@@ -31,7 +31,7 @@ jobs:
       run: |
         cd web
         npm i
-        npm build
+        npm run build
     - name: Install backend packages
       run: |
         cd backend
