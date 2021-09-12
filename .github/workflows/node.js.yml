@@ -39,7 +39,3 @@ jobs:
     - name: Move built web front to server
       run: |
         mv web/build backend/
-    - name: Start server
-      run: |
-        cd backend
-        NODE_END=production node server.js
