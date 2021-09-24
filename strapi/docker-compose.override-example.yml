@@ -1,0 +1,8 @@
+services:
+  strapi:
+    environment:
+      # strapi port
+      PORT: 80
+    ports:
+      # exposed 80 to local
+      - '80:80'
