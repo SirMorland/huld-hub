@@ -2,6 +2,9 @@ version: '3'
 services:
   strapi:
     image: strapi/strapi
+    build:
+      context: "."
+      dockerfile: "Dockerfile"
     environment:
       DATABASE_CLIENT: mysql
       DATABASE_HOST: mysql

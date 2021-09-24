@@ -1,4 +1,4 @@
-Huld hub Strapi backend
+Strapi with docker
 
 ## Getting started
 - Copy `docker-compose.override-example.yml` to `docker-compose.override.yml`
