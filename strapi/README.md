@@ -74,6 +74,32 @@ Once the docker container is up, you can access the documentation from http://lo
 
 This can be checked from `UsersPermissions - User` > `POST - /auth/local`.
 
+Taken from the official [documentation](https://strapi.io/documentation/developer-docs/latest/development/plugins/users-permissions.html#login).
+
+>Submit the user's identifier and password credentials for authentication. When the authentication is successful, the response data returned will have the user's information along with a jwt authentication token.
+>
+>The identifier param can either be an email or a username.
+>```
+>import axios from 'axios';
+>
+>// Request API.
+>axios
+>  .post('http://localhost:1337/auth/local', {
+>    identifier: 'user@strapi.io',
+>    password: 'strapiPassword',
+>  })
+>  .then(response => {
+>    // Handle success.
+>    console.log('Well done!');
+>    console.log('User profile', response.data.user);
+>    console.log('User token', response.data.jwt);
+>  })
+>  .catch(error => {
+>    // Handle error.
+>    console.log('An error occurred:', error.response);
+>  });
+> 
+>```
 ## FAQ
 
 ### Cannot find module
