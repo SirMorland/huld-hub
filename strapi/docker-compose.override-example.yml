@@ -1,0 +1,10 @@
+services:
+  strapi:
+    environment: #environment variables
+      # container port that strapi is exposed
+      PORT: 443
+      # JWT secure token for Strapi auth, check how to generate this from README.md
+      ADMIN_JWT_SECRET: [to-be-filled]
+    ports:
+      # local port gets exposed to the container port 
+      - '443:443'

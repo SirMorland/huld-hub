@@ -1,0 +1,6 @@
+# prevent files to be copied to docker container
+
+./app/node_modules
+# .cache/ and build/ are created from strapi build. The files are used for strapi admin dashboard
+./app/.cache
+./app/build
