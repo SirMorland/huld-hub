@@ -26,7 +26,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        cache-dependency-path: backend/package-lock.json
+        cache-dependency-path: backend/app/package-lock.json
     - name: Install web front packages and build it
       run: |
         cd web
@@ -34,8 +34,8 @@ jobs:
         npm run build
     - name: Install backend packages
       run: |
-        cd backend
+        cd backend/app
         npm i
-    - name: Move built web front to server
-      run: |
-        mv web/build backend/
+    # - name: Move built web front to server
+    #   run: |
+    #     mv web/build backend/app
