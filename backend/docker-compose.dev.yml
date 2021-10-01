@@ -1,0 +1,15 @@
+version: '3'
+services:
+  strapi:
+    volumes:
+      - ./app:/srv/app
+      - modules:/srv/app/node_modules
+      - cache:/srv/app/.cache
+
+  mysql:
+    volumes:
+      - ./data:/var/lib/mysql
+
+volumes:
+  modules:
+  cache:
