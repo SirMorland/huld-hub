@@ -9,7 +9,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - working-directory: ./strapi/app
+      - working-directory: ./backend/app
         run: |
           npm ci
           npm install jest
