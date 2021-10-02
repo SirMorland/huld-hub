@@ -28,15 +28,15 @@ jobs:
         cache: 'npm'
         cache-dependency-path: backend/app/package-lock.json
 
-      - name: Run backend lint test
-        working-directory: ./backend/app
-        run: |
-          npm ci
-          npm run lint
+    - name: Run backend lint test
+      working-directory: ./backend/app
+      run: |
+        npm ci
+        npm run lint
 
-      - name: Run backend test
-        working-directory: ./backend/app
-        run: |
-          npm ci
-          npm install jest
-          npm run test
+    - name: Run backend test
+      working-directory: ./backend/app
+      run: |
+        npm ci
+        npm install jest
+        npm run test
