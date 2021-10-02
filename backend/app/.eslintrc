@@ -1,11 +1,13 @@
 {
   "parser": "babel-eslint",
   "extends": "eslint:recommended",
+  "plugins": ["jest"],
   "env": {
     "commonjs": true,
     "es6": true,
     "node": true,
-    "browser": false
+    "browser": false,
+    "jest/globals": true
   },
   "parserOptions": {
     "ecmaFeatures": {
@@ -21,7 +23,12 @@
     "indent": ["error", 2, { "SwitchCase": 1 }],
     "linebreak-style": ["error", "unix"],
     "no-console": 0,
-    "quotes": ["error", "single"],
-    "semi": ["error", "always"]
+    "quotes": "off",
+    "semi": ["error", "always"],
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/prefer-to-have-length": "warn",
+    "jest/valid-expect": "error"
   }
 }
