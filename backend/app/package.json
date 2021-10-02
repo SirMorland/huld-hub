@@ -8,13 +8,17 @@
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
-    "test": "jest --forceExit --detectOpenHandles"
+    "test": "jest --forceExit --detectOpenHandles",
+    "lint": "eslint --ext js,ts ."
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.32.0",
     "sqlite3": "^5.0.2",
     "supertest": "^6.1.6"
   },
   "dependencies": {
+    "eslint-plugin-jest": "^24.5.0",
     "knex": "0.21.18",
     "mysql": "2.18.1",
     "strapi": "3.6.8",
