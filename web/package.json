@@ -15,6 +15,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "lint": "eslint --ext js,ts,tsx src",
+    "eslint": "node node_modules/eslint/bin/eslint.js --config node_modules/eslint-config-react-app/index.js",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
