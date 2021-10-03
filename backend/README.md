@@ -14,10 +14,10 @@ Strapi with docker
 
 ## Getting started
 
-- Copy `docker-compose.dev.yml` to `docker-compose.override.yml` to setup development environment. This file can be further edited if needed. See [docker-compose.override-example.yml](docker-compose.override-example.yml) as an example.
+- Copy `docker-compose.dev.yml` to `docker-compose.override.yml` to setup development environment. The `docker-compose.override.yml` file can be further edited if needed.
 - Run `docker-compose up` to start Strapi server in development mode. Docker will need to build the container if it's the first time you run it.
+- By default, the strapi endpoint will be at http://localhost:1337
 - Run `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d` to start Strapi server in production mode. Docker will need to build the container if it's the first time you run it.
-- By default, the strapi endpoint will be at http://localhost:443
 
 ## docker-compose.override.yml
 
