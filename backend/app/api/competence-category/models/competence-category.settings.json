@@ -1,6 +1,6 @@
 {
   "kind": "collectionType",
-  "collectionName": "competence_categories",
+  "collectionName": "competence-categories",
   "info": {
     "name": "CompetenceCategory",
     "description": ""
