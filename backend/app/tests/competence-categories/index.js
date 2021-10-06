@@ -8,6 +8,12 @@ describe('competence-categories api', () => {
   beforeAll(async()=>{
     await grantPrivileges(2, getPermissionValues('competence-categories', ['find', 'create']));  
   });
+  // clean up all categories
+  afterAll(async()=>{
+    const data = await strapi.query('competence-categories').find();
+    const promises = data.map(({id})=>strapi.services['competence-categories'].delete({id}));
+    await Promise.all(promises);
+  });
   it('should return competence categories with get', async () => {
     await strapi.services['competence-categories'].create(mockData);
     await request(strapi.server) 
