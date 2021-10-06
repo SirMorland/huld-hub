@@ -2,7 +2,7 @@
   "kind": "collectionType",
   "collectionName": "competence-categories",
   "info": {
-    "name": "CompetenceCategory",
+    "name": "Competence Categories",
     "description": ""
   },
   "options": {
