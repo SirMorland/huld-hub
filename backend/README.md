@@ -4,7 +4,14 @@ Strapi with docker
 
 - [Table Of Content](#table-of-content)
 - [Getting started](#getting-started)
+- [Default values from strapi:](#default-values-from-strapi)
+  - [Dashboard Admin:](#dashboard-admin)
+  - [Users](#users)
+    - [Admin user](#admin-user)
+    - [User user](#user-user)
 - [docker-compose.override.yml](#docker-composeoverrideyml)
+- [Create a db dump for frontend devs](#create-a-db-dump-for-frontend-devs)
+- [Import mysql dump to Strapi backend](#import-mysql-dump-to-strapi-backend)
   - [PORT](#port)
   - [ADMIN_JWT_SECRET](#admin_jwt_secret)
 - [Documentation](#documentation)
@@ -19,10 +26,56 @@ Strapi with docker
 - By default, the strapi endpoint will be at http://localhost:1337
 - Run `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d` to start Strapi server in production mode. Docker will need to build the container if it's the first time you run it.
 
+
+## Default values from strapi:
+
+### Dashboard Admin:
+  - username: dev@huld.io
+  - password: HuldHub2021
+
+### Users
+#### Admin user
+  - username: john.doe.admin@huld.io
+  - password: john.doe.admin
+#### User user
+  - username: john.doe.user@huld.io
+  - password: john.doe.admin
 ## docker-compose.override.yml
 
 - Reference https://docs.docker.com/compose/extends/
 - TLDR: used to override the docker-compose with your own config (e.g. environment variables or ports) for your local
+
+## Create a db dump for frontend devs
+
+- Make sure `mysql` container is up and running
+- Run `docker ps` to get the container ID of the mysql `container`:
+```bash
+docker ps                        
+CONTAINER ID   IMAGE           COMMAND                  CREATED         STATUS         PORTS                                       NAMES
+2b8f793f9429   strapi/strapi   "docker-entrypoint.s…"   2 minutes ago   Up 2 minutes   0.0.0.0:1337->1337/tcp, :::1337->1337/tcp   huldhub_backend
+ca35896ea2b7   mysql           "docker-entrypoint.s…"   2 minutes ago   Up 2 minutes   3306/tcp, 33060/tcp                         huldhub_database
+```
+- Run `docker exec ${MSQYL_CONTAINER_ID} /usr/bin/mysqldump -u root --password=strapi strapi > ./mysql-dump/backup.sql`. For example:
+```bash
+docker exec ca35896ea2b7 /usr/bin/mysqldump -u root --password=strapi strapi > ./mysql-dump/backup.sql
+```
+- the mysql dump will be applied to the mysql container after a fresh build of docker-compose.
+
+## Import mysql dump to Strapi backend
+
+- Make sure `mysql` container is up and running
+- Run `docker ps` to get the container ID of the `mysql` container:
+``` 
+docker ps                                                                             
+CONTAINER ID   IMAGE           COMMAND                  CREATED         STATUS          PORTS                                       NAMES
+d01eba674238   strapi/strapi   "docker-entrypoint.s…"   2 minutes ago   Up 59 seconds   0.0.0.0:1337->1337/tcp, :::1337->1337/tcp   huldhub_backend
+ddbb6159e544   mysql           "docker-entrypoint.s…"   2 minutes ago   Up 59 seconds   3306/tcp, 33060/tcp                         huldhub_database
+```
+- Run `docker exec -i ${MYSQL_CONTAINER_ID}  mysql -uroot -pstrapi strapi < ./mysql-dump/backup.sql`. For example:
+```bash
+docker exec ddbb6159e544 /usr/bin/mysqldump -u root --password=strapi strapi > ./mysql-dump/backup.sql
+```
+- the mysql dump will be applied to the mysql container immediately.
 
 ### PORT
 
