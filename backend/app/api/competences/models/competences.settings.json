@@ -19,7 +19,7 @@
       "type": "richtext"
     },
     "category": {
-      "model": "competence-category"
+      "model": "competence-categories"
     }
   }
 }

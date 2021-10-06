@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "10/06/2021 3:43:40 PM"
+    "x-generation-date": "10/06/2021 4:00:56 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -48,10 +48,10 @@
     "/competence-categories": {
       "get": {
         "deprecated": false,
-        "description": "",
+        "description": "Find all the competence-categories's records",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve competence-categories document(s)",
             "content": {
               "application/json": {
                 "schema": {
@@ -97,7 +97,7 @@
         },
         "summary": "",
         "tags": [
-          "Competence-category"
+          "Competence-categories"
         ],
         "parameters": [
           {
@@ -240,10 +240,10 @@
       },
       "post": {
         "deprecated": false,
-        "description": "Create a new record",
+        "description": "Create a new competence-categories record",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve competence-categories document(s)",
             "content": {
               "application/json": {
                 "schema": {
@@ -289,7 +289,7 @@
         },
         "summary": "",
         "tags": [
-          "Competence-category"
+          "Competence-categories"
         ],
         "requestBody": {
           "description": "",
@@ -297,7 +297,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewCompetence-category"
+                "$ref": "#/components/schemas/NewCompetence-categories"
               }
             }
           }
@@ -307,10 +307,10 @@
     "/competence-categories/count": {
       "get": {
         "deprecated": false,
-        "description": "",
+        "description": "Retrieve the number of competence-categories documents",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve competence-categories document(s)",
             "content": {
               "application/json": {
                 "schema": {
@@ -356,7 +356,7 @@
         },
         "summary": "",
         "tags": [
-          "Competence-category"
+          "Competence-categories"
         ],
         "parameters": []
       }
@@ -364,10 +364,10 @@
     "/competence-categories/{id}": {
       "get": {
         "deprecated": false,
-        "description": "",
+        "description": "Find one competence-categories record",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve competence-categories document(s)",
             "content": {
               "application/json": {
                 "schema": {
@@ -413,7 +413,7 @@
         },
         "summary": "",
         "tags": [
-          "Competence-category"
+          "Competence-categories"
         ],
         "parameters": [
           {
@@ -430,10 +430,10 @@
       },
       "put": {
         "deprecated": false,
-        "description": "Update a record",
+        "description": "Update a single competence-categories record",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve competence-categories document(s)",
             "content": {
               "application/json": {
                 "schema": {
@@ -479,7 +479,7 @@
         },
         "summary": "",
         "tags": [
-          "Competence-category"
+          "Competence-categories"
         ],
         "requestBody": {
           "description": "",
@@ -487,7 +487,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewCompetence-category"
+                "$ref": "#/components/schemas/NewCompetence-categories"
               }
             }
           }
@@ -507,10 +507,10 @@
       },
       "delete": {
         "deprecated": false,
-        "description": "Delete a record",
+        "description": "Delete a single competence-categories record",
         "responses": {
           "200": {
-            "description": "deletes a single record based on the ID supplied",
+            "description": "deletes a single competence-categories based on the ID supplied",
             "content": {
               "application/json": {
                 "schema": {
@@ -553,7 +553,7 @@
         },
         "summary": "",
         "tags": [
-          "Competence-category"
+          "Competence-categories"
         ],
         "parameters": [
           {
@@ -3347,46 +3347,6 @@
           }
         }
       },
-      "Competence-category": {
-        "required": [
-          "id"
-        ],
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "published_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "NewCompetence-category": {
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "published_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "created_by": {
-            "type": "string"
-          },
-          "updated_by": {
-            "type": "string"
-          }
-        }
-      },
       "Competences": {
         "required": [
           "id"
@@ -3422,10 +3382,6 @@
                 "type": "string"
               }
             }
-          },
-          "published_at": {
-            "type": "string",
-            "format": "date-time"
           }
         }
       },
@@ -3439,10 +3395,6 @@
           },
           "category": {
             "type": "string"
-          },
-          "published_at": {
-            "type": "string",
-            "format": "date-time"
           },
           "created_by": {
             "type": "string"

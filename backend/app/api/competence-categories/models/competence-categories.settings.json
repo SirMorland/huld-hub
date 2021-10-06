@@ -1,9 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "competence-categories",
+  "collectionName": "competence_categories",
   "info": {
-    "name": "Competence Categories",
-    "description": ""
+    "name": "Competence Categories"
   },
   "options": {
     "increments": true,

@@ -528,7 +528,7 @@
           "description": {
             "type": "string"
           },
-          "competence_category": {
+          "category": {
             "required": [
               "id"
             ],
@@ -542,9 +542,6 @@
               "description": {
                 "type": "string"
               },
-              "published_at": {
-                "type": "string"
-              },
               "created_by": {
                 "type": "string"
               },
@@ -552,10 +549,6 @@
                 "type": "string"
               }
             }
-          },
-          "published_at": {
-            "type": "string",
-            "format": "date-time"
           }
         }
       },
@@ -567,12 +560,8 @@
           "description": {
             "type": "string"
           },
-          "competence_category": {
+          "category": {
             "type": "string"
-          },
-          "published_at": {
-            "type": "string",
-            "format": "date-time"
           },
           "created_by": {
             "type": "string"
