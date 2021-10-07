@@ -29,4 +29,5 @@ it('strapi is defined', () => {
 });
 
 require('./competence-categories');
+require('./competences');
 require('./users');
