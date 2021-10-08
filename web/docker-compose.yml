@@ -1,0 +1,7 @@
+version: '3'
+services:
+  react-app:
+    container_name: huldhub_frontend
+    build:
+      context:  ./
+    restart: always
