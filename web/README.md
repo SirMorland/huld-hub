@@ -16,6 +16,5 @@ To start the development environment:
 
 ### Setup production environment
 To start the production environment:
-1. Copy `docker-compose.prod.yml` to `docker-compose.override.yml`. The `docker-compose.override.yml` file can be further edited if needed.
-2. Run `docker-compose up` to start the frontend in production mode. Docker will need to build the container if it's the first time you run it.
-3. The frontend runs on http://localhost:80 by default.
+1. Run `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d` to start the frontend in production mode. Docker will need to build the container if it's the first time you run it.
+2. The frontend runs on http://localhost:80 by default.
