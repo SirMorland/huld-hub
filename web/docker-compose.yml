@@ -1,6 +1,7 @@
 version: '3'
 services:
   react-app:
+    image: node/huldhub_react
     container_name: huldhub_frontend
     build:
       context:  ./
