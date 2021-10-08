@@ -16,6 +16,12 @@ describe("competences api", () => {
       strapi.services["competences"].delete({ id })
     );
     await Promise.all(promises);
+
+    const dataCat = await strapi.query("competence-categories").find();
+    const promisesCat = dataCat.map(({ id }) =>
+      strapi.services["competence-categories"].delete({ id })
+    );
+    await Promise.all(promisesCat);
   });
   //
   it("should return competences with get", async () => {
@@ -60,7 +66,7 @@ describe("competences api", () => {
   });
   //
   it("should be able to add a competence", async () => {
-    let categoryData= {
+    let categoryData = {
       name: "Skills",
       description: "Skills",
     };
