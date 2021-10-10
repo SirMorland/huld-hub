@@ -1,6 +1,34 @@
 # Huld hub
 
-## Dev work flow
+## Table of contents
+- [Authors](#Authors)
+- [Introduction](#Introduction)
+- [Usage](#Usage)
+- [Issues](#Issues)
+- [Dev work flow](#DevWorkFlow)
+
+## Authors <a name=Authors></a>
+ Markup : * Prosper Evergreen
+          * Ville Helppolainen
+          * Phu Nguyen
+          * Sai Polineni
+          * Hoang Tran
+          * Asbah Usmani
+          * Jori Väinölä
+
+## Introduction <a name=Introduction></a>
+
+This is an application for searching and displaying coworkers based on their skills and talents. Application requires a login before any information can be accessed and registration is allowed only through email invitation. Once logged in, user can search different skills (for example. web technology or C++) and application will return selection of coworkers who have those skills listed. By selecting searched user you may view their personal information, which can contains contact information, skills, work history, education, and other notable points of interest.
+
+## Usage <a name=Usage></a>
+
+To run this application you must initiate both backend and web applications. Instruction on how to do this can be found in files `backend/README` and `web/README`.
+
+## Usage <a name=Usage></a>
+
+TODO. Issues that come up in the application that will not be fixed for the release should be documented here.
+
+## Dev work flow <a name=DevWorkFlow></a>
 You can follow the [convetional commits](https://www.conventionalcommits.org/en/v1.0.0/) for naming branches and commit messages.
 
 1. When you start working on a feature, create a new branch from the `main` branch. For example the branch will be `feat/login`
