@@ -1,32 +1,37 @@
 # Huld hub
 
 ## Table of contents
-- [Authors](#Authors)
 - [Introduction](#Introduction)
+- [Authors](#Authors)
 - [Usage](#Usage)
 - [Issues](#Issues)
 - [Dev work flow](#DevWorkFlow)
+- [Used technologies](#UsedTechnologies)
 
-## Authors <a name=Authors></a>
- Markup : * Prosper Evergreen
-          * Ville Helppolainen
-          * Phu Nguyen
-          * Sai Polineni
-          * Hoang Tran
-          * Asbah Usmani
-          * Jori Väinölä
 
 ## Introduction <a name=Introduction></a>
 
-This is an application for searching and displaying coworkers based on their skills and talents. Application requires a login before any information can be accessed and registration is allowed only through email invitation. Once logged in, user can search different skills (for example. web technology or C++) and application will return selection of coworkers who have those skills listed. By selecting searched user you may view their personal information, which can contains contact information, skills, work history, education, and other notable points of interest.
+This is an application for keeping track of employees skills, work history, education, and other notable points of interest. The purpose is to search users based on their skills and talents they have listed and find coworkers that possess skills that are required. Search return a listing of users, that may be viewed in more detail.
+
+Application requires a login before any information can be accessed and registration is allowed only allowed if users email has the company domain. If email is correct, confirmation email is sent to the address.
+
+## Authors <a name=Authors></a>
+
+- Prosper Evergreen prosper.evergreen@tuni.fi
+- Ville Helppolainen ville.helppolainen@tuni.fi
+- Phu Nguyen phu.g.nguyen@tuni.fi
+- Sai Polineni sai.polineni@tuni.fi
+- Hoang Tran hoang.tran@tuni.fi
+- Asbah Usmani asbahamjad.usmani@tuni.fi
+- Jori Väinölä jori.vainola@tuni.fi
 
 ## Usage <a name=Usage></a>
 
-To run this application you must initiate both backend and web applications. Instruction on how to do this can be found in files `backend/README` and `web/README`.
+To start this application you must run both backend and web applications. Instruction on how to do this can be found in files `backend/README` and `web/README`. These files also contain other information like available commands and troubleshooting intructions,
 
-## Usage <a name=Usage></a>
+## Issues TODO <a name=Issues></a>
 
-TODO. Issues that come up in the application that will not be fixed for the release should be documented here.
+Issues that appear in the application that will not be fixed for the release should be documented here.
 
 ## Dev work flow <a name=DevWorkFlow></a>
 You can follow the [convetional commits](https://www.conventionalcommits.org/en/v1.0.0/) for naming branches and commit messages.
@@ -47,3 +52,11 @@ git push origin feat/login
 ```
 4. Go to the repo, it should show that you have a new branch that has just been pushed to. You can create a PR from that or create one manually. Fill in the PR descriptions, add some reviewers, labels, assign yourself to the PR and create the PR.
 5. Once the PR is approved, we can merge the PR to the `main` branch. Don't forget to write a descriptive merge message.
+
+## Dev work flow <a name=UsedTechnologies></a>
+
+This entire project utilizes Docker to run the application is same environment for all developers.
+
+Backend uses Strapi. 
+
+Web application is React based and styled with CSS.
