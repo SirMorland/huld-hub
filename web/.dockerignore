@@ -1,0 +1,2 @@
+# prevent files to be copied to docker container
+./node_modules
