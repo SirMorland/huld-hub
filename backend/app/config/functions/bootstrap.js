@@ -10,4 +10,16 @@
  * See more details here: https://strapi.io/documentation/developer-docs/latest/setup-deployment-guides/configurations.html#bootstrap
  */
 
-module.exports = () => {};
+const { roleSetup } = require('./roleSetup');
+const { userSetup } = require('./userSetup');
+ 
+module.exports = async () => {
+  if (process.env.NODE_ENV === 'development') {
+    try {
+      await roleSetup();
+      await userSetup();
+    } catch (e) {
+      console.error('Something went wrong in bootstraping', e);
+    }
+  }
+};
