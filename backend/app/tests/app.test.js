@@ -28,6 +28,5 @@ it('strapi is defined', () => {
   expect(strapi).toBeDefined();
 });
 
-require('./competence-categories');
-require('./competences');
+// require('./hello');
 require('./users');
