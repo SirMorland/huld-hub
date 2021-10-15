@@ -9,6 +9,9 @@ Strapi with docker
   - [ADMIN_JWT_SECRET](#admin_jwt_secret)
 - [Documentation](#documentation)
   - [Authentication endpoint](#authentication-endpoint)
+- [Bootstrap scripts](#bootstrap-scripts)
+  - [Role setup](#role-setup)
+  - [User setup](#user-setup)
 - [FAQ](#faq)
   - [Cannot find module](#cannot-find-module)
 
@@ -118,6 +121,26 @@ Taken from the official [documentation](https://strapi.io/documentation/develope
 >
 > ```
 
+## Bootstrap scripts
+In development, these will be added on server-startup:
+### Role setup
+Read more in [./app/config/functions/roleSetup.js](./app/config/functions/roleSetup.js)
+- add `admin` and `employee` roles if they don't exist
+- The roles would have access to all application permissions
+
+The module aslo exports these utilities: 
+- `findRole` (returns a role based on the role's name), 
+- `createRole` (creates a role), 
+- `ADMIN`, `EMPLOYEE` (constants for saving admin and employee roles' names)
+### User setup
+Read more in [./app/config/functions/userSetup.js](./app/config/functions/userSetup.js)
+- add an `admin` role user with `huld-admin` as username and password if it doesn't exists
+- add an `employee` role user with `huld-employee` as username and password if it doesn't exists
+- 
+The module aslo exports these utilities: 
+- `findUser` (returns a user based on the user's username),
+- createUser (creates a user),
+- `EMPLOYEE_CREDENTIAL` and `ADMIN_CREDENTIAL` (constants for saving the admin and employee users credentials - both username and password)
 ## FAQ
 
 ### Cannot find module
