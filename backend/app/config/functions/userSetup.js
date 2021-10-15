@@ -40,11 +40,11 @@ const userSetup = async () => {
   let employee = await findUserByUsername(EMPLOYEE_CREDENTIAL);
   if (!admin) {
     const adminRole = await findRoleByName(ADMIN);
-    await createUser(EMPLOYEE_CREDENTIAL, 'huld-admin@huld.io', EMPLOYEE_CREDENTIAL, adminRole.id);
+    await createUser(ADMIN_CREDENTIAL, 'huld-admin@huld.io', ADMIN_CREDENTIAL, adminRole.id);
   }
   if (!employee) {
     const employeeRole = await findRoleByName(EMPLOYEE);
-    await createUser(ADMIN_CREDENTIAL, 'huld-employee@huld.io', ADMIN_CREDENTIAL, employeeRole.id);
+    await createUser(EMPLOYEE_CREDENTIAL, 'huld-employee@huld.io', EMPLOYEE_CREDENTIAL, employeeRole.id);
   }
 };
 

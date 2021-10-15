@@ -16,9 +16,14 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Start backend
+      # First start mysql, then wait a minute before starting strapi so mysql
+      # has had time to properly boot up and we can connect and use it from the
+      # bootstrap script in strapi.
       run: |
         cd backend
-        docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+        docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d mysql
+        sleep 60
+        docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d strapi
 
     - name: Start frontend
       run: |

@@ -10,10 +10,13 @@
  * See more details here: https://strapi.io/documentation/developer-docs/latest/setup-deployment-guides/configurations.html#bootstrap
  */
 
+const { permissionSetup } = require('./permissionSetup');
 const { roleSetup } = require('./roleSetup');
 const { userSetup } = require('./userSetup');
  
 module.exports = async () => {
+  await permissionSetup();
+
   if (process.env.NODE_ENV === 'development') {
     try {
       await roleSetup();
