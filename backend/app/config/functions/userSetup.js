@@ -36,8 +36,8 @@ const createUser = (username, email, password, role) => {
  * Add huld-admin and huld-employee admin if not found
  */
 const userSetup = async () => {
-  let admin = await findUser('huld-admin');
-  let employee = await findUser('huld-employee');
+  let admin = await findUser(ADMIN_CREDENTIAL);
+  let employee = await findUser(EMPLOYEE_CREDENTIAL);
   if (!admin) {
     const adminRole = await findRole(ADMIN);
     await createUser(EMPLOYEE_CREDENTIAL, 'huld-admin@huld.io', EMPLOYEE_CREDENTIAL, adminRole.id);
