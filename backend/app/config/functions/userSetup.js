@@ -1,4 +1,4 @@
-const { findRole, ADMIN, EMPLOYEE } = require('./roleSetup');
+const { findRoleByName, ADMIN, EMPLOYEE } = require('./roleSetup');
 
 const ADMIN_CREDENTIAL = 'huld-admin';
 const EMPLOYEE_CREDENTIAL = 'huld-employee';
@@ -8,7 +8,7 @@ const EMPLOYEE_CREDENTIAL = 'huld-employee';
  * @returns a Promise that resolves a user object if found
  */
 
-const findUser = (username) => {
+const findUserByUsername = (username) => {
   return strapi.query("user", "users-permissions")
     .findOne({ username });
 };
@@ -36,21 +36,21 @@ const createUser = (username, email, password, role) => {
  * Add huld-admin and huld-employee admin if not found
  */
 const userSetup = async () => {
-  let admin = await findUser(ADMIN_CREDENTIAL);
-  let employee = await findUser(EMPLOYEE_CREDENTIAL);
+  let admin = await findUserByUsername(ADMIN_CREDENTIAL);
+  let employee = await findUserByUsername(EMPLOYEE_CREDENTIAL);
   if (!admin) {
-    const adminRole = await findRole(ADMIN);
+    const adminRole = await findRoleByName(ADMIN);
     await createUser(EMPLOYEE_CREDENTIAL, 'huld-admin@huld.io', EMPLOYEE_CREDENTIAL, adminRole.id);
   }
   if (!employee) {
-    const employeeRole = await findRole(EMPLOYEE);
+    const employeeRole = await findRoleByName(EMPLOYEE);
     await createUser(ADMIN_CREDENTIAL, 'huld-employee@huld.io', ADMIN_CREDENTIAL, employeeRole.id);
   }
 };
 
 module.exports = {
   userSetup,
-  findUser,
+  findUserByUsername,
   createUser,
   EMPLOYEE_CREDENTIAL,
   ADMIN_CREDENTIAL

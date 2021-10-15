@@ -1,7 +1,7 @@
 const ADMIN = 'admin';
 const EMPLOYEE = 'employee';
 
-const findRole = (name) => {
+const findRoleByName = (name) => {
   return strapi
     .query("role", "users-permissions")
     .findOne({name});
@@ -36,8 +36,8 @@ const enableApplicationPermissions = async (role) => {
  * enable all application permissions to them
  */
 const roleSetup = async () => {
-  let adminRole = await findRole(ADMIN);
-  let employeeRole = await findRole(EMPLOYEE);
+  let adminRole = await findRoleByName(ADMIN);
+  let employeeRole = await findRoleByName(EMPLOYEE);
   if (!adminRole) adminRole= await createRole(ADMIN, 'Admin user');
   if (!employeeRole) employeeRole = await createRole(EMPLOYEE, 'Employee user');
   await enableApplicationPermissions(adminRole.id);
@@ -47,7 +47,7 @@ const roleSetup = async () => {
 };
 
 module.exports = {
-  findRole,
+  findRoleByName,
   createRole,
   roleSetup,
   ADMIN,

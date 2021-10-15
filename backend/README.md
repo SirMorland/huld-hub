@@ -129,7 +129,7 @@ Read more in [./app/config/functions/roleSetup.js](./app/config/functions/roleSe
 - The roles would have access to all application permissions
 
 The module aslo exports these utilities: 
-- `findRole` (returns a role based on the role's name), 
+- `findRoleByName` (returns a role based on the role's name), 
 - `createRole` (creates a role), 
 - `ADMIN`, `EMPLOYEE` (constants for saving admin and employee roles' names)
 ### User setup
@@ -138,7 +138,7 @@ Read more in [./app/config/functions/userSetup.js](./app/config/functions/userSe
 - add an `employee` role user with `huld-employee` as username and password if it doesn't exists
 - 
 The module aslo exports these utilities: 
-- `findUser` (returns a user based on the user's username),
+- `findUserByUsername` (returns a user based on the user's username),
 - createUser (creates a user),
 - `EMPLOYEE_CREDENTIAL` and `ADMIN_CREDENTIAL` (constants for saving the admin and employee users credentials - both username and password)
 ## FAQ
