@@ -84,7 +84,7 @@ ADMIN_JWT_SECRET: V3z2kvxM8mRca9tDE7zLo9TpoiFaVSXbHq2vRYsWBCyuDt0n/CX+ek/SIXlORX
 
 ## Documentation
 
-Once the docker container is up, you can access the documentation from http://localhost:443/documentation
+Once the docker container is up, you can access the documentation from http://localhost:1337/documentation
 
 ### Authentication endpoint
 
