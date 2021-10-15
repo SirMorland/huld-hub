@@ -4,6 +4,7 @@
 - [Getting started](#getting-started)
   - [Setup development environment](#setup-development-environment)
   - [Setup production environment](#setup-production-environment)
+  - [Placeholder data from backend for development](#placeholder-data-from-backend-for-development)
 
 ## Getting started
 
@@ -18,3 +19,10 @@ To start the development environment:
 To start the production environment:
 1. Run `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d` to start the frontend in production mode. Docker will need to build the container if it's the first time you run it.
 2. The frontend runs on http://localhost:80 by default.
+
+### Placeholder data from backend for development
+In development by default, the backend will have these credentials:
+|**Username**|**Password**|**Role**|
+|---|---|---|
+|huld-admin|huld-admin|admin|
+|huld-employee|huld-employee|employee|
