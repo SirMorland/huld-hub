@@ -23,6 +23,7 @@ jobs:
     - name: Start frontend
       run: |
         cd web
+        npm i --silent
         docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 
     - name: Wait that containers have started
