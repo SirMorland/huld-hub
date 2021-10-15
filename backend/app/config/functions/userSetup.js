@@ -1,7 +1,7 @@
 const { findRole, ADMIN, EMPLOYEE } = require('./roleSetup');
 
+const ADMIN_CREDENTIAL = 'huld-admin';
 const EMPLOYEE_CREDENTIAL = 'huld-employee';
-const ADMIN_CREDENTIAL = 'huld-employee';
 
 /**
  * @param {string} username 
