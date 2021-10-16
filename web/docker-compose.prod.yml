@@ -1,0 +1,9 @@
+version: '3'
+services:
+  react-app:
+    build:
+      dockerfile: Dockerfile.prod
+    ports:
+      - "80:80"
+    environment:
+      NODE_ENV: production
