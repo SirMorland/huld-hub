@@ -4,11 +4,6 @@ Strapi with docker
 
 - [Table Of Content](#table-of-content)
 - [Getting started](#getting-started)
-- [Default values from strapi:](#default-values-from-strapi)
-  - [Dashboard Admin:](#dashboard-admin)
-  - [Users](#users)
-    - [Admin user](#admin-user)
-    - [User user](#user-user)
 - [docker-compose.override.yml](#docker-composeoverrideyml)
 - [Create a db dump for frontend devs](#create-a-db-dump-for-frontend-devs)
 - [Import mysql dump to Strapi backend](#import-mysql-dump-to-strapi-backend)
@@ -26,23 +21,10 @@ Strapi with docker
 
 - Copy `docker-compose.dev.yml` to `docker-compose.override.yml` to setup development environment. The `docker-compose.override.yml` file can be further edited if needed.
 - Run `docker-compose up` to start Strapi server in development mode. Docker will need to build the container if it's the first time you run it.
+- Database dumps in `/mysql-dump` will be imported when you run `docker-compose up` the first time
 - By default, the strapi endpoint will be at http://localhost:1337
 - Run `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d` to start Strapi server in production mode. Docker will need to build the container if it's the first time you run it.
 
-
-## Default values from strapi:
-
-### Dashboard Admin:
-  - username: dev@huld.io
-  - password: HuldHub2021
-
-### Users
-#### Admin user
-  - username: john.doe.admin@huld.io
-  - password: john.doe.admin
-#### User user
-  - username: john.doe.user@huld.io
-  - password: john.doe.admin
 ## docker-compose.override.yml
 
 - Reference https://docs.docker.com/compose/extends/
