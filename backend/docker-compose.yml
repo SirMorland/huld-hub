@@ -11,6 +11,7 @@ services:
       DATABASE_USERNAME: strapi
       DATABASE_PASSWORD: strapi
       DATABASE_SSL: 'false'
+      
     ports:
       - '1337:1337'
     depends_on:
