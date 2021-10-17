@@ -11,6 +11,13 @@ services:
       DATABASE_USERNAME: strapi
       DATABASE_PASSWORD: strapi
       DATABASE_SSL: 'false'
+      SMTP_USERNAME: huldhub@outlook.com
+      SMTP_PASSWORD: OutlookHubHuld
+      SMTP_HOST: smtp.office365.com
+      SMTP_PORT: 587
+      EMAIL_FROM: huldhub@outlook.com
+      EMAIL_REPLY_TO: huldhub@outlook.com
+      
     ports:
       - '1337:1337'
     depends_on:
