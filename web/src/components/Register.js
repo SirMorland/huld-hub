@@ -28,10 +28,11 @@ const useStyles = makeStyles({
     },
 });
 
-export default function LoginForm() {
+export default function RegistrationForm() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [reEnterPassword, setReEnterPassword] = useState('');
 
     const classes = useStyles();
 
@@ -59,7 +60,7 @@ export default function LoginForm() {
             >
 
                 <Typography component="h1" variant="h5" color="primary">
-                    Log in to Hub
+                    Register to Hub
                 </Typography>
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
@@ -87,15 +88,20 @@ export default function LoginForm() {
                                 onChange={e => setPassword(e.target.value)}
                             />
                         </Grid>
-                    </Grid>
-                    <br />
-                    <Grid container justifyContent="center">
-                        <Grid item>
-                            <Link href="#" variant="body2" color="secondary">
-                                Forgot Password?
-                            </Link>
+                        <Grid item xs={12}>
+                            <TextField
+                                required
+                                fullWidth
+                                type="password"
+                                id="reEnterPassword"
+                                name="reEnterPassword"
+                                label="Re-Enter Password"
+                                value={reEnterPassword}
+                                onChange={e => setReEnterPassword(e.target.value)}
+                            />
                         </Grid>
                     </Grid>
+
                     <br />
                     <Button
                         type="submit"
@@ -104,20 +110,19 @@ export default function LoginForm() {
                         color="primary"
                         sx={{ mt: 3, mb: 2 }}
                     >
-                        LOG IN
+                        Register
                     </Button>
                     <br />
                     <br />
                     <Grid container justifyContent="center">
                         <Grid item>
-                            <Link href="/register" variant="body2" color="secondary">
-                                Not Registered? Create an account
+                            <Link href="/" variant="body2" color="secondary">
+                                Already a member? Login instead
                             </Link>
                         </Grid>
                     </Grid>
                 </Box>
             </Box>
         </Container>
-
     );
 }
