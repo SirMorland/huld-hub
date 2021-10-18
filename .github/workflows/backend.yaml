@@ -26,7 +26,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        # cache-dependency-path: backend/app/package-lock.json
+        cache-dependency-path: backend/app/package-lock.json
 
     - name: Run backend lint test
       working-directory: ./backend/app
