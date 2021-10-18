@@ -53,7 +53,7 @@ git push origin feat/login
 4. Go to the repo, it should show that you have a new branch that has just been pushed to. You can create a PR from that or create one manually. Fill in the PR descriptions, add some reviewers, labels, assign yourself to the PR and create the PR.
 5. Once the PR is approved, we can merge the PR to the `main` branch. Don't forget to write a descriptive merge message.
 
-## Dev work flow <a name=UsedTechnologies></a>
+## Used technologies <a name=UsedTechnologies></a>
 
 This entire project utilizes Docker to run the application is same environment for all developers.
 
