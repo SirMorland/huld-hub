@@ -1,12 +1,15 @@
 /* eslint-disable no-useless-escape */
-
 const _ = require("lodash");
 const { sanitizeEntity } = require("strapi-utils");
 
-const emailRegExp =
-  process.env.NODE_ENV === "production"
-    ? /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@huld.io$/
-    : /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const emailRegExp = new RegExp(
+  `^(([^<>()\\[\\]\\\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@"]+)*)|(".+"))@${
+    process.env.EMAIL_DOMAIN ||
+    "((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))"
+  }$`
+);
+
+// const emailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const formatError = (error) => [
   { messages: [{ id: error.id, message: error.message, field: error.field }] },
@@ -106,8 +109,9 @@ module.exports = {
         null,
         formatError({
           id: "Auth.form.error.email.format",
-          message:
-            "Please provide valid email address i.e firstname.lastname@huld.io",
+          message: `Please provide valid email address i.e youremail@${
+            process.env.EMAIL_DOMAIN || "domain.com"
+          }`,
         })
       );
     }

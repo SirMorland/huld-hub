@@ -1,5 +1,5 @@
-const ADMIN = 'admin';
-const EMPLOYEE = 'employee';
+const ADMIN = 'Admin';
+const EMPLOYEE = 'Employee';
 
 const findRoleByName = (name) => {
   return strapi
@@ -17,7 +17,8 @@ const createRole = (name, description) => {
   return strapi.query("role", "users-permissions")
     .create({
       name,
-      description
+      description,
+      type: name.toLowerCase()
     });
 };
 

@@ -19,6 +19,7 @@ const registeredUser = {
 describe("Login and Register User", () => {
 
   it("should register new user", async () => {
+
     // Get all users in the database
     const usersBeforeRegister = await strapi.plugins[
       "users-permissions"
@@ -40,7 +41,7 @@ describe("Login and Register User", () => {
         expect(data.body.user.username).toBe(registeredUser.username);
         expect(data.body.user.email).toBe(registeredUser.email);
         // expect(data.body.user.confirmed).toBe(null);
-      });
+      }).catch(console.log);
 
     // Get the current number of users
     const usersAfterRegister = await strapi.plugins[
