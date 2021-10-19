@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_user_profile_work_experiences",
+  "info": {
+    "name": "Work Experiences",
+    "icon": "align-justify",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "from_date": {
+      "type": "datetime"
+    },
+    "to_date": {
+      "type": "datetime"
+    },
+    "title": {
+      "type": "string"
+    },
+    "sub_title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
+    }
+  }
+}

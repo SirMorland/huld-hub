@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_user_profile_education_histories",
+  "info": {
+    "name": "Education Histories",
+    "icon": "book-reader"
+  },
+  "options": {},
+  "attributes": {
+    "from_date": {
+      "type": "datetime"
+    },
+    "to_date": {
+      "type": "datetime"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
+    }
+  }
+}
