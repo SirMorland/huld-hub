@@ -6,6 +6,14 @@ services:
       PORT: 1337
       # JWT secure token for Strapi auth, check how to generate this from README.md
       ADMIN_JWT_SECRET: to-be-filled
+      # Email setup
+      SMTP_USERNAME: huldhub@outlook.com
+      SMTP_PASSWORD: OutlookHubHuld
+      SMTP_HOST: smtp.office365.com
+      SMTP_PORT: 587
+      EMAIL_FROM: huldhub@outlook.com
+      EMAIL_REPLY_TO: huldhub@outlook.com
+
     ports:
       # local port gets exposed to the container port 
       - '1337:1337'
@@ -16,6 +24,7 @@ services:
 
   mysql:
     volumes:
+      - ./mysql-dump:/docker-entrypoint-initdb.d
       - ./data:/var/lib/mysql
 
 volumes:

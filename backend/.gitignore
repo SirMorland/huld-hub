@@ -1,4 +1,5 @@
 node_modules/
 docker-compose.override.y*ml
 data
+mysql-dump/*sql
 app/extensions/documentation/public/index.html
