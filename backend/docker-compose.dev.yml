@@ -30,6 +30,7 @@ services:
   mysql:
     volumes:
       - ./mysql-dump:/docker-entrypoint-initdb.d
+      - ./data:/var/lib/mysql
 
 volumes:
   modules:

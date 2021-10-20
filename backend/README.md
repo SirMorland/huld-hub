@@ -191,7 +191,7 @@ To resolve this we have to remove the container's volume and build it again. Her
 
 ```
   docker-compose down;
-  docker-compose down --volume;
+  docker-compose down --volumes;
   docker-compose build strapi;
   docker-compose up
 ```
