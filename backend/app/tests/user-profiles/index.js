@@ -110,7 +110,7 @@ describe("user-profiles api", () => {
       });
   });
   //
-  it("should be able to add a user-profiles", async () => {
+  it("should be able to add a user-profile", async () => {
     const profileData = {
       name: "test 3",
       title: "test 3",
