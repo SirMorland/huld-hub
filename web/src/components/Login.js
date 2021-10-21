@@ -18,10 +18,10 @@ const useStyles = makeStyles({
     },
     form: {
         boxShadow: '2px 4px 8px RGBA(0, 0, 0, 0.16) ',
-        display: 'block',
         borderRadius: '5px',
-        padding: '20px',
+        padding: '24px 16px',
         background: 'white',
+        maxWidth: '512px',
     },
 });
 
