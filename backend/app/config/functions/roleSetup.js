@@ -11,7 +11,7 @@ const findRoleByName = (name) => {
  * 
  * @param {string} name role name
  * @param {string} description description
- * @returns Promise that resolves into
+ * @returns Promise that resolves into the created role
  */
 const createRole = (name, description) => {
   return strapi.query("role", "users-permissions")

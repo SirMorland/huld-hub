@@ -12,12 +12,14 @@
 
 const { roleSetup } = require('./roleSetup');
 const { userSetup } = require('./userSetup');
+const competenceSetup = require('./competenceSetup');
  
 module.exports = async () => {
   if (process.env.NODE_ENV === 'development') {
     try {
       await roleSetup();
       await userSetup();
+      await competenceSetup();
     } catch (e) {
       console.error('Something went wrong in bootstraping', e);
     }
