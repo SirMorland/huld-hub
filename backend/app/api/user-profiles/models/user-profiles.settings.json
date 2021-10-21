@@ -50,6 +50,9 @@
       "plugin": "users-permissions",
       "model": "user",
       "via": "profile"
+    },
+    "competences": {
+      "collection": "competences"
     }
   }
 }
