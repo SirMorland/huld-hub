@@ -13,7 +13,7 @@ const useStyles = makeStyles({
 
 export default function PageWrapper({ children }) {
   const { body } = useStyles();
-  return <Container component="main" className={body} >
+  return <Container maxWidth={false} component="main" className={body} >
     {children}
   </Container>
 }
