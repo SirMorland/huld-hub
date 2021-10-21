@@ -51,12 +51,18 @@ const createCompetenceIfnExist = async (name, category) => {
 
 /**
  * create categories and competences accordingly to MODEL if they do not exist
+ * @returns a promise that gets resolved when the setup is done
  */
-const competenceSetup = async () => {
-  MODEL.forEach(async ({category, items})=>{
-    const { id } = await createCategoryIfnExist(category);
-    await Promise.all(items.map(name => createCompetenceIfnExist(name,id)));
-  });
+const competenceSetup = () => new Promise(resolve => {
+  setup(0, resolve);
+});
+
+const setup = async (index, callback) => {
+  const {category, items} = MODEL[index];
+  const { id } = await createCategoryIfnExist(category);
+  await Promise.all(items.map(name => createCompetenceIfnExist(name,id)));
+  if (index + 1 === MODEL.length) callback();
+  else setup(index + 1, callback);
 };
 
 module.exports = competenceSetup;
