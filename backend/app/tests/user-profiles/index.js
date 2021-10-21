@@ -64,7 +64,7 @@ describe("user-profiles api", () => {
       });
   });
   //
-  it("should return a user-profiles with get", async () => {
+  it("should return a user-profile with get", async () => {
     const profileData = {
       name: "test 2",
       title: "test 2",
