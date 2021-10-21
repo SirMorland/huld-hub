@@ -1,5 +1,5 @@
-import LoginForm from "./components/Login";
-import RegistrationForm from "./components/Register";
+import LoginForm from "./pages/Login";
+import RegistrationForm from "./pages/Register";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
