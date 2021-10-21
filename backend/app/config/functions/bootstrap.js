@@ -16,10 +16,10 @@ const { userSetup } = require('./userSetup');
  
 module.exports = async () => {
   await permissionSetup();
+  await roleSetup();
 
   if (process.env.NODE_ENV === 'development') {
     try {
-      await roleSetup();
       await userSetup();
     } catch (e) {
       console.error('Something went wrong in bootstraping', e);

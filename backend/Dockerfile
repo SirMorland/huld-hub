@@ -2,7 +2,7 @@
 FROM strapi/strapi
 
 # setup root workdir
-WORKDIR /srv/app
+WORKDIR /app
 
 # copy package.json to workdir
 COPY ./app/package.json ./
