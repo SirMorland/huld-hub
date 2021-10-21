@@ -104,6 +104,7 @@ describe("user-profiles api", () => {
       .get("/user-profiles")
       .expect(200)
       .then((data) => {
+        
         expect(data.body).toHaveLength(1);
         expect(data.body[0].name).toBe(profileData.name);
         expect(data.body[0].work_experiences[0].id).toBe(
@@ -111,6 +112,9 @@ describe("user-profiles api", () => {
         );
         expect(data.body[0].education_histories[0].id).toBe(
           profileData.education_histories[0].id
+        );
+        expect(data.body[0].competences[0].id).toBe(
+          competence.id
         );
       });
   });
@@ -197,6 +201,9 @@ describe("user-profiles api", () => {
         expect(data.body.education_histories[0].id).toBe(
           profileData.education_histories[0].id
         );
+        expect(data.body.competences[0].id).toBe(
+          competence.id
+        );
       });
   });
 
@@ -282,6 +289,9 @@ describe("user-profiles api", () => {
         );
         expect(data.body.education_histories[0].id).toBe(
           profileData.education_histories[0].id
+        );
+        expect(data.body.competences[0].id).toBe(
+          competence.id
         );
       });
   });
