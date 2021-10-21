@@ -12,41 +12,14 @@
 
 const { roleSetup, defaultRoleSetup } = require("./roleSetup");
 const { userSetup } = require("./userSetup");
-
-const DEFAULT_ROLES = [
-  {
-    name: "Admin",
-    descripton: "Admin user",
-    type: "admin",
-  },
-  {
-    name: "Employee",
-    descripton: "Employee user",
-    type: "employee",
-  },
-];
-
-const DEFAULT_USERS = [
-  {
-    username: "huld-admin",
-    email: "huld-admin@huld.io",
-    password: "huld-admin",
-    role: "Admin" // Must match a role name 
-  },
-  {
-    username: "huld-employee",
-    email: "huld-employee@huld.io",
-    password: "huld-employee",
-    role: "Employee" // Must match a role name
-  },
-];
+const { DEFAULT_ROLES, DEFAULT_USERS } = require("./default_data");
 
 module.exports = async () => {
   if (process.env.NODE_ENV === "development") {
     try {
-      await roleSetup(DEFAULT_ROLES);
+      await roleSetup([DEFAULT_ROLES.ADMIN, DEFAULT_ROLES.EMPLOYEE]);
       await userSetup(DEFAULT_USERS);
-      await defaultRoleSetup(DEFAULT_ROLES.find((role) => role.name === "Employee"));
+      await defaultRoleSetup(DEFAULT_ROLES.EMPLOYEE);
     } catch (e) {
       console.error("Something went wrong in bootstraping", e);
     }

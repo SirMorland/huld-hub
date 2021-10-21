@@ -30,13 +30,13 @@ const createUser = (username, email, password, role) => {
 /**
  * Add huld-admin and huld-employee admin if not found
  *
- * @param {Array<{username: string; email: string; password: string; role: string}>} users - Array of users to be created
+ * @param {Array<{username: string; email: string; password: string; role: {name: string; description:string; type:string;}}>} users - Array of users to be created
  */
 const userSetup = async (users) => {
   await users.map(async (user) => {
     let customUser = await findUserByUsername(user.username);
     if (!customUser) {
-      const userRole = await findRoleByName(user.role);
+      const userRole = await findRoleByName(user.role.name);
       await createUser(user.username, user.email, user.password, userRole.id);
     }
   });
