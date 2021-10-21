@@ -14,17 +14,14 @@ const useStyles = makeStyles({
         justifyContent: 'center',
         alignItems: 'center',
         background: 'linear-gradient(180deg, #00173A 50%, #ffffff 50%)',
+        height: '100vh',
     },
     form: {
-        background: 'linear-gradient(to top, #ffffff 50%, #ffffff 50%)',
-        position: 'absolute',
+        boxShadow: '2px 4px 8px RGBA(0, 0, 0, 0.16) ',
         display: 'block',
-        top: '25%',
-        left: '30%',
-        marginTop: '20px',
-        marginBottom: '24px',
         borderRadius: '5px',
-        border: '2px solid #000000',
+        padding: '20px',
+        background: 'white',
     },
 });
 
@@ -47,11 +44,11 @@ export default function LoginForm() {
 
     return (
 
-        <Container component="main" maxWidth="xs" className={classes.form}>
+        <Container component="main" className={classes.body}>
 
             <Box
+                className={classes.form}
                 sx={{
-                    marginTop: 8,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
