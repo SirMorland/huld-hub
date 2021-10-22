@@ -39,7 +39,6 @@ const roleSetup = async (roles) => {
     let customeRole = await findRoleByName(role.name);
     if (!customeRole) customeRole = await createRole(role);
     await enableApplicationPermissions(customeRole.id);
-    console.log("ROLE DONE", role.name);
   }));
   // no role provided will enable application permissions to every role, uncomment this to apply
   // await enableApplicationPermissions();
@@ -79,7 +78,6 @@ const defaultRoleSetup = async (default_role) => {
     key: "advanced",
     value: { ...settings, default_role: role.type },
   });
-  console.log("DEFAULTROLE done");
 };
 
 module.exports = {
