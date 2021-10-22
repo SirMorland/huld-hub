@@ -28,12 +28,17 @@ const createCompetenceIfnExist = async (name, category) => {
   });
 };
 
-
-const competenceSetupAsync = async (categories) => {
+/**
+ * setting up competences accordingly to the passed in category model.
+ * The categories and competences will be added if the don't exist
+ * @param {Array.<{category:string, items:Array<string>}>} categories 
+ * @returns a promise that resolves when all the operations are done
+ */
+const competenceSetup = async (categories) => {
   return await Promise.all(categories.map(async ({category,items})=>{
     const { id } = await createCategoryIfnExist(category);
     await Promise.all(items.map(name => createCompetenceIfnExist(name,id)));
   }));
 };
 
-module.exports = competenceSetupAsync;
+module.exports = competenceSetup;
