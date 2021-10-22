@@ -33,13 +33,13 @@ const createUser = (username, email, password, role) => {
  * @param {Array<{username: string; email: string; password: string; role: {name: string; description:string; type:string;}}>} users - Array of users to be created
  */
 const userSetup = async (users) => {
-  await users.map(async (user) => {
+  await Promise.all(users.map(async (user) => {
     let customUser = await findUserByUsername(user.username);
     if (!customUser) {
       const userRole = await findRoleByName(user.role.name);
       await createUser(user.username, user.email, user.password, userRole.id);
     }
-  });
+  }));
 };
 
 module.exports = {

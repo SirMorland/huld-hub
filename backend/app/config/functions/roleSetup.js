@@ -35,11 +35,11 @@ const enableApplicationPermissions = async (role) => {
  * @param {Array<{name: string; description: string, type: string}>} roles roles array to be created
  */
 const roleSetup = async (roles) => {
-  await roles.map(async (role) => {
+  await Promise.all(roles.map(async (role) => {
     let customeRole = await findRoleByName(role.name);
     if (!customeRole) customeRole = await createRole(role);
     await enableApplicationPermissions(customeRole.id);
-  });
+  }));
   // no role provided will enable application permissions to every role, uncomment this to apply
   // await enableApplicationPermissions();
 };
