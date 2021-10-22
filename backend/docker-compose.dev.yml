@@ -13,6 +13,7 @@ services:
       SMTP_PORT: 587
       EMAIL_FROM: huldhub@outlook.com
       EMAIL_REPLY_TO: huldhub@outlook.com
+      EMAIL_DOMAIN: tuni.fi
 
     ports:
       # local port gets exposed to the container port 
@@ -24,8 +25,9 @@ services:
 
   mysql:
     volumes:
-      - ./mysql-dump:/docker-entrypoint-initdb.d
       - ./data:/var/lib/mysql
+      - ./mysql-dump:/docker-entrypoint-initdb.d
+
 
 volumes:
   modules:

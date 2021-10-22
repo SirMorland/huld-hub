@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * An asynchronous bootstrap function that runs before
@@ -10,19 +10,24 @@
  * See more details here: https://strapi.io/documentation/developer-docs/latest/setup-deployment-guides/configurations.html#bootstrap
  */
 
+
 const { permissionSetup } = require('./permissionSetup');
-const { roleSetup } = require('./roleSetup');
-const { userSetup } = require('./userSetup');
- 
+const { roleSetup, defaultRoleSetup } = require("./roleSetup");
+const { userSetup } = require("./userSetup");
+const { DEFAULT_ROLES, DEFAULT_USERS, DEFAULT_COMPETENCES } = require("./default_data");
+const competenceSetup = require('./competenceSetup');
+
 module.exports = async () => {
   await permissionSetup();
-  await roleSetup();
+  await roleSetup([DEFAULT_ROLES.ADMIN, DEFAULT_ROLES.EMPLOYEE]);
+  await defaultRoleSetup(DEFAULT_ROLES.EMPLOYEE);
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === "development") {
     try {
-      await userSetup();
+      await userSetup(DEFAULT_USERS);
+      await competenceSetup(DEFAULT_COMPETENCES);
     } catch (e) {
-      console.error('Something went wrong in bootstraping', e);
+      console.error("Something went wrong in bootstraping", e);
     }
   }
 };
