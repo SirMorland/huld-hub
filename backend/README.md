@@ -5,10 +5,15 @@ Strapi with docker
 - [Table Of Content](#table-of-content)
 - [Getting started](#getting-started)
 - [docker-compose.override.yml](#docker-composeoverrideyml)
+- [Create a db dump for frontend devs](#create-a-db-dump-for-frontend-devs)
+- [Import mysql dump to Strapi backend](#import-mysql-dump-to-strapi-backend)
   - [PORT](#port)
   - [ADMIN_JWT_SECRET](#admin_jwt_secret)
 - [Documentation](#documentation)
   - [Authentication endpoint](#authentication-endpoint)
+- [Bootstrap scripts](#bootstrap-scripts)
+  - [Role setup](#role-setup)
+  - [User setup](#user-setup)
 - [FAQ](#faq)
   - [Cannot find module](#cannot-find-module)
 
@@ -16,6 +21,7 @@ Strapi with docker
 
 - Copy `docker-compose.dev.yml` to `docker-compose.override.yml` to setup development environment. The `docker-compose.override.yml` file can be further edited if needed.
 - Run `docker-compose up` to start Strapi server in development mode. Docker will need to build the container if it's the first time you run it.
+- Database dumps in `/mysql-dump` will be imported when you run `docker-compose up` the first time
 - By default, the strapi endpoint will be at http://localhost:1337
 - Run `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d` to start Strapi server in production mode. Docker will need to build the container if it's the first time you run it.
 
@@ -23,6 +29,38 @@ Strapi with docker
 
 - Reference https://docs.docker.com/compose/extends/
 - TLDR: used to override the docker-compose with your own config (e.g. environment variables or ports) for your local
+
+## Create a db dump for frontend devs
+
+- Make sure `mysql` container is up and running
+- Run `docker ps` to get the container ID of the mysql `container`:
+```bash
+docker ps                        
+CONTAINER ID   IMAGE           COMMAND                  CREATED         STATUS         PORTS                                       NAMES
+2b8f793f9429   strapi/strapi   "docker-entrypoint.s…"   2 minutes ago   Up 2 minutes   0.0.0.0:1337->1337/tcp, :::1337->1337/tcp   huldhub_backend
+ca35896ea2b7   mysql           "docker-entrypoint.s…"   2 minutes ago   Up 2 minutes   3306/tcp, 33060/tcp                         huldhub_database
+```
+- Run `docker exec ${MSQYL_CONTAINER_ID} /usr/bin/mysqldump -u root --password=strapi strapi > ./mysql-dump/backup.sql`. For example:
+```bash
+docker exec ca35896ea2b7 /usr/bin/mysqldump -u root --password=strapi strapi > ./mysql-dump/backup.sql
+```
+- the mysql dump will be applied to the mysql container after a fresh build of docker-compose.
+
+## Import mysql dump to Strapi backend
+
+- Make sure `mysql` container is up and running
+- Run `docker ps` to get the container ID of the `mysql` container:
+``` 
+docker ps                                                                             
+CONTAINER ID   IMAGE           COMMAND                  CREATED         STATUS          PORTS                                       NAMES
+d01eba674238   strapi/strapi   "docker-entrypoint.s…"   2 minutes ago   Up 59 seconds   0.0.0.0:1337->1337/tcp, :::1337->1337/tcp   huldhub_backend
+ddbb6159e544   mysql           "docker-entrypoint.s…"   2 minutes ago   Up 59 seconds   3306/tcp, 33060/tcp                         huldhub_database
+```
+- Run `docker exec -i ${MYSQL_CONTAINER_ID}  mysql -uroot -pstrapi strapi < ./mysql-dump/backup.sql`. For example:
+```bash
+docker exec ddbb6159e544 /usr/bin/mysqldump -u root --password=strapi strapi > ./mysql-dump/backup.sql
+```
+- the mysql dump will be applied to the mysql container immediately.
 
 ### PORT
 
@@ -84,7 +122,7 @@ ADMIN_JWT_SECRET: V3z2kvxM8mRca9tDE7zLo9TpoiFaVSXbHq2vRYsWBCyuDt0n/CX+ek/SIXlORX
 
 ## Documentation
 
-Once the docker container is up, you can access the documentation from http://localhost:443/documentation
+Once the docker container is up, you can access the documentation from http://localhost:1337/documentation
 
 ### Authentication endpoint
 
@@ -118,6 +156,26 @@ Taken from the official [documentation](https://strapi.io/documentation/develope
 >
 > ```
 
+## Bootstrap scripts
+In development, these will be added on server-startup:
+### Role setup
+Read more in [./app/config/functions/roleSetup.js](./app/config/functions/roleSetup.js)
+- add `admin` and `employee` roles if they don't exist
+- The roles would have access to all application permissions
+
+The module aslo exports these utilities: 
+- `findRoleByName` (returns a role based on the role's name), 
+- `createRole` (creates a role), 
+- `ADMIN`, `EMPLOYEE` (constants for saving admin and employee roles' names)
+### User setup
+Read more in [./app/config/functions/userSetup.js](./app/config/functions/userSetup.js)
+- add an `admin` role user with `huld-admin` as username and password if it doesn't exists
+- add an `employee` role user with `huld-employee` as username and password if it doesn't exists
+- 
+The module aslo exports these utilities: 
+- `findUserByUsername` (returns a user based on the user's username),
+- createUser (creates a user),
+- `EMPLOYEE_CREDENTIAL` and `ADMIN_CREDENTIAL` (constants for saving the admin and employee users credentials - both username and password)
 ## FAQ
 
 ### Cannot find module
@@ -133,7 +191,7 @@ To resolve this we have to remove the container's volume and build it again. Her
 
 ```
   docker-compose down;
-  docker-compose down --volume;
+  docker-compose down --volumes;
   docker-compose build strapi;
   docker-compose up
 ```
