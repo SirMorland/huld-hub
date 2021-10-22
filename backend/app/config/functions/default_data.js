@@ -27,7 +27,28 @@ const DEFAULT_USERS = [
   },
 ];
 
+
+const DEFAULT_COMPETENCES = [
+  {
+    category: 'coding languages',
+    items: ['Javascript', 'Swift', 'Lua', 'Kotlin', 'CSS'],
+  },
+  {
+    category: 'keywords',
+    items: ['iOS', 'Android', 'macOS', 'Linux', 'REST'],
+  },
+  {
+    category: 'skills',
+    items: ['Mobile development', 'Team leading', 'UI/UX', 'Embedded systems']
+  },
+  {
+    category: 'positions',
+    items: ['Consulting', 'Tech lead Mobile Applications', 'Mobile Development']
+  }
+];
+
 module.exports = {
   DEFAULT_ROLES,
   DEFAULT_USERS,
+  DEFAULT_COMPETENCES,
 };
