@@ -1,23 +1,3 @@
-
-const MODEL = [
-  {
-    category: 'coding languages',
-    items: ['Javascript', 'Swift', 'Lua', 'Kotlin', 'CSS'],
-  },
-  {
-    category: 'keywords',
-    items: ['iOS', 'Android', 'macOS', 'Linux', 'REST'],
-  },
-  {
-    category: 'skills',
-    items: ['Mobile development', 'Team leading', 'UI/UX', 'Embedded systems']
-  },
-  {
-    category: 'positions',
-    items: ['Consulting', 'Tech lead Mobile Applications', 'Mobile Development']
-  }
-];
-
 /**
  * createCategory if it doesnt exist
  * otherwise return the category
@@ -49,20 +29,11 @@ const createCompetenceIfnExist = async (name, category) => {
 };
 
 
-/**
- * create categories and competences accordingly to MODEL if they do not exist
- * @returns a promise that gets resolved when the setup is done
- */
-const competenceSetup = () => new Promise(resolve => {
-  setup(0, resolve);
-});
-
-const setup = async (index, callback) => {
-  const {category, items} = MODEL[index];
-  const { id } = await createCategoryIfnExist(category);
-  await Promise.all(items.map(name => createCompetenceIfnExist(name,id)));
-  if (index + 1 === MODEL.length) callback();
-  else setup(index + 1, callback);
+const competenceSetupAsync = async (categories) => {
+  return await Promise.all(categories.map(async ({category,items})=>{
+    const { id } = await createCategoryIfnExist(category);
+    await Promise.all(items.map(name => createCompetenceIfnExist(name,id)));
+  }));
 };
 
-module.exports = competenceSetup;
+module.exports = competenceSetupAsync;
