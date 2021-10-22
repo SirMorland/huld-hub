@@ -39,6 +39,7 @@ const userSetup = async (users) => {
       const userRole = await findRoleByName(user.role.name);
       await createUser(user.username, user.email, user.password, userRole.id);
     }
+    console.log("USERDONE", user.username);
   });
 };
 
