@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
+import { fetchPost } from '../utils';
 
 export default function RegistrationForm() {
 
@@ -14,13 +15,25 @@ export default function RegistrationForm() {
     const [password, setPassword] = useState('');
     const [reEnterPassword, setReEnterPassword] = useState('');
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        // TODO: if password !== reEnterPassword, show error
+        if (email && password && password === reEnterPassword) {
+            const url = `${process.env.BACKEND_HOST}/auth/local/register`;
+            const body =  {
+                email, password, username:email
+            };
+            try {
+                const response = await fetchPost(url, body);
+                console.log('json response', await response.json());
+                // TODO: alert the user that registration completes and please check their email
+            } catch (e) {
+                if (e.response) {
+                    console.log("error handling here", e.response);
+                    // TODO: show errro here
+                } 
+            }
+        }
     };
 
     return (
@@ -68,7 +81,6 @@ export default function RegistrationForm() {
                             />
                         </Grid>
                     </Grid>
-
                     <br />
                     <Button
                         type="submit"
