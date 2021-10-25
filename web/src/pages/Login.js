@@ -7,24 +7,22 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import DialogWrapper from '../components/DialogWrapper';
 import PageWrapper from '../components/PageWrapper';
+import { useLocation } from 'react-router';
 
 export default function LoginForm() {
-
+    const location = useLocation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
     const handleSubmit = (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        // TODO: do a post request to backend login api
+        // backendlogin api can be found in http://localhost:1337/documentation/v1.0.0#/UsersPermissions%20-%20User/post_auth_local
     };
 
     return (
         <PageWrapper>
             <DialogWrapper>
+                {location.search.includes('confirmed=true') && <Typography component="p" variant="body" > Your email has been confirmed. You can log in now <br/><br/></Typography>}
                 <Typography component="h1" variant="h5" color="primary">
                     Log in to Hub
                 </Typography>
