@@ -36,7 +36,7 @@ export default function RegistrationForm() {
                 setError(errorMessage);
             } else {
                 // TODO: alert the user that registration completes and please check their email
-                history.push('/success');
+                history.push('/success', { email });
             }
         }
     };
