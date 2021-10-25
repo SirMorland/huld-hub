@@ -9,6 +9,7 @@ export default function RegistrationForm() {
     const {state} = useLocation();
     const email = state.email;
     const sendConfirmationEmail = () => {
+        console.log(email);
         // TODO send a post request to /auth/send-email-confirmation
         // the body is an object with {email: email}
     };

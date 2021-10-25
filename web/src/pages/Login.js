@@ -8,15 +8,19 @@ import Typography from '@material-ui/core/Typography';
 import DialogWrapper from '../components/DialogWrapper';
 import PageWrapper from '../components/PageWrapper';
 import { useLocation } from 'react-router';
+import { fetchPost } from '../utils';
 
 export default function LoginForm() {
     const location = useLocation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // TODO: do a post request to backend login api
-        // backendlogin api can be found in http://localhost:1337/documentation/v1.0.0#/UsersPermissions%20-%20User/post_auth_local
+        const url = `${process.env.REACT_APP_BACKEND_HOST}/auth/local`;
+        const body = { identifier: email, password };
+        const response = await fetchPost(url, body);
+        const json = await response.json();
+        // TODO: handle the errors
     };
 
     return (
