@@ -8,30 +8,35 @@ import Typography from '@material-ui/core/Typography';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
 import { fetchPost } from '../utils';
+import { useHistory } from "react-router-dom";
 
 export default function RegistrationForm() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [reEnterPassword, setReEnterPassword] = useState('');
+    const [error, setError] = useState('');
+    const history = useHistory();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // TODO: if password !== reEnterPassword, show error
-        if (email && password && password === reEnterPassword) {
-            const url = `${process.env.BACKEND_HOST}/auth/local/register`;
+        setError('');
+        if (password !== reEnterPassword){
+            setError("Passwords do not match! Please check");
+        } else if (email && password && password === reEnterPassword) {
+            const url = `${process.env.REACT_APP_BACKEND_HOST}/auth/local/register`;
             const body =  {
                 email, password, username:email
             };
-            try {
-                const response = await fetchPost(url, body);
-                console.log('json response', await response.json());
+            const response = await fetchPost(url, body);
+            const json = await response.json();
+            console.log('json response', json);
+            if (json.statusCode && json.statusCode !== 200) {
+                const errorMessage = json.data[0].messages[0].message;
+                setError(errorMessage);
+            } else {
                 // TODO: alert the user that registration completes and please check their email
-            } catch (e) {
-                if (e.response) {
-                    console.log("error handling here", e.response);
-                    // TODO: show errro here
-                } 
+                history.push('/success');
             }
         }
     };
@@ -82,6 +87,10 @@ export default function RegistrationForm() {
                         </Grid>
                     </Grid>
                     <br />
+                    {error && 
+                    <Typography component="p" variant="body2" color="secondary">
+                        {error}
+                    </Typography>}
                     <Button
                         type="submit"
                         fullWidth
