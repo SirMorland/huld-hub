@@ -1,26 +1,37 @@
 import React, { useState } from 'react';
+import { useHistory, useLocation } from 'react-router';
+import Cookies from 'js-cookie';
+
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
+
 import DialogWrapper from '../components/DialogWrapper';
 import PageWrapper from '../components/PageWrapper';
-import { useLocation } from 'react-router';
 import { fetchPost } from '../utils';
 
 export default function LoginForm() {
     const location = useLocation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const history = useHistory();
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
         const url = `${process.env.REACT_APP_BACKEND_HOST}/auth/local`;
         const body = { identifier: email, password };
         const response = await fetchPost(url, body);
-        const json = await response.json();
-        // TODO: handle the errors
+        
+        // TODO: add error checking
+        if(response.status === 200) {   
+            const json = await response.json();
+            Cookies.set("hub-jwt", json.jwt);
+            
+            history.push(`/${json.user.id}`);
+        }
     };
 
     return (

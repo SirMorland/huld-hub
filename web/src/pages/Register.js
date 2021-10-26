@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
+import Cookies from 'js-cookie';
+
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
+
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
 import { fetchPost } from '../utils';
-import { useHistory } from "react-router-dom";
 
 export default function RegistrationForm() {
 
@@ -30,13 +33,13 @@ export default function RegistrationForm() {
             };
             const response = await fetchPost(url, body);
             const json = await response.json();
-            console.log('json response', json);
+            
             if (json.statusCode && json.statusCode !== 200) {
                 const errorMessage = json.data[0].messages[0].message;
                 setError(errorMessage);
             } else {
-                // TODO: alert the user that registration completes and please check their email
-                history.push('/success', { email });
+                Cookies.set("hub-jwt", json.jwt);
+                history.push("/almost-done");
             }
         }
     };
