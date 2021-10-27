@@ -535,7 +535,7 @@
           "id": {
             "type": "string"
           },
-          "name": {
+          "first_name": {
             "type": "string"
           },
           "title": {
@@ -578,10 +578,10 @@
                   "type": "string",
                   "format": "date-time"
                 },
-                "title": {
+                "company": {
                   "type": "string"
                 },
-                "sub_title": {
+                "position": {
                   "type": "string"
                 },
                 "description": {
@@ -609,10 +609,13 @@
                   "type": "string",
                   "format": "date-time"
                 },
-                "title": {
+                "school": {
                   "type": "string"
                 },
                 "description": {
+                  "type": "string"
+                },
+                "degree": {
                   "type": "string"
                 }
               }
@@ -693,12 +696,15 @@
                 }
               }
             }
+          },
+          "last_name": {
+            "type": "string"
           }
         }
       },
       "NewUser-profiles": {
         "properties": {
-          "name": {
+          "first_name": {
             "type": "string"
           },
           "title": {
@@ -741,10 +747,10 @@
                   "type": "string",
                   "format": "date-time"
                 },
-                "title": {
+                "company": {
                   "type": "string"
                 },
-                "sub_title": {
+                "position": {
                   "type": "string"
                 },
                 "description": {
@@ -772,10 +778,13 @@
                   "type": "string",
                   "format": "date-time"
                 },
-                "title": {
+                "school": {
                   "type": "string"
                 },
                 "description": {
+                  "type": "string"
+                },
+                "degree": {
                   "type": "string"
                 }
               }
@@ -789,6 +798,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "last_name": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

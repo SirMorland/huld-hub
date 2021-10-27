@@ -13,10 +13,10 @@
     "to_date": {
       "type": "datetime"
     },
-    "title": {
+    "company": {
       "type": "string"
     },
-    "sub_title": {
+    "position": {
       "type": "string"
     },
     "description": {

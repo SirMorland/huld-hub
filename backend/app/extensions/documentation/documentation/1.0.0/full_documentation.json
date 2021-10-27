@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "10/21/2021 8:37:53 AM"
+    "x-generation-date": "10/27/2021 12:18:19 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -3936,7 +3936,7 @@
           "id": {
             "type": "string"
           },
-          "name": {
+          "first_name": {
             "type": "string"
           },
           "title": {
@@ -3979,10 +3979,10 @@
                   "type": "string",
                   "format": "date-time"
                 },
-                "title": {
+                "company": {
                   "type": "string"
                 },
-                "sub_title": {
+                "position": {
                   "type": "string"
                 },
                 "description": {
@@ -4010,10 +4010,13 @@
                   "type": "string",
                   "format": "date-time"
                 },
-                "title": {
+                "school": {
                   "type": "string"
                 },
                 "description": {
+                  "type": "string"
+                },
+                "degree": {
                   "type": "string"
                 }
               }
@@ -4094,12 +4097,15 @@
                 }
               }
             }
+          },
+          "last_name": {
+            "type": "string"
           }
         }
       },
       "NewUser-profiles": {
         "properties": {
-          "name": {
+          "first_name": {
             "type": "string"
           },
           "title": {
@@ -4142,10 +4148,10 @@
                   "type": "string",
                   "format": "date-time"
                 },
-                "title": {
+                "company": {
                   "type": "string"
                 },
-                "sub_title": {
+                "position": {
                   "type": "string"
                 },
                 "description": {
@@ -4173,10 +4179,13 @@
                   "type": "string",
                   "format": "date-time"
                 },
-                "title": {
+                "school": {
                   "type": "string"
                 },
                 "description": {
+                  "type": "string"
+                },
+                "degree": {
                   "type": "string"
                 }
               }
@@ -4190,6 +4199,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "last_name": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
