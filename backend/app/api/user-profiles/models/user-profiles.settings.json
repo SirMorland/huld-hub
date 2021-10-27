@@ -15,9 +15,6 @@
     "first_name": {
       "type": "string"
     },
-    "last_name": {
-      "type": "string"
-    },
     "title": {
       "type": "string"
     },
@@ -56,6 +53,12 @@
     },
     "competences": {
       "collection": "competences"
+    },
+    "last_name": {
+      "type": "string"
+    },
+    "bio": {
+      "type": "richtext"
     }
   }
 }

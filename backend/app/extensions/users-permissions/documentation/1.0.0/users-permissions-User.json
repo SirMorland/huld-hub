@@ -1301,6 +1301,9 @@
               "last_name": {
                 "type": "string"
               },
+              "bio": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
