@@ -60,14 +60,12 @@ const DEFAULT_PROFILES = [
     slack: "@huld-admin",
     work_experiences: [
       {
-        id: 1,
         from_date: "2021-10-20T12:36:26.000Z",
         title: "Admin at Admin",
         sub_title: "Administrator",
         description: "I have been doing admin at admin for few years. It's a nice job with interesting tasks. I love the work that I am doing here."
       },
       {
-        id: 2,
         from_date: "2020-10-20T12:36:26.000Z",
         to_date: "2021-10-20T12:36:26.000Z",
         title: "Cleaner at Admin",
@@ -77,13 +75,11 @@ const DEFAULT_PROFILES = [
     ],
     education_histories: [
       {
-        id: 1,
         from_date: "2021-10-20T12:36:26.000Z",
         title: "Master Degree at Tampere University",
         description: "Doing a master degree focused in administration work"
       },
       {
-        id: 2,
         from_date: "2011-10-20T12:36:26.000Z",
         to_date: "2015-10-20T12:36:26.000Z",
         title: "Bachelor Degree at Tampere University",
@@ -104,14 +100,12 @@ const DEFAULT_PROFILES = [
     slack: "@huld-employee",
     work_experiences: [
       {
-        id: 3,
         from_date: "2021-10-20T12:36:26.000Z",
         title: "Employee at Admin",
         sub_title: "Employee",
         description: "I have been doing employee work at admin for few years. It's a nice job with interesting tasks. I love the work that I am doing here."
       },
       {
-        id: 4,
         from_date: "2020-10-20T12:36:26.000Z",
         to_date: "2021-10-20T12:36:26.000Z",
         title: "Cleaner at Admin",
@@ -121,13 +115,11 @@ const DEFAULT_PROFILES = [
     ],
     education_histories: [
       {
-        id: 3,
         from_date: "2021-10-20T12:36:26.000Z",
         title: "Master Degree at Tampere University",
         description: "Doing a master degree focused in employee work"
       },
       {
-        id: 4,
         from_date: "2011-10-20T12:36:26.000Z",
         to_date: "2015-10-20T12:36:26.000Z",
         title: "Bachelor Degree at Tampere University",
