@@ -66,7 +66,8 @@ describe("user-profiles api", () => {
     });
 
     const profileData = {
-      name: "test 1",
+      first_name: "first name 1",
+      last_name: "last name 1",
       title: "test 1",
       email: "test1@gmail.com",
       phone: "+358414736293",
@@ -74,26 +75,29 @@ describe("user-profiles api", () => {
       linkedin: "",
       github: "",
       slack: "",
+      skills: "skills description 1",
+      competences: [competence.id],
+      bio: "bio 1",
       work_experiences: [
         {
           id: 1,
-          from_date: "2021-10-20T12:36:25.893Z",
-          to_date: "2021-10-20T12:36:25.893Z",
-          title: "test 1",
-          sub_title: "test 1",
-          description: "test 1",
+          company: "company 1",
+          position: "position 1",
+          start_date: "2021-10-20T12:36:25.893Z",
+          end_date: "2021-10-20T12:36:25.893Z",
+          description: "description 1",
         },
       ],
       education_histories: [
         {
           id: 1,
+          school: "school 1",
+          degree: "degree 1",
           from_date: "2021-10-20T12:36:25.893Z",
           to_date: "2021-10-20T12:36:25.893Z",
-          title: "test 1",
-          description: "test 1",
+          description: "description 1",
         },
       ],
-      competences: [competence.id],
       user: user.id,
       created_by: 1,
       updated_by: 1,
@@ -106,7 +110,10 @@ describe("user-profiles api", () => {
       .then((data) => {
         
         expect(data.body).toHaveLength(1);
-        expect(data.body[0].name).toBe(profileData.name);
+        expect(data.body[0].first_name).toBe(profileData.first_name);
+        expect(data.body[0].last_name).toBe(profileData.last_name);
+        expect(data.body[0].title).toBe(profileData.title);
+        expect(data.body[0].email).toBe(profileData.email);
         expect(data.body[0].work_experiences[0].id).toBe(
           profileData.work_experiences[0].id
         );
@@ -155,44 +162,50 @@ describe("user-profiles api", () => {
     });
 
     const profileData = {
-      name: "test 2",
+      first_name: "first name 2",
+      last_name: "last name 2",
       title: "test 2",
-      email: "test1@gmail.com",
+      email: "test2@gmail.com",
       phone: "+358414736293",
-      address: "Tampere",
+      address: "Helsinki",
       linkedin: "",
       github: "",
       slack: "",
+      skills: "skills description 2",
+      competences: [competence.id],
+      bio: "bio 2",
       work_experiences: [
         {
           id: 2,
-          from_date: "2021-10-20T12:36:25.893Z",
-          to_date: "2021-10-20T12:36:25.893Z",
-          title: "test 2",
-          sub_title: "test 2",
-          description: "test 2",
+          company: "company 2",
+          position: "position 2",
+          start_date: "2021-10-20T12:36:25.893Z",
+          end_date: "2021-10-20T12:36:25.893Z",
+          description: "description 2",
         },
       ],
       education_histories: [
         {
           id: 2,
+          school: "school 2",
+          degree: "degree 2",
           from_date: "2021-10-20T12:36:25.893Z",
           to_date: "2021-10-20T12:36:25.893Z",
-          title: "test 2",
-          description: "test 2",
+          description: "description 2",
         },
       ],
-      competences: [competence.id],
       user: user.id,
       created_by: 1,
       updated_by: 1,
-    };
+    }
+
     const profiles = await strapi.services["user-profiles"].create(profileData);
     await request(strapi.server)
       .get("/user-profiles/" + profiles.id)
       .expect(200)
       .then((data) => {
-        expect(data.body.name).toBe(profileData.name);
+        expect(data.body.first_name).toBe(profileData.first_name);
+        expect(data.body.last_name).toBe(profileData.last_name);
         expect(data.body.title).toBe(profileData.title);
         expect(data.body.email).toBe(profileData.email);
         expect(data.body.work_experiences[0].id).toBe(
@@ -244,7 +257,8 @@ describe("user-profiles api", () => {
     });
 
     const profileData = {
-      name: "test 3",
+      first_name: "first name 3",
+      last_name: "last name 3",
       title: "test 3",
       email: "test1@gmail.com",
       phone: "+358414736293",
@@ -252,36 +266,41 @@ describe("user-profiles api", () => {
       linkedin: "",
       github: "",
       slack: "",
+      skills: "skills description 3",
+      competences: [competence.id],
+      bio: "bio 3",
       work_experiences: [
         {
           id: 3,
-          from_date: "2021-10-20T12:36:25.893Z",
-          to_date: "2021-10-20T12:36:25.893Z",
-          title: "test 3",
-          sub_title: "test 3",
-          description: "test 3",
+          company: "company 3",
+          position: "position 3",
+          start_date: "2021-10-20T12:36:25.893Z",
+          end_date: "2021-10-20T12:36:25.893Z",
+          description: "description 3",
         },
       ],
       education_histories: [
         {
           id: 3,
+          school: "school 1",
+          degree: "degree 1",
           from_date: "2021-10-20T12:36:25.893Z",
           to_date: "2021-10-20T12:36:25.893Z",
-          title: "test 3",
-          description: "test 3",
+          description: "description 3",
         },
       ],
-      competences: [competence.id],
       user: user.id,
       created_by: 1,
       updated_by: 1,
     };
+
     await request(strapi.server)
       .post("/user-profiles")
       .send(profileData)
       .expect(200)
       .then((data) => {
-        expect(data.body.name).toBe(profileData.name);
+        expect(data.body.first_name).toBe(profileData.first_name);
+        expect(data.body.last_name).toBe(profileData.last_name);
         expect(data.body.title).toBe(profileData.title);
         expect(data.body.email).toBe(profileData.email);
         expect(data.body.work_experiences[0].id).toBe(
