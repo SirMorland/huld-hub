@@ -197,7 +197,7 @@ describe("user-profiles api", () => {
       user: user.id,
       created_by: 1,
       updated_by: 1,
-    }
+    };
 
     const profiles = await strapi.services["user-profiles"].create(profileData);
     await request(strapi.server)
