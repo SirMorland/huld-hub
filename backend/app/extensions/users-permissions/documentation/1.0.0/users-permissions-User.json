@@ -1304,6 +1304,9 @@
               "bio": {
                 "type": "string"
               },
+              "skills": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },

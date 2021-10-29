@@ -702,6 +702,9 @@
           },
           "bio": {
             "type": "string"
+          },
+          "skills": {
+            "type": "string"
           }
         }
       },
@@ -806,6 +809,9 @@
             "type": "string"
           },
           "bio": {
+            "type": "string"
+          },
+          "skills": {
             "type": "string"
           },
           "created_by": {
