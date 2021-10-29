@@ -7,17 +7,17 @@
   },
   "options": {},
   "attributes": {
-    "from_date": {
-      "type": "datetime"
-    },
-    "to_date": {
-      "type": "datetime"
-    },
     "company": {
       "type": "string"
     },
     "position": {
       "type": "string"
+    },
+    "start_date": {
+      "type": "datetime"
+    },
+    "end_date": {
+      "type": "datetime"
     },
     "description": {
       "type": "richtext"

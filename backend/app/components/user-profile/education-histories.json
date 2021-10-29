@@ -7,20 +7,20 @@
   },
   "options": {},
   "attributes": {
-    "from_date": {
-      "type": "datetime"
-    },
-    "to_date": {
-      "type": "datetime"
-    },
     "school": {
       "type": "string"
     },
-    "description": {
-      "type": "richtext"
-    },
     "degree": {
       "type": "string"
+    },
+    "start_date": {
+      "type": "datetime"
+    },
+    "end_date": {
+      "type": "datetime"
+    },
+    "description": {
+      "type": "richtext"
     }
   }
 }
