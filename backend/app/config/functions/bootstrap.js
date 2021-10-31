@@ -12,15 +12,18 @@
 
 
 const { permissionSetup } = require('./permissionSetup');
-const { roleSetup, defaultRoleSetup } = require("./roleSetup");
+const { roleSetup } = require("./roleSetup");
 const { userSetup } = require("./userSetup");
-const { DEFAULT_ROLES, DEFAULT_USERS, DEFAULT_COMPETENCES } = require("./default_data");
+const { defaultSettings } = require("./defaultSettings");
+const { DEFAULT_ROLES, DEFAULT_USERS, DEFAULT_COMPETENCES, DEFAULT_SETTINGS } = require("./defaultData");
 const competenceSetup = require('./competenceSetup');
 
+
 module.exports = async () => {
+
   await permissionSetup();
   await roleSetup([DEFAULT_ROLES.ADMIN, DEFAULT_ROLES.EMPLOYEE]);
-  await defaultRoleSetup(DEFAULT_ROLES.EMPLOYEE);
+  await defaultSettings(DEFAULT_SETTINGS);
 
   if (process.env.NODE_ENV === "development") {
     try {
