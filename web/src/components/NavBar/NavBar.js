@@ -39,7 +39,7 @@ const StyledUl = styled('ul')({
   justifyContent: "center"
 });
 
-const StyledLi = styled('StyledLi')({
+const StyledLi = styled('li')({
   padding: "16px",
 })
 
