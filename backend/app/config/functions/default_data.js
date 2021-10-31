@@ -50,79 +50,92 @@ const DEFAULT_COMPETENCES = [
 const DEFAULT_PROFILES = [
   {
     username: 'huld-admin',
-    name: "Admin Admin",
+    last_name: "Meikäläinen",
+    first_name: "Matti",
     title: "Administrator",
     email: "huld-admin@huld.io",
     phone: "+358 353 588 888",
-    address: "Admininkatu 503, 00503, Helsinki",
+    address: "Tampere",
     linkedin: "https://linkedin.com/huld-admin",
     github: "https://github.com/huld-admin",
     slack: "@huld-admin",
     work_experiences: [
       {
-        from_date: "2021-10-20T12:36:26.000Z",
-        title: "Admin at Admin",
-        sub_title: "Administrator",
-        description: "I have been doing admin at admin for few years. It's a nice job with interesting tasks. I love the work that I am doing here."
+        start_date: "2021-10-20T12:36:26.000Z",
+        position: "Admin",
+        description: "I have been doing admin at admin for few years. It's a nice job with interesting tasks. I love the work that I am doing here.",
+        company: "Mix n go Oy",
       },
       {
-        from_date: "2020-10-20T12:36:26.000Z",
-        to_date: "2021-10-20T12:36:26.000Z",
+        start_date: "2020-10-20T12:36:26.000Z",
+        end_date: "2021-10-20T12:36:26.000Z",
         title: "Cleaner at Admin",
-        sub_title: "Cleaner",
+        position: "cleaner",
+        company: "Jaffe and Hilbert",
         description: "Cleaning up admin desks, tables. Making coffee every morning"
       }
     ],
     education_histories: [
       {
-        from_date: "2021-10-20T12:36:26.000Z",
-        title: "Master Degree at Tampere University",
+        school: "Tampere University",
+        start_date: "2021-10-20T12:36:26.000Z",
+        degree: "Master Degree",
         description: "Doing a master degree focused in administration work"
       },
       {
-        from_date: "2011-10-20T12:36:26.000Z",
-        to_date: "2015-10-20T12:36:26.000Z",
-        title: "Bachelor Degree at Tampere University",
+        start_date: "2011-10-20T12:36:26.000Z",
+        end_date: "2015-10-20T12:36:26.000Z",
+        degree: "Bachelor Degree",
+        school: "Tampere University",
         description: "Did a bachelor degree focused in cleaning up and making coffee"
       }
     ],
     competences: ['Javascript', 'Swift', 'Lua', 'Kotlin', 'CSS'],
+    skills: "Technology\nInternet\nNetflix\nTesting",
+    bio: "I am an admin. I like to administrate.",
   },
   {
     username: "huld-employee",
-    name: "Employee Employee",
+    last_name: "John",
+    first_name: "Doe",
     title: "Employee",
     email: "huld-employee@huld.io",
     phone: "+358 853 333 333",
-    address: "Työntekijänkatu 404, 00404, Helsinki",
+    address: "Helsinki",
     linkedin: "https://linkedin.com/huld-employee",
     github: "https://github.com/huld-employee",
     slack: "@huld-employee",
+    skills: "Technology\nInternet\nNetflix",
+    bio: "I am an employee. I like to work.",
     work_experiences: [
       {
-        from_date: "2021-10-20T12:36:26.000Z",
+        start_date: "2021-10-20T12:36:26.000Z",
         title: "Employee at Admin",
-        sub_title: "Employee",
-        description: "I have been doing employee work at admin for few years. It's a nice job with interesting tasks. I love the work that I am doing here."
+        description: "I have been doing employee work at admin for few years. It's a nice job with interesting tasks. I love the work that I am doing here.",
+        position: "Employee",
+        company: "Admin Oy",
       },
       {
-        from_date: "2020-10-20T12:36:26.000Z",
-        to_date: "2021-10-20T12:36:26.000Z",
+        start_date: "2020-10-20T12:36:26.000Z",
+        end_date: "2021-10-20T12:36:26.000Z",
         title: "Cleaner at Admin",
         sub_title: "Cleaner",
-        description: "Cleaning up admin desks, tables. Making coffee every morning"
+        description: "Cleaning up admin desks, tables. Making coffee every morning",
+        company: "Mix n Go Oy",
       }
     ],
     education_histories: [
       {
-        from_date: "2021-10-20T12:36:26.000Z",
-        title: "Master Degree at Tampere University",
+        start_date: "2021-10-20T12:36:26.000Z",
+        school: "Tampere University",
+        degree: "Master degree",
         description: "Doing a master degree focused in employee work"
       },
       {
-        from_date: "2011-10-20T12:36:26.000Z",
-        to_date: "2015-10-20T12:36:26.000Z",
-        title: "Bachelor Degree at Tampere University",
+        start_date: "2011-10-20T12:36:26.000Z",
+        end_date: "2015-10-20T12:36:26.000Z",
+        degree: "Bachelor Degree",
+        school: "Tampere University",
         description: "Did a bachelor degree focused in cleaning up and making coffee"
       }
     ],
