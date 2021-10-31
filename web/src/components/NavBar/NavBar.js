@@ -1,27 +1,67 @@
 import React from 'react';
 import './style.css';
 import PropTypes from 'prop-types';
+import { styled } from '@mui/system';
+
+const StyledHeader = styled('header')(({ theme }) => ({
+  backgroundColor: theme.colors.primaryText,
+  minHeight: "56px",
+}));
+
+const headerTypography = (theme) => ({
+  fontFamily: theme.fonts.header,
+  color: 'white',
+  fontSize: "24px",
+  border: 0,
+  margin: 0,
+  padding: 0,
+  backgroundColor: "transparent",
+  cursor: "pointer",
+  textDecoration: "none",
+})
+
+const StyledButton = styled('button')(({ theme }) => headerTypography(theme));
+const StyledLink = styled('a')(({ theme }) => headerTypography(theme));
+
+const HeaderLink = styled(StyledLink)({
+  fontWeight: "bold",
+  padding: "16px",
+  display: "inline-block",
+})
+
+const StyledUl = styled('ul')({
+  listStyleType: "none",
+  margin: "0",
+  padding: "0",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center"
+});
+
+const StyledLi = styled('StyledLi')({
+  padding: "16px",
+})
 
 const NavBar = ({ loggedIn = false, role, onLogOutClick }) => {
   return (
-    <header>
+    <StyledHeader>
       <div className="container">
-        <a className="home" href="/">
+        <HeaderLink href="/">
           Hub
-        </a>
-        {loggedIn && <ul>
-          {role === 'admin' &&<li><a href="/admin">Admin</a></li> }
-          <li><button type="button" onClick={onLogOutClick}>Log out</button></li>
-          <li><a href="/search">Search</a></li>
-        </ul>}
+        </HeaderLink>
+        {loggedIn && <StyledUl>
+          {role === 'admin' && <StyledLi><StyledLink href="/admin">Admin</StyledLink></StyledLi>}
+          <StyledLi><StyledButton type="button" onClick={onLogOutClick}>Log out</StyledButton></StyledLi>
+          <StyledLi><StyledLink href="/search">🔎</StyledLink></StyledLi>
+        </StyledUl>}
       </div>
-    </header>
+    </StyledHeader>
   );
 }
 
 NavBar.propTypes = {
   loggedIn: PropTypes.bool,
-  role: PropTypes.oneOf(['admin','employee']),
+  role: PropTypes.oneOf(['admin', 'employee']),
   onLogOutClick: PropTypes.func,
 }
 

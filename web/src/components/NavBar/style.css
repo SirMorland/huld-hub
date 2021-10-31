@@ -1,53 +1,6 @@
-header {
-  background-color: #00173a;
-  color: white;
-  min-height: 56px;
-}
-
-header .container {
-  margin: auto;
-  color: white;
-}
-
 @media (min-width: 768px) {
   header .container {
     justify-content: space-between;
     display: flex;
   }
-}
-
-header .container .home {
-  font-size: 24px;
-  font-weight: bold;
-  padding: 16px;
-  display: inline-block;
-}
-
-header .container ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-header .container ul li {
-  padding: 16px;
-}
-
-header .container ul li button {
-  border: 0;
-  margin: 0;
-  padding: 0;
-  color: white;
-  font-size: 24px;
-  background-color: transparent;
-  cursor: pointer;
-}
-
-header a {
-  color: white;
-  text-decoration: none;
-  font-size: 24px;
 }
