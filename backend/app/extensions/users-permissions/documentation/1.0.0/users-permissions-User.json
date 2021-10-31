@@ -1259,7 +1259,7 @@
               "id": {
                 "type": "string"
               },
-              "name": {
+              "first_name": {
                 "type": "string"
               },
               "title": {
@@ -1297,6 +1297,15 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "last_name": {
+                "type": "string"
+              },
+              "bio": {
+                "type": "string"
+              },
+              "skills": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"

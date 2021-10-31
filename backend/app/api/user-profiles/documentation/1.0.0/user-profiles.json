@@ -535,7 +535,10 @@
           "id": {
             "type": "string"
           },
-          "name": {
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
             "type": "string"
           },
           "title": {
@@ -559,6 +562,40 @@
           "slack": {
             "type": "string"
           },
+          "skills": {
+            "type": "string"
+          },
+          "competences": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "bio": {
+            "type": "string"
+          },
           "work_experiences": {
             "type": "array",
             "items": {
@@ -570,19 +607,19 @@
                 "id": {
                   "type": "string"
                 },
-                "from_date": {
+                "company": {
+                  "type": "string"
+                },
+                "position": {
+                  "type": "string"
+                },
+                "start_date": {
                   "type": "string",
                   "format": "date-time"
                 },
-                "to_date": {
+                "end_date": {
                   "type": "string",
                   "format": "date-time"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "sub_title": {
-                  "type": "string"
                 },
                 "description": {
                   "type": "string"
@@ -601,16 +638,19 @@
                 "id": {
                   "type": "string"
                 },
-                "from_date": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "to_date": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "title": {
+                "school": {
                   "type": "string"
+                },
+                "degree": {
+                  "type": "string"
+                },
+                "start_date": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "end_date": {
+                  "type": "string",
+                  "format": "date-time"
                 },
                 "description": {
                   "type": "string"
@@ -665,40 +705,15 @@
                 "type": "string"
               }
             }
-          },
-          "competences": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "category": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
           }
         }
       },
       "NewUser-profiles": {
         "properties": {
-          "name": {
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
             "type": "string"
           },
           "title": {
@@ -722,6 +737,18 @@
           "slack": {
             "type": "string"
           },
+          "skills": {
+            "type": "string"
+          },
+          "competences": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "bio": {
+            "type": "string"
+          },
           "work_experiences": {
             "type": "array",
             "items": {
@@ -733,19 +760,19 @@
                 "id": {
                   "type": "string"
                 },
-                "from_date": {
+                "company": {
+                  "type": "string"
+                },
+                "position": {
+                  "type": "string"
+                },
+                "start_date": {
                   "type": "string",
                   "format": "date-time"
                 },
-                "to_date": {
+                "end_date": {
                   "type": "string",
                   "format": "date-time"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "sub_title": {
-                  "type": "string"
                 },
                 "description": {
                   "type": "string"
@@ -764,16 +791,19 @@
                 "id": {
                   "type": "string"
                 },
-                "from_date": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "to_date": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "title": {
+                "school": {
                   "type": "string"
+                },
+                "degree": {
+                  "type": "string"
+                },
+                "start_date": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "end_date": {
+                  "type": "string",
+                  "format": "date-time"
                 },
                 "description": {
                   "type": "string"
@@ -783,12 +813,6 @@
           },
           "user": {
             "type": "string"
-          },
-          "competences": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           },
           "created_by": {
             "type": "string"

@@ -12,7 +12,10 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "name": {
+    "first_name": {
+      "type": "string"
+    },
+    "last_name": {
       "type": "string"
     },
     "title": {
@@ -35,6 +38,15 @@
     },
     "slack": {
       "type": "string"
+    }, 
+    "skills": {
+      "type": "richtext"
+    },
+    "competences": {
+      "collection": "competences"
+    },
+    "bio": {
+      "type": "richtext"
     },
     "work_experiences": {
       "type": "component",
@@ -50,9 +62,6 @@
       "plugin": "users-permissions",
       "model": "user",
       "via": "profile"
-    },
-    "competences": {
-      "collection": "competences"
     }
   }
 }
