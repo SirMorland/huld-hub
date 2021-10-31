@@ -1,12 +1,18 @@
 import React from 'react';
-import './style.css';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/system';
 
-const StyledHeader = styled('header')(({ theme }) => ({
-  backgroundColor: theme.colors.primaryText,
-  minHeight: "56px",
-}));
+const StyledHeader = styled('header')(({ theme }) => `
+  background-color: ${theme.colors.primaryText};
+  min-height: 56px;
+`);
+
+const StyledContainer = styled('div')`
+  @media (min-width: 768px) {
+      justify-content: space-between;
+      display: flex;
+  }
+`;
 
 const headerTypography = (theme) => ({
   fontFamily: theme.fonts.header,
@@ -46,7 +52,7 @@ const StyledLi = styled('li')({
 const NavBar = ({ loggedIn = false, role, onLogOutClick }) => {
   return (
     <StyledHeader>
-      <div className="container">
+      <StyledContainer>
         <HeaderLink href="/">
           Hub
         </HeaderLink>
@@ -55,7 +61,7 @@ const NavBar = ({ loggedIn = false, role, onLogOutClick }) => {
           <StyledLi><StyledButton type="button" onClick={onLogOutClick}>Log out</StyledButton></StyledLi>
           <StyledLi><StyledLink href="/search">🔎</StyledLink></StyledLi>
         </StyledUl>}
-      </div>
+      </StyledContainer>
     </StyledHeader>
   );
 }
