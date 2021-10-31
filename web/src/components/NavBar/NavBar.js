@@ -26,7 +26,8 @@ const StyledLink = styled('a')(({ theme }) => headerTypography(theme));
 const HeaderLink = styled(StyledLink)({
   fontWeight: "bold",
   padding: "16px",
-  display: "inline-block",
+  display: "block",
+  textAlign: "center",
 })
 
 const StyledUl = styled('ul')({
