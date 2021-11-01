@@ -36,16 +36,22 @@ const createProfileIfnExists = async (data, user , competences) => {
   };
   return await strapi.query("user-profiles").create(params);
 };
+
+const setUpProfileRecursive = async (profiles, index, callback) => {
+  const profile = profiles[index];
+  const user = await findUserByUsername(profile.username);
+  const competences = await findCompetencesByNames(profile.competences);
+  await createProfileIfnExists(profile, user, competences);
+  if (index + 1 === profiles.length) callback();
+  else setUpProfileRecursive(profiles, index + 1, callback);
+};
+
 /**
  * create profiles if they don't exist based on the profiles models fed to the function
  * @param {Array} profiles array of profiles models to create
  */
-const profileSetup = async (profiles) => {
-  await Promise.all(profiles.map(async (profile) => {
-    const user = await findUserByUsername(profile.username);
-    const competences = await findCompetencesByNames(profile.competences);
-    await createProfileIfnExists(profile, user, competences);
-  }));
-};
+const profileSetup = (profiles) => new Promise((resolve)=>{
+  setUpProfileRecursive(profiles, 0, resolve);
+});
 
 module.exports = profileSetup;
