@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/system';
+import SearchIcon from '@mui/icons-material/Search';
 
 const StyledHeader = styled('header')(({ theme }) => `
   background-color: ${theme.colors.primaryText};
@@ -59,7 +60,11 @@ const NavBar = ({ loggedIn = false, role, onLogOutClick }) => {
         {loggedIn && <StyledUl>
           {role === 'admin' && <StyledLi><StyledLink href="/admin">Admin</StyledLink></StyledLi>}
           <StyledLi><StyledButton type="button" onClick={onLogOutClick}>Log out</StyledButton></StyledLi>
-          <StyledLi><StyledLink href="/search">🔎</StyledLink></StyledLi>
+          <StyledLi>
+            <StyledLink href="/search">
+              <SearchIcon />
+            </StyledLink>
+          </StyledLi>
         </StyledUl>}
       </StyledContainer>
     </StyledHeader>
