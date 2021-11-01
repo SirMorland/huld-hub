@@ -24,6 +24,7 @@ const headerTypography = (theme) => ({
   padding: 0,
   backgroundColor: "transparent",
   cursor: "pointer",
+  lineHeight: 1,
   textDecoration: "none",
 })
 
@@ -62,7 +63,7 @@ const NavBar = ({ loggedIn = false, role, onLogOutClick }) => {
           <StyledLi><StyledButton type="button" onClick={onLogOutClick}>Log out</StyledButton></StyledLi>
           <StyledLi>
             <StyledLink href="/search">
-              <SearchIcon />
+              <SearchIcon fontSize="small"/>
             </StyledLink>
           </StyledLi>
         </StyledUl>}
