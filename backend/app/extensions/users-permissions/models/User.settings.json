@@ -58,6 +58,10 @@
       "via": "users",
       "plugin": "users-permissions",
       "configurable": false
+    },
+    "profile": {
+      "via": "user",
+      "model": "user-profiles"
     }
   }
 }

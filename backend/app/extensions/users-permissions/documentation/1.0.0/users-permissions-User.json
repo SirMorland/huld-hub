@@ -1250,6 +1250,70 @@
                 "type": "string"
               }
             }
+          },
+          "profile": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "first_name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "linkedin": {
+                "type": "string"
+              },
+              "github": {
+                "type": "string"
+              },
+              "slack": {
+                "type": "string"
+              },
+              "work_experiences": {
+                "type": "component"
+              },
+              "education_histories": {
+                "type": "component"
+              },
+              "user": {
+                "type": "string"
+              },
+              "competences": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "last_name": {
+                "type": "string"
+              },
+              "bio": {
+                "type": "string"
+              },
+              "skills": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           }
         }
       },
@@ -1290,6 +1354,9 @@
             "default": false
           },
           "role": {
+            "type": "string"
+          },
+          "profile": {
             "type": "string"
           },
           "created_by": {
