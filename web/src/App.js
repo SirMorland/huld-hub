@@ -6,15 +6,17 @@ import AlmostDone from "./pages/AlmostDone";
 import EmailConfirmed from './pages/EmailConfirmed';
 import Profile from "./pages/Profile";
 
+import { login, register } from './api';
+
 function App() {
   return (
     <Router>
       <Switch>
         <Route exact path="/">
-          <LoginForm />
+          <LoginForm onSubmit={login} />
         </Route>
         <Route exact path="/register">
-          <RegistrationForm />
+          <RegistrationForm onSubmit={register} />
         </Route>
         <Route exact path="/almost-done" component={AlmostDone} />
         <Route exact path="/email-confirmed" component={EmailConfirmed} />
