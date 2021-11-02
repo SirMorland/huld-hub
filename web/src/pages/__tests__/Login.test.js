@@ -1,16 +1,17 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { act } from 'react-dom/test-utils';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import LoginForm from "../Login";
 
 import { EmailOrPasswordInvalidError } from '../../api';
+import { renderWithTheme } from '../../utils';
 
 describe('Login Form', () => {
     it('should render login form', () => {
-        const { getByText } = render(
+        const { getByText } = renderWithTheme(
             <MemoryRouter>
                 <LoginForm />
             </MemoryRouter>
@@ -20,7 +21,7 @@ describe('Login Form', () => {
     });
 
     it('render 2 input components', () => {
-        const { getByLabelText } = render(
+        const { getByLabelText } = renderWithTheme(
             <MemoryRouter>
                 <LoginForm />
             </MemoryRouter>
@@ -31,7 +32,7 @@ describe('Login Form', () => {
     });
 
     it('renders a submit button', () => {
-        const { getByText } = render(
+        const { getByText } = renderWithTheme(
             <MemoryRouter>
                 <LoginForm />
             </MemoryRouter>
@@ -43,7 +44,7 @@ describe('Login Form', () => {
     it('should submit when form inputs contain text', async () => {
         const onSubmit = jest.fn();
 
-        const { getByText, queryByText } = render(
+        const { getByText, queryByText } = renderWithTheme(
             <MemoryRouter>
                 <LoginForm onSubmit={onSubmit} />
             </MemoryRouter>
@@ -74,7 +75,7 @@ describe('Login Form', () => {
             throw new EmailOrPasswordInvalidError();
         });
 
-        const { getByText, queryByText } = render(
+        const { getByText, queryByText } = renderWithTheme(
             <MemoryRouter>
                 <LoginForm onSubmit={onSubmit} />
             </MemoryRouter>

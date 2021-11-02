@@ -1,32 +1,33 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import RegistrationForm from "../Register";
 
 import { EmailTakenError, EmailWrongDomainError } from '../../api';
+import { renderWithTheme } from '../../utils';
 
 describe('Registration Form', () => {
     it('should render registration form', () => {
-        const { getByText } = render(<RegistrationForm />);
+        const { getByText } = renderWithTheme(<RegistrationForm />);
         expect(getByText('Register to Hub')).toBeInTheDocument();
     });
 
     it('render input components', () => {
-        const { getByLabelText } = render(<RegistrationForm />);
+        const { getByLabelText } = renderWithTheme(<RegistrationForm />);
         expect(getByLabelText(/Email/i)).toBeInTheDocument();
     });
 
     it('renders a submit button', () => {
-        const { getByText } = render(<RegistrationForm />);
+        const { getByText } = renderWithTheme(<RegistrationForm />);
         expect(getByText("Register")).toBeInTheDocument();
     });
 
     it('should submit when form inputs contain text', async () => {
         const onSubmit = jest.fn();
 
-        const { getByText, queryByText } = render(
+        const { getByText, queryByText } = renderWithTheme(
             <RegistrationForm onSubmit={onSubmit} />
         );
 
@@ -56,7 +57,7 @@ describe('Registration Form', () => {
     it('should check that passwords match', async () => {
         const onSubmit = jest.fn();
 
-        const { getByText, queryByText } = render(
+        const { getByText, queryByText } = renderWithTheme(
             <RegistrationForm onSubmit={onSubmit} />
         );
 
@@ -90,7 +91,7 @@ describe('Registration Form', () => {
             throw new EmailWrongDomainError(errorMessage);
         });
 
-        const { getByText, queryByText } = render(
+        const { getByText, queryByText } = renderWithTheme(
             <RegistrationForm onSubmit={onSubmit} />
         );
 
@@ -123,7 +124,7 @@ describe('Registration Form', () => {
             throw new EmailTakenError();
         });
 
-        const { getByText, queryByText } = render(
+        const { getByText, queryByText } = renderWithTheme(
             <RegistrationForm onSubmit={onSubmit} />
         );
 

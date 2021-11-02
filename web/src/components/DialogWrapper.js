@@ -1,28 +1,21 @@
-import Box from '@material-ui/core/Box';
-import { makeStyles } from '@material-ui/styles';
+import { styled } from '@mui/system';
 
-const useStyles = makeStyles({
-  dialog: {
-    boxShadow: '2px 4px 8px RGBA(0, 0, 0, 0.16) ',
-    borderRadius: '5px',
-    padding: '24px 16px',
-    background: 'white',
-    width: '512px',
-    maxWidth: 'calc(100vw - 32px)'
-  },
-});
+const StyledBox = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 2px 4px 8px RGBA(0, 0, 0, 0.16);
+  padding: 24px 16px;
+  background: white;
+  width: 512px;
+  max-width: calc(100vw - 32px);
+`;
 
 export default function DialogWrapper({ children }) {
-  const { dialog } = useStyles();
-  return <Box
-    className={dialog}
-    sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    }}
-  >
-    {children}
-  </Box>
+  return (
+    <StyledBox>
+      {children}
+    </StyledBox>
+  )
 }
 
