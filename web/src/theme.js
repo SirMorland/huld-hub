@@ -23,9 +23,6 @@ const theme = createTheme({
       default: "#FFFFFF",
     },
   },
-  colors: {
-    primaryText: "#00173A",
-  },
   typography: {
     fontFamily: "Fira Sans",
     fontSize: 16,
@@ -38,6 +35,12 @@ const theme = createTheme({
       fontWeight: "bold",
     }
   },
+  fonts: {
+    header: "'Fira Sans', 'Helvetica Neue', Helvetica, sans-serif",
+  },
+  colors: {
+    primaryText: "#00173A"
+  }
 });
 
 export default theme;
