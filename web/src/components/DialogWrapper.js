@@ -7,7 +7,8 @@ const useStyles = makeStyles({
     borderRadius: '5px',
     padding: '24px 16px',
     background: 'white',
-    maxWidth: '512px',
+    width: '512px',
+    maxWidth: 'calc(100vw - 32px)'
   },
 });
 

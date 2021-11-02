@@ -9,28 +9,32 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 
-import DialogWrapper from '../components/DialogWrapper';
 import PageWrapper from '../components/PageWrapper';
-import { fetchPost } from '../utils';
+import DialogWrapper from '../components/DialogWrapper';
+import { EmailOrPasswordInvalidError } from '../api';
 
-export default function LoginForm() {
+export default function LoginForm({ onSubmit }) {
     const location = useLocation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const history = useHistory();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const url = `${process.env.REACT_APP_BACKEND_HOST}/auth/local`;
-        const body = { identifier: email, password };
-        const response = await fetchPost(url, body);
 
-        // TODO: add error checking
-        if (response.status === 200) {
-            const json = await response.json();
+        try {
+            const json = await onSubmit(email, password);
             Cookies.set("hub-jwt", json.jwt);
-
             history.push(`/${json.user.id}`);
+        } catch(error) {
+            switch(true) {
+                case error instanceof EmailOrPasswordInvalidError:
+                    setError("Incorrect email or password!");
+                    break;
+                default:
+                    break;
+            }
         }
     };
 
@@ -41,7 +45,7 @@ export default function LoginForm() {
                 <Typography component="h1" variant="h5" color="primary">
                     Log in to Hub
                 </Typography>
-                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }} data-testid='form'>
+                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3, width: '100%' }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
@@ -66,14 +70,18 @@ export default function LoginForm() {
                                 value={password}
                                 onChange={e => setPassword(e.target.value)}
                             />
-                        </Grid>
-                    </Grid>
-                    <br />
-                    <Grid container justifyContent="center">
-                        <Grid item>
-                            <Link href="#" variant="body2" color="secondary">
-                                Forgot Password?
-                            </Link>
+                            <br />
+                            <br />
+                            <Grid container justifyContent="center">
+                                <Grid item>
+                                    <Typography component="p" variant="body2" color="error">
+                                        {error && `${error} `}
+                                        <Link href="#" variant="body2" color="secondary">
+                                            Forgot Password?
+                                        </Link>
+                                    </Typography>
+                                </Grid>
+                            </Grid>
                         </Grid>
                     </Grid>
                     <br />
