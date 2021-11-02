@@ -61,7 +61,7 @@ describe("EducationHitoryList component", () => {
     const educationListEl = document.querySelectorAll(".education-item"); 
     expect(educationListEl).toBeTruthy();
     expect(educationListEl.length).toBe(testData.length);
-    Array.from(educationListEl).map((educationHitoryItem, index) => {
+    Array.from(educationListEl).forEach((educationHitoryItem, index) => {
       const schoolEl = educationHitoryItem.querySelector(".school");
       expect(schoolEl).toBeTruthy();
       expect(schoolEl.textContent).toBe(testData[index].school);
