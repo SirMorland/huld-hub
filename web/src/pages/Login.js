@@ -2,12 +2,8 @@ import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import Cookies from 'js-cookie';
 
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+import { Button, Grid, Link, TextField, Typography } from '@mui/material';
+import { Box } from '@mui/system';
 
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';

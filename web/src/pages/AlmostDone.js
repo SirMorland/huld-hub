@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import Cookies from 'js-cookie';
 
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import { Button, Typography } from '@mui/material';
 
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
