@@ -1,6 +1,6 @@
 const { fetchPost } = require("./utils");
 
-const login = async (email, password) => {
+export const login = async (email, password) => {
   const url = `${process.env.REACT_APP_BACKEND_HOST}/auth/local`;
   const body = { identifier: email, password };
 
@@ -15,7 +15,7 @@ const login = async (email, password) => {
   }
 }
 
-const register = async(email, password) => {
+export const register = async(email, password) => {
   const url = `${process.env.REACT_APP_BACKEND_HOST}/auth/local/register`;
   const body =  {
     email, password, username:email
@@ -41,11 +41,6 @@ const register = async(email, password) => {
   }
 }
 
-class EmailOrPasswordInvalidError extends Error {};
-class EmailWrongDomainError extends Error {};
-class EmailTakenError extends Error {};
-
-module.exports = {
-  login, register,
-  EmailOrPasswordInvalidError, EmailWrongDomainError, EmailTakenError
-};
+export class EmailOrPasswordInvalidError extends Error {};
+export class EmailWrongDomainError extends Error {};
+export class EmailTakenError extends Error {};
