@@ -14,7 +14,7 @@ const Title = styled("h2")(({ theme }) => ({
 function WorkHistoryList(props) {
   return (
     <div className="work-history">
-      <Title>Education History</Title>
+      <Title>Work History</Title>
       <div className="work-list">
         {props.workList &&
           props.workList.map((workItem) => (
