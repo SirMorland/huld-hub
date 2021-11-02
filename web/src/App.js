@@ -67,8 +67,8 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <NavBar loggedIn role="admin" />
-      <EducationHistoryList educationList={educationList} />
       <WorkHistoryList workList={workList} />
+      <EducationHistoryList educationList={educationList} />
     </ThemeProvider>
   );
 }
