@@ -13,15 +13,15 @@ const Title = styled("h2")(({ theme }) => ({
 
 function EducationHistoryList(props) {
   return (
-    <Box>
+    <div className="education-history">
       <Title>Education History</Title>
-      <div>
+      <div className="education-list">
         {props.educationList &&
           props.educationList.map((educationItem) => (
             <EducationHistoryItem educationItem={educationItem} key={educationItem.id} />
           ))}
       </div>
-    </Box>
+    </div>
   );
 }
 

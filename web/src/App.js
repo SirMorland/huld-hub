@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import EducationHistoryList from "./components/EducationHistoryList/EducationHistoryList";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
-import './App.css';
+import EducationHistoryList from "./components/EducationHistoryList/EducationHistoryList";
 import NavBar from './components/NavBar/NavBar';
 
 function App() {

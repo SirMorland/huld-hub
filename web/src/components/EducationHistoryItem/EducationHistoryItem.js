@@ -22,16 +22,16 @@ const Description = styled("div")(({ theme }) => ({
 
 function EducationHistoryItem(props) {
   return (
-    <div>
+    <div id={`education-${props.educationItem.id}`} className="education-item">
       <Header>
         <div>
-          {props.educationItem.school} - {props.educationItem.degree}
+          <span className="school">{props.educationItem.school}</span> - <span className="degree">{props.educationItem.degree}</span>
         </div>
         <div>
-          {props.educationItem.startDate} - {props.educationItem.endDate}
+          <span className="start-date">{props.educationItem.startDate}</span> - <span className="end-date">{props.educationItem.endDate}</span>
         </div>
       </Header>
-      <Description>{props.educationItem.description}</Description>
+      <Description className="description">{props.educationItem.description}</Description>
     </div>
   );
 }
