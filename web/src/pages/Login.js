@@ -18,18 +18,18 @@ export default function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const history = useHistory();
-    
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const url = `${process.env.REACT_APP_BACKEND_HOST}/auth/local`;
         const body = { identifier: email, password };
         const response = await fetchPost(url, body);
-        
+
         // TODO: add error checking
-        if(response.status === 200) {   
+        if (response.status === 200) {
             const json = await response.json();
             Cookies.set("hub-jwt", json.jwt);
-            
+
             history.push(`/${json.user.id}`);
         }
     };
@@ -37,11 +37,11 @@ export default function LoginForm() {
     return (
         <PageWrapper>
             <DialogWrapper>
-                {location.search.includes('confirmed=true') && <Typography component="p" variant="body" > Your email has been confirmed. You can log in now <br/><br/></Typography>}
+                {location.search.includes('confirmed=true') && <Typography component="p" variant="body" > Your email has been confirmed. You can log in now <br /><br /></Typography>}
                 <Typography component="h1" variant="h5" color="primary">
                     Log in to Hub
                 </Typography>
-                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }} data-testid='form'>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
