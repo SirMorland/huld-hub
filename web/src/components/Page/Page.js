@@ -24,7 +24,9 @@ const StyledMain = styled('main')`
 const Page = ({ header, children }) => {
 	return (
 		<React.Fragment>
-      <NavBar loggedIn role="admin" />
+      <NavBar loggedIn role="admin">
+        {header}
+      </NavBar>
 			<StyledMain>
 				{children}
 			</StyledMain>

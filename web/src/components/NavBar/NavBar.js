@@ -3,15 +3,35 @@ import PropTypes from 'prop-types';
 import { styled } from '@mui/system';
 import SearchIcon from '@mui/icons-material/Search';
 
-const StyledHeader = styled('header')(({ theme }) => `
+const StyledHeaderContainer = styled('div')(({ theme }) => `
+  position: sticky;
+  top: 0;
   background-color: ${theme.colors.primaryText};
   min-height: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `);
 
-const StyledContainer = styled('div')`
+const StyledHeader = styled('header')`
+  width: 100%;
+  max-width: 1920px;
+  padding: 0 16px;
+  box-sizing: border-box;
+
   @media (min-width: 768px) {
       justify-content: space-between;
       display: flex;
+  }
+`;
+const StyledContent = styled('div')`
+  width: 100%;
+  max-width: 1920px;
+  padding: 16px;
+  box-sizing: border-box;
+
+  @media (min-width: 768px) {
+    padding: 32px;
   }
 `;
 
@@ -51,10 +71,10 @@ const StyledLi = styled('li')({
   padding: "16px",
 })
 
-const NavBar = ({ loggedIn = false, role, onLogOutClick }) => {
+const NavBar = ({ children, loggedIn = false, role, onLogOutClick }) => {
   return (
-    <StyledHeader>
-      <StyledContainer>
+    <StyledHeaderContainer>
+      <StyledHeader>
         <HeaderLink href="/">
           Hub
         </HeaderLink>
@@ -67,12 +87,18 @@ const NavBar = ({ loggedIn = false, role, onLogOutClick }) => {
             </StyledLink>
           </StyledLi>
         </StyledUl>}
-      </StyledContainer>
-    </StyledHeader>
+      </StyledHeader>
+      {children &&
+        <StyledContent>
+          {children}
+        </StyledContent>
+      }
+    </StyledHeaderContainer>
   );
 }
 
 NavBar.propTypes = {
+  children: PropTypes.element,
   loggedIn: PropTypes.bool,
   role: PropTypes.oneOf(['admin', 'employee']),
   onLogOutClick: PropTypes.func,
