@@ -20,3 +20,7 @@ export const renderWithTheme = (children) => {
   </ThemeProvider>
   );
 };
+
+export const capitalizeFirstLetters = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}

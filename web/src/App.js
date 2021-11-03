@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
-import Skills from "./components/Skills/Skills";
-import CompetenceCategory from "./components/CompetenceCategory/CompetenceCategory";
+import ItemList from "./components/ItemList";
 import NavBar from "./components/NavBar/NavBar";
 
 function App() {
-  const skills = 'Front-end development';
   const categoryList = [
     {
       "id": 1,
@@ -43,7 +41,7 @@ function App() {
       "id": 10,
       "name": "Mobile development",
       "description": null,
-      "category": 3,
+      "category": 4,
       "created_at": "2021-10-29",
       "updated_at": "2021-10-29"
     },
@@ -51,7 +49,7 @@ function App() {
       "id": 11,
       "name": "Team leading",
       "description": null,
-      "category": 3,
+      "category": 4,
       "created_at": "2021-10-29",
       "updated_at": "2021-10-29"
     },
@@ -59,7 +57,7 @@ function App() {
       "id": 12,
       "name": "UI/UX",
       "description": null,
-      "category": 3,
+      "category": 1,
       "created_at": "2021-10-29",
       "updated_at": "2021-10-29"
     },
@@ -67,7 +65,7 @@ function App() {
       "id": 13,
       "name": "Embedded systems",
       "description": null,
-      "category": 3,
+      "category": 1,
       "created_at": "2021-10-29",
       "updated_at": "2021-10-29"
     },
@@ -75,30 +73,29 @@ function App() {
       "id": 16,
       "name": "Mobile Development",
       "description": null,
-      "category": 2,
+      "category": 1,
       "created_at": "2021-10-29",
       "updated_at": "2021-10-29"
     }
   ];
 
   const groupCompetencesByCategories = (competences, categoryList) => {
-    const categories = {};
-    competences.forEach((competence) => {
-      const category = categoryList.find(category => category.id === competence.category);
-      if (!categories[category.name]) {
-        categories[category.name] = [];
-      }
-      categories[category.name].push(competence);
+    return categoryList.map(category => {
+      return {
+        id: category.id,
+        title: category.name,
+        competences: competences.filter(competence => competence.category === category.id)
+      };
     });
-    return categories;
   };
   const categories = groupCompetencesByCategories(competenceList, categoryList);
-  
+
   return (
     <ThemeProvider theme={theme}>
       <NavBar loggedIn role="admin" />
-      <Skills skills={skills} />
-      <CompetenceCategory competenceCategoryList={categories}/>
+      {categories.map((category) => (
+        category.competences.length !== 0 && <ItemList key={category.id} title={category.title} items={category.competences} />
+      ))}
     </ThemeProvider>
   );
 }
