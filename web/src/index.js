@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import './index.css';
+
+import { CssBaseline } from '@mui/material';
+
 import App from './App';
 import Ping from './Ping';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
+    <CssBaseline />
     <BrowserRouter>
       <Switch>
         <Route exact path="/ping" component={Ping} />
