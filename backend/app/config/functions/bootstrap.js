@@ -14,8 +14,9 @@
 const { permissionSetup } = require('./permissionSetup');
 const { roleSetup, defaultRoleSetup } = require("./roleSetup");
 const { userSetup } = require("./userSetup");
-const { DEFAULT_ROLES, DEFAULT_USERS, DEFAULT_COMPETENCES } = require("./default_data");
+const { DEFAULT_ROLES, DEFAULT_USERS, DEFAULT_COMPETENCES, DEFAULT_PROFILES } = require("./default_data");
 const competenceSetup = require('./competenceSetup');
+const profileSetup = require('./profileSetup');
 
 module.exports = async () => {
   await permissionSetup();
@@ -26,6 +27,7 @@ module.exports = async () => {
     try {
       await userSetup(DEFAULT_USERS);
       await competenceSetup(DEFAULT_COMPETENCES);
+      await profileSetup(DEFAULT_PROFILES);
     } catch (e) {
       console.error("Something went wrong in bootstraping", e);
     }

@@ -1,0 +1,67 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_profiles",
+  "info": {
+    "name": "User Profiles",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "first_name": {
+      "type": "string"
+    },
+    "last_name": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "linkedin": {
+      "type": "string"
+    },
+    "github": {
+      "type": "string"
+    },
+    "slack": {
+      "type": "string"
+    }, 
+    "skills": {
+      "type": "richtext"
+    },
+    "competences": {
+      "collection": "competences"
+    },
+    "bio": {
+      "type": "richtext"
+    },
+    "work_experiences": {
+      "type": "component",
+      "repeatable": true,
+      "component": "user-profile.work-experiences"
+    },
+    "education_histories": {
+      "type": "component",
+      "repeatable": true,
+      "component": "user-profile.education-histories"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "profile"
+    }
+  }
+}

@@ -167,7 +167,10 @@ module.exports = {
           return ctx.badRequest(null, err);
         }
 
-        return ctx.send({ user: sanitizedUser });
+        const jwt = strapi.plugins["users-permissions"].services.jwt.issue(
+          _.pick(user, ["id", "email"])
+        );
+        return ctx.send({ jwt, user: sanitizedUser });
       }
 
       const jwt = strapi.plugins["users-permissions"].services.jwt.issue(
