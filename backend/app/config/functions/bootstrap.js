@@ -27,6 +27,7 @@ module.exports = async () => {
   await defaultSettings(DEFAULT_SETTINGS);
 
   if (process.env.NODE_ENV === "development") {
+
     try {
       await userSetup(DEFAULT_USERS);
       await competenceSetup(DEFAULT_COMPETENCES);
@@ -34,5 +35,6 @@ module.exports = async () => {
     } catch (e) {
       console.error("Something went wrong in bootstraping", e);
     }
+    
   }
 };
