@@ -12,6 +12,14 @@ services:
       DATABASE_PASSWORD: strapi
       DATABASE_SSL: 'false'
       EMAIL_DOMAIN: huld.io
+      AWS_KEY: "dev-key"
+      AWS_SECRET: "dev-secret"
+      AWS_REGION: "eu-west-1"
+      AWS_S3_HOSTNAME: "localstack"
+      AWS_S3_BUCKET_ENDPOINT: "false"
+      AWS_SSL_ENABLED: "false"
+      AWS_S3_FORCE_PATH_STYLE: "true"
+      AWS_S3_BUCKET: "huld-hub-local-bucket"
       
     ports:
       - '1337:1337'
@@ -31,3 +39,15 @@ services:
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       retries: 10
+
+  localstack:
+    image: localstack/localstack
+    environment:
+      - SERVICES=s3
+      - HOSTNAME_EXTERNAL=localhost
+      - DATA_DIR=/tmp/localstack/data
+    ports:
+      - '4566:4566'
+    volumes:
+      - ./.localstack/entrypoints:/docker-entrypoint-initaws.d
+      - ./.localstack/data:/tmp/localstack/data
