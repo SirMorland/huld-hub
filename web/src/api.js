@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 const { fetchPost } = require("./utils");
 
 export const login = async (email, password) => {
@@ -13,6 +15,10 @@ export const login = async (email, password) => {
     default:
       throw new Error(response.status);
   }
+}
+
+export const logout = async () => {
+  Cookies.remove("hub-jwt");
 }
 
 export const register = async(email, password) => {
@@ -41,6 +47,28 @@ export const register = async(email, password) => {
   }
 }
 
+export const getProfile = async (id, jwt) => {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/user-profiles/${id}`;
+  const response = await fetch(url, {
+    headers: {
+      "Authorization": `Bearer ${jwt}`
+    }
+  });
+
+  switch(response.status) {
+    case 200:
+      return await response.json();
+    case 401:
+      throw new UnauthorizedError();
+    case 404:
+      throw new NotFoundError();
+    default:
+      throw new Error(response.status);
+  }
+}
+
 export class EmailOrPasswordInvalidError extends Error {};
 export class EmailWrongDomainError extends Error {};
 export class EmailTakenError extends Error {};
+export class UnauthorizedError extends Error {};
+export class NotFoundError extends Error {};

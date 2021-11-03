@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from 'prop-types';
+
 import { styled } from '@mui/system';
 
 import NavBar from '../NavBar/NavBar';
+import { logout } from "../../api";
 
 const StyledMain = styled('main')`
   display: grid;
@@ -21,10 +23,11 @@ const StyledMain = styled('main')`
   }
 `;
 
+
 const Page = ({ header, children }) => {
 	return (
 		<React.Fragment>
-      <NavBar loggedIn role="admin">
+      <NavBar onLogOutClick={logout}>
         {header}
       </NavBar>
 			<StyledMain>
@@ -36,7 +39,10 @@ const Page = ({ header, children }) => {
 
 Page.propTypes = {
   header: PropTypes.element,
-  children: PropTypes.element
-}
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element)
+  ])
+};
 
 export default Page;

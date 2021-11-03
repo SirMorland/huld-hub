@@ -1,17 +1,13 @@
 import ReactDOMServer from 'react-dom/server';
-import { render } from '@testing-library/react';
-import { ThemeProvider } from '@mui/material';
 
 import Page from '../Page';
 
-import theme from '../../../theme';
+import { renderHelper } from '../../../utils';
 
 describe('Page', () => {
   it('Should render empty page when no props are passed', () => {
-    const { getByRole } = render(
-      <ThemeProvider theme={theme}>
+    const { getByRole } = renderHelper(
         <Page />
-      </ThemeProvider>
     );
 
     expect(getByRole('banner').parentElement.childElementCount).toBe(1);
@@ -21,12 +17,10 @@ describe('Page', () => {
   it('Should render children props as is', () => {
     const children = <p>Test content</p>;
 
-    const { getByRole } = render(
-      <ThemeProvider theme={theme}>
-        <Page>
-          {children}
-        </Page>
-      </ThemeProvider>
+    const { getByRole } = renderHelper(
+      <Page>
+        {children}
+      </Page>
     );
 
     expect(getByRole('banner').parentElement.childElementCount).toBe(1);
@@ -38,10 +32,8 @@ describe('Page', () => {
   it('Should render header', () => {
     const header = <p>Test header</p>;
 
-    const { getByRole } = render(
-      <ThemeProvider theme={theme}>
-        <Page header={header} />
-      </ThemeProvider>
+    const { getByRole } = renderHelper(
+      <Page header={header} />
     );
 
     expect(getByRole('banner').parentElement.childElementCount).toBe(2);
@@ -54,12 +46,10 @@ describe('Page', () => {
     const children = <p>Test content</p>;
     const header = <p>Test header</p>;
 
-    const { getByRole } = render(
-      <ThemeProvider theme={theme}>
-        <Page header={header}>
-          {children}
-        </Page>
-      </ThemeProvider>
+    const { getByRole } = renderHelper(
+      <Page header={header}>
+        {children}
+      </Page>
     );
 
     expect(getByRole('banner').parentElement.childElementCount).toBe(2);

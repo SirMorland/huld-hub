@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
 import { styled } from '@mui/system';
 import SearchIcon from '@mui/icons-material/Search';
+
+import { UserContext } from '../../App';
 
 const StyledHeaderContainer = styled('div')(({ theme }) => `
   position: sticky;
   top: 0;
+  z-index: 10;
   background-color: ${theme.colors.primaryText};
   min-height: 56px;
   display: flex;
@@ -49,7 +55,7 @@ const headerTypography = (theme) => ({
 })
 
 const StyledButton = styled('button')(({ theme }) => headerTypography(theme));
-const StyledLink = styled('a')(({ theme }) => headerTypography(theme));
+const StyledLink = styled(Link)(({ theme }) => headerTypography(theme));
 
 const HeaderLink = styled(StyledLink)({
   fontWeight: "bold",
@@ -71,18 +77,26 @@ const StyledLi = styled('li')({
   padding: "16px",
 })
 
-const NavBar = ({ children, loggedIn = false, role, onLogOutClick }) => {
+const NavBar = ({ children, onLogOutClick }) => {
+	const user = useContext(UserContext);
+  const history = useHistory();
+
+  const logOut = async () => {
+    await onLogOutClick();
+    history.push("/login");
+  }
+
   return (
     <StyledHeaderContainer>
       <StyledHeader>
-        <HeaderLink href="/">
+        <HeaderLink to="/">
           Hub
         </HeaderLink>
-        {loggedIn && <StyledUl>
-          {role === 'admin' && <StyledLi><StyledLink href="/admin">Admin</StyledLink></StyledLi>}
-          <StyledLi><StyledButton type="button" onClick={onLogOutClick}>Log out</StyledButton></StyledLi>
+        {user && <StyledUl>
+          {user.role.type === 'admin' && <StyledLi><StyledLink to="/admin">Admin</StyledLink></StyledLi>}
+          <StyledLi><StyledButton type="button" onClick={logOut}>Log out</StyledButton></StyledLi>
           <StyledLi>
-            <StyledLink href="/search">
+            <StyledLink to="/search">
               <SearchIcon fontSize="small"/>
             </StyledLink>
           </StyledLi>
@@ -99,13 +113,10 @@ const NavBar = ({ children, loggedIn = false, role, onLogOutClick }) => {
 
 NavBar.propTypes = {
   children: PropTypes.element,
-  loggedIn: PropTypes.bool,
-  role: PropTypes.oneOf(['admin', 'employee']),
   onLogOutClick: PropTypes.func,
 }
 
 NavBar.defaultProps = {
-  loggedIn: false,
   onLogOutClick: null,
 }
 
