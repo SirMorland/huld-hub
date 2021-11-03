@@ -66,6 +66,40 @@ const DEFAULT_SETTINGS = [
       default_role: DEFAULT_ROLES.EMPLOYEE.type,
     },
   },
+  {
+    environment: "",
+    type: "plugin",
+    name: "users-permissions",
+    key: "email",
+    value: {
+      "reset_password": {
+        "display": "Email.template.reset_password",
+        "icon": "sync",
+        "options": {
+          "from": {
+            "name": "Administration Panel",
+            "email": process.env.SMTP_USERNAME,
+          },
+          "response_email": "",
+          "object": "Reset password",
+          "message": "<p>We heard that you lost your password. Sorry about that!</p>\n\n<p>But don’t worry! You can use the following link to reset your password:</p>\n<p><%= URL %>?code=<%= TOKEN %></p>\n\n<p>Thanks.</p>"
+        }
+      },
+      "email_confirmation": {
+        "display": "Email.template.email_confirmation",
+        "icon": "check-square",
+        "options": {
+          "from": {
+            "name": "Administration Panel",
+            "email": process.env.SMTP_USERNAME,
+          },
+          "response_email": "",
+          "object": "Account confirmation",
+          "message": "<p>Thank you for registering!</p>\n\n<p>You have to confirm your email address. Please click on the link below.</p>\n\n<p><%= URL %>?confirmation=<%= CODE %></p>\n\n<p>Thanks.</p>"
+        }
+      }
+    },
+  },
 ];
 
 
