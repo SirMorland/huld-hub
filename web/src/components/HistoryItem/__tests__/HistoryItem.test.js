@@ -1,31 +1,31 @@
 import { cleanup } from "@testing-library/react";
 import { renderWithTheme } from "../../../utils";
-import EducationHitoryItem from "../EducationHistoryItem.js";
+import HitoryItem from "../HistoryItem.js";
 
 const testData = {
   id: 1,
-  school: "Air Force",
-  degree: "Bachelor's degree",
+  organisation: "Air Force",
+  title: "Bachelor's degree",
   startDate: "20.10.2020",
   endDate: "10.11.2021",
   description:
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam facere atque quos error voluptatibus illum? Minima delectus a porro animi rerum corrupti voluptas sit dolorem ad accusamus? Quidem, a alias.",
 };
 
-describe("EducationHitoryItem component", () => {
+describe("HitoryItem component", () => {
   beforeEach(() => {
-    renderWithTheme(<EducationHitoryItem educationItem={testData} />);
+    renderWithTheme(<HitoryItem historyItem={testData} />);
   });
   afterAll(cleanup);
-  it("should render school correctly", () => {
-    const schoolEl = document.querySelector(".school");
-    expect(schoolEl).toBeTruthy();
-    expect(schoolEl.textContent).toBe(testData.school);
+  it("should render organisation correctly", () => {
+    const organisationEl = document.querySelector(".organisation");
+    expect(organisationEl).toBeTruthy();
+    expect(organisationEl.textContent).toBe(testData.organisation);
   });
-  it("should render degree correctly", () => {
-    const degreeEl = document.querySelector(".degree");
-    expect(degreeEl).toBeTruthy();
-    expect(degreeEl.textContent).toBe(testData.degree);
+  it("should render title correctly", () => {
+    const titleEl = document.querySelector(".title");
+    expect(titleEl).toBeTruthy();
+    expect(titleEl.textContent).toBe(testData.title);
   });
   it("should render start date correctly", () => {
     const startDateEl = document.querySelector(".start-date");

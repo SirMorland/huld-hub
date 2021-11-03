@@ -12,34 +12,30 @@ const Header = styled("h3")(({ theme }) => ({
 }));
 
 const Description = styled("div")(({ theme }) => ({
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "space-betweenz",
   fontSize: theme.typography.flexSize,
   color: theme.palette.text.primary,
   textAlign: "justify",
 }));
 
-function WorkHistoryItem(props) {
+function HistoryItem(props) {
   return (
-    <div id={`work-${props.workItem.id}`} className="work-item">
+    <div id={`history-${props.historyItem.id}`} className="history-item">
       <Header>
         <div>
-          <span className="company">{props.workItem.company}</span> - <span className="position">{props.workItem.position}</span>
+          <span className="organisation">{props.historyItem.organisation}</span> - <span className="title">{props.historyItem.title}</span>
         </div>
         <div>
-          <span className="start-date">{props.workItem.startDate}</span> - <span className="end-date">{props.workItem.endDate}</span>
+          <span className="start-date">{props.historyItem.startDate}</span> - <span className="end-date">{props.historyItem.endDate}</span>
         </div>
       </Header>
-      <Description className="description">{props.workItem.description}</Description>
+      <Description className="description">{props.historyItem.description}</Description>
     </div>
   );
 }
 
-
-export const WorkHistoryItemProps = PropTypes.shape({
-  company: PropTypes.string.isRequired,
-  position: PropTypes.string.isRequired,
+export const HistoryItemProps = PropTypes.shape({
+  organisation: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   startDate: PropTypes.string.isRequired,
   endDate: PropTypes.string,
   description: PropTypes.string,
@@ -49,8 +45,8 @@ export const WorkHistoryItemProps = PropTypes.shape({
   ]).isRequired,
 });
 
-WorkHistoryItem.propTypes = {
-  workItem: WorkHistoryItemProps,
+HistoryItem.propTypes = {
+  historyItem: HistoryItemProps,
 };
 
-export default WorkHistoryItem;
+export default HistoryItem;
