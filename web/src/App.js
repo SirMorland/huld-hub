@@ -81,24 +81,24 @@ function App() {
     }
   ];
 
-  const groupCompetencesByCategories = (competences) => {
+  const groupCompetencesByCategories = (competences, categoryList) => {
     const categories = {};
     competences.forEach((competence) => {
-      if (!categories[competence.category]) {
-        categories[competence.category] = [];
+      const category = categoryList.find(category => category.id === competence.category);
+      if (!categories[category.name]) {
+        categories[category.name] = [];
       }
-      categories[competence.category].push(competence);
+      categories[category.name].push(competence);
     });
     return categories;
   };
-  const competences = groupCompetencesByCategories(competenceList);
-  console.log(competences);
+  const categories = groupCompetencesByCategories(competenceList, categoryList);
   
   return (
     <ThemeProvider theme={theme}>
       <NavBar loggedIn role="admin" />
       <Skills skills={skills} />
-      {/* <CompetenceCategory competenceCategoryList={competenceCategoryList}/> */}
+      <CompetenceCategory competenceCategoryList={categories}/>
     </ThemeProvider>
   );
 }
