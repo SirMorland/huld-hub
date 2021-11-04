@@ -79,23 +79,23 @@ function App() {
       "updated_at": "2021-10-29"
     }
   ];
-  const groupCompetencesByCategories = (competences, categoryList) => {
-    return categoryList.map(category => {
+  const getCompetencesWithCategoryNames = (categories, competences) => {
+    return competences.map(competence => {
+      const category = categories.find(category => category.id === competence.category);
       return {
-        id: category.id,
-        title: category.name,
-        competences: competences.filter(competence => competence.category === category.id)
-      };
+        ...competence,
+        category_name: category.name,
+      }
     });
-  };
-  const categories = groupCompetencesByCategories(competenceList, categoryList);
-
+  }
+  
+  const competences = getCompetencesWithCategoryNames(categoryList, competenceList);
+  
   return (
     <ThemeProvider theme={theme}>
       <NavBar loggedIn role="admin" />
-      {categories.map((category) => (
-        category.competences.length !== 0 && <ItemList key={category.id} title={category.title} items={category.competences} />
-      ))}
+      <ItemList title="Language proficiencies" items={competences.filter(a => a.category_name === "coding languages")} />
+      <ItemList title="Keywords" items={competences.filter(a => a.category_name === "keywords")} />
     </ThemeProvider>
   );
 }

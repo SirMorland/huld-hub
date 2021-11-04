@@ -6,11 +6,13 @@ import { capitalizeFirstLetters } from "../utils";
 const ItemList = (props) => {
   return (
     <>
-      <Typography variant="h4">{capitalizeFirstLetters(props.title)}</Typography>
-      {props.items && props.items.map(item => 
-          <Typography key={item.id} variant="body1">{item.name}</Typography>
-        )
-      }
+    <Typography variant="h4">{capitalizeFirstLetters(props.title)}</Typography>
+      <ul>
+        {props.items && props.items.map(item => 
+            <li key={item.id}><Typography variant="body1">{item.name}</Typography></li>
+          )
+        }
+      </ul>
     </>
   );
 };
