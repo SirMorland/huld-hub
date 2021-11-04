@@ -11,9 +11,9 @@ const Title = styled("h2")(({ theme }) => ({
 
 function HistoryList(props) {
   return (
-    <div className="history">
-      <Title className="history-title">{props.title}</Title>
-      <div className="history-list">
+    <div data-testid="history">
+      <Title data-testid="history-title">{props.title}</Title>
+      <div data-testid="history-list">
         {props.historyList &&
           props.historyList.map((historyItem) => (
             <HistoryItem historyItem={historyItem} key={historyItem.id} />

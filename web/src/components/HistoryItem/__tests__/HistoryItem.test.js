@@ -13,33 +13,39 @@ const testData = {
 };
 
 describe("HitoryItem component", () => {
+  let container = null;
   beforeEach(() => {
-    renderWithTheme(<HitoryItem historyItem={testData} />);
+    container = renderWithTheme(<HitoryItem historyItem={testData} />);
   });
   afterAll(cleanup);
   it("should render organisation correctly", () => {
-    const organisationEl = document.querySelector(".organisation");
+    const { getByTestId } = container;
+    const organisationEl = getByTestId("organisation");
     expect(organisationEl).toBeTruthy();
-    expect(organisationEl.textContent).toBe(testData.organisation);
+    expect(organisationEl).toHaveTextContent(testData.organisation);
   });
   it("should render title correctly", () => {
-    const titleEl = document.querySelector(".title");
+    const { getByTestId } = container;
+    const titleEl = getByTestId("title");
     expect(titleEl).toBeTruthy();
-    expect(titleEl.textContent).toBe(testData.title);
+    expect(titleEl).toHaveTextContent(testData.title);
   });
   it("should render start date correctly", () => {
-    const startDateEl = document.querySelector(".start-date");
+    const { getByTestId } = container;
+    const startDateEl = getByTestId("start-date");
     expect(startDateEl).toBeTruthy();
-    expect(startDateEl.textContent).toBe(testData.startDate);
+    expect(startDateEl).toHaveTextContent(testData.startDate);
   });
   it("should render end date correctly", () => {
-    const endDateEl = document.querySelector(".end-date");
+    const { getByTestId } = container;
+    const endDateEl = getByTestId("end-date");
     expect(endDateEl).toBeTruthy();
-    expect(endDateEl.textContent).toBe(testData.endDate);
+    expect(endDateEl).toHaveTextContent(testData.endDate);
   });
   it("should render description correctly", () => {
-    const descriptionEl = document.querySelector(".description");
+    const { getByTestId } = container;
+    const descriptionEl = getByTestId("description");
     expect(descriptionEl).toBeTruthy();
-    expect(descriptionEl.textContent).toBe(testData.description);
+    expect(descriptionEl).toHaveTextContent(testData.description);
   });
 });

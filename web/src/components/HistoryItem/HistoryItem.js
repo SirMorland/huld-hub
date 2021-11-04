@@ -19,16 +19,16 @@ const Description = styled("div")(({ theme }) => ({
 
 function HistoryItem(props) {
   return (
-    <div id={`history-${props.historyItem.id}`} className="history-item">
+    <div id={`history-${props.historyItem.id}`} data-testid="history-item">
       <Header>
         <div>
-          <span className="organisation">{props.historyItem.organisation}</span> - <span className="title">{props.historyItem.title}</span>
+          <span data-testid="organisation">{props.historyItem.organisation}</span> - <span data-testid="title">{props.historyItem.title}</span>
         </div>
         <div>
-          <span className="start-date">{props.historyItem.startDate}</span> - <span className="end-date">{props.historyItem.endDate}</span>
+          <span data-testid="start-date">{props.historyItem.startDate}</span> - <span data-testid="end-date">{props.historyItem.endDate}</span>
         </div>
       </Header>
-      <Description className="description">{props.historyItem.description}</Description>
+      <Description data-testid="description">{props.historyItem.description}</Description>
     </div>
   );
 }

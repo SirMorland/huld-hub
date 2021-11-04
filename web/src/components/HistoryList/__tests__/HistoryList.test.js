@@ -1,4 +1,4 @@
-import { cleanup } from "@testing-library/react";
+import { cleanup, getByTestId } from "@testing-library/react";
 import { renderWithTheme } from "../../../utils";
 import HitoryList from "../HistoryList.js";
 
@@ -47,48 +47,59 @@ const testData = {
 describe("HitoryList component", () => {
   afterEach(cleanup);
   it("should render correct title", () => {
-    renderWithTheme(<HitoryList title={testData.title} />);
-    const historyTitleEl = document.querySelector(".history-title");
+    const { getByTestId } = renderWithTheme(
+      <HitoryList title={testData.title} />
+    );
+    const historyTitleEl = getByTestId("history-title");
     expect(historyTitleEl).toBeTruthy();
-    expect(historyTitleEl.textContent).toBe(testData.title);
+    expect(getByTestId("history-title")).toHaveTextContent(testData.title);
   });
   it("should render no education data", () => {
-    renderWithTheme(<HitoryList title={testData.title} />);
-    const historyListEl = document.querySelector(".history-list");
+    const { getByTestId } = renderWithTheme(
+      <HitoryList title={testData.title} />
+    );
+    const historyListEl = getByTestId("history-list");
     expect(historyListEl).toBeTruthy();
-    expect(historyListEl.childElementCount).toBe(0);
+    expect(historyListEl.children).toHaveLength(0);
   });
   it("should render correct number of history items", () => {
-    renderWithTheme(
+    const { getByTestId } = renderWithTheme(
       <HitoryList title={testData.title} historyList={testData.historyItems} />
     );
-    const historyListEl = document.querySelector(".history-list");
+    const historyListEl = getByTestId("history-list");
     expect(historyListEl).toBeTruthy();
-    expect(historyListEl.childElementCount).toBe(testData.historyItems.length);
+    expect(historyListEl.children).toHaveLength(testData.historyItems.length);
   });
   it("should render correct history item data", () => {
-    renderWithTheme(
+    const { getAllByTestId } = renderWithTheme(
       <HitoryList title={testData.title} historyList={testData.historyItems} />
     );
-    const historyListEl = document.querySelectorAll(".history-item");
+    const historyListEl = getAllByTestId("history-item");
     expect(historyListEl).toBeTruthy();
-    expect(historyListEl.length).toBe(testData.historyItems.length);
-    Array.from(historyListEl).forEach((educationHitoryItem, index) => {
-      const organisationEl = educationHitoryItem.querySelector(".organisation");
+    expect(historyListEl).toHaveLength(testData.historyItems.length);
+
+    historyListEl.forEach((educationHitoryItem, index) => {
+      const organisationEl = getByTestId(educationHitoryItem, "organisation");
       expect(organisationEl).toBeTruthy();
-      expect(organisationEl.textContent).toBe(testData.historyItems[index].organisation);
-      const titleEl = educationHitoryItem.querySelector(".title");
+      expect(organisationEl).toHaveTextContent(
+        testData.historyItems[index].organisation
+      );
+      const titleEl = getByTestId(educationHitoryItem, "title");
       expect(titleEl).toBeTruthy();
-      expect(titleEl.textContent).toBe(testData.historyItems[index].title);
-      const startDateEl = educationHitoryItem.querySelector(".start-date");
+      expect(titleEl).toHaveTextContent(testData.historyItems[index].title);
+      const startDateEl = getByTestId(educationHitoryItem, "start-date");
       expect(startDateEl).toBeTruthy();
-      expect(startDateEl.textContent).toBe(testData.historyItems[index].startDate);
-      const endDateEl = educationHitoryItem.querySelector(".end-date");
+      expect(startDateEl).toHaveTextContent(
+        testData.historyItems[index].startDate
+      );
+      const endDateEl = getByTestId(educationHitoryItem, "end-date");
       expect(endDateEl).toBeTruthy();
-      expect(endDateEl.textContent).toBe(testData.historyItems[index].endDate);
-      const descriptionEl = educationHitoryItem.querySelector(".description");
+      expect(endDateEl).toHaveTextContent(testData.historyItems[index].endDate);
+      const descriptionEl = getByTestId(educationHitoryItem, "description");
       expect(descriptionEl).toBeTruthy();
-      expect(descriptionEl.textContent).toBe(testData.historyItems[index].description);
+      expect(descriptionEl).toHaveTextContent(
+        testData.historyItems[index].description
+      );
     });
   });
 });
