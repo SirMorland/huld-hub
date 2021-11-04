@@ -22,7 +22,7 @@ export default function LoginForm({ onSubmit }) {
         try {
             const json = await onSubmit(email, password);
             Cookies.set("hub-jwt", json.jwt);
-            history.push(`/${json.user.id}`);
+            history.push("/");
         } catch(error) {
             switch(true) {
                 case error instanceof EmailOrPasswordInvalidError:

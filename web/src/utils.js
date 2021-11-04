@@ -1,5 +1,9 @@
-import { ThemeProvider } from '@mui/material';
+
+import { BrowserRouter } from 'react-router-dom';
 import { render } from '@testing-library/react';
+
+import { ThemeProvider } from '@mui/material';
+
 import theme from './theme';
 
 export const fetchPost = (url, body) => {
@@ -15,8 +19,24 @@ export const fetchPost = (url, body) => {
 
 export const renderWithTheme = (children) => {
   return render(
-  <ThemeProvider theme={theme}>
-  {children}
-  </ThemeProvider>
+    <ThemeProvider theme={theme}>
+        {children}
+    </ThemeProvider>
+  );
+};
+export const renderWithRouter = (children) => {
+  return render(
+    <BrowserRouter>
+      {children}
+    </BrowserRouter>
+  );
+};
+export const renderHelper =  (children) => {
+  return render(
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        {children}
+      </BrowserRouter>
+    </ThemeProvider>
   );
 };
