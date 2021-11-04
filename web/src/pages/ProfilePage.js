@@ -2,11 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useRouteMatch } from 'react-router';
 import Cookies from 'js-cookie';
 
+<<<<<<< HEAD
 
 import { styled } from '@mui/system';
 
 import Page from '../components/Page/Page';
 import UserContactinfo from '../components/UserContactinfo';
+=======
+import { styled } from '@mui/system';
+
+import Page from '../components/Page/Page';
+>>>>>>> main
 import { NotFoundError, UnauthorizedError } from '../api';
 
 const h2 = {
@@ -21,6 +27,7 @@ const p = {
   margin: 0
 };
 
+<<<<<<< HEAD
 const HeaderLeft = {
   width: "50%",
   float: "left"
@@ -32,6 +39,8 @@ const HeaderRight = {
 };
 
 
+=======
+>>>>>>> main
 const Skills = styled('div')`
   @media (min-width: 768px) {
     grid-column-start: 1;
@@ -81,9 +90,12 @@ const Education = styled('div')`
   }
 `;
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> main
 function ProfilePage({ id, getProfile }) {
   let history = useHistory();
   let match = useRouteMatch();
@@ -129,6 +141,7 @@ function ProfilePage({ id, getProfile }) {
     <Page header={
       profile &&
       <React.Fragment>
+<<<<<<< HEAD
         <div style={HeaderLeft}>
           <h1 style={{margin: 0, color: 'white'}}>{profile.first_name} {profile.last_name}</h1>
           <h2 style={{margin: 0, color: 'white'}}>{profile.title}</h2>
@@ -136,6 +149,10 @@ function ProfilePage({ id, getProfile }) {
         <div style={HeaderRight}>
           <UserContactinfo {...profile} ></UserContactinfo>
         </div>
+=======
+        <h1 style={{margin: 0, color: 'white'}}>{profile.first_name} {profile.last_name}</h1>
+        <h2 style={{margin: 0, color: 'white'}}>{profile.title}</h2>
+>>>>>>> main
       </React.Fragment>
     }>
       <Skills>
