@@ -17,35 +17,91 @@ const DEFAULT_USERS = [
     username: "huld-admin",
     email: "huld-admin@huld.io",
     password: "huld-admin",
-    role: DEFAULT_ROLES.ADMIN
+    role: DEFAULT_ROLES.ADMIN,
   },
   {
     username: "huld-employee",
     email: "huld-employee@huld.io",
     password: "huld-employee",
-    role: DEFAULT_ROLES.EMPLOYEE
+    role: DEFAULT_ROLES.EMPLOYEE,
   },
 ];
-
 
 const DEFAULT_COMPETENCES = [
   {
-    category: 'coding languages',
-    items: ['Javascript', 'Swift', 'Lua', 'Kotlin', 'CSS'],
+    category: "coding languages",
+    items: ["Javascript", "Swift", "Lua", "Kotlin", "CSS"],
   },
   {
-    category: 'keywords',
-    items: ['iOS', 'Android', 'macOS', 'Linux', 'REST'],
+    category: "keywords",
+    items: ["iOS", "Android", "macOS", "Linux", "REST"],
   },
   {
-    category: 'skills',
-    items: ['Mobile development', 'Team leading', 'UI/UX', 'Embedded systems']
+    category: "skills",
+    items: ["Mobile development", "Team leading", "UI/UX", "Embedded systems"],
   },
   {
-    category: 'positions',
-    items: ['Consulting', 'Tech lead Mobile Applications', 'Mobile Development']
-  }
+    category: "positions",
+    items: [
+      "Consulting",
+      "Tech lead Mobile Applications",
+      "Mobile Development",
+    ],
+  },
 ];
+
+// See https://strapi.io/documentation/developer-docs/latest/setup-deployment-guides/configurations.html#database
+const DEFAULT_SETTINGS = [
+  {
+    environment: "",
+    type: "plugin",
+    name: "users-permissions",
+    key: "advanced",
+    value: {
+      unique_email: true,
+      allow_register: true,
+      email_confirmation: true,
+      email_reset_password: `http://${process.env.WEB_DOMAIN ?? "localhost:3000"}/reset-password`,
+      email_confirmation_redirection: `http://${process.env.WEB_DOMAIN ?? "localhost:3000"}/confirm-email`,
+      default_role: DEFAULT_ROLES.EMPLOYEE.type,
+    },
+  },
+  {
+    environment: "",
+    type: "plugin",
+    name: "users-permissions",
+    key: "email",
+    value: {
+      "reset_password": {
+        "display": "Email.template.reset_password",
+        "icon": "sync",
+        "options": {
+          "from": {
+            "name": "Administration Panel",
+            "email": process.env.SMTP_USERNAME,
+          },
+          "response_email": "",
+          "object": "Reset password",
+          "message": "<p>We heard that you lost your password. Sorry about that!</p>\n\n<p>But don’t worry! You can use the following link to reset your password:</p>\n<p><%= URL %>?code=<%= TOKEN %></p>\n\n<p>Thanks.</p>"
+        }
+      },
+      "email_confirmation": {
+        "display": "Email.template.email_confirmation",
+        "icon": "check-square",
+        "options": {
+          "from": {
+            "name": "Administration Panel",
+            "email": process.env.SMTP_USERNAME,
+          },
+          "response_email": "",
+          "object": "Account confirmation",
+          "message": "<p>Thank you for registering!</p>\n\n<p>You have to confirm your email address. Please click on the link below.</p>\n\n<p><%= URL %>?confirmation=<%= CODE %></p>\n\n<p>Thanks.</p>"
+        }
+      }
+    },
+  },
+];
+
 
 const DEFAULT_PROFILES = [
   {
@@ -142,9 +198,11 @@ const DEFAULT_PROFILES = [
     competences: ['Mobile development', 'Team leading', 'UI/UX', 'Embedded systems']
   }
 ];
+
 module.exports = {
   DEFAULT_ROLES,
   DEFAULT_USERS,
   DEFAULT_COMPETENCES,
+  DEFAULT_SETTINGS,
   DEFAULT_PROFILES,
 };
