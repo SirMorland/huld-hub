@@ -62,7 +62,7 @@ const DEFAULT_SETTINGS = [
       allow_register: true,
       email_confirmation: true,
       email_reset_password: `http://${process.env.WEB_DOMAIN ?? "localhost:3000"}/reset-password`,
-      email_confirmation_redirection: `http://${process.env.WEB_DOMAIN ?? "localhost:3000"}/confirm-email`,
+      email_confirmation_redirection: `http://${process.env.WEB_DOMAIN ?? "localhost:3000"}/email-confirmed`,
       default_role: DEFAULT_ROLES.EMPLOYEE.type,
     },
   },
