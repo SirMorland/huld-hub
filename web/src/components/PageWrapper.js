@@ -4,6 +4,8 @@ import { styled } from '@mui/system';
 
 import NavBar from './NavBar/NavBar';
 
+import { logout } from '../api';
+
 const StyledContainer = styled('div')(({theme}) => `
     position: absolute;
     top: 0;
@@ -18,7 +20,7 @@ const StyledContainer = styled('div')(({theme}) => `
 export default function PageWrapper({ children }) {
   return (
     <React.Fragment>
-      <NavBar />
+      <NavBar onLogOutClick={logout} />
       <StyledContainer>
         {children}
       </StyledContainer>
