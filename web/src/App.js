@@ -5,13 +5,14 @@ import NavBar from "./components/NavBar/NavBar";
 
 const workHistory = {
   title: "Work History",
+  noItemDescription: "No Work History Provided",
   historyItems: [
     {
       id: 1,
       organisation: "Huld",
       title: "Fullstack Developer",
-      startDate: "20.10.2020",
-      endDate: "10.11.2021",
+      start_date: "20.10.2020",
+      end_date: "10.11.2021",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam facere atque quos error voluptatibus illum? Minima delectus a porro animi rerum corrupti voluptas sit dolorem ad accusamus? Quidem, a alias.",
     },
@@ -19,8 +20,8 @@ const workHistory = {
       id: 2,
       organisation: "Huld",
       title: "Fullstack Developer",
-      startDate: "20.10.2020",
-      endDate: "10.11.2021",
+      start_date: "20.10.2020",
+      end_date: "10.11.2021",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam facere atque quos error voluptatibus illum? Minima delectus a porro animi rerum corrupti voluptas sit dolorem ad accusamus? Quidem, a alias.",
     },
@@ -28,8 +29,8 @@ const workHistory = {
       id: 3,
       organisation: "Huld",
       title: "Fullstack Developer",
-      startDate: "20.10.2020",
-      endDate: "10.11.2021",
+      start_date: "20.10.2020",
+      end_date: "10.11.2021",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam facere atque quos error voluptatibus illum? Minima delectus a porro animi rerum corrupti voluptas sit dolorem ad accusamus? Quidem, a alias.",
     },
@@ -38,13 +39,14 @@ const workHistory = {
 
 const educationHistory = {
   title: "Education History",
+  noItemDescription: "No Education History Provided",
   historyItems: [
     {
       id: 1,
       organisation: "Air Force",
       title: "Bachelor's degree",
-      startDate: "20.10.2020",
-      endDate: "10.11.2021",
+      start_date: "20.10.2020",
+      end_date: "10.11.2021",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam facere atque quos error voluptatibus illum? Minima delectus a porro animi rerum corrupti voluptas sit dolorem ad accusamus? Quidem, a alias.",
     },
@@ -52,8 +54,8 @@ const educationHistory = {
       id: 2,
       organisation: "Air Force",
       title: "Bachelor's degree",
-      startDate: "20.10.2020",
-      endDate: "10.11.2021",
+      start_date: "20.10.2020",
+      end_date: "10.11.2021",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam facere atque quos error voluptatibus illum? Minima delectus a porro animi rerum corrupti voluptas sit dolorem ad accusamus? Quidem, a alias.",
     },
@@ -61,8 +63,8 @@ const educationHistory = {
       id: 3,
       organisation: "Air Force",
       title: "Bachelor's degree",
-      startDate: "20.10.2020",
-      endDate: "10.11.2021",
+      start_date: "20.10.2020",
+      end_date: "10.11.2021",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam facere atque quos error voluptatibus illum? Minima delectus a porro animi rerum corrupti voluptas sit dolorem ad accusamus? Quidem, a alias.",
     },
@@ -73,8 +75,10 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <NavBar loggedIn role="admin" />
-      <HistoryList title={workHistory.title} historyList={workHistory.historyItems} />
-      <HistoryList title={educationHistory.title} historyList={educationHistory.historyItems} />
+      <HistoryList title={workHistory.title} historyItems={workHistory.historyItems} noItemDescription={workHistory.noItemDescription}/>
+      <HistoryList title={workHistory.title} noItemDescription={workHistory.noItemDescription}/>
+      <HistoryList title={educationHistory.title} historyItems={educationHistory.historyItems} noItemDescription={educationHistory.noItemDescription} />
+      <HistoryList title={educationHistory.title} noItemDescription={educationHistory.noItemDescription}/>
     </ThemeProvider>
   );
 }

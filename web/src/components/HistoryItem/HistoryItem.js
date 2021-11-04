@@ -11,8 +11,8 @@ const Header = styled("h3")(({ theme }) => ({
   marginTop: "16px",
 }));
 
-const Description = styled("div")(({ theme }) => ({
-  fontSize: theme.typography.flexSize,
+const Description = styled("p")(({ theme }) => ({
+  fontSize: theme.typography.fontSize,
   color: theme.palette.text.primary,
   textAlign: "justify",
 }));
@@ -21,12 +21,12 @@ function HistoryItem(props) {
   return (
     <div id={`history-${props.historyItem.id}`} data-testid="history-item">
       <Header>
-        <div>
+        <span>
           <span data-testid="organisation">{props.historyItem.organisation}</span> - <span data-testid="title">{props.historyItem.title}</span>
-        </div>
-        <div>
-          <span data-testid="start-date">{props.historyItem.startDate}</span> - <span data-testid="end-date">{props.historyItem.endDate}</span>
-        </div>
+        </span>
+        <span>
+          <span data-testid="start-date">{props.historyItem.start_date}</span> - <span data-testid="end-date">{props.historyItem.end_date}</span>
+        </span>
       </Header>
       <Description data-testid="description">{props.historyItem.description}</Description>
     </div>
@@ -36,8 +36,8 @@ function HistoryItem(props) {
 export const HistoryItemProps = PropTypes.shape({
   organisation: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  startDate: PropTypes.string.isRequired,
-  endDate: PropTypes.string,
+  start_date: PropTypes.string.isRequired,
+  end_date: PropTypes.string,
   description: PropTypes.string,
   id: PropTypes.oneOfType([
     PropTypes.string,

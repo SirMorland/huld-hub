@@ -9,27 +9,43 @@ const Title = styled("h2")(({ theme }) => ({
   color: theme.palette.text.primary,
 }));
 
+const EmptyHistory = styled("p")(({ theme }) => ({
+  fontSize: theme.typography.fontSize,
+  color: theme.palette.grey.main,
+  textAlign: "center",
+}));
+
+const renderHistoryItems = ({ historyItems, noItemDescription }) => {
+  if (historyItems && historyItems.length > 0) {
+    return historyItems.map((historyItem) => (
+      <HistoryItem historyItem={historyItem} key={historyItem.id} />
+    ));
+  } else {
+    return (
+      <EmptyHistory data-testid="no-item-description">
+        {noItemDescription}
+      </EmptyHistory>
+    );
+  }
+};
+
 function HistoryList(props) {
   return (
     <div data-testid="history">
       <Title data-testid="history-title">{props.title}</Title>
-      <div data-testid="history-list">
-        {props.historyList &&
-          props.historyList.map((historyItem) => (
-            <HistoryItem historyItem={historyItem} key={historyItem.id} />
-          ))}
-      </div>
+      <div data-testid="history-items">{renderHistoryItems(props)}</div>
     </div>
   );
 }
 
 HistoryList.defaultProps = {
-  historyList: [],
+  historyItems: [],
 };
 
 HistoryList.propTypes = {
   title: PropTypes.string.isRequired,
-  historyList: PropTypes.arrayOf(HistoryItemProps),
+  noItemDescription: PropTypes.string.isRequired,
+  historyItems: PropTypes.arrayOf(HistoryItemProps),
 };
 
 export default HistoryList;

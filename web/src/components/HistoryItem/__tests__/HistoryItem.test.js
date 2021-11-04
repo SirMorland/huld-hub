@@ -6,8 +6,8 @@ const testData = {
   id: 1,
   organisation: "Air Force",
   title: "Bachelor's degree",
-  startDate: "20.10.2020",
-  endDate: "10.11.2021",
+  start_date: "20.10.2020",
+  end_date: "10.11.2021",
   description:
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam facere atque quos error voluptatibus illum? Minima delectus a porro animi rerum corrupti voluptas sit dolorem ad accusamus? Quidem, a alias.",
 };
@@ -32,15 +32,15 @@ describe("HitoryItem component", () => {
   });
   it("should render start date correctly", () => {
     const { getByTestId } = container;
-    const startDateEl = getByTestId("start-date");
-    expect(startDateEl).toBeTruthy();
-    expect(startDateEl).toHaveTextContent(testData.startDate);
+    const start_dateEl = getByTestId("start-date");
+    expect(start_dateEl).toBeTruthy();
+    expect(start_dateEl).toHaveTextContent(testData.start_date);
   });
   it("should render end date correctly", () => {
     const { getByTestId } = container;
-    const endDateEl = getByTestId("end-date");
-    expect(endDateEl).toBeTruthy();
-    expect(endDateEl).toHaveTextContent(testData.endDate);
+    const end_dateEl = getByTestId("end-date");
+    expect(end_dateEl).toBeTruthy();
+    expect(end_dateEl).toHaveTextContent(testData.end_date);
   });
   it("should render description correctly", () => {
     const { getByTestId } = container;
