@@ -25,7 +25,7 @@ function HistoryItem(props) {
           <span data-testid="organisation">{props.historyItem.organisation}</span> - <span data-testid="title">{props.historyItem.title}</span>
         </span>
         <span>
-          <span data-testid="start-date">{props.historyItem.start_date}</span> - <span data-testid="end-date">{props.historyItem.end_date}</span>
+          <span data-testid="start-date">{props.historyItem.start_date.substring(0, 4)}</span> - <span data-testid="end-date">{props.historyItem.end_date.substring(0, 4)}</span>
         </span>
       </Header>
       <Description data-testid="description">{props.historyItem.description}</Description>
