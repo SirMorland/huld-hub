@@ -79,16 +79,6 @@ function App() {
       "updated_at": "2021-10-29"
     }
   ];
-  const skills = [
-    {
-      name: "Technology\nInternet\nNetflix\nTesting"
-    }
-  ];
-  const bio = [
-    {
-      name: "I am an admin. I like to administrate."
-    }
-  ];
   const groupCompetencesByCategories = (competences, categoryList) => {
     return categoryList.map(category => {
       return {
@@ -103,11 +93,9 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <NavBar loggedIn role="admin" />
-      {skills && <ItemList key="" title="skills" items={skills} />}
       {categories.map((category) => (
         category.competences.length !== 0 && <ItemList key={category.id} title={category.title} items={category.competences} />
       ))}
-      {bio && <ItemList key="" title="bio" items={bio} />}
     </ThemeProvider>
   );
 }
