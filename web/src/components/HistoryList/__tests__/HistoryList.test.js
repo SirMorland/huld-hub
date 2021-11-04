@@ -45,6 +45,11 @@ const testData = {
   ],
 };
 
+const getYear = (data) => {
+  const date = new Date(data);
+  return date.getFullYear();
+};
+
 describe("HistoryList component", () => {
   afterEach(cleanup);
   it("should render correct title", () => {
@@ -107,12 +112,12 @@ describe("HistoryList component", () => {
       const start_dateEl = getByTestId(educationHitoryItem, "start-date");
       expect(start_dateEl).toBeTruthy();
       expect(start_dateEl).toHaveTextContent(
-        testData.historyItems[index].start_date.substring(0, 4)
+        getYear(testData.historyItems[index].start_date)
       );
       const end_dateEl = getByTestId(educationHitoryItem, "end-date");
       expect(end_dateEl).toBeTruthy();
       expect(end_dateEl).toHaveTextContent(
-        testData.historyItems[index].end_date.substring(0, 4)
+        getYear(testData.historyItems[index].end_date)
       );
       const descriptionEl = getByTestId(educationHitoryItem, "description");
       expect(descriptionEl).toBeTruthy();

@@ -17,6 +17,11 @@ const Description = styled("p")(({ theme }) => ({
   textAlign: "justify",
 }));
 
+const getYear = (data) =>{
+  const date = new Date(data);
+  return date.getFullYear()
+}
+
 function HistoryItem(props) {
   return (
     <div id={`history-${props.historyItem.id}`} data-testid="history-item">
@@ -25,7 +30,7 @@ function HistoryItem(props) {
           <span data-testid="organisation">{props.historyItem.organisation}</span> - <span data-testid="title">{props.historyItem.title}</span>
         </span>
         <span>
-          <span data-testid="start-date">{props.historyItem.start_date.substring(0, 4)}</span> - <span data-testid="end-date">{props.historyItem.end_date.substring(0, 4)}</span>
+          <span data-testid="start-date">{getYear(props.historyItem.start_date)}</span> - <span data-testid="end-date">{getYear(props.historyItem.end_date)}</span>
         </span>
       </Header>
       <Description data-testid="description">{props.historyItem.description}</Description>
