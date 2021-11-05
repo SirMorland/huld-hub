@@ -1,6 +1,6 @@
 import { cleanup } from "@testing-library/react";
 import { renderWithTheme } from "../../../utils";
-import HitoryItem from "../HistoryItem.js";
+import HistoryItem from "../HistoryItem.js";
 
 const testData = {
   id: 1,
@@ -17,10 +17,10 @@ const getYear = (data) =>{
   return date.getFullYear()
 }
 
-describe("HitoryItem component", () => {
+describe("HistoryItem component", () => {
   let container = null;
   beforeEach(() => {
-    container = renderWithTheme(<HitoryItem historyItem={testData} />);
+    container = renderWithTheme(<HistoryItem historyItem={testData} />);
   });
   afterAll(cleanup);
   it("should render organisation correctly", () => {
