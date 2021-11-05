@@ -112,7 +112,8 @@ function ProfilePage({ id, getProfile, getCompetenceCategories }) {
   let match = useRouteMatch();
 
   let [profile, setProfile] = useState(null);
-
+  let [competenceCategories, setCompetenceCategories] = useState(null);
+  
   useEffect(() => {
     let jwt = Cookies.get("hub-jwt");
 
