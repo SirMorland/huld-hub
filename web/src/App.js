@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
@@ -14,37 +14,13 @@ import ProfilePage from "./pages/ProfilePage";
 import { getProfile, login, register, getCompetenceCategories } from './api';
 import theme from './theme';
 import Page from './components/Page/Page';
+import useUser from './hooks/useUser';
 
 export const UserContext = React.createContext(null);
 
 function App() {
-  let [user, setUser] = useState(null);
-
-  let jwt = Cookies.get("hub-jwt");
-
-  useEffect(() => {
-      let fetchUser = async (jwt) => {
-        const url = `${process.env.REACT_APP_BACKEND_HOST}/users/me`;
-        const response = await fetch(url, {
-          headers: {
-            "Authorization": `Bearer ${jwt}`
-          }
-        });
-        if(response.status === 200) {
-          let json = await response.json();
-          setUser(json);
-        } else {
-          setUser(false);
-        }
-      }
-
-      if(jwt) {
-        fetchUser(jwt);
-      } else {
-        setUser(false);
-      }
-
-  }, [jwt]);
+  const jwt = Cookies.get("hub-jwt");
+  const user = useUser();
 
   if(user === null) {
     return (
