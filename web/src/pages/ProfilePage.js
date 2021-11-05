@@ -1,13 +1,15 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useHistory, useRouteMatch } from "react-router";
 import Cookies from "js-cookie";
 import { styled } from "@mui/system";
-import { NotFoundError, UnauthorizedError } from "../api";
 
 import Page from '../components/Page/Page';
 import HistoryList from "../components/HistoryList/HistoryList";
 import ItemList from "../components/ItemList";
 import UserContactinfo from '../components/UserContactinfo';
+import useProfile from "../hooks/useProfile";
+import useCompetenceCategories from "../hooks/useCompetenceCategories";
+import { getCompetencesWithCategoryNames } from "../utils";
 
 
 const h2 = {
@@ -107,59 +109,18 @@ const getHistoryProps = (historyItems = [], type) => {
   };
 };
 
-function ProfilePage({ id, getProfile, getCompetenceCategories }) {
+function ProfilePage({ id }) {
   let history = useHistory();
   let match = useRouteMatch();
-
-  let [profile, setProfile] = useState(null);
-  let [competenceCategories, setCompetenceCategories] = useState(null);
+  const profile = useProfile(id || match.params.id);
+  const competenceCategories = useCompetenceCategories();
   
   useEffect(() => {
     let jwt = Cookies.get("hub-jwt");
-
-    let fetchProfile = async (id) => {
-      try {
-        const json = await getProfile(id, jwt);
-        setProfile(json);
-      } catch (error) {
-        switch (true) {
-          case error instanceof NotFoundError:
-            setProfile(false);
-            break;
-          case error instanceof UnauthorizedError: //TODO: this does not necessarily mean the email is not confirmed
-            history.push("/almost-done"); //We should return more accurate errors to deduce why user is not authorized
-            break;
-          default:
-            break;
-        }
-      }
-    };
-
-    let fetchCompetenceCategory = async () => {
-      try {
-        const json = await getCompetenceCategories(jwt);
-        setCompetenceCategories(json);
-      } catch(error) {
-        switch(true) {
-          case error instanceof NotFoundError:
-            setCompetenceCategories(false);
-            break;
-          case error instanceof UnauthorizedError:  //TODO: this does not necessarily mean the email is not confirmed
-            history.push("/almost-done");           //We should return more accurate errors to deduce why user is not authorized
-            break;
-          default:
-            break;
-        }
-      }
-    }
-
     if (!jwt) {
       history.push("/");
-    } else {
-      fetchProfile(id || match.params.id);
-      fetchCompetenceCategory();  
-    }
-  }, [id, match.params.id, history, getProfile, getCompetenceCategories]);
+    } 
+  }, [history]);
 
   const educationHistory = useMemo(
     () =>
@@ -179,19 +140,11 @@ function ProfilePage({ id, getProfile, getCompetenceCategories }) {
     [profile]
   );
 
-  const getCompetencesWithCategoryNames = (categories, competences) => {
-    return competences.map(competence => {
-      const category = categories.find(category => category.id === competence.category);
-      return {
-        ...competence,
-        category_name: category.name,
-      }
-    });
-  }
-  let competences = null;
-  if(competenceCategories && profile != null && profile.competences !== null){
-    competences = getCompetencesWithCategoryNames(competenceCategories, profile.competences);
-  }
+  const competences = useMemo(()=>{
+    if (profile && profile.competences) return getCompetencesWithCategoryNames(competenceCategories, profile.competences);
+    return [];
+  }, [competenceCategories, profile]);
+
 
   if (profile === false) {
     // TODO: render actual 404 page
