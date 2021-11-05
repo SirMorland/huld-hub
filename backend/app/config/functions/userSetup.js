@@ -23,6 +23,7 @@ const createUser = (username, email, password, role) => {
     email,
     password,
     role,
+    provider: 'local',
     confirmed: true,
   });
 };
@@ -37,7 +38,8 @@ const userSetup = async (users) => {
     let customUser = await findUserByUsername(user.username);
     if (!customUser) {
       const userRole = await findRoleByName(user.role.name);
-      await createUser(user.username, user.email, user.password, userRole.id);
+      const password = await strapi.admin.services.auth.hashPassword(user.password);
+      await createUser(user.username, user.email, password, userRole.id);
     }
   }));
 };
