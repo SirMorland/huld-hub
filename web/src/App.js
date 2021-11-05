@@ -11,7 +11,7 @@ import AlmostDone from "./pages/AlmostDone";
 import EmailConfirmed from './pages/EmailConfirmed';
 import ProfilePage from "./pages/ProfilePage";
 
-import { getProfile, login, register } from './api';
+import { getProfile, login, register, getCompetenceCategories } from './api';
 import theme from './theme';
 import Page from './components/Page/Page';
 
@@ -62,7 +62,7 @@ function App() {
         <Switch>
           <Route exact path="/">
             {user ?
-              <ProfilePage id={user.profile} getProfile={getProfile} />
+              <ProfilePage id={user.profile} getProfile={getProfile} getCompetenceCategories={getCompetenceCategories}/>
             :
               (jwt ?
                 <Redirect to="/almost-done" />

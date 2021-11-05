@@ -67,6 +67,26 @@ export const getProfile = async (id, jwt) => {
   }
 }
 
+export const getCompetenceCategories = async (jwt) => {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/competence-categories`;
+  const response = await fetch(url, {
+    headers: {
+      "Authorization": `Bearer ${jwt}`
+    }
+  });
+
+  switch(response.status) {
+    case 200:
+      return await response.json();
+    case 401:
+      throw new UnauthorizedError();
+    case 404:
+      throw new NotFoundError();
+    default:
+      throw new Error(response.status);
+  }
+}
+
 export class EmailOrPasswordInvalidError extends Error {};
 export class EmailWrongDomainError extends Error {};
 export class EmailTakenError extends Error {};

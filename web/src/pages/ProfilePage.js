@@ -6,6 +6,7 @@ import { NotFoundError, UnauthorizedError } from "../api";
 
 import Page from '../components/Page/Page';
 import HistoryList from "../components/HistoryList/HistoryList";
+import ItemList from "../components/ItemList";
 import UserContactinfo from '../components/UserContactinfo';
 
 
@@ -106,12 +107,13 @@ const getHistoryProps = (historyItems = [], type) => {
   };
 };
 
-function ProfilePage({ id, getProfile }) {
+function ProfilePage({ id, getProfile, getCompetenceCategories }) {
   let history = useHistory();
   let match = useRouteMatch();
 
   let [profile, setProfile] = useState(null);
-
+  let [competenceCategories, setCompetenceCategories] = useState(null);
+  
   useEffect(() => {
     let jwt = Cookies.get("hub-jwt");
 
@@ -133,12 +135,31 @@ function ProfilePage({ id, getProfile }) {
       }
     };
 
+    let fetchCompetenceCategory = async () => {
+      try {
+        const json = await getCompetenceCategories(jwt);
+        setCompetenceCategories(json);
+      } catch(error) {
+        switch(true) {
+          case error instanceof NotFoundError:
+            setCompetenceCategories(false);
+            break;
+          case error instanceof UnauthorizedError:  //TODO: this does not necessarily mean the email is not confirmed
+            history.push("/almost-done");           //We should return more accurate errors to deduce why user is not authorized
+            break;
+          default:
+            break;
+        }
+      }
+    }
+
     if (!jwt) {
       history.push("/");
     } else {
       fetchProfile(id || match.params.id);
+      fetchCompetenceCategory();  
     }
-  }, [id, match.params.id, history, getProfile]);
+  }, [id, match.params.id, history, getProfile, getCompetenceCategories]);
 
   const educationHistory = useMemo(
     () =>
@@ -157,6 +178,20 @@ function ProfilePage({ id, getProfile }) {
       ),
     [profile]
   );
+
+  const getCompetencesWithCategoryNames = (categories, competences) => {
+    return competences.map(competence => {
+      const category = categories.find(category => category.id === competence.category);
+      return {
+        ...competence,
+        category_name: category.name,
+      }
+    });
+  }
+  let competences = null;
+  if(competenceCategories && profile != null && profile.competences !== null){
+    competences = getCompetencesWithCategoryNames(competenceCategories, profile.competences);
+  }
 
   if (profile === false) {
     // TODO: render actual 404 page
@@ -183,16 +218,10 @@ function ProfilePage({ id, getProfile }) {
         <p style={p}>Skill 3</p>
       </Skills>
       <Languages>
-        <h2 style={h2}>Languages</h2>
-        <p style={p}>Language 1</p>
-        <p style={p}>Language 2</p>
-        <p style={p}>Language 3</p>
+      {competences !== null && <ItemList title="Language proficiencies" items={competences.filter(a => a.category_name === "coding languages")} /> }
       </Languages>
       <Keywords>
-        <h2 style={h2}>Keywords</h2>
-        <p style={p}>Keyword 1</p>
-        <p style={p}>Keyword 2</p>
-        <p style={p}>Keyword 3</p>
+        {competences !== null && <ItemList List title="Keywords" items={competences.filter(a => a.category_name === "keywords")} />}
       </Keywords>
       <Bio>
         <h2 style={h2}>Bio</h2>
