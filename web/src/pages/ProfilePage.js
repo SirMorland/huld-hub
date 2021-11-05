@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useRouteMatch } from 'react-router';
 import Cookies from 'js-cookie';
 
+
 import { styled } from '@mui/system';
 
 import Page from '../components/Page/Page';
+import UserContactinfo from '../components/UserContactinfo';
 import { NotFoundError, UnauthorizedError } from '../api';
 
 const h2 = {
@@ -18,6 +20,16 @@ const h3 = {
 const p = {
   margin: 0
 };
+
+const HeaderLeft =  styled('div')`
+  width: 50%;
+  float: left;
+`;
+
+const HeaderRight =  styled('div')`
+  width: 50%;
+  float: left;
+`;
 
 const Skills = styled('div')`
   @media (min-width: 768px) {
@@ -113,8 +125,13 @@ function ProfilePage({ id, getProfile }) {
     <Page header={
       profile &&
       <React.Fragment>
-        <h1 style={{margin: 0, color: 'white'}}>{profile.first_name} {profile.last_name}</h1>
-        <h2 style={{margin: 0, color: 'white'}}>{profile.title}</h2>
+        <HeaderLeft>
+          <h1 style={{margin: 0, color: 'white'}}>{profile.first_name} {profile.last_name}</h1>
+          <h2 style={{margin: 0, color: 'white'}}>{profile.title}</h2>
+        </HeaderLeft>
+        <HeaderRight>
+          <UserContactinfo {...profile} ></UserContactinfo>
+        </HeaderRight>
       </React.Fragment>
     }>
       <Skills>
