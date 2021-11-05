@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useHistory, useRouteMatch } from "react-router";
 import Cookies from "js-cookie";
 import { styled } from "@mui/system";
@@ -64,72 +64,33 @@ const Education = styled("div")`
   }
 `;
 
-const workHistory = {
-  title: "Work History",
-  noItemDescription: "No Work History Provided",
-  historyItems: [
-    {
-      id: 1,
-      organisation: "Huld",
-      title: "Fullstack Developer",
-      start_date: "2021-10-29T11:35:16.000Z",
-      end_date: "2021-10-29T11:35:16.000Z",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam facere atque quos error voluptatibus illum? Minima delectus a porro animi rerum corrupti voluptas sit dolorem ad accusamus? Quidem, a alias.",
-    },
-    {
-      id: 2,
-      organisation: "Huld",
-      title: "Fullstack Developer",
-      start_date: "2021-10-29T11:35:16.000Z",
-      end_date: "2021-10-29T11:35:16.000Z",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam facere atque quos error voluptatibus illum? Minima delectus a porro animi rerum corrupti voluptas sit dolorem ad accusamus? Quidem, a alias.",
-    },
-    {
-      id: 3,
-      organisation: "Huld",
-      title: "Fullstack Developer",
-      start_date: "2021-10-29T11:35:16.000Z",
-      end_date: "2021-10-29T11:35:16.000Z",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam facere atque quos error voluptatibus illum? Minima delectus a porro animi rerum corrupti voluptas sit dolorem ad accusamus? Quidem, a alias.",
-    },
-  ],
+const HISTORY_TYPE = {
+  education: "Education",
+  work: "Work",
 };
 
-const educationHistory = {
-  title: "Education History",
-  noItemDescription: "No Education History Provided",
-  historyItems: [
-    {
-      id: 1,
-      organisation: "Air Force",
-      title: "Bachelor's degree",
-      start_date: "2021-10-29T11:35:16.000Z",
-      end_date: "2021-10-29T11:35:16.000Z",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam facere atque quos error voluptatibus illum? Minima delectus a porro animi rerum corrupti voluptas sit dolorem ad accusamus? Quidem, a alias.",
-    },
-    {
-      id: 2,
-      organisation: "Air Force",
-      title: "Bachelor's degree",
-      start_date: "2021-10-29T11:35:16.000Z",
-      end_date: "2021-10-29T11:35:16.000Z",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam facere atque quos error voluptatibus illum? Minima delectus a porro animi rerum corrupti voluptas sit dolorem ad accusamus? Quidem, a alias.",
-    },
-    {
-      id: 3,
-      organisation: "Air Force",
-      title: "Bachelor's degree",
-      start_date: "2021-10-29T11:35:16.000Z",
-      end_date: "2021-10-29T11:35:16.000Z",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam facere atque quos error voluptatibus illum? Minima delectus a porro animi rerum corrupti voluptas sit dolorem ad accusamus? Quidem, a alias.",
-    },
-  ],
+/**
+ * A function that produces the props for using HistoryList component
+ *
+ * @param {Array<object>} historyItems - Array of history items
+ * @param {*} type - type of history items
+ * @returns {object}
+ */
+const getHistoryProps = (historyItems = [], type) => {
+  return {
+    title: `${type} History`,
+    noItemDescription: `No ${type} History Provided`,
+    historyItems: historyItems.map((historyItem) => ({
+      id: historyItem.id,
+      organisation:
+        historyItem[type === HISTORY_TYPE.education ? "school" : "company"],
+      title:
+        historyItem[type === HISTORY_TYPE.education ? "degree" : "position"],
+      description: historyItem.description,
+      start_date: historyItem.start_date,
+      end_date: historyItem.end_date,
+    })),
+  };
 };
 
 function ProfilePage({ id, getProfile }) {
@@ -165,6 +126,24 @@ function ProfilePage({ id, getProfile }) {
       fetchProfile(id || match.params.id);
     }
   }, [id, match.params.id, history, getProfile]);
+
+  const educationHistory = useMemo(
+    () =>
+      getHistoryProps(
+        profile ? profile.education_histories : [],
+        HISTORY_TYPE.education
+      ),
+    [profile]
+  );
+
+  const workHistory = useMemo(
+    () =>
+      getHistoryProps(
+        profile ? profile.work_experiences : [],
+        HISTORY_TYPE.work
+      ),
+    [profile]
+  );
 
   if (profile === false) {
     // TODO: render actual 404 page
