@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory, useRouteMatch } from 'react-router';
-import Cookies from 'js-cookie';
+import React, { useEffect, useState } from "react";
+import { useHistory, useRouteMatch } from "react-router";
+import Cookies from "js-cookie";
+import { styled } from "@mui/system";
 
-import { styled } from '@mui/system';
+import Page from "../components/Page/Page";
+import HistoryList from "./components/HistoryList/HistoryList";
 
-import Page from '../components/Page/Page';
-import { NotFoundError, UnauthorizedError } from '../api';
+import { NotFoundError, UnauthorizedError } from "../api";
 
 const h2 = {
-  margin: 0
+  margin: 0,
 };
 const h3 = {
   margin: 0,
-  marginTop: 16
-
+  marginTop: 16,
 };
 const p = {
-  margin: 0
+  margin: 0,
 };
 
-const Skills = styled('div')`
+const Skills = styled("div")`
   @media (min-width: 768px) {
     grid-column-start: 1;
   }
@@ -27,7 +27,7 @@ const Skills = styled('div')`
     grid-column-start: 1;
   }
 `;
-const Languages = styled('div')`
+const Languages = styled("div")`
   @media (min-width: 768px) {
     grid-column-start: 1;
   }
@@ -35,15 +35,7 @@ const Languages = styled('div')`
     grid-column-start: 1;
   }
 `;
-const Keywords = styled('div')`
-  @media (min-width: 768px) {
-    grid-column-start: 2;
-  }
-  @media (min-width: 1152px) {
-    grid-column-start: 1;
-  }
-`;
-const Bio = styled('div')`
+const Keywords = styled("div")`
   @media (min-width: 768px) {
     grid-column-start: 2;
   }
@@ -51,7 +43,15 @@ const Bio = styled('div')`
     grid-column-start: 1;
   }
 `;
-const Work = styled('div')`
+const Bio = styled("div")`
+  @media (min-width: 768px) {
+    grid-column-start: 2;
+  }
+  @media (min-width: 1152px) {
+    grid-column-start: 1;
+  }
+`;
+const Work = styled("div")`
   @media (min-width: 768px) {
     grid-column-start: 1;
   }
@@ -59,7 +59,7 @@ const Work = styled('div')`
     grid-column-start: 2;
   }
 `;
-const Education = styled('div')`
+const Education = styled("div")`
   @media (min-width: 768px) {
     grid-column-start: 2;
   }
@@ -67,6 +67,74 @@ const Education = styled('div')`
     grid-column-start: 3;
   }
 `;
+
+const workHistory = {
+  title: "Work History",
+  noItemDescription: "No Work History Provided",
+  historyItems: [
+    {
+      id: 1,
+      organisation: "Huld",
+      title: "Fullstack Developer",
+      start_date: "2021-10-29T11:35:16.000Z",
+      end_date: "2021-10-29T11:35:16.000Z",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam facere atque quos error voluptatibus illum? Minima delectus a porro animi rerum corrupti voluptas sit dolorem ad accusamus? Quidem, a alias.",
+    },
+    {
+      id: 2,
+      organisation: "Huld",
+      title: "Fullstack Developer",
+      start_date: "2021-10-29T11:35:16.000Z",
+      end_date: "2021-10-29T11:35:16.000Z",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam facere atque quos error voluptatibus illum? Minima delectus a porro animi rerum corrupti voluptas sit dolorem ad accusamus? Quidem, a alias.",
+    },
+    {
+      id: 3,
+      organisation: "Huld",
+      title: "Fullstack Developer",
+      start_date: "2021-10-29T11:35:16.000Z",
+      end_date: "2021-10-29T11:35:16.000Z",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam facere atque quos error voluptatibus illum? Minima delectus a porro animi rerum corrupti voluptas sit dolorem ad accusamus? Quidem, a alias.",
+    },
+  ],
+};
+
+const educationHistory = {
+  title: "Education History",
+  noItemDescription: "No Education History Provided",
+  historyItems: [
+    {
+      id: 1,
+      organisation: "Air Force",
+      title: "Bachelor's degree",
+      start_date: "2021-10-29T11:35:16.000Z",
+      end_date: "2021-10-29T11:35:16.000Z",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam facere atque quos error voluptatibus illum? Minima delectus a porro animi rerum corrupti voluptas sit dolorem ad accusamus? Quidem, a alias.",
+    },
+    {
+      id: 2,
+      organisation: "Air Force",
+      title: "Bachelor's degree",
+      start_date: "2021-10-29T11:35:16.000Z",
+      end_date: "2021-10-29T11:35:16.000Z",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam facere atque quos error voluptatibus illum? Minima delectus a porro animi rerum corrupti voluptas sit dolorem ad accusamus? Quidem, a alias.",
+    },
+    {
+      id: 3,
+      organisation: "Air Force",
+      title: "Bachelor's degree",
+      start_date: "2021-10-29T11:35:16.000Z",
+      end_date: "2021-10-29T11:35:16.000Z",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam facere atque quos error voluptatibus illum? Minima delectus a porro animi rerum corrupti voluptas sit dolorem ad accusamus? Quidem, a alias.",
+    },
+  ],
+};
 
 function ProfilePage({ id, getProfile }) {
   let history = useHistory();
@@ -77,46 +145,49 @@ function ProfilePage({ id, getProfile }) {
   useEffect(() => {
     let jwt = Cookies.get("hub-jwt");
 
-    let fetchProfile = async id => {
+    let fetchProfile = async (id) => {
       try {
         const json = await getProfile(id, jwt);
         setProfile(json);
-      } catch(error) {
-        switch(true) {
+      } catch (error) {
+        switch (true) {
           case error instanceof NotFoundError:
             setProfile(false);
             break;
-          case error instanceof UnauthorizedError:  //TODO: this does not necessarily mean the email is not confirmed
-            history.push("/almost-done");           //We should return more accurate errors to deduce why user is not authorized
+          case error instanceof UnauthorizedError: //TODO: this does not necessarily mean the email is not confirmed
+            history.push("/almost-done"); //We should return more accurate errors to deduce why user is not authorized
             break;
           default:
             break;
         }
       }
-    }
+    };
 
-    if(!jwt) {
+    if (!jwt) {
       history.push("/");
     } else {
       fetchProfile(id || match.params.id);
     }
   }, [id, match.params.id, history, getProfile]);
 
-  if(profile === false) {
+  if (profile === false) {
     // TODO: render actual 404 page
-    return (
-      <h1>404</h1>
-    )
+    return <h1>404</h1>;
   }
 
   return (
-    <Page header={
-      profile &&
-      <React.Fragment>
-        <h1 style={{margin: 0, color: 'white'}}>{profile.first_name} {profile.last_name}</h1>
-        <h2 style={{margin: 0, color: 'white'}}>{profile.title}</h2>
-      </React.Fragment>
-    }>
+    <Page
+      header={
+        profile && (
+          <React.Fragment>
+            <h1 style={{ margin: 0, color: "white" }}>
+              {profile.first_name} {profile.last_name}
+            </h1>
+            <h2 style={{ margin: 0, color: "white" }}>{profile.title}</h2>
+          </React.Fragment>
+        )
+      }
+    >
       <Skills>
         <h2 style={h2}>Skills</h2>
         <p style={p}>Skill 1</p>
@@ -137,19 +208,31 @@ function ProfilePage({ id, getProfile }) {
       </Keywords>
       <Bio>
         <h2 style={h2}>Bio</h2>
-        <p style={p}>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+        <p style={p}>
+          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+          nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+          sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+          rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+          ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+          sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+          dolore magna aliquyam erat, sed diam voluptua.
+        </p>
       </Bio>
 
       <Work>
-        <h2 style={h2}>Work History</h2>
-        <h3 style={h3}>Cleaner</h3>
-        <p style={p}>I cleaned</p>
+        <HistoryList
+          title={workHistory.title}
+          historyItems={workHistory.historyItems}
+          noItemDescription={workHistory.noItemDescription}
+        />
       </Work>
-      
+
       <Education>
-        <h2 style={h2}>Education History</h2>
-        <h3 style={h3}>Daycare</h3>
-        <p style={p}>I studied vector algebra</p>
+        <HistoryList
+          title={educationHistory.title}
+          historyItems={educationHistory.historyItems}
+          noItemDescription={educationHistory.noItemDescription}
+        />
       </Education>
     </Page>
   );
