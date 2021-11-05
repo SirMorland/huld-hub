@@ -107,7 +107,7 @@ const getHistoryProps = (historyItems = [], type) => {
   };
 };
 
-function ProfilePage({ id, getProfile }) {
+function ProfilePage({ id, getProfile, getCompetenceCategories }) {
   let history = useHistory();
   let match = useRouteMatch();
 
