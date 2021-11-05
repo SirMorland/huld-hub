@@ -1,4 +1,5 @@
 const request = require("supertest");
+const { grantPrivileges, getPermissionValues } = require("../helpers/strapi");
 
 // user mock data
 const mockUserData = {
@@ -17,6 +18,20 @@ const registeredUser = {
 };
 
 describe("Login and Register User", () => {
+  beforeAll(async () => {
+    await grantPrivileges(
+      2,
+      getPermissionValues("user-profiles", ["find", "findone", "create"])
+    );
+  });
+  // clean up all competences
+  afterAll(async () => {
+    const dataProfile = await strapi.query("user-profiles").find();
+    const promiseProfile = dataProfile.map(({ id }) =>
+      strapi.services["user-profiles"].delete({ id })
+    );
+    await Promise.all(promiseProfile);
+  });
 
   it("should register new user", async () => {
 
@@ -54,6 +69,20 @@ describe("Login and Register User", () => {
     // Check that the registered users details in the database match the expected result
     expect(usersAfterRegister[0].username).toBe(registeredUser.username);
     expect(usersAfterRegister[0].email).toBe(registeredUser.email);
+  });
+
+  it("should have generated a profile for the new user", async () => {
+    await request(strapi.server)
+      .get("/user-profiles")
+      .expect(200)
+      .then((data) => {
+        
+        expect(data.body).toHaveLength(1);
+        expect(data.body[0].first_name).toBe(registeredUser.username);
+        expect(data.body[0].last_name).toBe(null);
+        expect(data.body[0].title).toBe(null);
+        expect(data.body[0].email).toBe(registeredUser.email);
+      });
   });
 
   it("should login user and return jwt token", async () => {
