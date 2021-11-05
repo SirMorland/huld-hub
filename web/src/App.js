@@ -1,102 +1,102 @@
-import React from "react";
-import { ThemeProvider } from "@mui/material/styles";
-import theme from "./theme";
-import ItemList from "./components/ItemList";
-import NavBar from "./components/NavBar/NavBar";
+
+import React, { useEffect, useState } from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import Cookies from 'js-cookie';
+
+import { ThemeProvider } from '@mui/material';
+
+import LoginForm from "./pages/Login";
+import RegistrationForm from "./pages/Register";
+import AlmostDone from "./pages/AlmostDone";
+import EmailConfirmed from './pages/EmailConfirmed';
+import ProfilePage from "./pages/ProfilePage";
+
+import { getProfile, login, register, getCompetenceCategories } from './api';
+import theme from './theme';
+import Page from './components/Page/Page';
+
+export const UserContext = React.createContext(null);
 
 function App() {
-  
-  const categoryList = [
-    {
-      "id": 1,
-      "name": "coding languages",
-      "description": null,
-      "created_at": "2021-10-29T11:35:16.000Z",
-      "updated_at": "2021-10-29T11:35:16.000Z"
-    },
-    {
-      "id": 2,
-      "name": "positions",
-      "description": null,
-      "created_at": "2021-10-29T11:35:16.000Z",
-      "updated_at": "2021-10-29T11:35:16.000Z"
-    },
-    {
-      "id": 3,
-      "name": "skills",
-      "description": null,
-      "created_at": "2021-10-29T11:35:16.000Z",
-      "updated_at": "2021-10-29T11:35:16.000Z"
-    },
-    {
-      "id": 4,
-      "name": "keywords",
-      "description": null,
-      "created_at": "2021-10-29T11:35:16.000Z",
-      "updated_at": "2021-10-29T11:35:16.000Z"
-    }
-  ];
+  let [user, setUser] = useState(null);
 
-  const competenceList = [
-    {
-      "id": 10,
-      "name": "Mobile development",
-      "description": null,
-      "category": 4,
-      "created_at": "2021-10-29",
-      "updated_at": "2021-10-29"
-    },
-    {
-      "id": 11,
-      "name": "Team leading",
-      "description": null,
-      "category": 4,
-      "created_at": "2021-10-29",
-      "updated_at": "2021-10-29"
-    },
-    {
-      "id": 12,
-      "name": "UI/UX",
-      "description": null,
-      "category": 1,
-      "created_at": "2021-10-29",
-      "updated_at": "2021-10-29"
-    },
-    {
-      "id": 13,
-      "name": "Embedded systems",
-      "description": null,
-      "category": 1,
-      "created_at": "2021-10-29",
-      "updated_at": "2021-10-29"
-    },
-    {
-      "id": 16,
-      "name": "Mobile Development",
-      "description": null,
-      "category": 1,
-      "created_at": "2021-10-29",
-      "updated_at": "2021-10-29"
-    }
-  ];
-  const getCompetencesWithCategoryNames = (categories, competences) => {
-    return competences.map(competence => {
-      const category = categories.find(category => category.id === competence.category);
-      return {
-        ...competence,
-        category_name: category.name,
+  let jwt = Cookies.get("hub-jwt");
+
+  useEffect(() => {
+      let fetchUser = async (jwt) => {
+        const url = `${process.env.REACT_APP_BACKEND_HOST}/users/me`;
+        const response = await fetch(url, {
+          headers: {
+            "Authorization": `Bearer ${jwt}`
+          }
+        });
+        if(response.status === 200) {
+          let json = await response.json();
+          setUser(json);
+        } else {
+          setUser(false);
+        }
       }
-    });
+
+      if(jwt) {
+        fetchUser(jwt);
+      } else {
+        setUser(false);
+      }
+
+  }, [jwt]);
+
+  if(user === null) {
+    return (
+      <UserContext.Provider value={user}>
+        <ThemeProvider theme={theme}>
+          <Page />
+        </ThemeProvider>
+      </UserContext.Provider>
+    );
   }
-  
-  const competences = getCompetencesWithCategoryNames(categoryList, competenceList);
-  
+
   return (
-    <ThemeProvider theme={theme}>
-      <NavBar loggedIn role="admin" />
-      <ItemList title="Language proficiencies" items={competences.filter(a => a.category_name === "coding languages")} />
-      <ItemList title="Keywords" items={competences.filter(a => a.category_name === "keywords")} />
-    </ThemeProvider>
+    <UserContext.Provider value={user}>
+      <ThemeProvider theme={theme}>
+        <Switch>
+          <Route exact path="/">
+            {user ?
+              <ProfilePage id={user.profile} getProfile={getProfile} getCompetenceCategories={getCompetenceCategories}/>
+            :
+              (jwt ?
+                <Redirect to="/almost-done" />
+              :
+                <Redirect to="/login" />
+              )
+            }
+          </Route>
+          <Route exact path="/login">
+            {user ?
+              <Redirect to="/" />
+            :
+              <LoginForm onSubmit={login} />
+            }
+          </Route>
+          <Route exact path="/register">
+            {user ?
+              <Redirect to="/" />
+            :
+              (jwt ?
+                <Redirect to="/almost-done" />
+              :
+                <RegistrationForm onSubmit={register} />
+              )
+            }
+          </Route>
+          <Route exact path="/almost-done" component={AlmostDone} />
+          <Route exact path="/email-confirmed" component={EmailConfirmed} />
+          <Route exact path="/:id">
+            <ProfilePage getProfile={getProfile} />
+          </Route>
+        </Switch>
+      </ThemeProvider>
+    </UserContext.Provider>
   );
 }
 
