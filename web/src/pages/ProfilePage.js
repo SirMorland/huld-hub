@@ -140,11 +140,16 @@ function ProfilePage({ id }) {
     [profile]
   );
 
-  const competences = useMemo(()=>{
-    if (profile && profile.competences) return getCompetencesWithCategoryNames(competenceCategories, profile.competences);
-    return [];
+  const {languages, keywords} = useMemo(()=>{
+    if (profile && profile.competences) {
+      const competences = getCompetencesWithCategoryNames(competenceCategories, profile.competences);
+      return {
+        languages: competences.filter(competence => competence.category_name === "coding languages"),
+        keywords: competences.filter(competence => competence.category_name === "keywords"),
+      }
+    } 
+    return {languages: [], keywords: []};
   }, [competenceCategories, profile]);
-
 
   if (profile === false) {
     // TODO: render actual 404 page
@@ -171,10 +176,10 @@ function ProfilePage({ id }) {
         <p style={p}>Skill 3</p>
       </Skills>
       <Languages>
-      {competences !== null && <ItemList title="Language proficiencies" items={competences.filter(a => a.category_name === "coding languages")} /> }
+        {languages.length > 0 && <ItemList title="Language proficiencies" items={languages} /> }
       </Languages>
       <Keywords>
-        {competences !== null && <ItemList List title="Keywords" items={competences.filter(a => a.category_name === "keywords")} />}
+        {keywords.length > 0 && <ItemList List title="Keywords" items={keywords} />}
       </Keywords>
       <Bio>
         <h2 style={h2}>Bio</h2>
