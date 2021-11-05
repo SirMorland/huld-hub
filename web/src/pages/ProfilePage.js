@@ -4,16 +4,12 @@ import Cookies from "js-cookie";
 import { styled } from "@mui/system";
 
 import Page from "../components/Page/Page";
-import HistoryList from "./components/HistoryList/HistoryList";
+import HistoryList from "../components/HistoryList/HistoryList";
 
 import { NotFoundError, UnauthorizedError } from "../api";
 
 const h2 = {
   margin: 0,
-};
-const h3 = {
-  margin: 0,
-  marginTop: 16,
 };
 const p = {
   margin: 0,

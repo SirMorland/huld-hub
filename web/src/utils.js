@@ -17,6 +17,11 @@ export const fetchPost = (url, body) => {
   });
 };
 
+export const getYear = (data) =>{
+  const date = new Date(data);
+  return date.getFullYear()
+}
+
 export const renderWithTheme = (children) => {
   return render(
     <ThemeProvider theme={theme}>

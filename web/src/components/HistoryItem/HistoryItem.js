@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { styled } from "@mui/system";
-
+import { getYear } from "../../utils";
 const Header = styled("h3")(({ theme }) => ({
   ...theme.typography.h3,
   color: theme.palette.text.primary,
@@ -17,23 +17,29 @@ const Description = styled("p")(({ theme }) => ({
   textAlign: "justify",
 }));
 
-const getYear = (data) =>{
-  const date = new Date(data);
-  return date.getFullYear()
-}
-
 function HistoryItem(props) {
   return (
     <div id={`history-${props.historyItem.id}`} data-testid="history-item">
       <Header>
         <span>
-          <span data-testid="organisation">{props.historyItem.organisation}</span> - <span data-testid="title">{props.historyItem.title}</span>
+          <span data-testid="organisation">
+            {props.historyItem.organisation}
+          </span>{" "}
+          - <span data-testid="title">{props.historyItem.title}</span>
         </span>
         <span>
-          <span data-testid="start-date">{getYear(props.historyItem.start_date)}</span> - <span data-testid="end-date">{getYear(props.historyItem.end_date)}</span>
+          <span data-testid="start-date">
+            {getYear(props.historyItem.start_date)}
+          </span>{" "}
+          -{" "}
+          <span data-testid="end-date">
+            {getYear(props.historyItem.end_date)}
+          </span>
         </span>
       </Header>
-      <Description data-testid="description">{props.historyItem.description}</Description>
+      <Description data-testid="description">
+        {props.historyItem.description}
+      </Description>
     </div>
   );
 }
@@ -44,10 +50,7 @@ export const HistoryItemProps = PropTypes.shape({
   start_date: PropTypes.string.isRequired,
   end_date: PropTypes.string,
   description: PropTypes.string,
-  id: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]).isRequired,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 });
 
 HistoryItem.propTypes = {

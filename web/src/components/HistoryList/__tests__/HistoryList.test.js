@@ -1,5 +1,5 @@
 import { cleanup, getByTestId } from "@testing-library/react";
-import { renderWithTheme } from "../../../utils";
+import { renderWithTheme, getYear } from "../../../utils";
 import HistoryList from "../HistoryList.js";
 
 const testData = {
@@ -43,11 +43,6 @@ const testData = {
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam facere atque quos error voluptatibus illum? Minima delectus a porro animi rerum corrupti voluptas sit dolorem ad accusamus? Quidem, a alias.",
     },
   ],
-};
-
-const getYear = (data) => {
-  const date = new Date(data);
-  return date.getFullYear();
 };
 
 describe("HistoryList component", () => {
