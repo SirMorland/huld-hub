@@ -7,7 +7,6 @@ import HistoryItem, { HistoryItemProps } from "../HistoryItem/HistoryItem.js";
 
 const EmptyHistory = styled(Typography)(({ theme }) => ({
   color: theme.palette.grey.main,
-  textAlign: "center",
 }));
 
 const renderHistoryItems = ({ historyItems, noItemDescription }) => {
