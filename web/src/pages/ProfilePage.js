@@ -21,16 +21,15 @@ const p = {
   margin: 0
 };
 
-const HeaderLeft = {
-  width: "50%",
-  float: "left"
-};
+const HeaderLeft =  styled('div')`
+  width: 50%;
+  float: left;
+`;
 
-const HeaderRight = {
-  width: "50%",
-  float: "right"
-};
-
+const HeaderRight =  styled('div')`
+  width: 50%;
+  float: left;
+`;
 
 const Skills = styled('div')`
   @media (min-width: 768px) {
@@ -126,13 +125,13 @@ function ProfilePage({ id, getProfile }) {
     <Page header={
       profile &&
       <React.Fragment>
-        <div style={HeaderLeft}>
+        <HeaderLeft>
           <h1 style={{margin: 0, color: 'white'}}>{profile.first_name} {profile.last_name}</h1>
           <h2 style={{margin: 0, color: 'white'}}>{profile.title}</h2>
-        </div>
-        <div style={HeaderRight}>
+        </HeaderLeft>
+        <HeaderRight>
           <UserContactinfo {...profile} ></UserContactinfo>
-        </div>
+        </HeaderRight>
       </React.Fragment>
     }>
       <Skills>
