@@ -16,7 +16,7 @@ const StyledUl = styled('ul')({
 const ItemList = (props) => {
   return (
     <>
-    <Typography variant="h4">{capitalizeFirstLetters(props.title)}</Typography>
+    <Typography variant="h2">{capitalizeFirstLetters(props.title)}</Typography>
       <StyledUl>
         {props.items && props.items.map(item => 
             <li key={item.id}><Typography variant="body1">{item.name}</Typography></li>
