@@ -71,7 +71,7 @@ describe("Login and Register User", () => {
     expect(usersAfterRegister[0].email).toBe(registeredUser.email);
   });
 
-  it("should have generated a profile for the new user", async () => {
+  it("should generate a profile for the new user", async () => {
     await request(strapi.server)
       .get("/user-profiles")
       .expect(200)
