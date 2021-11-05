@@ -159,7 +159,7 @@ function ProfilePage({ id, getProfile, getCompetenceCategories }) {
       fetchProfile(id || match.params.id);
       fetchCompetenceCategory();  
     }
-  }, [id, match.params.id, history, getProfile]);
+  }, [id, match.params.id, history, getProfile], getCompetenceCategories);
 
   const educationHistory = useMemo(
     () =>
