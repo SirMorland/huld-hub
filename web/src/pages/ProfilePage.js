@@ -2,11 +2,12 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useHistory, useRouteMatch } from "react-router";
 import Cookies from "js-cookie";
 import { styled } from "@mui/system";
-
-import Page from "../components/Page/Page";
-import HistoryList from "../components/HistoryList/HistoryList";
-
 import { NotFoundError, UnauthorizedError } from "../api";
+
+import Page from '../components/Page/Page';
+import HistoryList from "../components/HistoryList/HistoryList";
+import UserContactinfo from '../components/UserContactinfo';
+
 
 const h2 = {
   margin: 0,
@@ -15,7 +16,17 @@ const p = {
   margin: 0,
 };
 
-const Skills = styled("div")`
+const HeaderLeft =  styled('div')`
+  width: 50%;
+  float: left;
+`;
+
+const HeaderRight =  styled('div')`
+  width: 50%;
+  float: left;
+`;
+
+const Skills = styled('div')`
   @media (min-width: 768px) {
     grid-column-start: 1;
   }
@@ -153,18 +164,18 @@ function ProfilePage({ id, getProfile }) {
   }
 
   return (
-    <Page
-      header={
-        profile && (
-          <React.Fragment>
-            <h1 style={{ margin: 0, color: "white" }}>
-              {profile.first_name} {profile.last_name}
-            </h1>
-            <h2 style={{ margin: 0, color: "white" }}>{profile.title}</h2>
-          </React.Fragment>
-        )
-      }
-    >
+    <Page header={
+      profile &&
+      <React.Fragment>
+        <HeaderLeft>
+          <h1 style={{margin: 0, color: 'white'}}>{profile.first_name} {profile.last_name}</h1>
+          <h2 style={{margin: 0, color: 'white'}}>{profile.title}</h2>
+        </HeaderLeft>
+        <HeaderRight>
+          <UserContactinfo {...profile} ></UserContactinfo>
+        </HeaderRight>
+      </React.Fragment>
+    }>
       <Skills>
         <h2 style={h2}>Skills</h2>
         <p style={p}>Skill 1</p>
