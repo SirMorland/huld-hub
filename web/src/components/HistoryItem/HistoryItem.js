@@ -1,19 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Typography from '@mui/material/Typography';
 import { styled } from "@mui/system";
 import { getYear } from "../../utils";
-const Header = styled("h3")(({ theme }) => ({
-  ...theme.typography.h3,
-  color: theme.palette.text.primary,
+
+const Header = styled(Typography)(({ theme }) => ({
   display: "flex",
   flexDirection: "row",
   justifyContent: "space-between",
   marginTop: "16px",
 }));
 
-const Description = styled("p")(({ theme }) => ({
-  fontSize: theme.typography.fontSize,
-  color: theme.palette.text.primary,
+const Description = styled(Typography)(({ theme }) => ({
   textAlign: "justify",
 }));
 
@@ -24,7 +22,7 @@ const DateSpan = styled("span")({
 function HistoryItem(props) {
   return (
     <div id={`history-${props.historyItem.id}`} data-testid="history-item">
-      <Header>
+      <Header variant="h3">
         <span>
           <span data-testid="organisation">
             {props.historyItem.organisation}
@@ -41,7 +39,7 @@ function HistoryItem(props) {
           </span>
         </DateSpan>
       </Header>
-      <Description data-testid="description">
+      <Description variant="body1" data-testid="description">
         {props.historyItem.description}
       </Description>
     </div>

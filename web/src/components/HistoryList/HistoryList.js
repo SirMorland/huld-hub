@@ -1,18 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Typography from "@mui/material/Typography";
 import { styled } from "@mui/system";
 
 import HistoryItem, { HistoryItemProps } from "../HistoryItem/HistoryItem.js";
 
-const Title = styled("h2")(({ theme }) => ({
-  ...theme.typography.h2,
-  color: theme.palette.text.primary,
-}));
-
-const EmptyHistory = styled("p")(({ theme }) => ({
-  fontSize: theme.typography.fontSize,
+const EmptyHistory = styled(Typography)(({ theme }) => ({
   color: theme.palette.grey.main,
-  textAlign: "center",
 }));
 
 const renderHistoryItems = ({ historyItems, noItemDescription }) => {
@@ -22,7 +16,7 @@ const renderHistoryItems = ({ historyItems, noItemDescription }) => {
     ));
   } else {
     return (
-      <EmptyHistory data-testid="no-item-description">
+      <EmptyHistory variant="body1" data-testid="no-item-description">
         {noItemDescription}
       </EmptyHistory>
     );
@@ -32,7 +26,9 @@ const renderHistoryItems = ({ historyItems, noItemDescription }) => {
 function HistoryList(props) {
   return (
     <div data-testid="history">
-      <Title data-testid="history-title">{props.title}</Title>
+      <Typography variant="h2" data-testid="history-title">
+        {props.title}
+      </Typography>
       <div data-testid="history-items">{renderHistoryItems(props)}</div>
     </div>
   );
