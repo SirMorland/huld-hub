@@ -23,7 +23,7 @@ describe('useUser hook', () => {
     const mockUser = { id: 1 };
     fetch.mockResponseOnce(JSON.stringify(mockUser),{status: 200});
 
-    const { result, waitForNextUpdate } = renderHook(() => useUser('jwt'))
+    const { result, waitForNextUpdate } = renderHook(() => useUser('jwt'));
     await waitForNextUpdate();
     expect(result.current).toEqual(mockUser);
   });

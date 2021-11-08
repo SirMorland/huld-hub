@@ -11,8 +11,11 @@ const useUser = (jwt) => {
         }
       });
       if (response.status === 200) {
-        let json = await response.json();
-        setUser(json);
+        try {
+          let json = await response.json();
+          setUser(json);
+        } catch (e) {
+        } 
       } else {
         setUser(false);
       }
