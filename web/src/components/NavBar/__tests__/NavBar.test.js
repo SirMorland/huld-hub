@@ -11,7 +11,7 @@ describe('NavBar', () => {
   });
   it('should render log out side bar when logged in', () => {
     const { getByText } = renderHelper(
-      <UserContext.Provider value={{role: {type: 'employee'}}}>
+      <UserContext.Provider value={{user:{role: {type: 'employee'}}}}>
         <NavBar />
       </UserContext.Provider>
     );
@@ -19,7 +19,7 @@ describe('NavBar', () => {
   });
   it('should render admin when logged in with admin', () => {
     const { getByText } = renderHelper(
-      <UserContext.Provider value={{role: {type: 'admin'}}}>
+      <UserContext.Provider value={{user:{role: {type: 'admin'}}}}>
         <NavBar />
       </UserContext.Provider>
     );
@@ -27,7 +27,7 @@ describe('NavBar', () => {
   });
   it('should not render admin when logged in with employee', () => {
     const { queryByText } = renderHelper(
-      <UserContext.Provider value={{role: {type: 'employee'}}}>
+      <UserContext.Provider value={{user:{role: {type: 'employee'}}}}>
         <NavBar />
       </UserContext.Provider>
     );
@@ -36,7 +36,7 @@ describe('NavBar', () => {
   it('should run log out function when logout is clicked', () => {
     const onLogOutClick = jest.fn();
     const { getByText } = renderHelper(
-      <UserContext.Provider value={{role: {type: 'employee'}}}>
+      <UserContext.Provider value={{user:{role: {type: 'employee'}}}}>
         <NavBar onLogOutClick={onLogOutClick} />
       </UserContext.Provider>
     );

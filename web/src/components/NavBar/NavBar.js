@@ -78,7 +78,7 @@ const StyledLi = styled('li')({
 })
 
 const NavBar = ({ children, onLogOutClick }) => {
-	const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const history = useHistory();
 
   const logOut = async () => {
@@ -97,7 +97,7 @@ const NavBar = ({ children, onLogOutClick }) => {
           <StyledLi><StyledButton type="button" onClick={logOut}>Log out</StyledButton></StyledLi>
           <StyledLi>
             <StyledLink to="/search">
-              <SearchIcon fontSize="small"/>
+              <SearchIcon fontSize="small" />
             </StyledLink>
           </StyledLi>
         </StyledUl>}

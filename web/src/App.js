@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
@@ -19,12 +19,19 @@ import useUser from './hooks/useUser';
 export const UserContext = React.createContext(null);
 
 function App() {
-  const jwt = Cookies.get("hub-jwt");
-  const user = useUser();
-
+  const [jwt, setJwt] = React.useState(Cookies.get("hub-jwt"));
+  useEffect(() => {
+    setJwt(Cookies.get("hub-jwt"));
+  }, []);
+  const user = useUser(jwt);
+  const contextValue = {
+    user,
+    setJwt,
+    jwt,
+  };
   if(user === null) {
     return (
-      <UserContext.Provider value={user}>
+      <UserContext.Provider value={contextValue}>
         <ThemeProvider theme={theme}>
           <Page />
         </ThemeProvider>
@@ -33,7 +40,7 @@ function App() {
   }
 
   return (
-    <UserContext.Provider value={user}>
+    <UserContext.Provider value={contextValue}>
       <ThemeProvider theme={theme}>
         <Switch>
           <Route exact path="/">

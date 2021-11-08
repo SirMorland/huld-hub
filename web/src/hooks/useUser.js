@@ -1,10 +1,8 @@
-import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 
-const useUser = () => {
+const useUser = (jwt) => {
   const [user, setUser] = useState(null);
   useEffect(() => {
-    const jwt = Cookies.get("hub-jwt");
     const fetchUser = async (jwt) => {
       const url = `${process.env.REACT_APP_BACKEND_HOST}/users/me`;
       const response = await fetch(url, {
@@ -25,7 +23,7 @@ const useUser = () => {
     } else {
       setUser(false);
     }
-  }, []);
+  }, [jwt]);
   return user;
 }
 
