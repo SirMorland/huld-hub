@@ -1,12 +1,10 @@
-import React, { useContext } from 'react';
-import { useHistory } from 'react-router';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { styled } from '@mui/system';
 import SearchIcon from '@mui/icons-material/Search';
 
-import { UserContext } from '../../App';
 
 const StyledHeaderContainer = styled('div')(({ theme }) => `
   position: sticky;
@@ -77,25 +75,16 @@ const StyledLi = styled('li')({
   padding: "16px",
 })
 
-const NavBar = ({ children, onLogOutClick }) => {
-  const { user, setJwt } = useContext(UserContext);
-  const history = useHistory();
-
-  const logOut = async () => {
-    await onLogOutClick();
-    setJwt(null);
-    history.push("/login");
-  }
-
+const NavBar = ({ children, onLogOutClick, loggedIn, role }) => {
   return (
     <StyledHeaderContainer>
       <StyledHeader>
         <HeaderLink to="/">
           Hub
         </HeaderLink>
-        {user && <StyledUl>
-          {user.role.type === 'admin' && <StyledLi><StyledLink to="/admin">Admin</StyledLink></StyledLi>}
-          <StyledLi><StyledButton type="button" onClick={logOut}>Log out</StyledButton></StyledLi>
+        {loggedIn && <StyledUl>
+          {role === 'admin' && <StyledLi><StyledLink to="/admin">Admin</StyledLink></StyledLi>}
+          <StyledLi><StyledButton type="button" onClick={onLogOutClick}>Log out</StyledButton></StyledLi>
           <StyledLi>
             <StyledLink to="/search">
               <SearchIcon fontSize="small" />
@@ -115,6 +104,8 @@ const NavBar = ({ children, onLogOutClick }) => {
 NavBar.propTypes = {
   children: PropTypes.element,
   onLogOutClick: PropTypes.func,
+  role: PropTypes.string,
+  loggedIn: PropTypes.bool,
 }
 
 NavBar.defaultProps = {

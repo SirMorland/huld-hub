@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { styled } from '@mui/system';
 
 import NavBar from './NavBar/NavBar';
 
 import { logout } from '../api';
+import { UserContext } from '../App';
 
-const StyledContainer = styled('div')(({theme}) => `
+const StyledContainer = styled('div')(({ theme }) => `
     position: absolute;
     top: 0;
     display: flex;
@@ -18,9 +19,14 @@ const StyledContainer = styled('div')(({theme}) => `
 `);
 
 export default function PageWrapper({ children }) {
+  const { user, setJwt, jwt } = useContext(UserContext);
+  const onLogOutClick = () => {
+    setJwt(null);
+    logout();
+  }
   return (
     <React.Fragment>
-      <NavBar onLogOutClick={logout} />
+      <NavBar onLogOutClick={onLogOutClick} loggedIn={jwt !== null} role={user?.role?.type} />
       <StyledContainer>
         {children}
       </StyledContainer>
