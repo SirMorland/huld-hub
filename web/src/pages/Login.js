@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
-import Cookies from 'js-cookie';
 
 import { Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
@@ -22,7 +21,6 @@ export default function LoginForm({ onSubmit }) {
 
         try {
             const json = await onSubmit(email, password);
-            Cookies.set("hub-jwt", json.jwt);
             setJwt(json.jwt);
             history.push("/");
         } catch (error) {
