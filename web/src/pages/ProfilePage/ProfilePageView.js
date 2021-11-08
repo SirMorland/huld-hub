@@ -1,15 +1,12 @@
-import React, { useEffect, useMemo } from "react";
-import { useHistory, useRouteMatch } from "react-router";
-import Cookies from "js-cookie";
+import React from "react";
 import { styled } from "@mui/system";
 
-import Page from '../components/Page/Page';
-import HistoryList from "../components/HistoryList/HistoryList";
-import ItemList from "../components/ItemList";
-import UserContactinfo from '../components/UserContactinfo';
-import useProfile from "../hooks/useProfile";
-import useCompetenceCategories from "../hooks/useCompetenceCategories";
-import { getCompetencesWithCategoryNames } from "../utils";
+import Page from '../../components/Page/Page';
+import HistoryList from "../../components/HistoryList/HistoryList";
+import ItemList from "../../components/ItemList";
+import UserContactinfo from '../../components/UserContactinfo';
+import ActionButtonContainer from "../../components/ActionButtonContainer";
+import { Button } from "@mui/material";
 
 
 const h2 = {
@@ -80,81 +77,8 @@ const Education = styled("div")`
   }
 `;
 
-const HISTORY_TYPE = {
-  education: "Education",
-  work: "Work",
-};
-
-/**
- * A function that produces the props for using HistoryList component
- *
- * @param {Array<object>} historyItems - Array of history items
- * @param {*} type - type of history items
- * @returns {object}
- */
-const getHistoryProps = (historyItems = [], type) => {
-  return {
-    title: `${type} History`,
-    noItemDescription: `No ${type} History Provided`,
-    historyItems: historyItems.map((historyItem) => ({
-      id: historyItem.id,
-      organisation:
-        historyItem[type === HISTORY_TYPE.education ? "school" : "company"],
-      title:
-        historyItem[type === HISTORY_TYPE.education ? "degree" : "position"],
-      description: historyItem.description,
-      start_date: historyItem.start_date,
-      end_date: historyItem.end_date,
-    })),
-  };
-};
-
-function ProfilePage({ id }) {
-  let history = useHistory();
-  let match = useRouteMatch();
-  const profile = useProfile(id || match.params.id);
-  const competenceCategories = useCompetenceCategories();
-  
-  useEffect(() => {
-    let jwt = Cookies.get("hub-jwt");
-    if (!jwt) {
-      history.push("/");
-    } 
-  }, [history]);
-
-  const educationHistory = useMemo(
-    () =>
-      getHistoryProps(
-        profile ? profile.education_histories : [],
-        HISTORY_TYPE.education
-      ),
-    [profile]
-  );
-
-  const workHistory = useMemo(
-    () =>
-      getHistoryProps(
-        profile ? profile.work_experiences : [],
-        HISTORY_TYPE.work
-      ),
-    [profile]
-  );
-
-  const {languages, keywords} = useMemo(()=>{
-    if (profile && profile.competences) {
-      const competences = getCompetencesWithCategoryNames(competenceCategories, profile.competences);
-      return {
-        languages: competences.filter(competence => competence.category_name === "coding languages"),
-        keywords: competences.filter(competence => competence.category_name === "keywords"),
-      }
-    } 
-    return {languages: [], keywords: []};
-  }, [competenceCategories, profile]);
-
-  if (profile === false) {
-    // TODO: render actual 404 page
-    return <h1>404</h1>;
-  }
+function ProfilePageView({ profile, onEditClick }) {
+  const {languages, keywords, workHistory, educationHistory} = profile;
 
   return (
     <Page header={
@@ -209,8 +133,19 @@ function ProfilePage({ id }) {
           noItemDescription={educationHistory.noItemDescription}
         />
       </Education>
+      
+      <ActionButtonContainer>
+        <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={onEditClick}
+        >
+          Edit
+        </Button>
+      </ActionButtonContainer>
     </Page>
   );
 }
 
-export default ProfilePage;
+export default ProfilePageView;

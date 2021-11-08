@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material/styles";
+import shadows from "@mui/material/styles/shadows";
 
 // See other (default) values: https://mui.com/customization/default-theme/
 const theme = createTheme({
@@ -7,7 +8,7 @@ const theme = createTheme({
       main: "#0047F2",
     },
     secondary: {
-      main: "#FC5B8B",
+      main: "#FF5E89",
     },
     error: {
       main: "#F73D3D",
@@ -23,6 +24,7 @@ const theme = createTheme({
       default: "#FFFFFF",
     },
   },
+  shadows: shadows.map(() => "none"),
   typography: {
     fontFamily: "Fira Sans",
     fontSize: 16,
@@ -30,16 +32,36 @@ const theme = createTheme({
       fontSize: "24px",
       fontWeight: "bold",
     },
-    h3:{
+    h3: {
       fontSize: "20px",
       fontWeight: "bold",
+    },
+    button: {
+      fontSize: "16px",
+      lineHeight: 1,
+      textTransform: "initial"
     }
+  },
+  shape: {
+    borderRadius: 0
   },
   fonts: {
     header: "'Fira Sans', 'Helvetica Neue', Helvetica, sans-serif",
   },
   colors: {
     primaryText: "#00173A"
+  },
+  components: {
+    MuiButton: {
+      defaultProps: {
+        disableRipple: true
+      },
+      styleOverrides: {
+        root: {
+          padding: "16px 24px"
+        }
+      }
+    }
   }
 });
 

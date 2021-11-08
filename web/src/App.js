@@ -9,7 +9,7 @@ import LoginForm from "./pages/Login";
 import RegistrationForm from "./pages/Register";
 import AlmostDone from "./pages/AlmostDone";
 import EmailConfirmed from './pages/EmailConfirmed';
-import ProfilePage from "./pages/ProfilePage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
 
 import { login, register } from './api';
 import theme from './theme';
