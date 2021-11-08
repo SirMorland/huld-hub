@@ -30,11 +30,15 @@ export const renderWithTheme = (children) => {
 export const renderWithRouter = (children) => {
   return render(<BrowserRouter>{children}</BrowserRouter>);
 };
-export const renderHelper = (children, user) => {
+export const renderHelper = (children, context) => {
+  const contextValue = { 
+    setJwt: () => { }, jwt: 'jwt',
+    ...context,
+  };
   return render(
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
+        <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
       </BrowserRouter>
     </ThemeProvider>
   );
