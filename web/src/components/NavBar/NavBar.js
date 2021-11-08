@@ -78,11 +78,12 @@ const StyledLi = styled('li')({
 })
 
 const NavBar = ({ children, onLogOutClick }) => {
-  const { user } = useContext(UserContext);
+  const { user, setJwt } = useContext(UserContext);
   const history = useHistory();
 
   const logOut = async () => {
     await onLogOutClick();
+    setJwt(null);
     history.push("/login");
   }
 
