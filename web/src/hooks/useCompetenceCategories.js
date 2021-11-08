@@ -1,13 +1,11 @@
-import Cookies from "js-cookie";
 import {useEffect, useState} from "react";
 import { useHistory } from "react-router";
 import {getCompetenceCategories, NotFoundError, UnauthorizedError} from '../api';
 
-const useCompetenceCategories = () => {
+const useCompetenceCategories = (jwt) => {
   const [competenceCategories, setCompetenceCategories] = useState([]);
   const history = useHistory();
   useEffect(()=>{
-    const jwt = Cookies.get("hub-jwt");
     const fetchCompetenceCategories = async () => {
       try {
         const json = await getCompetenceCategories(jwt);
@@ -26,7 +24,7 @@ const useCompetenceCategories = () => {
       }
     };
     if (jwt) fetchCompetenceCategories();
-  }, [history]);
+  }, [history, jwt]);
   return competenceCategories;
 };
 

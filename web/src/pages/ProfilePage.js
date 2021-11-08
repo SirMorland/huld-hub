@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import { useHistory, useRouteMatch } from "react-router";
 import Cookies from "js-cookie";
 import { styled } from "@mui/system";
@@ -10,6 +10,7 @@ import UserContactinfo from '../components/UserContactinfo';
 import useProfile from "../hooks/useProfile";
 import useCompetenceCategories from "../hooks/useCompetenceCategories";
 import { getCompetencesWithCategoryNames } from "../utils";
+import { UserContext } from "../App";
 
 
 const h2 = {
@@ -19,12 +20,12 @@ const p = {
   margin: 0,
 };
 
-const HeaderLeft =  styled('div')`
+const HeaderLeft = styled('div')`
   width: 50%;
   float: left;
 `;
 
-const HeaderRight =  styled('div')`
+const HeaderRight = styled('div')`
   width: 50%;
   float: left;
 `;
@@ -112,14 +113,15 @@ const getHistoryProps = (historyItems = [], type) => {
 function ProfilePage({ id }) {
   let history = useHistory();
   let match = useRouteMatch();
-  const profile = useProfile(id || match.params.id);
-  const competenceCategories = useCompetenceCategories();
-  
+  const { jwt } = useContext(UserContext);
+  const profile = useProfile(id || match.params.id, jwt);
+  const competenceCategories = useCompetenceCategories(jwt);
+
   useEffect(() => {
     let jwt = Cookies.get("hub-jwt");
     if (!jwt) {
       history.push("/");
-    } 
+    }
   }, [history]);
 
   const educationHistory = useMemo(
@@ -140,15 +142,15 @@ function ProfilePage({ id }) {
     [profile]
   );
 
-  const {languages, keywords} = useMemo(()=>{
+  const { languages, keywords } = useMemo(() => {
     if (profile && profile.competences) {
       const competences = getCompetencesWithCategoryNames(competenceCategories, profile.competences);
       return {
         languages: competences.filter(competence => competence.category_name === "coding languages"),
         keywords: competences.filter(competence => competence.category_name === "keywords"),
       }
-    } 
-    return {languages: [], keywords: []};
+    }
+    return { languages: [], keywords: [] };
   }, [competenceCategories, profile]);
 
   if (profile === false) {
@@ -161,8 +163,8 @@ function ProfilePage({ id }) {
       profile &&
       <React.Fragment>
         <HeaderLeft>
-          <h1 style={{margin: 0, color: 'white'}}>{profile.first_name} {profile.last_name}</h1>
-          <h2 style={{margin: 0, color: 'white'}}>{profile.title}</h2>
+          <h1 style={{ margin: 0, color: 'white' }}>{profile.first_name} {profile.last_name}</h1>
+          <h2 style={{ margin: 0, color: 'white' }}>{profile.title}</h2>
         </HeaderLeft>
         <HeaderRight>
           <UserContactinfo {...profile} ></UserContactinfo>
@@ -176,7 +178,7 @@ function ProfilePage({ id }) {
         <p style={p}>Skill 3</p>
       </Skills>
       <Languages>
-        {languages.length > 0 && <ItemList title="Language proficiencies" items={languages} /> }
+        {languages.length > 0 && <ItemList title="Language proficiencies" items={languages} />}
       </Languages>
       <Keywords>
         {keywords.length > 0 && <ItemList List title="Keywords" items={keywords} />}
