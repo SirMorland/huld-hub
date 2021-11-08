@@ -6,6 +6,7 @@ import { styled } from '@mui/system';
 
 import Page from '../components/Page/Page';
 import { NotFoundError, UnauthorizedError } from '../api';
+import Title from '../components/Title/Title';
 
 const h2 = {
   margin: 0
@@ -67,7 +68,7 @@ const Education = styled('div')`
     grid-column-start: 3;
   }
 `;
-
+const image_url = "https://images.pexels.com/photos/6386956/pexels-photo-6386956.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500";
 function ProfilePage({ id, getProfile }) {
   let history = useHistory();
   let match = useRouteMatch();
@@ -81,8 +82,8 @@ function ProfilePage({ id, getProfile }) {
       try {
         const json = await getProfile(id, jwt);
         setProfile(json);
-      } catch(error) {
-        switch(true) {
+      } catch (error) {
+        switch (true) {
           case error instanceof NotFoundError:
             setProfile(false);
             break;
@@ -95,14 +96,14 @@ function ProfilePage({ id, getProfile }) {
       }
     }
 
-    if(!jwt) {
+    if (!jwt) {
       history.push("/");
     } else {
       fetchProfile(id || match.params.id);
     }
   }, [id, match.params.id, history, getProfile]);
 
-  if(profile === false) {
+  if (profile === false) {
     // TODO: render actual 404 page
     return (
       <h1>404</h1>
@@ -113,8 +114,12 @@ function ProfilePage({ id, getProfile }) {
     <Page header={
       profile &&
       <React.Fragment>
-        <h1 style={{margin: 0, color: 'white'}}>{profile.first_name} {profile.last_name}</h1>
-        <h2 style={{margin: 0, color: 'white'}}>{profile.title}</h2>
+        <Title
+          first_name={profile.first_name}
+          last_name={profile.last_name}
+          title={profile.title}
+          image={image_url}
+        />
       </React.Fragment>
     }>
       <Skills>
@@ -145,7 +150,7 @@ function ProfilePage({ id, getProfile }) {
         <h3 style={h3}>Cleaner</h3>
         <p style={p}>I cleaned</p>
       </Work>
-      
+
       <Education>
         <h2 style={h2}>Education History</h2>
         <h3 style={h3}>Daycare</h3>
