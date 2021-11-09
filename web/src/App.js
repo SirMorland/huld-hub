@@ -28,13 +28,21 @@ function App() {
   }, [_setJwt]);
 
   const setJwt = useCallback((jwt) => {
-    Cookies.set("hub-jwt", jwt);
-    _setJwt(jwt);
+    if (jwt) {
+      Cookies.set("hub-jwt", jwt);
+      _setJwt(jwt);
+    }
+  }, [_setJwt]);
+
+  const removeJwt = useCallback(() => {
+    console.log("removeJwt");
+    Cookies.remove("hub-jwt");
+    _setJwt(null);
   }, [_setJwt]);
 
   if (user === null) {
     return (
-      <UserContext.Provider value={{ user, setJwt, jwt }}>
+      <UserContext.Provider value={{ user, setJwt, jwt, removeJwt }}>
         <ThemeProvider theme={theme}>
           <Page />
         </ThemeProvider>
@@ -43,7 +51,7 @@ function App() {
   }
 
   return (
-    <UserContext.Provider value={{ user, setJwt, jwt }}>
+    <UserContext.Provider value={{ user, setJwt, jwt, removeJwt }}>
       <ThemeProvider theme={theme}>
         <Switch>
           <Route exact path="/">

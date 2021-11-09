@@ -18,13 +18,13 @@ const StyledContainer = styled('div')(({ theme }) => `
 `);
 
 export default function PageWrapper({ children }) {
-  const { user, setJwt, jwt } = useContext(UserContext);
+  const { user, removeJwt, jwt } = useContext(UserContext);
   const onLogOutClick = () => {
-    setJwt(null);
+    removeJwt();
   }
   return (
     <React.Fragment>
-      <NavBar onLogOutClick={onLogOutClick} loggedIn={jwt !== null} role={user?.role?.type} />
+      <NavBar onLogOutClick={onLogOutClick} loggedIn={!!jwt} role={user?.role?.type} />
       <StyledContainer>
         {children}
       </StyledContainer>
