@@ -1,5 +1,4 @@
 import { createTheme } from "@mui/material/styles";
-import shadows from "@mui/material/styles/shadows";
 
 // See other (default) values: https://mui.com/customization/default-theme/
 const theme = createTheme({
@@ -24,7 +23,6 @@ const theme = createTheme({
       default: "#FFFFFF",
     },
   },
-  shadows: shadows.map(() => "none"),
   typography: {
     fontFamily: "Fira Sans",
     fontSize: 16,
@@ -35,6 +33,9 @@ const theme = createTheme({
     h3: {
       fontSize: "20px",
       fontWeight: "bold",
+    },
+    body1:{
+      fontSize: "16px"
     },
     button: {
       fontSize: "16px",
@@ -54,7 +55,8 @@ const theme = createTheme({
   components: {
     MuiButton: {
       defaultProps: {
-        disableRipple: true
+        disableRipple: true,
+        disableElevation: true
       },
       styleOverrides: {
         root: {

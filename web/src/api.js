@@ -1,5 +1,3 @@
-import Cookies from "js-cookie";
-
 const { fetchPost } = require("./utils");
 
 export const login = async (email, password) => {
@@ -15,10 +13,6 @@ export const login = async (email, password) => {
     default:
       throw new Error(response.status);
   }
-}
-
-export const logout = async () => {
-  Cookies.remove("hub-jwt");
 }
 
 export const register = async(email, password) => {

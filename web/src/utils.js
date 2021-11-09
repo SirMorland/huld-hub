@@ -4,6 +4,8 @@ import { render } from "@testing-library/react";
 import { ThemeProvider } from "@mui/material";
 
 import theme from "./theme";
+import React from "react";
+import { UserContext } from "./App";
 
 export const fetchPost = (url, body) => {
   return fetch(url, {
@@ -28,10 +30,16 @@ export const renderWithTheme = (children) => {
 export const renderWithRouter = (children) => {
   return render(<BrowserRouter>{children}</BrowserRouter>);
 };
-export const renderHelper = (children) => {
+export const renderHelper = (children, context) => {
+  const contextValue = { 
+    setJwt: () => { }, jwt: 'jwt',
+    ...context,
+  };
   return render(
     <ThemeProvider theme={theme}>
-      <BrowserRouter>{children}</BrowserRouter>
+      <BrowserRouter>
+        <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
+      </BrowserRouter>
     </ThemeProvider>
   );
 };

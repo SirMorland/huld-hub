@@ -20,14 +20,10 @@ describe('useCompetenceCategories hook', () => {
     expect(result.current.length).toEqual(0);
   })
   it('should return categories list when hub-jwt is defined and the jwt is proper', async () => {
-    Object.defineProperty(window.document, 'cookie', {
-      writable: true,
-      value: 'hub-jwt=changedtosomethingelsesopeoplewouldntknowthaticopiedfromstackoverflow',
-    });
     const mockCategories = [{ id: 1, name: 'cat' }];
     fetch.mockResponseOnce(JSON.stringify(mockCategories), { status: 200 });
 
-    const { result, waitForNextUpdate } = renderHook(() => useCompetenceCategories())
+    const { result, waitForNextUpdate } = renderHook(() => useCompetenceCategories('jwt'));
     await waitForNextUpdate();
     expect(result.current).toEqual(mockCategories);
   });

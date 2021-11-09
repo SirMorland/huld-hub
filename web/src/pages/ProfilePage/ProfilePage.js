@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useHistory, useRouteMatch } from "react-router";
 import Cookies from "js-cookie";
 
@@ -8,6 +8,7 @@ import useCompetenceCategories from "../../hooks/useCompetenceCategories";
 import ProfilePageEdit from "./ProfilePageEdit";
 import ProfilePageView from "./ProfilePageView";
 
+import { UserContext } from "../../App";
 import { getCompetencesWithCategoryNames } from "../../utils";
 
 const HISTORY_TYPE = {
@@ -43,7 +44,9 @@ function ProfilePage({ id }) {
   let history = useHistory();
   let match = useRouteMatch();
 
-  const profile = useProfile(id || match.params.id);
+  const { jwt } = useContext(UserContext);
+
+  const profile = useProfile(id || match.params.id, jwt);
   const competenceCategories = useCompetenceCategories();
 
   const [edit, setEdit] = useState(false);

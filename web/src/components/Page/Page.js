@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from 'prop-types';
 
 import { styled } from '@mui/system';
 
 import NavBar from '../NavBar/NavBar';
-import { logout } from "../../api";
+import { UserContext } from "../../App";
 
 const StyledMain = styled('main')`
   display: grid;
@@ -26,9 +26,13 @@ const StyledMain = styled('main')`
 
 
 const Page = ({ header, children }) => {
-	return (
+  const { user, removeJwt, jwt } = useContext(UserContext);
+  const onLogOutClick = () => {
+    removeJwt();
+  }
+  return (
 		<React.Fragment>
-      <NavBar onLogOutClick={logout}>
+      <NavBar onLogOutClick={onLogOutClick} loggedIn={!!jwt} role={user?.role?.type} >
         {header}
       </NavBar>
 			<StyledMain>

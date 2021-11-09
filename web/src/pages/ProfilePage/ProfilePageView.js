@@ -1,4 +1,6 @@
 import React from "react";
+
+import { Button } from "@mui/material";
 import { styled } from "@mui/system";
 
 import Page from '../../components/Page/Page';
@@ -6,8 +8,6 @@ import HistoryList from "../../components/HistoryList/HistoryList";
 import ItemList from "../../components/ItemList";
 import UserContactinfo from '../../components/UserContactinfo';
 import ActionButtonContainer from "../../components/ActionButtonContainer";
-import { Button } from "@mui/material";
-
 
 const h2 = {
   margin: 0,
@@ -16,12 +16,12 @@ const p = {
   margin: 0,
 };
 
-const HeaderLeft =  styled('div')`
+const HeaderLeft = styled('div')`
   width: 50%;
   float: left;
 `;
 
-const HeaderRight =  styled('div')`
+const HeaderRight = styled('div')`
   width: 50%;
   float: left;
 `;
@@ -85,8 +85,8 @@ function ProfilePageView({ profile, onEditClick }) {
       profile &&
       <React.Fragment>
         <HeaderLeft>
-          <h1 style={{margin: 0, color: 'white'}}>{profile.first_name} {profile.last_name}</h1>
-          <h2 style={{margin: 0, color: 'white'}}>{profile.title}</h2>
+          <h1 style={{ margin: 0, color: 'white' }}>{profile.first_name} {profile.last_name}</h1>
+          <h2 style={{ margin: 0, color: 'white' }}>{profile.title}</h2>
         </HeaderLeft>
         <HeaderRight>
           <UserContactinfo {...profile} ></UserContactinfo>
@@ -100,7 +100,7 @@ function ProfilePageView({ profile, onEditClick }) {
         <p style={p}>Skill 3</p>
       </Skills>
       <Languages>
-        {languages.length > 0 && <ItemList title="Language proficiencies" items={languages} /> }
+        {languages.length > 0 && <ItemList title="Language proficiencies" items={languages} />}
       </Languages>
       <Keywords>
         {keywords.length > 0 && <ItemList List title="Keywords" items={keywords} />}

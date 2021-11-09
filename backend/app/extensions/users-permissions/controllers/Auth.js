@@ -154,6 +154,18 @@ module.exports = {
         .query("user", "users-permissions")
         .create(params);
 
+      const nameRegex = /(?<first_name>[^.@]+)(\.(?<last_name>[^.@]+))?@.*/gm;
+      const { groups: { first_name, last_name }} = nameRegex.exec(params.email);
+
+      await strapi
+        .query("user-profiles")
+        .create({
+          first_name,
+          last_name,
+          email: params.email,
+          user: user.id
+        });
+
       const sanitizedUser = sanitizeEntity(user, {
         model: strapi.query("user", "users-permissions").model,
       });
@@ -182,6 +194,8 @@ module.exports = {
         user: sanitizedUser,
       });
     } catch (err) {
+      console.error(err);
+
       const adminError = _.includes(err.message, "username")
         ? {
           id: "Auth.form.error.username.taken",

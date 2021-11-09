@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import { styled } from '@mui/system';
 import { capitalizeFirstLetters } from "../utils";
 
@@ -8,9 +8,6 @@ const StyledUl = styled('ul')({
   listStyleType: "none",
   margin: "0",
   padding: "0",
-  display: "flex",
-  alignItems: "left",
-  justifyContent: "left"
 });
 
 const ItemList = (props) => {

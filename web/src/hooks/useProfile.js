@@ -1,13 +1,11 @@
-import Cookies from "js-cookie";
 import {useEffect, useState} from "react";
 import { useHistory } from "react-router";
 import {getProfile, NotFoundError, UnauthorizedError} from '../api';
 
-const useProfile = (id) => {
+const useProfile = (id, jwt) => {
   const [profile, setProfile] = useState(null);
   const history = useHistory();
   useEffect(()=>{
-    const jwt = Cookies.get("hub-jwt");
     const fetchProfile = async (id) => {
       try {
         const json = await getProfile(id, jwt);
@@ -26,7 +24,7 @@ const useProfile = (id) => {
       }
     };
     if (jwt) fetchProfile(id);
-  }, [id, history]);
+  }, [id, history, jwt]);
   return profile;
 };
 

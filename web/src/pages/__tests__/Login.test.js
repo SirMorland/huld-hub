@@ -1,5 +1,4 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
 import { act } from 'react-dom/test-utils';
 import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -7,36 +6,24 @@ import '@testing-library/jest-dom';
 import LoginForm from "../Login";
 
 import { EmailOrPasswordInvalidError } from '../../api';
-import { renderWithTheme } from '../../utils';
+import { renderHelper } from '../../utils';
 
 describe('Login Form', () => {
     it('should render login form', () => {
-        const { getByText } = renderWithTheme(
-            <MemoryRouter>
-                <LoginForm />
-            </MemoryRouter>
-        );
+        const { getByText } = renderHelper(<LoginForm />);
 
         expect(getByText('Log in to Hub')).toBeInTheDocument();
     });
 
     it('render 2 input components', () => {
-        const { getByLabelText } = renderWithTheme(
-            <MemoryRouter>
-                <LoginForm />
-            </MemoryRouter>
-        );
+        const { getByLabelText } = renderHelper(<LoginForm />);
 
         expect(getByLabelText(/Email/i)).toBeInTheDocument();
         expect(getByLabelText(/Password/i)).toBeInTheDocument();
     });
 
     it('renders a submit button', () => {
-        const { getByText } = renderWithTheme(
-            <MemoryRouter>
-                <LoginForm />
-            </MemoryRouter>
-        );
+        const { getByText } = renderHelper(<LoginForm />);
 
         expect(getByText("LOG IN")).toBeInTheDocument();
     });
@@ -44,11 +31,7 @@ describe('Login Form', () => {
     it('should submit when form inputs contain text', async () => {
         const onSubmit = jest.fn();
 
-        const { getByText, queryByText } = renderWithTheme(
-            <MemoryRouter>
-                <LoginForm onSubmit={onSubmit} />
-            </MemoryRouter>
-        );
+        const { getByText, queryByText } = renderHelper(<LoginForm onSubmit={onSubmit} />);
 
         await act(async () => {
             fireEvent.change(screen.getByLabelText(/Email/i), {
@@ -75,11 +58,7 @@ describe('Login Form', () => {
             throw new EmailOrPasswordInvalidError();
         });
 
-        const { getByText, queryByText } = renderWithTheme(
-            <MemoryRouter>
-                <LoginForm onSubmit={onSubmit} />
-            </MemoryRouter>
-        );
+        const { getByText, queryByText } = renderHelper(<LoginForm onSubmit={onSubmit} />);
 
         expect(queryByText(/Incorrect email or password!/i)).not.toBeInTheDocument();
 
