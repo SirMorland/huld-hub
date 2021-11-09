@@ -4,10 +4,6 @@ import Cookies from "js-cookie";
 import { styled } from "@mui/system";
 
 import Page from '../components/Page/Page';
-
-import { NotFoundError, UnauthorizedError } from '../api';
-import Title from '../components/Title/Title';
-
 import HistoryList from "../components/HistoryList/HistoryList";
 import ItemList from "../components/ItemList";
 import UserContactinfo from '../components/UserContactinfo';
@@ -15,8 +11,7 @@ import useProfile from "../hooks/useProfile";
 import useCompetenceCategories from "../hooks/useCompetenceCategories";
 import { getCompetencesWithCategoryNames } from "../utils";
 import { UserContext } from "../App";
-
-
+import Title from '../components/Title/Title';
 
 const h2 = {
   margin: 0,
@@ -24,11 +19,6 @@ const h2 = {
 const p = {
   margin: 0,
 };
-
-const HeaderLeft = styled('div')`
-  width: 50%;
-  float: left;
-`;
 
 const HeaderRight = styled('div')`
   width: 50%;
@@ -86,10 +76,6 @@ const Education = styled("div")`
   }
 `;
 
-const image_url = "https://images.pexels.com/photos/6386956/pexels-photo-6386956.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500";
-function ProfilePage({ id, getProfile }) {
-
-
 const HISTORY_TYPE = {
   education: "Education",
   work: "Work",
@@ -119,8 +105,9 @@ const getHistoryProps = (historyItems = [], type) => {
   };
 };
 
-function ProfilePage({ id }) {
+const image_url = "https://images.pexels.com/photos/6386956/pexels-photo-6386956.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500";
 
+function ProfilePage({ id }) {
   let history = useHistory();
   let match = useRouteMatch();
   const { jwt } = useContext(UserContext);
@@ -129,36 +116,10 @@ function ProfilePage({ id }) {
 
   useEffect(() => {
     let jwt = Cookies.get("hub-jwt");
-
-
-    let fetchProfile = async id => {
-      try {
-        const json = await getProfile(id, jwt);
-        setProfile(json);
-      } catch (error) {
-        switch (true) {
-          case error instanceof NotFoundError:
-            setProfile(false);
-            break;
-          case error instanceof UnauthorizedError:  //TODO: this does not necessarily mean the email is not confirmed
-            history.push("/almost-done");           //We should return more accurate errors to deduce why user is not authorized
-            break;
-          default:
-            break;
-        }
-      }
-
     if (!jwt) {
       history.push("/");
-
     }
   }, [history]);
-
-
-    if (!jwt) {
-      history.push("/");
-    } else {
-      fetchProfile(id || match.params.id);
 
   const educationHistory = useMemo(
     () =>
@@ -185,7 +146,6 @@ function ProfilePage({ id }) {
         languages: competences.filter(competence => competence.category_name === "coding languages"),
         keywords: competences.filter(competence => competence.category_name === "keywords"),
       }
-
     }
     return { languages: [], keywords: [] };
   }, [competenceCategories, profile]);
@@ -199,13 +159,15 @@ function ProfilePage({ id }) {
     <Page header={
       profile &&
       <React.Fragment>
-
         <Title
           first_name={profile.first_name}
           last_name={profile.last_name}
           title={profile.title}
           image={image_url}
         />
+        <HeaderRight>
+          <UserContactinfo {...profile} ></UserContactinfo>
+        </HeaderRight>
       </React.Fragment>
     }>
       <Skills>
