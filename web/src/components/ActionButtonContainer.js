@@ -1,25 +1,22 @@
 import { styled } from '@mui/system';
 
-const StyledWrapper = styled('div')`
-  position: absolute;
-  bottom: 16px;
-  height: 80px;
-`;
-
 const StyledContainer = styled('div')`
   position: fixed;
+  bottom: 16px;
   display: grid;
   grid-auto-flow: column;
   gap: 32px;
+
+  @media (min-width: 768px){
+    bottom: 32px;
+  }
 `;
 
 const ActionButtonContainer = ({ children }) => {
   return (
-    <StyledWrapper>
-      <StyledContainer>
-        {children}
-      </StyledContainer>
-    </StyledWrapper>
+    <StyledContainer>
+      {children}
+    </StyledContainer>
   );
 }
 
