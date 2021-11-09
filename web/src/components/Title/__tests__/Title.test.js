@@ -1,4 +1,4 @@
-import { cleanup, getByTestId } from "@testing-library/react";
+import { cleanup } from "@testing-library/react";
 import Title from "../Title.js";
 import { renderWithTheme } from "../../../utils";
 
