@@ -1,24 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory, useRouteMatch } from 'react-router';
-import Cookies from 'js-cookie';
-
-import { styled } from '@mui/system';
+import React, { useContext, useEffect, useMemo } from "react";
+import { useHistory, useRouteMatch } from "react-router";
+import Cookies from "js-cookie";
+import { styled } from "@mui/system";
 
 import Page from '../components/Page/Page';
-import ProfileInfo from '../components/ProfileInfo/ProfileInfo';
-import { NotFoundError, UnauthorizedError } from '../api';
+import HistoryList from "../components/HistoryList/HistoryList";
+import ItemList from "../components/ItemList";
+import ProfileInfo from "../components/ProfileInfo/ProfileInfo";
+import UserContactinfo from '../components/UserContactinfo';
+import useProfile from "../hooks/useProfile";
+import useCompetenceCategories from "../hooks/useCompetenceCategories";
+import { getCompetencesWithCategoryNames } from "../utils";
+import { UserContext } from "../App";
 
-const h2 = {
-  margin: 0
-};
-const h3 = {
-  margin: 0,
-  marginTop: 16
 
-};
-const p = {
-  margin: 0
-};
+const HeaderLeft = styled('div')`
+  width: 50%;
+  float: left;
+`;
+
+const HeaderRight = styled('div')`
+  width: 50%;
+  float: left;
+`;
 
 const Skills = styled('div')`
   @media (min-width: 768px) {
@@ -28,7 +32,7 @@ const Skills = styled('div')`
     grid-column-start: 1;
   }
 `;
-const Languages = styled('div')`
+const Languages = styled("div")`
   @media (min-width: 768px) {
     grid-column-start: 1;
   }
@@ -36,15 +40,7 @@ const Languages = styled('div')`
     grid-column-start: 1;
   }
 `;
-const Keywords = styled('div')`
-  @media (min-width: 768px) {
-    grid-column-start: 2;
-  }
-  @media (min-width: 1152px) {
-    grid-column-start: 1;
-  }
-`;
-const Bio = styled('div')`
+const Keywords = styled("div")`
   @media (min-width: 768px) {
     grid-column-start: 2;
   }
@@ -52,101 +48,150 @@ const Bio = styled('div')`
     grid-column-start: 1;
   }
 `;
-const Work = styled('div')`
+const Bio = styled("div")`
+  @media (min-width: 768px) {
+    grid-column-start: 2;
+  }
+  @media (min-width: 1152px) {
+    grid-column-start: 1;
+  }
+`;
+const Work = styled("div")`
   @media (min-width: 768px) {
     grid-column-start: 1;
   }
   @media (min-width: 1152px) {
     grid-column-start: 2;
+    grid-row: span 4;
   }
 `;
-const Education = styled('div')`
+const Education = styled("div")`
   @media (min-width: 768px) {
     grid-column-start: 2;
   }
   @media (min-width: 1152px) {
     grid-column-start: 3;
+    grid-row: span 4;
   }
 `;
 
-function ProfilePage({ id, getProfile }) {
+const HISTORY_TYPE = {
+  education: "Education",
+  work: "Work",
+};
+
+/**
+ * A function that produces the props for using HistoryList component
+ *
+ * @param {Array<object>} historyItems - Array of history items
+ * @param {*} type - type of history items
+ * @returns {object}
+ */
+const getHistoryProps = (historyItems = [], type) => {
+  return {
+    title: `${type} History`,
+    noItemDescription: `No ${type} History Provided`,
+    historyItems: historyItems.map((historyItem) => ({
+      id: historyItem.id,
+      organisation:
+        historyItem[type === HISTORY_TYPE.education ? "school" : "company"],
+      title:
+        historyItem[type === HISTORY_TYPE.education ? "degree" : "position"],
+      description: historyItem.description,
+      start_date: historyItem.start_date,
+      end_date: historyItem.end_date,
+    })),
+  };
+};
+
+function ProfilePage({ id }) {
   let history = useHistory();
   let match = useRouteMatch();
-
-  let [profile, setProfile] = useState(null);
+  const { jwt } = useContext(UserContext);
+  const profile = useProfile(id || match.params.id, jwt);
+  const competenceCategories = useCompetenceCategories(jwt);
 
   useEffect(() => {
     let jwt = Cookies.get("hub-jwt");
+    if (!jwt) {
+      history.push("/");
+    }
+  }, [history]);
 
-    let fetchProfile = async id => {
-      try {
-        const json = await getProfile(id, jwt);
-        setProfile(json);
-      } catch(error) {
-        switch(true) {
-          case error instanceof NotFoundError:
-            setProfile(false);
-            break;
-          case error instanceof UnauthorizedError:  //TODO: this does not necessarily mean the email is not confirmed
-            history.push("/almost-done");           //We should return more accurate errors to deduce why user is not authorized
-            break;
-          default:
-            break;
-        }
+  const educationHistory = useMemo(
+    () =>
+      getHistoryProps(
+        profile ? profile.education_histories : [],
+        HISTORY_TYPE.education
+      ),
+    [profile]
+  );
+
+  const workHistory = useMemo(
+    () =>
+      getHistoryProps(
+        profile ? profile.work_experiences : [],
+        HISTORY_TYPE.work
+      ),
+    [profile]
+  );
+
+  const { languages, keywords } = useMemo(() => {
+    if (profile && profile.competences) {
+      const competences = getCompetencesWithCategoryNames(competenceCategories, profile.competences);
+      return {
+        languages: competences.filter(competence => competence.category_name === "coding languages"),
+        keywords: competences.filter(competence => competence.category_name === "keywords"),
       }
     }
+    return { languages: [], keywords: [] };
+  }, [competenceCategories, profile]);
 
-    if(!jwt) {
-      history.push("/");
-    } else {
-      fetchProfile(id || match.params.id);
-    }
-  }, [id, match.params.id, history, getProfile]);
-
-  if(profile === false) {
+  if (profile === false) {
     // TODO: render actual 404 page
-    return (
-      <h1>404</h1>
-    )
+    return <h1>404</h1>;
   }
 
   return (
     <Page header={
       profile &&
       <React.Fragment>
-        <h1 style={{margin: 0, color: 'white'}}>{profile.first_name} {profile.last_name}</h1>
-        <h2 style={{margin: 0, color: 'white'}}>{profile.title}</h2>
+        <HeaderLeft>
+          <h1 style={{ margin: 0, color: 'white' }}>{profile.first_name} {profile.last_name}</h1>
+          <h2 style={{ margin: 0, color: 'white' }}>{profile.title}</h2>
+        </HeaderLeft>
+        <HeaderRight>
+          <UserContactinfo {...profile} ></UserContactinfo>
+        </HeaderRight>
       </React.Fragment>
     }>
       <Skills>
         <ProfileInfo title="Skills" data={profile && profile.skills}/> 
       </Skills>
       <Languages>
-        <h2 style={h2}>Languages</h2>
-        <p style={p}>Language 1</p>
-        <p style={p}>Language 2</p>
-        <p style={p}>Language 3</p>
+        {languages.length > 0 && <ItemList title="Language proficiencies" items={languages} />}
       </Languages>
       <Keywords>
-        <h2 style={h2}>Keywords</h2>
-        <p style={p}>Keyword 1</p>
-        <p style={p}>Keyword 2</p>
-        <p style={p}>Keyword 3</p>
+        {keywords.length > 0 && <ItemList List title="Keywords" items={keywords} />}
       </Keywords>
       <Bio>
         <ProfileInfo title="Bio" data={profile && profile.bio}/>
       </Bio>
 
       <Work>
-        <h2 style={h2}>Work History</h2>
-        <h3 style={h3}>Cleaner</h3>
-        <p style={p}>I cleaned</p>
+        <HistoryList
+          title={workHistory.title}
+          historyItems={workHistory.historyItems}
+          noItemDescription={workHistory.noItemDescription}
+        />
       </Work>
-      
+
       <Education>
-        <h2 style={h2}>Education History</h2>
-        <h3 style={h3}>Daycare</h3>
-        <p style={p}>I studied vector algebra</p>
+        <HistoryList
+          title={educationHistory.title}
+          historyItems={educationHistory.historyItems}
+          noItemDescription={educationHistory.noItemDescription}
+        />
       </Education>
     </Page>
   );
