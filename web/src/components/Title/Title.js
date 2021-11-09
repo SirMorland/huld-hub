@@ -12,24 +12,41 @@ const NameContainer = styled('div')`
   display: flex;
   flex-direction: column;
 `;
+
+const StyledAvatar = styled(Avatar)`
+    margin-right: 32px;
+    width: 128px;
+    height: 128px;
+`;
+const StyledHeader = styled(Typography)(({ theme }) => `
+  font-weight: bold;
+  color: white;
+  font-size: 48px;
+  font-family: ${theme.fonts.header};
+`);
+const StyledSubHeader = styled(Typography)(({ theme }) => `
+  font-weight: bold;
+  color: white;
+  font-size: 32px;
+  font-family: ${theme.fonts.header};
+`);
 const Title = (props) => {
     const { first_name, last_name, title, image } = props;
 
     return (
         <StyledContainer>
-            <Avatar
-                style={{ marginRight: "14px", width: '70px', height: '70px' }}
-                alt="Jack Sparrow"
+            <StyledAvatar
+                alt="Profile Picture"
                 src={image}
                 data-testid="avatar"
             />
             <NameContainer >
-                <Typography variant="h4" style={{ color: "white" }} data-testid="user_name">
+                <StyledHeader data-testid="user_name">
                     {first_name} {last_name}
-                </Typography>
-                <Typography variant="h7" style={{ color: "white" }} data-testid="user_title">
+                </StyledHeader>
+                <StyledSubHeader data-testid="user_title">
                     {title}
-                </Typography>
+                </StyledSubHeader>
             </NameContainer>
         </StyledContainer>
     );
