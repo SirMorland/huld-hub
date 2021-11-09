@@ -6,6 +6,7 @@ const StyledContainer = styled('div')`
   display: grid;
   grid-auto-flow: column;
   gap: 32px;
+  z-index: 1;
 
   @media (min-width: 768px){
     bottom: 32px;

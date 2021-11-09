@@ -40,7 +40,7 @@ const getHistoryProps = (historyItems = [], type) => {
   };
 };
 
-function ProfilePage({ id }) {
+function ProfilePage({ id, onSave }) {
   let history = useHistory();
   let match = useRouteMatch();
 
@@ -94,9 +94,13 @@ function ProfilePage({ id }) {
 
   const profileProps = {...profile, educationHistory, workHistory, languages, keywords};
 
+  const onSaveClick = async (profile) => {
+    return await onSave(profile, jwt);
+  }
+
   if(edit) {
     return (
-      <ProfilePageEdit profile={profileProps} onCancelClick={() => setEdit(false)} />
+      <ProfilePageEdit profile={profileProps} onSaveClick={onSaveClick} onCancelClick={() => setEdit(false)} />
     );
   } else {
     return (

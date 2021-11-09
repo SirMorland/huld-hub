@@ -5,6 +5,7 @@ import { styled } from "@mui/system";
 
 import Page from '../../components/Page/Page';
 import ActionButtonContainer from "../../components/ActionButtonContainer";
+import { DoubleFieldContainer } from "../../components/GenericComponents";
 
 const Grid = styled('div')`
   display: grid;
@@ -78,19 +79,17 @@ const Education = styled("div")`
   }
 `;
 
-const Double =  styled("div")`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-`;
-
 function ProfilePageEdit({ profile, onSaveClick, onCancelClick }) {
   const [edited, setEdited] = useState(profile);
+
+  const onSave = async () => {
+    await onSaveClick(edited);
+  }
 
   return (
     <Page>
       <BasicInfo>
-        <Double>
+        <DoubleFieldContainer>
           <TextField
             required
             fullWidth
@@ -111,7 +110,7 @@ function ProfilePageEdit({ profile, onSaveClick, onCancelClick }) {
             value={edited.last_name}
             onChange={e => setEdited(prev => ({...prev, last_name: e.target.value}))}
           />
-        </Double>
+        </DoubleFieldContainer>
         <TextField
           required
           fullWidth
@@ -125,7 +124,7 @@ function ProfilePageEdit({ profile, onSaveClick, onCancelClick }) {
       </BasicInfo>
 
       <ContactInfo>
-        <Double>
+        <DoubleFieldContainer>
           <TextField
             required
             fullWidth
@@ -136,7 +135,8 @@ function ProfilePageEdit({ profile, onSaveClick, onCancelClick }) {
             value={edited.email}
             onChange={e => setEdited(prev => ({...prev, email: e.target.value}))}
             />
-        </Double>
+          <div />
+        </DoubleFieldContainer>
       </ContactInfo>
 
       <Skills>
@@ -165,7 +165,7 @@ function ProfilePageEdit({ profile, onSaveClick, onCancelClick }) {
               fullWidth
               variant="contained"
               color="primary"
-              onClick={onSaveClick}
+              onClick={onSave}
           >
             Save
           </Button>
