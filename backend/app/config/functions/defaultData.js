@@ -62,7 +62,7 @@ const DEFAULT_SETTINGS = [
       allow_register: true,
       email_confirmation: true,
       email_reset_password: `http://${process.env.WEB_DOMAIN ?? "localhost:3000"}/reset-password`,
-      email_confirmation_redirection: `http://${process.env.WEB_DOMAIN ?? "localhost:3000"}/confirm-email`,
+      email_confirmation_redirection: `http://${process.env.WEB_DOMAIN ?? "localhost:3000"}/email-confirmed`,
       default_role: DEFAULT_ROLES.EMPLOYEE.type,
     },
   },
@@ -175,7 +175,7 @@ const DEFAULT_PROFILES = [
         start_date: "2020-10-20T12:36:26.000Z",
         end_date: "2021-10-20T12:36:26.000Z",
         title: "Cleaner at Admin",
-        sub_title: "Cleaner",
+        position: "Cleaner",
         description: "Cleaning up admin desks, tables. Making coffee every morning",
         company: "Mix n Go Oy",
       }
