@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
-import Cookies from 'js-cookie';
 
 import { Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
@@ -8,6 +7,7 @@ import { Box } from '@mui/system';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
 import { EmailOrPasswordInvalidError } from '../api';
+import { UserContext } from '../App';
 
 export default function LoginForm({ onSubmit }) {
     const location = useLocation();
@@ -15,16 +15,16 @@ export default function LoginForm({ onSubmit }) {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const history = useHistory();
-
+    const { setJwt } = useContext(UserContext);
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         try {
             const json = await onSubmit(email, password);
-            Cookies.set("hub-jwt", json.jwt);
+            setJwt(json.jwt);
             history.push("/");
-        } catch(error) {
-            switch(true) {
+        } catch (error) {
+            switch (true) {
                 case error instanceof EmailOrPasswordInvalidError:
                     setError("Incorrect email or password!");
                     break;

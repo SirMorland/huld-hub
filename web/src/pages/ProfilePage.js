@@ -1,13 +1,16 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import { useHistory, useRouteMatch } from "react-router";
 import Cookies from "js-cookie";
 import { styled } from "@mui/system";
-import { NotFoundError, UnauthorizedError } from "../api";
 
 import Page from '../components/Page/Page';
 import HistoryList from "../components/HistoryList/HistoryList";
 import ItemList from "../components/ItemList";
 import UserContactinfo from '../components/UserContactinfo';
+import useProfile from "../hooks/useProfile";
+import useCompetenceCategories from "../hooks/useCompetenceCategories";
+import { getCompetencesWithCategoryNames } from "../utils";
+import { UserContext } from "../App";
 
 
 const h2 = {
@@ -17,12 +20,12 @@ const p = {
   margin: 0,
 };
 
-const HeaderLeft =  styled('div')`
+const HeaderLeft = styled('div')`
   width: 50%;
   float: left;
 `;
 
-const HeaderRight =  styled('div')`
+const HeaderRight = styled('div')`
   width: 50%;
   float: left;
 `;
@@ -107,59 +110,19 @@ const getHistoryProps = (historyItems = [], type) => {
   };
 };
 
-function ProfilePage({ id, getProfile, getCompetenceCategories }) {
+function ProfilePage({ id }) {
   let history = useHistory();
   let match = useRouteMatch();
+  const { jwt } = useContext(UserContext);
+  const profile = useProfile(id || match.params.id, jwt);
+  const competenceCategories = useCompetenceCategories(jwt);
 
-  let [profile, setProfile] = useState(null);
-  let [competenceCategories, setCompetenceCategories] = useState(null);
-  
   useEffect(() => {
     let jwt = Cookies.get("hub-jwt");
-
-    let fetchProfile = async (id) => {
-      try {
-        const json = await getProfile(id, jwt);
-        setProfile(json);
-      } catch (error) {
-        switch (true) {
-          case error instanceof NotFoundError:
-            setProfile(false);
-            break;
-          case error instanceof UnauthorizedError: //TODO: this does not necessarily mean the email is not confirmed
-            history.push("/almost-done"); //We should return more accurate errors to deduce why user is not authorized
-            break;
-          default:
-            break;
-        }
-      }
-    };
-
-    let fetchCompetenceCategory = async () => {
-      try {
-        const json = await getCompetenceCategories(jwt);
-        setCompetenceCategories(json);
-      } catch(error) {
-        switch(true) {
-          case error instanceof NotFoundError:
-            setCompetenceCategories(false);
-            break;
-          case error instanceof UnauthorizedError:  //TODO: this does not necessarily mean the email is not confirmed
-            history.push("/almost-done");           //We should return more accurate errors to deduce why user is not authorized
-            break;
-          default:
-            break;
-        }
-      }
-    }
-
     if (!jwt) {
       history.push("/");
-    } else {
-      fetchProfile(id || match.params.id);
-      fetchCompetenceCategory();  
     }
-  }, [id, match.params.id, history, getProfile, getCompetenceCategories]);
+  }, [history]);
 
   const educationHistory = useMemo(
     () =>
@@ -179,19 +142,16 @@ function ProfilePage({ id, getProfile, getCompetenceCategories }) {
     [profile]
   );
 
-  const getCompetencesWithCategoryNames = (categories, competences) => {
-    return competences.map(competence => {
-      const category = categories.find(category => category.id === competence.category);
+  const { languages, keywords } = useMemo(() => {
+    if (profile && profile.competences) {
+      const competences = getCompetencesWithCategoryNames(competenceCategories, profile.competences);
       return {
-        ...competence,
-        category_name: category.name,
+        languages: competences.filter(competence => competence.category_name === "coding languages"),
+        keywords: competences.filter(competence => competence.category_name === "keywords"),
       }
-    });
-  }
-  let competences = null;
-  if(competenceCategories && profile != null && profile.competences !== null){
-    competences = getCompetencesWithCategoryNames(competenceCategories, profile.competences);
-  }
+    }
+    return { languages: [], keywords: [] };
+  }, [competenceCategories, profile]);
 
   if (profile === false) {
     // TODO: render actual 404 page
@@ -203,8 +163,8 @@ function ProfilePage({ id, getProfile, getCompetenceCategories }) {
       profile &&
       <React.Fragment>
         <HeaderLeft>
-          <h1 style={{margin: 0, color: 'white'}}>{profile.first_name} {profile.last_name}</h1>
-          <h2 style={{margin: 0, color: 'white'}}>{profile.title}</h2>
+          <h1 style={{ margin: 0, color: 'white' }}>{profile.first_name} {profile.last_name}</h1>
+          <h2 style={{ margin: 0, color: 'white' }}>{profile.title}</h2>
         </HeaderLeft>
         <HeaderRight>
           <UserContactinfo {...profile} ></UserContactinfo>
@@ -218,10 +178,10 @@ function ProfilePage({ id, getProfile, getCompetenceCategories }) {
         <p style={p}>Skill 3</p>
       </Skills>
       <Languages>
-      {competences !== null && <ItemList title="Language proficiencies" items={competences.filter(a => a.category_name === "coding languages")} /> }
+        {languages.length > 0 && <ItemList title="Language proficiencies" items={languages} />}
       </Languages>
       <Keywords>
-        {competences !== null && <ItemList List title="Keywords" items={competences.filter(a => a.category_name === "keywords")} />}
+        {keywords.length > 0 && <ItemList List title="Keywords" items={keywords} />}
       </Keywords>
       <Bio>
         <h2 style={h2}>Bio</h2>

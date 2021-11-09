@@ -9,49 +9,49 @@ import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
 
 export default function AlmostDone() {
-	const user = useContext(UserContext);
-    const history = useHistory();
+	const { user } = useContext(UserContext);
+	const history = useHistory();
 
 	const [email, setEmail] = useState(null);
 
-    useEffect(() => {
-        let jwt = Cookies.get("hub-jwt");
+	useEffect(() => {
+		let jwt = Cookies.get("hub-jwt");
 
-        if(jwt) {
-            let {email} = JSON.parse(atob(jwt.split('.')[1])); //TODO: maybe use an actual jwt parser library
-            setEmail(email);
-        } else {
+		if (jwt) {
+			let { email } = JSON.parse(atob(jwt.split('.')[1])); //TODO: maybe use an actual jwt parser library
+			setEmail(email);
+		} else {
 			history.push("/login");
 		}
-    }, [history]);
+	}, [history]);
 
 	useEffect(() => {
-		if(user) {
+		if (user) {
 			history.push("/");
 		}
 	}, [user, history]);
 
-    const sendConfirmationEmail = () => {
-        console.log(email);
-        // TODO send a post request to /auth/send-email-confirmation
-        // the body is an object with {email: email}
-    };
+	const sendConfirmationEmail = () => {
+		console.log(email);
+		// TODO send a post request to /auth/send-email-confirmation
+		// the body is an object with {email: email}
+	};
 
-	return(
+	return (
 		<PageWrapper>
 			<DialogWrapper>
 				<Typography component="h1" variant="h5" color="primary">
 					Almost done
 				</Typography>
-				<br/>
-				<br/>
+				<br />
+				<br />
 				<Typography component="p" variant="body2">
 					Thank you for registering to Hub. To finish your registration, please confirm your email address by clicking the link we sent to {email}.
-					<br/>
-					<br/>
+					<br />
+					<br />
 					Didn't receive the confirmation email? Please check your spam folder or try sending the email again by clicking the button below.
-					<br/>
-					<br/>
+					<br />
+					<br />
 				</Typography>
 				<Button
 					type="button"

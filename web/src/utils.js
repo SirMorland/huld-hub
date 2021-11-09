@@ -4,6 +4,8 @@ import { render } from "@testing-library/react";
 import { ThemeProvider } from "@mui/material";
 
 import theme from "./theme";
+import React from "react";
+import { UserContext } from "./App";
 
 export const fetchPost = (url, body) => {
   return fetch(url, {
@@ -28,13 +30,31 @@ export const renderWithTheme = (children) => {
 export const renderWithRouter = (children) => {
   return render(<BrowserRouter>{children}</BrowserRouter>);
 };
-export const renderHelper = (children) => {
+export const renderHelper = (children, context) => {
+  const contextValue = { 
+    setJwt: () => { }, jwt: 'jwt',
+    ...context,
+  };
   return render(
     <ThemeProvider theme={theme}>
-      <BrowserRouter>{children}</BrowserRouter>
+      <BrowserRouter>
+        <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
+      </BrowserRouter>
     </ThemeProvider>
   );
 };
 export const capitalizeFirstLetters = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+export const getCompetencesWithCategoryNames = (categories, competences) => {
+  if (competences && competences.length > 0 && categories && categories.length > 0)
+    return competences.map(competence => {
+      const category = categories.find(category => category.id === competence.category);
+      return {
+        ...competence,
+        category_name: category.name,
+      }
+    });
+  return [];
 }
