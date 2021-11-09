@@ -11,10 +11,10 @@ const StyledTypography = styled(Typography)`
 const ProfileInfo = ({title, data}) => {
     return(
         <div className="profileBio">
-            <Typography variant="h4" colour="primary" >
+            <Typography variant="h2" colour="primary" data-testid="title" >
                 {title}
             </Typography>
-            <StyledTypography>
+            <StyledTypography data-testid="data">
                 {data}
             </StyledTypography>
         </div>
