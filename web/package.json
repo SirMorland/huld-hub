@@ -5,6 +5,8 @@
   "dependencies": {
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
+    "@mdi/js": "^6.4.95",
+    "@mdi/react": "^1.5.0",
     "@mui/icons-material": "^5.0.5",
     "@mui/material": "^5.0.6",
     "@testing-library/jest-dom": "^5.14.1",
@@ -21,7 +23,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --verbose",
     "lint": "eslint --ext js,jsx,ts,tsx src",
     "eslint": "node node_modules/eslint/bin/eslint.js --config node_modules/eslint-config-react-app/index.js",
     "eject": "react-scripts eject"
@@ -43,5 +45,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/react-hooks": "^7.0.2",
+    "jest-fetch-mock": "^3.0.3",
+    "react-test-renderer": "^16.14.0"
   }
 }
