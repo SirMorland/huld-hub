@@ -10,30 +10,31 @@ const OutlinedInput = styled(MuiOutlinedInput)(({ theme }) => ({
   margin: "4px 0",
 }));
 
-function TextInput({ label, ...props }) {
+function TextField({ label, textarea, ...props }) {
   const inputProps = {
     fullWidth: true,
     placeholder: label,
+    ...(textarea && { multiline: true, rows: 4 }),
     ...props,
   };
   return (
-    <div data-testid="textinput-container">
+    <div data-testid="textfield-container">
       {label && (
         <Typography
           component="label"
           variant="body1"
           htmlFor={props.id || ""}
-          data-testid="textinput-label"
+          data-testid="textfield-label"
         >
           {label}
         </Typography>
       )}
       <OutlinedInput
         {...inputProps}
-        inputProps={{ "data-testid": "textinput-input" }}
+        inputProps={{ "data-testid": "textfield-input" }}
       />
     </div>
   );
 }
 
-export default TextInput;
+export default TextField;
