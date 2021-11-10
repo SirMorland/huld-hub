@@ -10,10 +10,11 @@ const OutlinedInput = styled(MuiOutlinedInput)(({ theme }) => ({
   margin: "4px 0",
 }));
 
-function TextInput({ label, ...props }) {
+function TextField({ label, textarea, ...props }) {
   const inputProps = {
     fullWidth: true,
     placeholder: label,
+    ...(textarea && { multiline: true, rows: 4 }),
     ...props,
   };
   return (
@@ -36,4 +37,4 @@ function TextInput({ label, ...props }) {
   );
 }
 
-export default TextInput;
+export default TextField;

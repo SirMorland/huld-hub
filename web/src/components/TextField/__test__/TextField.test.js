@@ -1,6 +1,6 @@
 import { fireEvent, cleanup } from "@testing-library/react";
 import { renderWithTheme } from "../../../utils";
-import TextInput from "../TextInput";
+import TextInput from "../TextField";
 
 const testData = {
   label: "test label",
