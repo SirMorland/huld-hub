@@ -17,14 +17,10 @@ const p = {
   margin: 0,
 };
 
-const HeaderLeft = styled('div')`
-  width: 50%;
-  float: left;
-`;
-
-const HeaderRight = styled('div')`
-  width: 50%;
-  float: left;
+const HeaderContentContainer = styled('div')`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const Skills = styled('div')`
@@ -86,19 +82,15 @@ function ProfilePageView({ profile, onEditClick }) {
   return (
     <Page header={
       profile &&
-      <React.Fragment>
-        <HeaderLeft>
-          <Title
-            first_name={profile.first_name}
-            last_name={profile.last_name}
-            title={profile.title}
-            image={image_url}
+      <HeaderContentContainer>
+        <Title
+          first_name={profile.first_name}
+          last_name={profile.last_name}
+          title={profile.title}
+          image={image_url}
           />
-        </HeaderLeft>
-        <HeaderRight>
-          <UserContactinfo {...profile} ></UserContactinfo>
-        </HeaderRight>
-      </React.Fragment>
+        <UserContactinfo {...profile} ></UserContactinfo>
+      </HeaderContentContainer>
     }>
       <Skills>
         <h2 style={h2}>Skills</h2>
