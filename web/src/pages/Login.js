@@ -4,6 +4,7 @@ import { useHistory, useLocation } from 'react-router';
 import { Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 
+import TextInput from '../components/TextInput/TextInput';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
 import { EmailOrPasswordInvalidError } from '../api';
@@ -42,6 +43,8 @@ export default function LoginForm({ onSubmit }) {
                     Log in to Hub
                 </Typography>
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3, width: '100%' }}>
+                <TextInput label="Email"/>
+                <TextInput label="Email"/>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
