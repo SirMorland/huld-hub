@@ -48,13 +48,13 @@ function ProfilePage({ id, onSave }) {
 
   const [profile, setProfile] = useProfile(id || match.params.id, jwt);
   const competenceCategories = useCompetenceCategories();
+  const [edit, setEdit] = useState(false);
 
   const onSaveClick = async (profile) => {
     setProfile(profile);
     await onSave(profile, jwt);
+    setEdit(false);
   }
-
-  const [edit, setEdit] = useState(false);
   
   useEffect(() => {
     let jwt = Cookies.get("hub-jwt");
