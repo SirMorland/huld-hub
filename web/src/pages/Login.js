@@ -4,7 +4,7 @@ import { useHistory, useLocation } from 'react-router';
 import { Button, Grid, Link, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 
-import TextInput from '../components/TextInput/TextInput';
+import TextField from '../components/TextField/TextField';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
 import { EmailOrPasswordInvalidError } from '../api';
@@ -45,7 +45,7 @@ export default function LoginForm({ onSubmit }) {
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3, width: '100%' }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <TextInput
+                            <TextField
                                 required
                                 id="email"
                                 type="email"
@@ -57,7 +57,7 @@ export default function LoginForm({ onSubmit }) {
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <TextInput
+                            <TextField
                                 required
                                 type="password"
                                 id="password"
