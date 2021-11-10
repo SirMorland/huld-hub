@@ -1,6 +1,5 @@
 import { fireEvent, cleanup } from "@testing-library/react";
 import { renderWithTheme } from "../../../utils";
-import { useState } from "react";
 import TextInput from "../TextInput";
 
 const testData = {
