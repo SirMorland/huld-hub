@@ -80,13 +80,27 @@ const testProfile = {
 };
 
 describe("useHistoryList hook", () => {
+  it("should return correct data when user profile is not available", () => {
+    const type = HISTORY_TYPE[Math.floor(Math.random() * 2)];
+    const { result } = renderHook(() => useHistoryList(undefined, type));
+    expect(result.current).toBeTruthy();
+    const { title, noItemDescription, historyItems } = result.current;
+    expect(title).toBe(`${capitalizeFirstLetters(type)} History`);
+    expect(noItemDescription).toBe(
+      `No ${capitalizeFirstLetters(type)} History Provided`
+    );
+    expect(historyItems).toHaveLength(0);
+  
+  });
   it("should return correct data when user history is empty", () => {
     const type = HISTORY_TYPE[Math.floor(Math.random() * 2)];
     const { result } = renderHook(() => useHistoryList(emptyProfile, type));
     expect(result.current).toBeTruthy();
     const { title, noItemDescription, historyItems } = result.current;
     expect(title).toBe(`${capitalizeFirstLetters(type)} History`);
-    expect(noItemDescription).toBe(`No ${capitalizeFirstLetters(type)} History Provided`);
+    expect(noItemDescription).toBe(
+      `No ${capitalizeFirstLetters(type)} History Provided`
+    );
     expect(historyItems).toHaveLength(0);
   });
   it("should return correct data when user history is provided", async () => {
@@ -95,7 +109,10 @@ describe("useHistoryList hook", () => {
     expect(result.current).toBeTruthy();
     const { title, noItemDescription, historyItems } = result.current;
     expect(title).toBe(`${capitalizeFirstLetters(type)} History`);
-    expect(noItemDescription).toBe(`No ${capitalizeFirstLetters(type)} History Provided`);
+    expect(noItemDescription).toBe(
+      `No ${capitalizeFirstLetters(type)} History Provided`
+    );
+
     const historyType =
       type === HISTORY_TYPE[0] ? "education_histories" : "work_experiences";
     expect(historyItems).toHaveLength(testProfile[historyType].length);

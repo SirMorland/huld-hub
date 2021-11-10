@@ -2,8 +2,8 @@ import { useMemo } from "react";
 import { capitalizeFirstLetters } from "../utils";
 
 const HISTORY_TYPE = {
-  education: "Education",
-  work: "Work",
+  education: "education",
+  work: "work",
 };
 
 /**
@@ -36,7 +36,7 @@ const useHistoryList = (profile, type) => {
       getHistoryProps(
         profile
           ? profile[
-              type.toLowerCase() === HISTORY_TYPE.education
+              type.toLowerCase() === HISTORY_TYPE.education.toLowerCase()
                 ? "education_histories"
                 : "work_experiences"
             ]
