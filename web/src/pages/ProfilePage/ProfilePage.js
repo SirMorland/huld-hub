@@ -3,6 +3,7 @@ import { useHistory, useRouteMatch } from "react-router";
 import Cookies from "js-cookie";
 
 import useProfile from "../../hooks/useProfile";
+import useCompetences from "../../hooks/useCompetences";
 import useCompetenceCategories from "../../hooks/useCompetenceCategories";
 
 import ProfilePageEdit from "./ProfilePageEdit";
@@ -47,7 +48,11 @@ function ProfilePage({ id, onSave }) {
   const { jwt } = useContext(UserContext);
 
   const [profile, setProfile] = useProfile(id || match.params.id, jwt);
-  const competenceCategories = useCompetenceCategories();
+
+  const allLanguages = useCompetences("coding languages", jwt);
+  const allKeywords = useCompetences("keywords", jwt);
+  const competenceCategories = useCompetenceCategories(jwt);
+
   const [edit, setEdit] = useState(false);
 
   const onSaveClick = async (profile) => {
@@ -55,12 +60,12 @@ function ProfilePage({ id, onSave }) {
     await onSave(profile, jwt);
     setEdit(false);
   }
-  
+
   useEffect(() => {
     let jwt = Cookies.get("hub-jwt");
     if (!jwt) {
       history.push("/");
-    } 
+    }
   }, [history]);
 
   const educationHistory = useMemo(
@@ -81,15 +86,15 @@ function ProfilePage({ id, onSave }) {
     [profile]
   );
 
-  const {languages, keywords} = useMemo(()=>{
+  const { languages, keywords } = useMemo(() => {
     if (profile && profile.competences) {
       const competences = getCompetencesWithCategoryNames(competenceCategories, profile.competences);
       return {
         languages: competences.filter(competence => competence.category_name === "coding languages"),
         keywords: competences.filter(competence => competence.category_name === "keywords"),
       }
-    } 
-    return {languages: [], keywords: []};
+    }
+    return { languages: [], keywords: [] };
   }, [competenceCategories, profile]);
 
   if (profile === false) {
@@ -97,11 +102,16 @@ function ProfilePage({ id, onSave }) {
     return <h1>404</h1>;
   }
 
-  const profileProps = {...profile, educationHistory, workHistory, languages, keywords};
-
-  if(edit) {
+  const profileProps = { ...profile, educationHistory, workHistory, languages, keywords };
+  if (edit) {
     return (
-      <ProfilePageEdit profile={profileProps} onSaveClick={onSaveClick} onCancelClick={() => setEdit(false)} />
+      <ProfilePageEdit
+        profile={profileProps} 
+        onSaveClick={onSaveClick} 
+        onCancelClick={() => setEdit(false)} 
+        allLanguages={allLanguages}
+        allKeywords={allKeywords}
+      />
     );
   } else {
     return (
