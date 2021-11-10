@@ -6,6 +6,7 @@ import { styled } from "@mui/system";
 import Page from '../../components/Page/Page';
 import HistoryList from "../../components/HistoryList/HistoryList";
 import ItemList from "../../components/ItemList";
+import Title from "../../components/Title/Title";
 import UserContactinfo from '../../components/UserContactinfo';
 import ActionButtonContainer from "../../components/ActionButtonContainer";
 
@@ -77,6 +78,8 @@ const Education = styled("div")`
   }
 `;
 
+const image_url = "https://images.pexels.com/photos/6386956/pexels-photo-6386956.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500";
+
 function ProfilePageView({ profile, onEditClick }) {
   const {languages, keywords, workHistory, educationHistory} = profile;
 
@@ -85,8 +88,12 @@ function ProfilePageView({ profile, onEditClick }) {
       profile &&
       <React.Fragment>
         <HeaderLeft>
-          <h1 style={{ margin: 0, color: 'white' }}>{profile.first_name} {profile.last_name}</h1>
-          <h2 style={{ margin: 0, color: 'white' }}>{profile.title}</h2>
+          <Title
+            first_name={profile.first_name}
+            last_name={profile.last_name}
+            title={profile.title}
+            image={image_url}
+          />
         </HeaderLeft>
         <HeaderRight>
           <UserContactinfo {...profile} ></UserContactinfo>
