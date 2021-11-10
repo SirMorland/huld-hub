@@ -1,17 +1,14 @@
-import React, { useContext, useEffect, useMemo } from "react";
-import { useHistory, useRouteMatch } from "react-router";
-import Cookies from "js-cookie";
+import React, { useMemo } from "react";
+
+import { Button } from "@mui/material";
 import { styled } from "@mui/system";
 
-import Page from '../components/Page/Page';
-import HistoryList from "../components/HistoryList/HistoryList";
-import ItemList from "../components/ItemList";
-import UserContactinfo from '../components/UserContactinfo';
-import useProfile from "../hooks/useProfile";
-import useCompetenceCategories from "../hooks/useCompetenceCategories";
-import { getCompetencesWithCategoryNames } from "../utils";
-import { UserContext } from "../App";
-import Title from '../components/Title/Title';
+import Page from '../../components/Page/Page';
+import HistoryList from "../../components/HistoryList/HistoryList";
+import ItemList from "../../components/ItemList";
+import Title from "../../components/Title/Title";
+import UserContactinfo from '../../components/UserContactinfo';
+import ActionButtonContainer from "../../components/ActionButtonContainer";
 
 const h2 = {
   margin: 0,
@@ -19,6 +16,11 @@ const h2 = {
 const p = {
   margin: 0,
 };
+
+const HeaderLeft = styled('div')`
+  width: 50%;
+  float: left;
+`;
 
 const HeaderRight = styled('div')`
   width: 50%;
@@ -80,7 +82,6 @@ const HISTORY_TYPE = {
   education: "Education",
   work: "Work",
 };
-
 /**
  * A function that produces the props for using HistoryList component
  *
@@ -88,7 +89,7 @@ const HISTORY_TYPE = {
  * @param {*} type - type of history items
  * @returns {object}
  */
-const getHistoryProps = (historyItems = [], type) => {
+ const getHistoryProps = (historyItems = [], type) => {
   return {
     title: `${type} History`,
     noItemDescription: `No ${type} History Provided`,
@@ -105,19 +106,8 @@ const getHistoryProps = (historyItems = [], type) => {
   };
 };
 
-function ProfilePage({ id }) {
-  let history = useHistory();
-  let match = useRouteMatch();
-  const { jwt } = useContext(UserContext);
-  const profile = useProfile(id || match.params.id, jwt);
-  const competenceCategories = useCompetenceCategories(jwt);
-
-  useEffect(() => {
-    let jwt = Cookies.get("hub-jwt");
-    if (!jwt) {
-      history.push("/");
-    }
-  }, [history]);
+function ProfilePageView({ profile, onEditClick }) {
+  const { languages, keywords } = profile;
 
   const educationHistory = useMemo(
     () =>
@@ -136,32 +126,18 @@ function ProfilePage({ id }) {
       ),
     [profile]
   );
-
-  const { languages, keywords } = useMemo(() => {
-    if (profile && profile.competences) {
-      const competences = getCompetencesWithCategoryNames(competenceCategories, profile.competences);
-      return {
-        languages: competences.filter(competence => competence.category_name === "coding languages"),
-        keywords: competences.filter(competence => competence.category_name === "keywords"),
-      }
-    }
-    return { languages: [], keywords: [] };
-  }, [competenceCategories, profile]);
-
-  if (profile === false) {
-    // TODO: render actual 404 page
-    return <h1>404</h1>;
-  }
   return (
     <Page header={
       profile &&
       <React.Fragment>
-        <Title
-          first_name={profile.first_name}
-          last_name={profile.last_name}
-          title={profile.title}
-          image={`${process.env.REACT_APP_BACKEND_HOST}${profile.image.url}`}
-        />
+        <HeaderLeft>
+          <Title
+            first_name={profile.first_name}
+            last_name={profile.last_name}
+            title={profile.title}
+            image={`${process.env.REACT_APP_BACKEND_HOST}${profile.image.url}`}
+          />
+        </HeaderLeft>
         <HeaderRight>
           <UserContactinfo {...profile} ></UserContactinfo>
         </HeaderRight>
@@ -207,8 +183,19 @@ function ProfilePage({ id }) {
           noItemDescription={educationHistory.noItemDescription}
         />
       </Education>
+
+      <ActionButtonContainer>
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          onClick={onEditClick}
+        >
+          Edit
+        </Button>
+      </ActionButtonContainer>
     </Page>
   );
 }
 
-export default ProfilePage;
+export default ProfilePageView;

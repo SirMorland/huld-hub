@@ -61,6 +61,11 @@ export const getProfile = async (id, jwt) => {
   }
 }
 
+export const postProfile = async (profile, jwt) => {
+  // TODO: implement this
+  console.log("Saving profile", profile);
+}
+
 export const getCompetenceCategories = async (jwt) => {
   const url = `${process.env.REACT_APP_BACKEND_HOST}/competence-categories`;
   const response = await fetch(url, {

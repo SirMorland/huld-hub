@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import { Box } from '@mui/system';
 import { Button, Grid, Link, Typography } from '@mui/material';
 
-import TextInput from '../components/TextInput/TextInput';
+import TextField from '../components/TextField/TextField';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
 import { EmailTakenError, EmailWrongDomainError } from '../api';
@@ -56,7 +56,7 @@ export default function RegistrationForm({ onSubmit }) {
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <TextInput
+                            <TextField
                                 required
                                 id="email"
                                 type="email"
@@ -81,7 +81,7 @@ export default function RegistrationForm({ onSubmit }) {
                             }
                         </Grid>
                         <Grid item xs={12}>
-                            <TextInput
+                            <TextField
                                 required
                                 type="password"
                                 id="password"
@@ -93,7 +93,7 @@ export default function RegistrationForm({ onSubmit }) {
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <TextInput
+                            <TextField
                                 required
                                 type="password"
                                 id="reEnterPassword"
