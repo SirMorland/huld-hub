@@ -54,10 +54,9 @@ function ProfilePage({ id, onSave }) {
   const competenceCategories = useCompetenceCategories(jwt);
 
   const [edit, setEdit] = useState(false);
-
-  const onSaveClick = async (profile) => {
-    setProfile(profile);
-    await onSave(profile, jwt);
+  const onSaveClick = async (_profile) => {
+    setProfile(_profile);
+    await onSave(_profile, jwt);
     setEdit(false);
   }
 

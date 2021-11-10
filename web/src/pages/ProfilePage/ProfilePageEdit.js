@@ -84,8 +84,9 @@ function ProfilePageEdit({ profile, onSaveClick, onCancelClick, allLanguages, al
   const [edited, setEdited] = useState(profile);
 
   console.log(edited);
-  const onSave = async () => {
-    await onSaveClick(edited);
+  const onSave = () => {
+    const competences = [...edited.keywords, ...edited.languages];
+    onSaveClick({...edited, competences});
   }
   console.log(edited);
 
