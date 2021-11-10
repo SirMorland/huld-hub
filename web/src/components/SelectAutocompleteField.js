@@ -13,6 +13,7 @@ const SelectAutocompleteField = ({options, label, onSelect, ...props}) => {
     <Autocomplete
       options={options}
       getOptionLabel={option => option.name}
+      data-testid="select-autocomplete-field"
       key={random}
       renderInput={params => (
         <TextField
