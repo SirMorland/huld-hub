@@ -1,23 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Typography from '@mui/material/Typography';
+import Typography from "@mui/material/Typography";
 import { styled } from "@mui/system";
 import { getYear } from "../../utils";
 
-const Header = styled(Typography)(({ theme }) => ({
+const Header = styled(Typography)({
   display: "flex",
   flexDirection: "row",
   justifyContent: "space-between",
   marginTop: "16px",
-}));
+});
 
-const Description = styled(Typography)(({ theme }) => ({
+const Description = styled(Typography)({
   textAlign: "justify",
-}));
+});
 
 const DateSpan = styled("span")({
-  whiteSpace: "nowrap"
-})
+  whiteSpace: "nowrap",
+});
 
 function HistoryItem(props) {
   return (
