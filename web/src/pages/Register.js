@@ -3,8 +3,9 @@ import { useHistory } from "react-router-dom";
 import Cookies from 'js-cookie';
 
 import { Box } from '@mui/system';
-import { Button, Grid, Link, TextField, Typography } from '@mui/material';
+import { Button, Grid, Link, Typography } from '@mui/material';
 
+import TextInput from '../components/TextInput/TextInput';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
 import { EmailTakenError, EmailWrongDomainError } from '../api';
@@ -55,12 +56,12 @@ export default function RegistrationForm({ onSubmit }) {
                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <TextField
+                            <TextInput
                                 required
-                                fullWidth
                                 id="email"
                                 type="email"
                                 label="Email Address"
+                                placeholder="john.doe@huld.io"
                                 name="email"
                                 value={email}
                                 onChange={e => setEmail(e.target.value)}
@@ -80,25 +81,26 @@ export default function RegistrationForm({ onSubmit }) {
                             }
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField
+                            <TextInput
                                 required
-                                fullWidth
                                 type="password"
                                 id="password"
                                 name="password"
                                 label="Password"
+                                placeholder="********"
                                 value={password}
                                 onChange={e => setPassword(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField
+                            <TextInput
                                 required
                                 fullWidth
                                 type="password"
                                 id="reEnterPassword"
                                 name="reEnterPassword"
                                 label="Re-Enter Password"
+                                placeholder="********"
                                 value={reEnterPassword}
                                 onChange={e => setReEnterPassword(e.target.value)}
                             />

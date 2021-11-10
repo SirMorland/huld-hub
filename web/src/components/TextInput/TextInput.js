@@ -10,10 +10,6 @@ const OutlinedInput = styled(MuiOutlinedInput)(({ theme }) => ({
   margin: "4px 0",
 }));
 
-const ContainerDiv = styled("div")({
-  margin: "8px 0",
-});
-
 function TextInput({ label, ...props }) {
   const inputProps = {
     fullWidth: true,
@@ -21,7 +17,7 @@ function TextInput({ label, ...props }) {
     ...props,
   };
   return (
-    <ContainerDiv data-testid="textinput-container">
+    <div data-testid="textinput-container">
       {label && (
         <Typography
           component="label"
@@ -36,7 +32,7 @@ function TextInput({ label, ...props }) {
         {...inputProps}
         inputProps={{ "data-testid": "textinput-input" }}
       />
-    </ContainerDiv>
+    </div>
   );
 }
 
