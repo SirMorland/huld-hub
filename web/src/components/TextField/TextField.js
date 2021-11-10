@@ -18,20 +18,20 @@ function TextField({ label, textarea, ...props }) {
     ...props,
   };
   return (
-    <div data-testid="textinput-container">
+    <div data-testid="textfield-container">
       {label && (
         <Typography
           component="label"
           variant="body1"
           htmlFor={props.id || ""}
-          data-testid="textinput-label"
+          data-testid="textfield-label"
         >
           {label}
         </Typography>
       )}
       <OutlinedInput
         {...inputProps}
-        inputProps={{ "data-testid": "textinput-input" }}
+        inputProps={{ "data-testid": "textfield-input" }}
       />
     </div>
   );
