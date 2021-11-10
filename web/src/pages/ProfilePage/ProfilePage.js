@@ -46,8 +46,13 @@ function ProfilePage({ id, onSave }) {
 
   const { jwt } = useContext(UserContext);
 
-  const profile = useProfile(id || match.params.id, jwt);
+  const [profile, setProfile] = useProfile(id || match.params.id, jwt);
   const competenceCategories = useCompetenceCategories();
+
+  const onSaveClick = async (profile) => {
+    setProfile(profile);
+    await onSave(profile, jwt);
+  }
 
   const [edit, setEdit] = useState(false);
   
@@ -93,10 +98,6 @@ function ProfilePage({ id, onSave }) {
   }
 
   const profileProps = {...profile, educationHistory, workHistory, languages, keywords};
-
-  const onSaveClick = async (profile) => {
-    return await onSave(profile, jwt);
-  }
 
   if(edit) {
     return (

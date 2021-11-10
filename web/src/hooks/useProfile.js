@@ -25,7 +25,7 @@ const useProfile = (id, jwt) => {
     };
     if (jwt) fetchProfile(id);
   }, [id, history, jwt]);
-  return profile;
+  return [profile, setProfile];
 };
 
 export default useProfile;
