@@ -31,30 +31,41 @@ export const renderWithRouter = (children) => {
   return render(<BrowserRouter>{children}</BrowserRouter>);
 };
 export const renderHelper = (children, context) => {
-  const contextValue = { 
-    setJwt: () => { }, jwt: 'jwt',
+  const contextValue = {
+    setJwt: () => {},
+    jwt: "jwt",
     ...context,
   };
   return render(
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
+        <UserContext.Provider value={contextValue}>
+          {children}
+        </UserContext.Provider>
       </BrowserRouter>
     </ThemeProvider>
   );
 };
+
 export const capitalizeFirstLetters = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
-}
+};
 
 export const getCompetencesWithCategoryNames = (categories, competences) => {
-  if (competences && competences.length > 0 && categories && categories.length > 0)
-    return competences.map(competence => {
-      const category = categories.find(category => category.id === competence.category);
+  if (
+    competences &&
+    competences.length > 0 &&
+    categories &&
+    categories.length > 0
+  )
+    return competences.map((competence) => {
+      const category = categories.find(
+        (category) => category.id === competence.category
+      );
       return {
         ...competence,
         category_name: category.name,
-      }
+      };
     });
   return [];
-}
+};

@@ -1,12 +1,10 @@
 import { useMemo } from "react";
+import { capitalizeFirstLetters } from "../utils";
 
 const HISTORY_TYPE = {
   education: "Education",
   work: "Work",
 };
-
-const capitalize = (string) =>
-  string.trim().replace(/^\w/, (c) => c.toUpperCase());
 
 /**
  * A function that produces the props for using HistoryList component
@@ -17,8 +15,8 @@ const capitalize = (string) =>
  */
 const getHistoryProps = (historyItems = [], type) => {
   return {
-    title: `${capitalize(type)} History`,
-    noItemDescription: `No ${capitalize(type)} History Provided`,
+    title: `${capitalizeFirstLetters(type)} History`,
+    noItemDescription: `No ${capitalizeFirstLetters(type)} History Provided`,
     historyItems: historyItems.map((historyItem) => ({
       id: historyItem.id,
       organisation:
@@ -38,12 +36,12 @@ const useHistoryList = (profile, type) => {
       getHistoryProps(
         profile
           ? profile[
-              type.toUpperCase() === HISTORY_TYPE.education
+              type.toLowerCase() === HISTORY_TYPE.education
                 ? "education_histories"
                 : "work_experiences"
             ]
           : [],
-        type.toUpperCase()
+        type.toLowerCase()
       ),
     [profile, type]
   );
