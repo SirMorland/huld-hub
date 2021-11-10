@@ -67,23 +67,8 @@ function ProfilePage({ id, onSave }) {
     }
   }, [history]);
 
-  const educationHistory = useMemo(
-    () =>
-      getHistoryProps(
-        profile ? profile.education_histories : [],
-        HISTORY_TYPE.education
-      ),
-    [profile]
-  );
-
-  const workHistory = useMemo(
-    () =>
-      getHistoryProps(
-        profile ? profile.work_experiences : [],
-        HISTORY_TYPE.work
-      ),
-    [profile]
-  );
+  const educationHistory = useMemo(() => getHistoryProps(profile ? profile.education_histories : [], HISTORY_TYPE.education), [profile]);
+  const workHistory = useMemo(() => getHistoryProps(profile ? profile.work_experiences : [], HISTORY_TYPE.work), [profile]);
 
   const { languages, keywords } = useMemo(() => {
     if (profile && profile.competences) {
@@ -105,9 +90,9 @@ function ProfilePage({ id, onSave }) {
   if (edit) {
     return (
       <ProfilePageEdit
-        profile={profileProps} 
-        onSaveClick={onSaveClick} 
-        onCancelClick={() => setEdit(false)} 
+        profile={profileProps}
+        onSaveClick={onSaveClick}
+        onCancelClick={() => setEdit(false)}
         allLanguages={allLanguages}
         allKeywords={allKeywords}
       />
