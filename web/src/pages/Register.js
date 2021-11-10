@@ -95,7 +95,6 @@ export default function RegistrationForm({ onSubmit }) {
                         <Grid item xs={12}>
                             <TextInput
                                 required
-                                fullWidth
                                 type="password"
                                 id="reEnterPassword"
                                 name="reEnterPassword"
