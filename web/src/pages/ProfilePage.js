@@ -105,8 +105,6 @@ const getHistoryProps = (historyItems = [], type) => {
   };
 };
 
-const image_url = "https://images.pexels.com/photos/6386956/pexels-photo-6386956.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500";
-
 function ProfilePage({ id }) {
   let history = useHistory();
   let match = useRouteMatch();
@@ -154,7 +152,6 @@ function ProfilePage({ id }) {
     // TODO: render actual 404 page
     return <h1>404</h1>;
   }
-
   return (
     <Page header={
       profile &&
@@ -163,7 +160,7 @@ function ProfilePage({ id }) {
           first_name={profile.first_name}
           last_name={profile.last_name}
           title={profile.title}
-          image={image_url}
+          image={`${process.env.REACT_APP_BACKEND_HOST}${profile.image.url}`}
         />
         <HeaderRight>
           <UserContactinfo {...profile} ></UserContactinfo>
