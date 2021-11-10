@@ -11,7 +11,7 @@ import useProfile from "../hooks/useProfile";
 import useCompetenceCategories from "../hooks/useCompetenceCategories";
 import { getCompetencesWithCategoryNames } from "../utils";
 import { UserContext } from "../App";
-
+import Title from '../components/Title/Title';
 
 const h2 = {
   margin: 0,
@@ -19,11 +19,6 @@ const h2 = {
 const p = {
   margin: 0,
 };
-
-const HeaderLeft = styled('div')`
-  width: 50%;
-  float: left;
-`;
 
 const HeaderRight = styled('div')`
   width: 50%;
@@ -110,6 +105,8 @@ const getHistoryProps = (historyItems = [], type) => {
   };
 };
 
+const image_url = "https://images.pexels.com/photos/6386956/pexels-photo-6386956.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500";
+
 function ProfilePage({ id }) {
   let history = useHistory();
   let match = useRouteMatch();
@@ -162,10 +159,12 @@ function ProfilePage({ id }) {
     <Page header={
       profile &&
       <React.Fragment>
-        <HeaderLeft>
-          <h1 style={{ margin: 0, color: 'white' }}>{profile.first_name} {profile.last_name}</h1>
-          <h2 style={{ margin: 0, color: 'white' }}>{profile.title}</h2>
-        </HeaderLeft>
+        <Title
+          first_name={profile.first_name}
+          last_name={profile.last_name}
+          title={profile.title}
+          image={image_url}
+        />
         <HeaderRight>
           <UserContactinfo {...profile} ></UserContactinfo>
         </HeaderRight>
