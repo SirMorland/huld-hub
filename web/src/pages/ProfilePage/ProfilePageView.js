@@ -89,7 +89,7 @@ const HISTORY_TYPE = {
  * @param {*} type - type of history items
  * @returns {object}
  */
- const getHistoryProps = (historyItems = [], type) => {
+const getHistoryProps = (historyItems = [], type) => {
   return {
     title: `${type} History`,
     noItemDescription: `No ${type} History Provided`,
@@ -108,7 +108,6 @@ const HISTORY_TYPE = {
 
 function ProfilePageView({ profile, onEditClick }) {
   const { languages, keywords } = profile;
-
   const educationHistory = useMemo(
     () =>
       getHistoryProps(
@@ -131,12 +130,12 @@ function ProfilePageView({ profile, onEditClick }) {
       profile &&
       <React.Fragment>
         <HeaderLeft>
-          <Title
+          {profile.first_name && profile.last_name && <Title
             first_name={profile.first_name}
             last_name={profile.last_name}
             title={profile.title}
-            image={`${process.env.REACT_APP_BACKEND_HOST}${profile.image.url}`}
-          />
+            image={`${process.env.REACT_APP_BACKEND_HOST}${profile.image.formats.small.url}`}
+          />}
         </HeaderLeft>
         <HeaderRight>
           <UserContactinfo {...profile} ></UserContactinfo>
