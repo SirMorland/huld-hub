@@ -1,16 +1,20 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useRouteMatch } from "react-router";
 import Cookies from "js-cookie";
 
 import useProfile from "../../hooks/useProfile";
-import useCompetenceCategories from "../../hooks/useCompetenceCategories";
 
 import ProfilePageEdit from "./ProfilePageEdit";
 import ProfilePageView from "./ProfilePageView";
 
 import { UserContext } from "../../App";
-import { getCompetencesWithCategoryNames } from "../../utils";
+import useSkills from "../../hooks/useSkills";
+import useHistoryList from "../../hooks/useHistoryList";
 
+const HISTORY_TYPE = {
+  education: "education",
+  work: "work",
+};
 
 function ProfilePage({ id, onSave }) {
   let history = useHistory();
@@ -19,7 +23,6 @@ function ProfilePage({ id, onSave }) {
   const { jwt } = useContext(UserContext);
 
   const [profile, setProfile] = useProfile(id || match.params.id, jwt);
-  const competenceCategories = useCompetenceCategories();
   const [edit, setEdit] = useState(false);
 
   const onSaveClick = async (profile) => {
@@ -35,23 +38,18 @@ function ProfilePage({ id, onSave }) {
     } 
   }, [history]);
 
-  const {languages, keywords} = useMemo(()=>{
-    if (profile && profile.competences) {
-      const competences = getCompetencesWithCategoryNames(competenceCategories, profile.competences);
-      return {
-        languages: competences.filter(competence => competence.category_name === "coding languages"),
-        keywords: competences.filter(competence => competence.category_name === "keywords"),
-      }
-    } 
-    return {languages: [], keywords: []};
-  }, [competenceCategories, profile]);
+  const {languages, keywords} = useSkills(profile, jwt);
+  const educationHistory = useHistoryList(profile, HISTORY_TYPE.education);
+  const workHistory = useHistoryList(profile, HISTORY_TYPE.work);
 
   if (profile === false) {
     // TODO: render actual 404 page
     return <h1>404</h1>;
   }
 
-  const profileProps = {...profile, languages, keywords};
+  
+
+  const profileProps = {...profile, languages, keywords, educationHistory, workHistory};
 
   if(edit) {
     return (

@@ -30,6 +30,13 @@ const getHistoryProps = (historyItems = [], type) => {
   };
 };
 
+/**
+ * A hook that extractes the user history items an creates the props for rendering the HistoryList Component
+ * 
+ * @param {object} profile user profile object
+ * @param { "education" | "work" } type the history type
+ * @returns 
+ */
 const useHistoryList = (profile, type) => {
   const historyList = useMemo(
     () =>
