@@ -13,15 +13,10 @@ const DateInputDiv = styled("div")({
 });
 
 function DatePicker({ label, value, setValue, ...props }) {
-  const [dateValue, setDateValue] = React.useState(null);
+  const [dateValue, setDateValue] = React.useState(value ? new Date(value) : null);
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
   const MuiDatePicker = isSmallScreen ? MobileDatePicker : DesktopDatePicker;
-
-  React.useEffect(() => {
-    value && setDateValue(value);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   React.useEffect(() => {
     setValue && setValue(dateValue.toISOString());
