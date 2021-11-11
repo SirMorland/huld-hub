@@ -134,7 +134,7 @@ function ProfilePageView({ profile, onEditClick }) {
             first_name={profile.first_name}
             last_name={profile.last_name}
             title={profile.title}
-            image={`${process.env.REACT_APP_BACKEND_HOST}${profile.image.formats.small.url}`}
+            image={profile.image && `${process.env.REACT_APP_BACKEND_HOST}${profile.image.formats.small.url}`}
           />}
         </HeaderLeft>
         <HeaderRight>
