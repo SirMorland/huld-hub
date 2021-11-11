@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { getCompetencesWithCategoryNames } from "../api";
+import { getCompetencesWithCategoryNames } from "../utils";
 import useCompetenceCategories from "./useCompetenceCategories";
 
 
