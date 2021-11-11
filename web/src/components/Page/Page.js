@@ -9,9 +9,10 @@ import { UserContext } from "../../App";
 const StyledMain = styled('main')`
   display: grid;
   grid-auto-flow: dense;
+  grid-auto-columns: 1fr;
   justify-content: center;
   gap: 24px 64px;
-  margin: 16px 0 112px auto;
+  margin: 16px 0 80px auto;
   padding: 0 16px;
   max-width: 1920px;
   box-sizing: border-box;
