@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, screen } from "@testing-library/react";
+import { cleanup, fireEvent, screen, waitFor } from "@testing-library/react";
 import { renderWithTheme } from "../../utils";
 import DatePicker from "../DatePicker";
 
@@ -57,17 +57,16 @@ describe("DatePicker Component", () => {
     expect(screen.getByText(testData.date.getDate())).toBeTruthy();
   });
 
-  it("should call onChange function with correct value", () => {
+  it("should call onChange function with correct value", async () => {
     const onChange = jest.fn((date) => `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`);
     const { getByTestId } = renderWithTheme(
       <DatePicker label={testData.label}  onChange={onChange}/>
     );
     const calenderIconEl = getByTestId("CalendarIcon");
-
     fireEvent.click(calenderIconEl);
     fireEvent.click(screen.getByText(testData.randomDay));
 
-    expect(onChange).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(onChange).toHaveBeenCalledTimes(1));
     expect(onChange).toHaveReturnedWith(`${testData.randomDay}.${testData.date.getMonth()}.${testData.date.getFullYear()}`);
   });
 });
