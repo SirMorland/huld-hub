@@ -83,12 +83,10 @@ const Education = styled("div")`
 function ProfilePageEdit({ profile, onSaveClick, onCancelClick, allLanguages, allKeywords }) {
   const [edited, setEdited] = useState(profile);
 
-  console.log(edited);
   const onSave = () => {
     const competences = [...edited.keywords, ...edited.languages];
     onSaveClick({...edited, competences});
   }
-  console.log(edited);
 
   // filter languages that are not already in edited.languages by name
   const languagesToAdd = allLanguages.filter(language => !edited.languages.some(editedLanguage => editedLanguage.name === language.name));
