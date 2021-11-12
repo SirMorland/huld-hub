@@ -4,7 +4,7 @@ import { useHistory, useLocation } from 'react-router';
 import { Button, Grid, Link, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 
-import TextField from '../components/TextField/TextField';
+import TextField from '../components/TextField';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
 import { EmailOrPasswordInvalidError } from '../api';

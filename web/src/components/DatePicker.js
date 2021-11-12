@@ -12,16 +12,10 @@ const DateInputDiv = styled("div")({
   margin: "4px 0",
 });
 
-function DatePicker({ label, value, setValue, ...props }) {
-  const [dateValue, setDateValue] = React.useState(value ? new Date(value) : null);
+function DatePicker({ label, ...props }) {
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
   const MuiDatePicker = isSmallScreen ? MobileDatePicker : DesktopDatePicker;
-
-  React.useEffect(() => {
-    setValue && setValue(dateValue.toISOString());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dateValue]);
 
   const dateProps = {
     inputFormat: "dd.MM.yyyy",
@@ -48,8 +42,6 @@ function DatePicker({ label, value, setValue, ...props }) {
           <MuiDatePicker
             data-testid="date-picker"
             {...dateProps}
-            value={dateValue}
-            onChange={setDateValue}
             renderInput={({ inputProps, ...params }) => (
               <TextField
                 fullWidth

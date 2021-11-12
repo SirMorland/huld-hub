@@ -1,5 +1,5 @@
 import { fireEvent, cleanup } from "@testing-library/react";
-import { renderWithTheme } from "../../../utils";
+import { renderWithTheme } from "../../utils";
 import TextField from "../TextField";
 
 const testData = {

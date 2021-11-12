@@ -1,10 +1,10 @@
 import { cleanup, fireEvent, screen } from "@testing-library/react";
-import { renderWithTheme } from "../../../utils";
+import { renderWithTheme } from "../../utils";
 import DatePicker from "../DatePicker";
 
 const testData = {
   label: "end date",
-  randomDay: 1 + Math.floor(Math.random() * 28),
+  randomDay: 10 + Math.floor(Math.random() * 18),
   date: new Date(),
   monthNames: [
     "January",
@@ -21,6 +21,7 @@ const testData = {
     "December",
   ],
 };
+
 
 describe("DatePicker Component", () => {
   afterAll(cleanup);
@@ -56,15 +57,17 @@ describe("DatePicker Component", () => {
     expect(screen.getByText(testData.date.getDate())).toBeTruthy();
   });
 
-  it("should set date correctly", () => {
+  it("should call onChange function with correct value", () => {
+    const onChange = jest.fn((date) => `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`);
     const { getByTestId } = renderWithTheme(
-      <DatePicker label={testData.label} />
+      <DatePicker label={testData.label}  onChange={onChange}/>
     );
     const calenderIconEl = getByTestId("CalendarIcon");
-    fireEvent.click(calenderIconEl);
 
+    fireEvent.click(calenderIconEl);
     fireEvent.click(screen.getByText(testData.randomDay));
-    const dateInputEl = getByTestId("date-input")
-    expect(dateInputEl.value).toBe(`${testData.randomDay.toString().padStart(2, '0')}.${testData.date.getMonth()+1}.${testData.date.getFullYear()}`);
+
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveReturnedWith(`${testData.randomDay}.${testData.date.getMonth()}.${testData.date.getFullYear()}`);
   });
 });

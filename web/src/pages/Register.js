@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import { Box } from '@mui/system';
 import { Button, Grid, Link, Typography } from '@mui/material';
 
-import TextField from '../components/TextField/TextField';
+import TextField from '../components/TextField';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
 import { EmailTakenError, EmailWrongDomainError } from '../api';
