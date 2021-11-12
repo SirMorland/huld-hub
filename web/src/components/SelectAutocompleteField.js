@@ -3,11 +3,11 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { styled } from '@mui/system';
 
-const StyledAutocomplete = styled(Autocomplete)(({ theme }) => ({
-  button: {
-    color: theme.palette.text.primary
+const StyledAutocomplete = styled(Autocomplete)(({ theme }) => (`
+  button, label {
+    color: ${theme.palette.text.primary};
   }
-}));
+`));
 
 
 const SelectAutocompleteField = ({options, label, onSelect, ...props}) => {
