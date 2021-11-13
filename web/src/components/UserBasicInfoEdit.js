@@ -4,16 +4,22 @@ import { Typography } from "@mui/material";
 import { styled } from "@mui/system";
 
 const LabelText = styled(Typography)`
-  font-size: 15px;
-  padding-top: 15px;
+  font-size: 16px;
+  margin-top: 16px;
+  margin-bottom: -3px;
 `;
 
+const LargeContainer = styled('div')`
+`;
+
+const InputContainer = styled('div')`
+`;
 
 export default function UserBasicInfoEdit({edited,setEdited } ) {
     return (
-      <div>
+      <LargeContainer>
          <DoubleFieldContainer>
-           <div>
+           <InputContainer>
            <LabelText>First name</LabelText>
             <TextField
                 required
@@ -25,8 +31,8 @@ export default function UserBasicInfoEdit({edited,setEdited } ) {
                 value={edited.first_name}
                 onChange={e => setEdited(prev => ({...prev, first_name: e.target.value}))}
               />
-           </div>
-           <div>
+           </InputContainer>
+           <InputContainer>
            <LabelText>Last name</LabelText>
            <TextField
               required
@@ -38,10 +44,10 @@ export default function UserBasicInfoEdit({edited,setEdited } ) {
               value={edited.last_name}
               onChange={e => setEdited(prev => ({...prev, last_name: e.target.value}))}
             />
-           </div>
+           </InputContainer>
           </DoubleFieldContainer>
           <DoubleFieldContainer>
-            <div>
+            <InputContainer>
             <LabelText>Title</LabelText>
               <TextField
               required
@@ -53,11 +59,11 @@ export default function UserBasicInfoEdit({edited,setEdited } ) {
               value={edited.title}
               onChange={e => setEdited(prev => ({...prev, title: e.target.value}))}
             />
-            </div>
+            </InputContainer>
           </DoubleFieldContainer>
           <DoubleFieldContainer>
-            <div>
-                <LabelText>Address</LabelText>
+            <InputContainer>
+                <LabelText>Site</LabelText>
                 <TextField
                     required
                     fullWidth
@@ -68,8 +74,8 @@ export default function UserBasicInfoEdit({edited,setEdited } ) {
                     value={edited.address}
                     onChange={e => setEdited(prev => ({...prev, address: e.target.value}))}
                 />
-            </div>
-            <div>
+            </InputContainer>
+            <InputContainer>
                 <LabelText>Phone</LabelText>
                 <TextField
                     required
@@ -81,10 +87,10 @@ export default function UserBasicInfoEdit({edited,setEdited } ) {
                     value={edited.phone}
                     onChange={e => setEdited(prev => ({...prev, phone: e.target.value}))}
                 />
-            </div>
+            </InputContainer>
           </DoubleFieldContainer>
           <DoubleFieldContainer>
-          <div>
+          <InputContainer>
                 <LabelText>Email</LabelText>
                 <TextField
                     required
@@ -96,9 +102,9 @@ export default function UserBasicInfoEdit({edited,setEdited } ) {
                     value={edited.email}
                     onChange={e => setEdited(prev => ({...prev, email: e.target.value}))}
                 />
-            </div>
+            </InputContainer>
         
-              <div>
+              <InputContainer>
                 <LabelText>Slack</LabelText>
                 <TextField
                     required
@@ -110,10 +116,10 @@ export default function UserBasicInfoEdit({edited,setEdited } ) {
                     value={edited.slack}
                     onChange={e => setEdited(prev => ({...prev, slack: e.target.value}))}
                 />
-            </div>
+            </InputContainer>
           </DoubleFieldContainer>
           <DoubleFieldContainer>
-          <div>
+          <InputContainer>
                 <LabelText>LinkedIn</LabelText>
                 <TextField
                     required
@@ -125,9 +131,9 @@ export default function UserBasicInfoEdit({edited,setEdited } ) {
                     value={edited.linkedin}
                     onChange={e => setEdited(prev => ({...prev, linkedin: e.target.value}))}
                 />
-            </div>
+            </InputContainer>
           
-              <div>
+              <InputContainer>
                 <LabelText>Github</LabelText>
                 <TextField
                     required
@@ -139,8 +145,8 @@ export default function UserBasicInfoEdit({edited,setEdited } ) {
                     value={edited.github}
                     onChange={e => setEdited(prev => ({...prev, github: e.target.value}))}
                 />
-            </div>
+            </InputContainer>
           </DoubleFieldContainer>
-      </div>
+      </LargeContainer>
     );
   }
