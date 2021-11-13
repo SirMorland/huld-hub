@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useRouteMatch } from "react-router";
 import Cookies from "js-cookie";
 
@@ -10,6 +10,7 @@ import ProfilePageEdit from "./ProfilePageEdit";
 import ProfilePageView from "./ProfilePageView";
 
 import { UserContext } from "../../App";
+import { formatProfileForSave } from "../../utils";
 import useGetCompetencesByCategory from "../../hooks/useGetCompetencesByCategory";
 
 
@@ -26,9 +27,9 @@ function ProfilePage({ id, onSave }) {
   const competenceCategories = useCompetenceCategories(jwt);
 
   const [edit, setEdit] = useState(false);
-  const onSaveClick = async (_profile) => {
-    setProfile(_profile);
-    await onSave(_profile, jwt);
+  const onSaveClick = async (profile) => {
+    const profileToBeSaved = formatProfileForSave(profile);
+    setProfile(await onSave(profileToBeSaved, jwt));
     setEdit(false);
   }
 
@@ -41,7 +42,6 @@ function ProfilePage({ id, onSave }) {
 
   const languages = useGetCompetencesByCategory(profile, competenceCategories, "coding languages");
   const keywords = useGetCompetencesByCategory(profile, competenceCategories, "keywords");
-
 
   if (profile === false) {
     // TODO: render actual 404 page
