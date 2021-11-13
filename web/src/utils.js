@@ -60,7 +60,7 @@ export const getCompetencesWithCategoryNames = (categories, competences) => {
   )
     return competences.map((competence) => {
       const category = categories.find(
-        (category) => category.id === competence.category
+        (category) => category.id === competence.category || category.id
       );
       return {
         ...competence,
