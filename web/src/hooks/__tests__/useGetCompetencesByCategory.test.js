@@ -8,7 +8,7 @@ const categories = [
   },
 ]
 
-const correctCompenteces = [    {
+const correctCompetences = [    {
   name: 'com1',
   category: 1,
 },
@@ -23,7 +23,7 @@ const correctCompenteces = [    {
 
 const profile = {
   competences: [
-    ...correctCompenteces,
+    ...correctCompetences,
     {
       name: 'com4',
       category: 2,
@@ -42,7 +42,7 @@ describe('useGetCompetencesByCategory hook', () => {
   });
   it('should return correct array with correct category', () => {
     const { result } = renderHook(() => useGetCompetencesByCategory(profile, categories, 'coding languages'));
-    expect(result.current).toEqual(correctCompenteces);
+    expect(result.current).toEqual(correctCompetences);
   });
 });
 
