@@ -5,9 +5,8 @@ const useGetCompetencesByCategory = (profile, categories, categoryName) => {
     () => {
       if (profile) return profile.competences.filter(
         ({ category }) => {
-          const catId = category.id || category;
           const cat = categories && categories.find(({ name }) => name === categoryName);
-          return cat && cat.id === catId;
+          return cat && cat.id === category;
         });
       else return [];
     },
