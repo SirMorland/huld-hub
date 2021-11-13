@@ -3,6 +3,7 @@ import { useHistory, useRouteMatch } from "react-router";
 import Cookies from "js-cookie";
 
 import useProfile from "../../hooks/useProfile";
+import useCompetences from "../../hooks/useCompetences";
 import useCompetenceCategories from "../../hooks/useCompetenceCategories";
 
 import ProfilePageEdit from "./ProfilePageEdit";
@@ -19,20 +20,23 @@ function ProfilePage({ id, onSave }) {
   const { jwt } = useContext(UserContext);
 
   const [profile, setProfile] = useProfile(id || match.params.id, jwt);
-  const competenceCategories = useCompetenceCategories();
-  const [edit, setEdit] = useState(false);
 
-  const onSaveClick = async (profile) => {
-    setProfile(profile);
-    await onSave(profile, jwt);
+  const allLanguages = useCompetences("coding languages", jwt);
+  const allKeywords = useCompetences("keywords", jwt);
+  const competenceCategories = useCompetenceCategories(jwt);
+
+  const [edit, setEdit] = useState(false);
+  const onSaveClick = async (_profile) => {
+    setProfile(_profile);
+    await onSave(_profile, jwt);
     setEdit(false);
   }
-  
+
   useEffect(() => {
     let jwt = Cookies.get("hub-jwt");
     if (!jwt) {
       history.push("/");
-    } 
+    }
   }, [history]);
 
   const {languages, keywords} = useMemo(()=>{
@@ -42,8 +46,8 @@ function ProfilePage({ id, onSave }) {
         languages: competences.filter(competence => competence.category_name === "coding languages"),
         keywords: competences.filter(competence => competence.category_name === "keywords"),
       }
-    } 
-    return {languages: [], keywords: []};
+    }
+    return { languages: [], keywords: [] };
   }, [competenceCategories, profile]);
 
   if (profile === false) {
@@ -55,7 +59,13 @@ function ProfilePage({ id, onSave }) {
 
   if(edit) {
     return (
-      <ProfilePageEdit profile={profileProps} onSaveClick={onSaveClick} onCancelClick={() => setEdit(false)} />
+      <ProfilePageEdit
+        profile={profileProps}
+        onSaveClick={onSaveClick}
+        onCancelClick={() => setEdit(false)}
+        allLanguages={allLanguages}
+        allKeywords={allKeywords}
+      />
     );
   } else {
     return (
