@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { capitalizeFirstLetters } from "../utils";
 
-const HISTORY_TYPE = {
+export const HISTORY_TYPE = {
   education: "education",
   work: "work",
 };
