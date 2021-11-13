@@ -65,6 +65,7 @@ const ContactLinkedInIcon = styled(LinkedInIcon)`
 const ContactMdiIcon = styled(Icon)`
   vertical-align: text-bottom;
   margin-top: 4px;
+  margin-left: 8px;
 `;
 
 export default function UserContactinfo(profile) {

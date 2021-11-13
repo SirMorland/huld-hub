@@ -5,7 +5,7 @@ import { styled } from "@mui/system";
 
 import Page from '../../components/Page/Page';
 import ActionButtonContainer from "../../components/ActionButtonContainer";
-import { DoubleFieldContainer } from "../../components/GenericComponents";
+import UserBasicInfoEdit from "../../components/UserBasicInfoEdit";
 
 const Grid = styled('div')`
   display: grid;
@@ -15,14 +15,6 @@ const Grid = styled('div')`
 const BasicInfo = styled(Grid)`
   @media (min-width: 768px) {
     grid-column-start: 1;
-  }
-  @media (min-width: 1152px) {
-    grid-column-start: 1;
-  }
-`;
-const ContactInfo = styled(Grid)`
-  @media (min-width: 768px) {
-    grid-column-start: 2;
   }
   @media (min-width: 1152px) {
     grid-column-start: 1;
@@ -89,55 +81,8 @@ function ProfilePageEdit({ profile, onSaveClick, onCancelClick }) {
   return (
     <Page>
       <BasicInfo>
-        <DoubleFieldContainer>
-          <TextField
-            required
-            fullWidth
-            id="first_name"
-            type="text"
-            label="First name"
-            name="first_name"
-            value={edited.first_name}
-            onChange={e => setEdited(prev => ({...prev, first_name: e.target.value}))}
-          />
-          <TextField
-            required
-            fullWidth
-            id="last_name"
-            type="text"
-            label="Last name"
-            name="last_name"
-            value={edited.last_name}
-            onChange={e => setEdited(prev => ({...prev, last_name: e.target.value}))}
-          />
-        </DoubleFieldContainer>
-        <TextField
-          required
-          fullWidth
-          id="title"
-          type="text"
-          label="Title"
-          name="title"
-          value={edited.title}
-          onChange={e => setEdited(prev => ({...prev, title: e.target.value}))}
-        />
+        <UserBasicInfoEdit edited={edited} setEdited={setEdited}></UserBasicInfoEdit>
       </BasicInfo>
-
-      <ContactInfo>
-        <DoubleFieldContainer>
-          <TextField
-            required
-            fullWidth
-            id="email"
-            type="email"
-            label="Email"
-            name="email"
-            value={edited.email}
-            onChange={e => setEdited(prev => ({...prev, email: e.target.value}))}
-            />
-          <div />
-        </DoubleFieldContainer>
-      </ContactInfo>
 
       <Skills>
         <h2>Skills</h2>
