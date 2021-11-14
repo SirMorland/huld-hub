@@ -1,6 +1,6 @@
 import { cleanup } from "@testing-library/react";
 import { renderWithTheme, capitalizeFirstLetters } from "../../utils";
-import ItemList from "../ItemList.js";
+import ItemListView from "../ItemListView.js";
 
 const mockData = {
   "title": "keywords",
@@ -26,15 +26,15 @@ const mockData = {
 describe("EducationHitoryList component", () => {
   afterEach(cleanup);
   it("should render without crashing", () => {
-    const { container } = renderWithTheme(<ItemList title={mockData.title} items={mockData.items} />);
+    const { container } = renderWithTheme(<ItemListView title={mockData.title} items={mockData.items} />);
     expect(container).toBeTruthy();
   });
   it("should render title", () => {
-    const { getByText } = renderWithTheme(<ItemList title={mockData.title} items={mockData.items} />);
+    const { getByText } = renderWithTheme(<ItemListView title={mockData.title} items={mockData.items} />);
     expect(getByText(capitalizeFirstLetters(mockData.title))).toBeInTheDocument();
   });
   it("should render items", () => {
-    const { getByText } = renderWithTheme(<ItemList title={mockData.title} items={mockData.items} />);
+    const { getByText } = renderWithTheme(<ItemListView title={mockData.title} items={mockData.items} />);
     expect(getByText(mockData.items[0].name)).toBeInTheDocument();
     expect(getByText(mockData.items[1].name)).toBeInTheDocument();
   })

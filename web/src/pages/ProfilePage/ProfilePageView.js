@@ -5,7 +5,7 @@ import { styled } from "@mui/system";
 
 import Page from '../../components/Page/Page';
 import HistoryList from "../../components/HistoryList/HistoryList";
-import ItemList from "../../components/ItemList";
+import ItemListView from "../../components/ItemListView";
 import Title from "../../components/Title/Title";
 import UserContactinfo from '../../components/UserContactinfo';
 import ActionButtonContainer from "../../components/ActionButtonContainer";
@@ -149,10 +149,10 @@ function ProfilePageView({ profile, onEditClick }) {
         <p style={p}>Skill 3</p>
       </Skills>
       <Languages>
-        {languages.length > 0 && <ItemList title="Language proficiencies" items={languages} />}
+        {languages.length > 0 && <ItemListView title="Language proficiencies" items={languages} />}
       </Languages>
       <Keywords>
-        {keywords.length > 0 && <ItemList List title="Keywords" items={keywords} />}
+        {keywords.length > 0 && <ItemListView List title="Keywords" items={keywords} />}
       </Keywords>
       <Bio>
         <h2 style={h2}>Bio</h2>

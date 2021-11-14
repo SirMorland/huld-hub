@@ -10,7 +10,7 @@ const StyledUl = styled('ul')({
   padding: "0",
 });
 
-const ItemList = (props) => {
+const ItemListView = (props) => {
   return (
     <>
     <Typography variant="h2">{capitalizeFirstLetters(props.title)}</Typography>
@@ -23,7 +23,7 @@ const ItemList = (props) => {
     </>
   );
 };
-ItemList.propTypes = {
+ItemListView.propTypes = {
   title: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
@@ -31,4 +31,4 @@ ItemList.propTypes = {
   })).isRequired,
 };
 
-export default ItemList;
+export default ItemListView;
