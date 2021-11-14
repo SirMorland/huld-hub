@@ -185,9 +185,7 @@ function ProfilePageEdit({ profile, onSaveClick, onCancelClick, allLanguages, al
       </Languages>
       <Keywords>
         <h4>Keywords</h4>
-        {/* TODO: create a listing component so items can be removed */}
         <ItemListEdit items={edited.keywords} onRemove={onKeywordRemove}/>
-        {/* {edited.keywords.map(keyword => (<p>{keyword.name}</p>))} */}
         <SelectInputField options={keywordsToAdd} onSelect={onKeywordAdd} label="Pick new keyword"/>
       </Keywords>
       <Bio>
