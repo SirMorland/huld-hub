@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 
 import { styled } from "@mui/system";
@@ -7,6 +7,7 @@ import Page from '../../components/Page/Page';
 import ActionButtonContainer from "../../components/ActionButtonContainer";
 import { DoubleFieldContainer } from "../../components/GenericComponents";
 import SelectInputField from "../../components/SelectAutocompleteField";
+import ItemListEdit from "../../components/ItemListEdit";
 
 const Grid = styled('div')`
   display: grid;
@@ -107,6 +108,20 @@ function ProfilePageEdit({ profile, onSaveClick, onCancelClick, allLanguages, al
     });
   }
 
+  const onKeywordRemove = (keywords) => {
+    setEdited({
+      ...edited,
+      keywords,
+    });
+  }
+
+  const onLanguageRemove = (languages) => {
+    setEdited({
+      ...edited,
+      languages,
+    });
+  }
+
   return (
     <Page>
       <BasicInfo>
@@ -164,15 +179,15 @@ function ProfilePageEdit({ profile, onSaveClick, onCancelClick, allLanguages, al
         <h2>Skills</h2>
       </Skills>
       <Languages>
-        <h2>Language proficiencies</h2>
-        {/* TODO: create a listing component so items can be removed */}
-        {edited.languages.map(language => (<p>{language.name}</p>))}
+        <Typography variant="h2">Language proficiencies</Typography>
+        <ItemListEdit items={edited.languages} onRemove={onLanguageRemove}/>
         <SelectInputField options={languagesToAdd} onSelect={onLanguageAdd} label="Pick new language proficiency"/>
       </Languages>
       <Keywords>
-        <h2>Keywords</h2>
+        <h4>Keywords</h4>
         {/* TODO: create a listing component so items can be removed */}
-        {edited.keywords.map(keyword => (<p>{keyword.name}</p>))}
+        <ItemListEdit items={edited.keywords} onRemove={onKeywordRemove}/>
+        {/* {edited.keywords.map(keyword => (<p>{keyword.name}</p>))} */}
         <SelectInputField options={keywordsToAdd} onSelect={onKeywordAdd} label="Pick new keyword"/>
       </Keywords>
       <Bio>
