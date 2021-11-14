@@ -26,15 +26,15 @@ const mockData = {
 describe("EducationHitoryList component", () => {
   afterEach(cleanup);
   it("should render without crashing", () => {
-    const { container } = renderWithTheme(<ItemListView title={mockData.title} items={mockData.items} />);
+    const { container } = renderWithTheme(<ItemListView title={mockData.title} items={mockData.items} noItemDescription=""/>);
     expect(container).toBeTruthy();
   });
   it("should render title", () => {
-    const { getByText } = renderWithTheme(<ItemListView title={mockData.title} items={mockData.items} />);
+    const { getByText } = renderWithTheme(<ItemListView title={mockData.title} items={mockData.items} noItemDescription=""/>);
     expect(getByText(capitalizeFirstLetters(mockData.title))).toBeInTheDocument();
   });
   it("should render items", () => {
-    const { getByText } = renderWithTheme(<ItemListView title={mockData.title} items={mockData.items} />);
+    const { getByText } = renderWithTheme(<ItemListView title={mockData.title} items={mockData.items} noItemDescription=""/>);
     expect(getByText(mockData.items[0].name)).toBeInTheDocument();
     expect(getByText(mockData.items[1].name)).toBeInTheDocument();
   })
