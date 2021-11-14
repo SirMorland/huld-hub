@@ -149,10 +149,10 @@ function ProfilePageView({ profile, onEditClick }) {
         <p style={p}>Skill 3</p>
       </Skills>
       <Languages>
-        {languages.length > 0 && <ItemListView title="Language proficiencies" items={languages} />}
+        {<ItemListView title="Language proficiencies" items={languages} noItemDescription="No Language Proficiencies Provided" />}
       </Languages>
       <Keywords>
-        {keywords.length > 0 && <ItemListView List title="Keywords" items={keywords} />}
+        {<ItemListView List title="Keywords" items={keywords} noItemDescription="No Keywords Provided" />}
       </Keywords>
       <Bio>
         <h2 style={h2}>Bio</h2>

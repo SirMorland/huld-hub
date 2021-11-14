@@ -10,16 +10,37 @@ const StyledUl = styled('ul')({
   padding: "0",
 });
 
+const EmptyItem = styled(Typography)(({ theme }) => ({
+  color: theme.palette.grey.main,
+}));
+
+const renderItems = ({ items, noItemDescription }) => {
+  if (items && items.length > 0) {
+    return (
+      <>
+        <StyledUl>
+          {items && items.map(item => 
+              <li key={item.id}><Typography variant="body1">{item.name}</Typography></li>
+            )
+          }
+        </StyledUl>
+      </>
+    );
+  } else {
+    return (
+      <EmptyItem variant="body1" data-testid="no-item-description">
+        {noItemDescription}
+      </EmptyItem>
+    );
+  }
+};
+
+
 const ItemListView = (props) => {
   return (
     <>
-    <Typography variant="h2">{capitalizeFirstLetters(props.title)}</Typography>
-      <StyledUl>
-        {props.items && props.items.map(item => 
-            <li key={item.id}><Typography variant="body1">{item.name}</Typography></li>
-          )
-        }
-      </StyledUl>
+      <Typography variant="h2">{capitalizeFirstLetters(props.title)}</Typography>
+      {renderItems(props)}
     </>
   );
 };
@@ -29,6 +50,7 @@ ItemListView.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
   })).isRequired,
+  noItemDescription: PropTypes.string.isRequired,
 };
 
 export default ItemListView;
