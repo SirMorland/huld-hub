@@ -1,10 +1,10 @@
-import React, { useMemo } from "react";
+import React from "react";
 
 import { Button } from "@mui/material";
 import { styled } from "@mui/system";
 
 import Page from '../../components/Page/Page';
-import HistoryList from "../../components/HistoryList/HistoryList";
+import HistoryListView from "../../components/HistoryList/HistoryListView";
 import ItemList from "../../components/ItemList";
 import Title from "../../components/Title/Title";
 import UserContactinfo from '../../components/UserContactinfo';
@@ -78,53 +78,10 @@ const Education = styled("div")`
   }
 `;
 
-const HISTORY_TYPE = {
-  education: "Education",
-  work: "Work",
-};
-/**
- * A function that produces the props for using HistoryList component
- *
- * @param {Array<object>} historyItems - Array of history items
- * @param {*} type - type of history items
- * @returns {object}
- */
-const getHistoryProps = (historyItems = [], type) => {
-  return {
-    title: `${type} History`,
-    noItemDescription: `No ${type} History Provided`,
-    historyItems: historyItems.map((historyItem) => ({
-      id: historyItem.id,
-      organisation:
-        historyItem[type === HISTORY_TYPE.education ? "school" : "company"],
-      title:
-        historyItem[type === HISTORY_TYPE.education ? "degree" : "position"],
-      description: historyItem.description,
-      start_date: historyItem.start_date,
-      end_date: historyItem.end_date,
-    })),
-  };
-};
 
 function ProfilePageView({ profile, onEditClick }) {
-  const { languages, keywords } = profile;
-  const educationHistory = useMemo(
-    () =>
-      getHistoryProps(
-        profile ? profile.education_histories : [],
-        HISTORY_TYPE.education
-      ),
-    [profile]
-  );
-
-  const workHistory = useMemo(
-    () =>
-      getHistoryProps(
-        profile ? profile.work_experiences : [],
-        HISTORY_TYPE.work
-      ),
-    [profile]
-  );
+  const { languages, keywords, educationHistory, workHistory } = profile;
+  
   return (
     <Page header={
       profile &&
@@ -168,7 +125,7 @@ function ProfilePageView({ profile, onEditClick }) {
       </Bio>
 
       <Work>
-        <HistoryList
+        <HistoryListView
           title={workHistory.title}
           historyItems={workHistory.historyItems}
           noItemDescription={workHistory.noItemDescription}
@@ -176,7 +133,7 @@ function ProfilePageView({ profile, onEditClick }) {
       </Work>
 
       <Education>
-        <HistoryList
+        <HistoryListView
           title={educationHistory.title}
           historyItems={educationHistory.historyItems}
           noItemDescription={educationHistory.noItemDescription}
