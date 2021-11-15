@@ -95,6 +95,7 @@ const HistoryListEdit = forwardRef((props, ref) => {
         onClick={addNewItem}
         sx={{
           margin: "24px 0",
+          whiteSpace: "nowrap",
         }}
       >
         Add a new {props.type}

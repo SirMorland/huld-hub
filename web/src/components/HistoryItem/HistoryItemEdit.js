@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import DoNotDisturbOnIcon from "@mui/icons-material/DoNotDisturbOn";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
 import { styled } from "@mui/system";
 import { capitalizeFirstLetters } from "../../utils";
 import DatePicker from "../DatePicker";
 import TextField from "../TextField";
 import { HISTORY_TYPE } from "../../hooks/useHistoryList";
+import { DoubleFieldContainer, Grid } from "../GenericComponents";
 
 const Header = styled(Typography)({
   display: "flex",
@@ -84,8 +84,8 @@ const HistoryItemEdit = forwardRef((props, ref) => {
         }`}</Title>
       </Header>
       <Body>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
+        <Grid>
+          <DoubleFieldContainer>
             <TextField
               data-testid="textfield-organisation"
               required
@@ -94,8 +94,6 @@ const HistoryItemEdit = forwardRef((props, ref) => {
               onChange={({ target }) => setOrganisation(target.value)}
               error={!organisation}
             />
-          </Grid>
-          <Grid item xs={12} sm={6}>
             <TextField
               data-testid="textfield-title"
               required
@@ -104,32 +102,32 @@ const HistoryItemEdit = forwardRef((props, ref) => {
               onChange={({ target }) => setTitle(target.value)}
               error={!title}
             />
-          </Grid>
-          <Grid item xs={12} sm={6} data-testid="grid-start_date">
-            <DatePicker
-              textInputProps={{ required: true, error: !startDate }}
-              label="Start date *"
-              value={startDate}
-              onChange={setStartDate}
-              error={!startDate}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} data-testid="grid-end_date">
-            <DatePicker
-              label="End date"
-              value={endDate}
-              onChange={setEndDate}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              data-testid="textfield-description"
-              textarea
-              label="Description"
-              value={description}
-              onChange={({ target }) => setDescription(target.value)}
-            />
-          </Grid>
+          </DoubleFieldContainer>
+          <DoubleFieldContainer>
+            <div data-testid="grid-start_date">
+              <DatePicker
+                textInputProps={{ required: true, error: !startDate }}
+                label="Start date *"
+                value={startDate}
+                onChange={setStartDate}
+                error={!startDate}
+              />
+            </div>
+            <div data-testid="grid-end_date">
+              <DatePicker
+                label="End date"
+                value={endDate}
+                onChange={setEndDate}
+              />
+            </div>
+          </DoubleFieldContainer>
+          <TextField
+            data-testid="textfield-description"
+            textarea
+            label="Description"
+            value={description}
+            onChange={({ target }) => setDescription(target.value)}
+          />
         </Grid>
       </Body>
     </div>

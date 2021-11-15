@@ -5,13 +5,8 @@ import { styled } from "@mui/system";
 
 import Page from '../../components/Page/Page';
 import ActionButtonContainer from "../../components/ActionButtonContainer";
-import { DoubleFieldContainer } from "../../components/GenericComponents";
+import { DoubleFieldContainer, Grid } from "../../components/GenericComponents";
 import SelectInputField from "../../components/SelectAutocompleteField";
-
-const Grid = styled('div')`
-  display: grid;
-  gap: 16px;
-`;
 
 const BasicInfo = styled(Grid)`
   @media (min-width: 768px) {

@@ -1,7 +1,6 @@
 import { cleanup, getByTestId } from "@testing-library/react";
 import {
   renderWithTheme,
-  getYear,
   capitalizeFirstLetters,
 } from "../../../utils";
 import HistoryListEdit from "../HistoryListEdit.js";
