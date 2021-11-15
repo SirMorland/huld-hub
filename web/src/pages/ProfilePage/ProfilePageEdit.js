@@ -166,13 +166,13 @@ function ProfilePageEdit({ profile, onSaveClick, onCancelClick, allLanguages, al
       <Languages>
         <h2>Language proficiencies</h2>
         {/* TODO: create a listing component so items can be removed */}
-        {edited.languages.map(language => (<p>{language.name}</p>))}
+        {edited.languages.map(language => (<p key={language.id}>{language.name}</p>))}
         <SelectInputField options={languagesToAdd} onSelect={onLanguageAdd} label="Pick new language proficiency"/>
       </Languages>
       <Keywords>
         <h2>Keywords</h2>
         {/* TODO: create a listing component so items can be removed */}
-        {edited.keywords.map(keyword => (<p>{keyword.name}</p>))}
+        {edited.keywords.map(keyword => (<p key={keyword.id}>{keyword.name}</p>))}
         <SelectInputField options={keywordsToAdd} onSelect={onKeywordAdd} label="Pick new keyword"/>
       </Keywords>
       <Bio>
