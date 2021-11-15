@@ -10,15 +10,24 @@ const OutlinedInput = styled(MuiOutlinedInput)(({ theme }) => ({
   margin: "4px 0",
 }));
 
+const Container = styled("div")({
+  // some styling
+})
+
+/**
+ * 
+ * @param {StyledComponent<OutlinedInputProps & MUIStyledCommonProps<Theme>, {}, {}>} param0 
+ * @returns 
+ */
 function TextField({ label, textarea, ...props }) {
   const inputProps = {
     fullWidth: true,
     placeholder: label,
-    ...(textarea && { multiline: true, rows: 4 }),
+    ...(textarea && { multiline: true, minRows: 4 }),
     ...props,
   };
   return (
-    <div data-testid="textfield-container">
+    <Container data-testid="textfield-container">
       {label && (
         <Typography
           component="label"
@@ -33,7 +42,7 @@ function TextField({ label, textarea, ...props }) {
         {...inputProps}
         inputProps={{ "data-testid": "textfield-input" }}
       />
-    </div>
+    </Container>
   );
 }
 

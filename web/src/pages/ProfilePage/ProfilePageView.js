@@ -4,12 +4,11 @@ import { Button } from "@mui/material";
 import { styled } from "@mui/system";
 
 import Page from '../../components/Page/Page';
-import HistoryList from "../../components/HistoryList/HistoryList";
+import HistoryListView from "../../components/HistoryList/HistoryListView";
 import ItemList from "../../components/ItemList";
 import Title from "../../components/Title/Title";
 import UserContactinfo from '../../components/UserContactinfo';
 import ActionButtonContainer from "../../components/ActionButtonContainer";
-import useHistoryList, { HISTORY_TYPE } from '../../hooks/useHistoryList';
 
 const h2 = {
   margin: 0,
@@ -75,11 +74,10 @@ const Education = styled("div")`
   }
 `;
 
-function ProfilePageView({ profile, onEditClick }) {
-  const { languages, keywords } = profile;
-  const educationHistory = useHistoryList(profile, HISTORY_TYPE.education);
-  const workHistory = useHistoryList(profile, HISTORY_TYPE.work);
 
+function ProfilePageView({ profile, onEditClick }) {
+  const { languages, keywords, educationHistory, workHistory } = profile;
+  
   return (
     <Page header={
       profile &&
@@ -119,7 +117,7 @@ function ProfilePageView({ profile, onEditClick }) {
       </Bio>
 
       <Work>
-        <HistoryList
+        <HistoryListView
           title={workHistory.title}
           historyItems={workHistory.historyItems}
           noItemDescription={workHistory.noItemDescription}
@@ -127,7 +125,7 @@ function ProfilePageView({ profile, onEditClick }) {
       </Work>
 
       <Education>
-        <HistoryList
+        <HistoryListView
           title={educationHistory.title}
           historyItems={educationHistory.historyItems}
           noItemDescription={educationHistory.noItemDescription}

@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 
 import useProfile from "../../hooks/useProfile";
 import useCompetences from "../../hooks/useCompetences";
+import useHistoryList from "../../hooks/useHistoryList";
 import useCompetenceCategories from "../../hooks/useCompetenceCategories";
 
 import ProfilePageEdit from "./ProfilePageEdit";
@@ -13,6 +14,10 @@ import { UserContext } from "../../App";
 import { formatProfileForSave } from "../../utils";
 import useGetCompetencesByCategory from "../../hooks/useGetCompetencesByCategory";
 
+const HISTORY_TYPE = {
+  education: "education",
+  work: "work",
+};
 
 function ProfilePage({ id, onSave }) {
   let history = useHistory();
@@ -43,12 +48,16 @@ function ProfilePage({ id, onSave }) {
   const languages = useGetCompetencesByCategory(profile, competenceCategories, "coding languages");
   const keywords = useGetCompetencesByCategory(profile, competenceCategories, "keywords");
 
+  const educationHistory = useHistoryList(profile, HISTORY_TYPE.education)
+  const workHistory = useHistoryList(profile, HISTORY_TYPE.work)
+
+
   if (profile === false) {
     // TODO: render actual 404 page
     return <h1>404</h1>;
   }
 
-  const profileProps = { ...profile, languages, keywords };
+  const profileProps = {...profile, languages, keywords, educationHistory, workHistory};
 
   if (edit) {
     return (
