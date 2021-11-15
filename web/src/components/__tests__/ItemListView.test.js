@@ -4,6 +4,7 @@ import ItemListView from "../ItemListView.js";
 
 const mockData = {
   "title": "keywords",
+  "noItemDescription": "No item description",
   "items": [
       {
           "id": 10,
@@ -23,7 +24,7 @@ const mockData = {
       }
   ]
 }
-describe("EducationHitoryList component", () => {
+describe("ItemListView component", () => {
   afterEach(cleanup);
   it("should render without crashing", () => {
     const { container } = renderWithTheme(<ItemListView title={mockData.title} items={mockData.items} noItemDescription=""/>);
@@ -32,6 +33,10 @@ describe("EducationHitoryList component", () => {
   it("should render title", () => {
     const { getByText } = renderWithTheme(<ItemListView title={mockData.title} items={mockData.items} noItemDescription=""/>);
     expect(getByText(capitalizeFirstLetters(mockData.title))).toBeInTheDocument();
+  });
+  it("should render no item description", () => {
+    const { getByText } = renderWithTheme(<ItemListView title={mockData.title} items={[]} noItemDescription={mockData.noItemDescription}/>);
+    expect(getByText(mockData.noItemDescription)).toBeInTheDocument();
   });
   it("should render items", () => {
     const { getByText } = renderWithTheme(<ItemListView title={mockData.title} items={mockData.items} noItemDescription=""/>);
