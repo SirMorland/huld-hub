@@ -50,7 +50,8 @@ const headerTypography = (theme) => ({
   cursor: "pointer",
   lineHeight: 1,
   textDecoration: "none",
-})
+  verticalAlign: "bottom",
+});
 
 const StyledButton = styled('button')(({ theme }) => headerTypography(theme));
 const StyledLink = styled(Link)(({ theme }) => headerTypography(theme));
@@ -60,7 +61,7 @@ const HeaderLink = styled(StyledLink)({
   padding: "16px",
   display: "block",
   textAlign: "center",
-})
+});
 
 const StyledUl = styled('ul')({
   listStyleType: "none",
@@ -73,7 +74,13 @@ const StyledUl = styled('ul')({
 
 const StyledLi = styled('li')({
   padding: "16px",
-})
+});
+
+const StyledSearchIcon = styled(SearchIcon)`
+  width: 24px;
+  height: 24px;
+  vertical-align: bottom;
+`;
 
 const NavBar = ({ children, onLogOutClick, loggedIn, role }) => {
   return (
@@ -87,7 +94,7 @@ const NavBar = ({ children, onLogOutClick, loggedIn, role }) => {
           <StyledLi><StyledButton type="button" onClick={onLogOutClick}>Log out</StyledButton></StyledLi>
           <StyledLi>
             <StyledLink to="/search">
-              <SearchIcon fontSize="small" />
+              <StyledSearchIcon />
             </StyledLink>
           </StyledLi>
         </StyledUl>}
