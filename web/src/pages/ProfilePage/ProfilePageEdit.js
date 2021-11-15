@@ -1,6 +1,6 @@
 import { Button, TextField } from "@mui/material";
 import React, { useState, useRef } from "react";
-
+import Box from "@mui/material/Box";
 import { styled } from "@mui/system";
 
 import Page from "../../components/Page/Page";
@@ -90,7 +90,8 @@ function ProfilePageEdit({
 
   const [edited, setEdited] = useState(userProfile);
 
-  const onSave = () => {
+  const onSave = (evt) => {
+    evt.preventDefault();
     const education_histories = educationHistoryRef.current.getHistoryList();
     const work_experiences = workHistoryRef.current.getHistoryList();
     const competences = [...edited.keywords, ...edited.languages];
@@ -132,127 +133,129 @@ function ProfilePageEdit({
   };
 
   return (
-    <Page>
-      <BasicInfo>
-        <DoubleFieldContainer>
+    <Box component="form" onSubmit={onSave}>
+      <Page>
+        <BasicInfo>
+          <DoubleFieldContainer>
+            <TextField
+              required
+              fullWidth
+              id="first_name"
+              type="text"
+              label="First name"
+              name="first_name"
+              value={edited.first_name}
+              onChange={(e) =>
+                setEdited((prev) => ({ ...prev, first_name: e.target.value }))
+              }
+            />
+            <TextField
+              required
+              fullWidth
+              id="last_name"
+              type="text"
+              label="Last name"
+              name="last_name"
+              value={edited.last_name}
+              onChange={(e) =>
+                setEdited((prev) => ({ ...prev, last_name: e.target.value }))
+              }
+            />
+          </DoubleFieldContainer>
           <TextField
             required
             fullWidth
-            id="first_name"
+            id="title"
             type="text"
-            label="First name"
-            name="first_name"
-            value={edited.first_name}
+            label="Title"
+            name="title"
+            value={edited.title}
             onChange={(e) =>
-              setEdited((prev) => ({ ...prev, first_name: e.target.value }))
+              setEdited((prev) => ({ ...prev, title: e.target.value }))
             }
           />
-          <TextField
-            required
+        </BasicInfo>
+
+        <ContactInfo>
+          <DoubleFieldContainer>
+            <TextField
+              required
+              fullWidth
+              id="email"
+              type="email"
+              label="Email"
+              name="email"
+              value={edited.email || ""}
+              onChange={(e) =>
+                setEdited((prev) => ({ ...prev, email: e.target.value }))
+              }
+            />
+            <div />
+          </DoubleFieldContainer>
+        </ContactInfo>
+
+        <Skills>
+          <h2>Skills</h2>
+        </Skills>
+        <Languages>
+          <h2>Language proficiencies</h2>
+          {/* TODO: create a listing component so items can be removed */}
+          {edited.languages.map((language) => (
+            <p key={language.id}>{language.name}</p>
+          ))}
+          <SelectInputField
+            options={languagesToAdd}
+            onSelect={onLanguageAdd}
+            label="Pick new language proficiency"
+          />
+        </Languages>
+        <Keywords>
+          <h2>Keywords</h2>
+          {/* TODO: create a listing component so items can be removed */}
+          {edited.keywords.map((keyword) => (
+            <p key={keyword.id}>{keyword.name}</p>
+          ))}
+          <SelectInputField
+            options={keywordsToAdd}
+            onSelect={onKeywordAdd}
+            label="Pick new keyword"
+          />
+        </Keywords>
+        <Bio>
+          <h2>Bio</h2>
+        </Bio>
+
+        <Work>
+          <HistoryListEdit
+            type={HISTORY_TYPE.work}
+            historyItems={workHistory.historyItems}
+            ref={workHistoryRef}
+          />
+        </Work>
+
+        <Education>
+          <HistoryListEdit
+            type={HISTORY_TYPE.education}
+            historyItems={educationHistory.historyItems}
+            ref={educationHistoryRef}
+          />
+        </Education>
+
+        <ActionButtonContainer>
+          <Button fullWidth variant="contained" type="submit" color="primary">
+            Save
+          </Button>
+          <Button
             fullWidth
-            id="last_name"
-            type="text"
-            label="Last name"
-            name="last_name"
-            value={edited.last_name}
-            onChange={(e) =>
-              setEdited((prev) => ({ ...prev, last_name: e.target.value }))
-            }
-          />
-        </DoubleFieldContainer>
-        <TextField
-          required
-          fullWidth
-          id="title"
-          type="text"
-          label="Title"
-          name="title"
-          value={edited.title}
-          onChange={(e) =>
-            setEdited((prev) => ({ ...prev, title: e.target.value }))
-          }
-        />
-      </BasicInfo>
-
-      <ContactInfo>
-        <DoubleFieldContainer>
-          <TextField
-            required
-            fullWidth
-            id="email"
-            type="email"
-            label="Email"
-            name="email"
-            value={edited.email || ""}
-            onChange={(e) =>
-              setEdited((prev) => ({ ...prev, email: e.target.value }))
-            }
-          />
-          <div />
-        </DoubleFieldContainer>
-      </ContactInfo>
-
-      <Skills>
-        <h2>Skills</h2>
-      </Skills>
-      <Languages>
-        <h2>Language proficiencies</h2>
-        {/* TODO: create a listing component so items can be removed */}
-        {edited.languages.map((language) => (
-          <p key={language.id}>{language.name}</p>
-        ))}
-        <SelectInputField
-          options={languagesToAdd}
-          onSelect={onLanguageAdd}
-          label="Pick new language proficiency"
-        />
-      </Languages>
-      <Keywords>
-        <h2>Keywords</h2>
-        {/* TODO: create a listing component so items can be removed */}
-        {edited.keywords.map((keyword) => (
-          <p key={keyword.id}>{keyword.name}</p>
-        ))}
-        <SelectInputField
-          options={keywordsToAdd}
-          onSelect={onKeywordAdd}
-          label="Pick new keyword"
-        />
-      </Keywords>
-      <Bio>
-        <h2>Bio</h2>
-      </Bio>
-
-      <Work>
-        <HistoryListEdit
-          type={HISTORY_TYPE.work}
-          historyItems={workHistory.historyItems}
-          ref={workHistoryRef}
-        />
-      </Work>
-
-      <Education>
-        <HistoryListEdit
-          type={HISTORY_TYPE.education}
-          historyItems={educationHistory.historyItems}
-          ref={educationHistoryRef}
-        />
-      </Education>
-
-      <ActionButtonContainer>
-        <Button fullWidth variant="contained" color="primary" onClick={onSave}>
-          Save
-        </Button>
-        <Button
-          fullWidth
-          variant="contained"
-          color="error"
-          onClick={onCancelClick}
-        >
-          Cancel
-        </Button>
-      </ActionButtonContainer>
-    </Page>
+            variant="contained"
+            color="error"
+            onClick={onCancelClick}
+          >
+            Cancel
+          </Button>
+        </ActionButtonContainer>
+      </Page>
+    </Box>
   );
 }
 
