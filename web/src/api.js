@@ -63,7 +63,9 @@ export const getProfile = async (id, jwt) => {
 
 export const postProfile = async (profile, jwt) => {
   // TODO: implement this
-  console.log("Saving profile", profile);
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/user-profiles/${profile.id}`;
+  const response = await fetchPost(url, profile, jwt, "PUT");
+  return await handleBasicReponse(response);
 }
 
 export const getCompetenceCategories = async (jwt) => {
@@ -73,17 +75,7 @@ export const getCompetenceCategories = async (jwt) => {
       "Authorization": `Bearer ${jwt}`
     }
   });
-
-  switch(response.status) {
-    case 200:
-      return await response.json();
-    case 401:
-      throw new UnauthorizedError();
-    case 404:
-      throw new NotFoundError();
-    default:
-      throw new Error(response.status);
-  }
+  return await handleBasicReponse(response);
 }
 
 export const getCategoryCompetences = async (category, jwt) => {
@@ -93,17 +85,7 @@ export const getCategoryCompetences = async (category, jwt) => {
       "Authorization": `Bearer ${jwt}`
     }
   });
-
-  switch(response.status) {
-    case 200:
-      return await response.json();
-    case 401:
-      throw new UnauthorizedError();
-    case 404:
-      throw new NotFoundError();
-    default:
-      throw new Error(response.status);
-  }
+  return await handleBasicReponse(response);
 }
 
 
@@ -112,3 +94,16 @@ export class EmailWrongDomainError extends Error {};
 export class EmailTakenError extends Error {};
 export class UnauthorizedError extends Error {};
 export class NotFoundError extends Error {};
+
+const handleBasicReponse = (response) => {
+  switch(response.status) {
+    case 200:
+      return response.json();
+    case 401:
+      throw new UnauthorizedError();
+    case 404:
+      throw new NotFoundError();
+    default:
+      throw new Error(response.status);
+  }
+}

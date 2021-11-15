@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useRouteMatch } from "react-router";
 import Cookies from "js-cookie";
 
@@ -11,7 +11,8 @@ import ProfilePageEdit from "./ProfilePageEdit";
 import ProfilePageView from "./ProfilePageView";
 
 import { UserContext } from "../../App";
-import { getCompetencesWithCategoryNames } from "../../utils";
+import { formatProfileForSave } from "../../utils";
+import useGetCompetencesByCategory from "../../hooks/useGetCompetencesByCategory";
 
 const HISTORY_TYPE = {
   education: "education",
@@ -31,9 +32,9 @@ function ProfilePage({ id, onSave }) {
   const competenceCategories = useCompetenceCategories(jwt);
 
   const [edit, setEdit] = useState(false);
-  const onSaveClick = async (_profile) => {
-    setProfile(_profile);
-    await onSave(_profile, jwt);
+  const onSaveClick = async (profile) => {
+    const profileToBeSaved = formatProfileForSave(profile);
+    setProfile(await onSave(profileToBeSaved, jwt));
     setEdit(false);
   }
 
@@ -44,16 +45,8 @@ function ProfilePage({ id, onSave }) {
     }
   }, [history]);
 
-  const {languages, keywords} = useMemo(()=>{
-    if (profile && profile.competences) {
-      const competences = getCompetencesWithCategoryNames(competenceCategories, profile.competences);
-      return {
-        languages: competences.filter(competence => competence.category_name === "coding languages"),
-        keywords: competences.filter(competence => competence.category_name === "keywords"),
-      }
-    }
-    return { languages: [], keywords: [] };
-  }, [competenceCategories, profile]);
+  const languages = useGetCompetencesByCategory(profile, competenceCategories, "coding languages");
+  const keywords = useGetCompetencesByCategory(profile, competenceCategories, "keywords");
 
   const educationHistory = useHistoryList(profile, HISTORY_TYPE.education)
   const workHistory = useHistoryList(profile, HISTORY_TYPE.work)
@@ -66,7 +59,7 @@ function ProfilePage({ id, onSave }) {
 
   const profileProps = {...profile, languages, keywords, educationHistory, workHistory};
 
-  if(edit) {
+  if (edit) {
     return (
       <ProfilePageEdit
         profile={profileProps}
