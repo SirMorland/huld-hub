@@ -26,6 +26,13 @@ const Title = styled("span")({
   whiteSpace: "nowrap",
 });
 
+/**
+ * A component that renders a history items of a user
+ *
+ * @param {{ historyItem :{ organisation: string; title: string; start_date: string; end_date: string; description: string;}; mapId: number | string; type: string; }} props
+ * @param { React.ForwardedRef<any> } ref
+ * @returns {JSX.Element}
+ */
 const HistoryItemEdit = forwardRef((props, ref) => {
   const { historyItem } = props;
   const organisationType =
@@ -52,7 +59,7 @@ const HistoryItemEdit = forwardRef((props, ref) => {
         start_date: startDate,
         end_date: endDate,
         description,
-        mapId: historyItem.mapId
+        mapId: historyItem.mapId,
       }),
     }),
     [description, endDate, historyItem.mapId, organisation, startDate, title]
@@ -63,10 +70,11 @@ const HistoryItemEdit = forwardRef((props, ref) => {
       <Header variant="h3">
         <span>
           <IconButton
+            data-testid="btn-delete"
             color="secondary"
             aria-label="cancel"
             sx={{ padding: "0" }}
-            onClick={props.removeItemByIndex.bind(this, props.index)}
+            onClick={() => props.removeItemByIndex(props.index)}
           >
             <DoNotDisturbOnIcon />
           </IconButton>
@@ -79,6 +87,7 @@ const HistoryItemEdit = forwardRef((props, ref) => {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
+              data-testid="textfield-organisation"
               required
               label={`${capitalizeFirstLetters(organisationType)} *`}
               value={organisation}
@@ -88,6 +97,7 @@ const HistoryItemEdit = forwardRef((props, ref) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              data-testid="textfield-title"
               required
               label={`${capitalizeFirstLetters(titleType)} *`}
               value={title}
@@ -95,7 +105,7 @@ const HistoryItemEdit = forwardRef((props, ref) => {
               error={!title}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} data-testid="grid-start_date">
             <DatePicker
               textInputProps={{ required: true, error: !startDate }}
               label="Start date *"
@@ -104,7 +114,7 @@ const HistoryItemEdit = forwardRef((props, ref) => {
               error={!startDate}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} data-testid="grid-end_date">
             <DatePicker
               label="End date"
               value={endDate}
@@ -113,6 +123,7 @@ const HistoryItemEdit = forwardRef((props, ref) => {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              data-testid="textfield-description"
               textarea
               label="Description"
               value={description}
@@ -134,15 +145,14 @@ export const HistoryItemProps = PropTypes.shape({
   ]),
   end_date: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
   description: PropTypes.string,
+  mapId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 });
 
-
-HistoryItemEdit.displayName ="HistoryItemEdit"
+HistoryItemEdit.displayName = "HistoryItemEdit";
 
 HistoryItemEdit.propTypes = {
   historyItem: HistoryItemProps,
   index: PropTypes.number.isRequired,
-  mapId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   type: PropTypes.string.isRequired,
   removeItemByIndex: PropTypes.func.isRequired,
 };
