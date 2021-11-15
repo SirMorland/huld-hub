@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/system";
 
-import HistoryItem, { HistoryItemProps } from "../HistoryItem/HistoryItem.js";
+import HistoryItemView, { HistoryItemViewProps } from "../HistoryItem/HistoryItemView.js";
 
 const EmptyHistory = styled(Typography)(({ theme }) => ({
   color: theme.palette.grey.main,
@@ -12,7 +12,7 @@ const EmptyHistory = styled(Typography)(({ theme }) => ({
 const renderHistoryItems = ({ historyItems, noItemDescription }) => {
   if (historyItems && historyItems.length > 0) {
     return historyItems.map((historyItem) => (
-      <HistoryItem historyItem={historyItem} key={historyItem.id} />
+      <HistoryItemView historyItem={historyItem} key={historyItem.id} />
     ));
   } else {
     return (
@@ -23,7 +23,13 @@ const renderHistoryItems = ({ historyItems, noItemDescription }) => {
   }
 };
 
-function HistoryList(props) {
+/**
+ * A component that renders a list of history items of a user
+ * 
+ * @param {{ title: string; noItemDescription: string; historyItems: Array<object>; }} props 
+ * @returns {JSX.Element}
+ */
+function HistoryListView(props) {
   return (
     <div data-testid="history">
       <Typography variant="h2" data-testid="history-title">
@@ -34,14 +40,14 @@ function HistoryList(props) {
   );
 }
 
-HistoryList.defaultProps = {
+HistoryListView.defaultProps = {
   historyItems: [],
 };
 
-HistoryList.propTypes = {
+HistoryListView.propTypes = {
   title: PropTypes.string.isRequired,
   noItemDescription: PropTypes.string.isRequired,
-  historyItems: PropTypes.arrayOf(HistoryItemProps),
+  historyItems: PropTypes.arrayOf(HistoryItemViewProps),
 };
 
-export default HistoryList;
+export default HistoryListView;
