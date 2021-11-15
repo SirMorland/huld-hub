@@ -66,7 +66,7 @@ const HistoryItemEdit = forwardRef((props, ref) => {
   );
 
   return (
-    <div>
+    <div data-testid="history-edit-item">
       <Header variant="h3">
         <span>
           <IconButton

@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import styled from "@mui/system/styled";
 import PropTypes from "prop-types";
 import HistoryItemEdit, {
   HistoryItemProps,
@@ -22,6 +23,19 @@ const historyProfileFormat = (data = [], type) =>
     end_date: end_date && end_date.toISOString(),
     description,
   }));
+
+const EmptyHistory = styled(Typography)(({ theme }) => ({
+  color: theme.palette.grey.main,
+  textAlign: "center",
+}));
+
+const Body = styled("div")({
+  marginTop: "8px",
+});
+
+const Header = styled(Typography)({
+  marginTop: "24px",
+});
 
 const HistoryListEdit = forwardRef((props, ref) => {
   const [historyItems, setHistoryItem] = useState(
@@ -50,7 +64,7 @@ const HistoryListEdit = forwardRef((props, ref) => {
 
   const removeItemByIndex = async (index) => {
     const newValue = [...getHistoryListData()];
-    historyItemRefs.current = historyItemRefs.current.splice(index, 1);
+    historyItemRefs.current.splice(index, 1);
     newValue.splice(index, 1);
     setHistoryItem(newValue);
   };
@@ -70,39 +84,43 @@ const HistoryListEdit = forwardRef((props, ref) => {
 
   return (
     <div>
-      <Typography
-        variant="h2"
-        data-testid="history-title"
-        sx={{ marginTop: "24px" }}
-      >
+      <Header variant="h2" data-testid="history-title">
         {capitalizeFirstLetters(props.type)} history
-      </Typography>
+      </Header>
       <Button
+        data-testid="btn-add-new"
         fullWidth
         variant="contained"
         color="primary"
         onClick={addNewItem}
         sx={{
-          marginTop: "24px",
+          margin: "24px 0",
         }}
       >
         Add a new {props.type}
       </Button>
-
-      {historyItems.map((_, i) => {
-        const reverseIndex = historyItems.length - 1 - i;
-        historyItemRefs.current[reverseIndex] = createRef();
-        return (
-          <HistoryItemEdit
-            historyItem={historyItems[reverseIndex]}
-            index={reverseIndex}
-            type={props.type}
-            key={historyItems[reverseIndex].mapId}
-            removeItemByIndex={removeItemByIndex}
-            ref={historyItemRefs.current[reverseIndex]}
-          />
-        );
-      })}
+      <Body data-testid="edit-history-list">
+        {historyItems && historyItems.length > 0 ? (
+          historyItems.map((_, i) => {
+            const reverseIndex = historyItems.length - 1 - i;
+            historyItemRefs.current[reverseIndex] = createRef();
+            return (
+              <HistoryItemEdit
+                historyItem={historyItems[reverseIndex]}
+                index={reverseIndex}
+                type={props.type}
+                key={historyItems[reverseIndex].mapId}
+                removeItemByIndex={removeItemByIndex}
+                ref={historyItemRefs.current[reverseIndex]}
+              />
+            );
+          })
+        ) : (
+          <EmptyHistory variant="body1" data-testid="no-item-description">
+            No {capitalizeFirstLetters(props.type)} item added
+          </EmptyHistory>
+        )}
+      </Body>
     </div>
   );
 });
@@ -111,12 +129,10 @@ HistoryListEdit.defaultProps = {
   historyItems: [],
 };
 
-HistoryListEdit.displayName ="HistoryListEdit"
+HistoryListEdit.displayName = "HistoryListEdit";
 
 HistoryListEdit.propTypes = {
   type: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  noItemDescription: PropTypes.string.isRequired,
   historyItems: PropTypes.arrayOf(HistoryItemProps),
 };
 
