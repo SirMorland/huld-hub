@@ -84,17 +84,22 @@ function ProfilePageEdit({
   allLanguages,
   allKeywords,
 }) {
-  const { educationHistory, workHistory, userProfile } = profile;
-  const workHisoryRef = useRef()
-  const educationHisoryRef = useRef()
+  const { educationHistory, workHistory, ...userProfile } = profile;
+  const workHistoryRef = useRef();
+  const educationHistoryRef = useRef();
 
   const [edited, setEdited] = useState(userProfile);
 
   const onSave = () => {
-    const education_histories = educationHisoryRef.current.getHistoryList()
-    const work_experiences = workHisoryRef.current.getHistoryList()
+    const education_histories = educationHistoryRef.current.getHistoryList();
+    const work_experiences = workHistoryRef.current.getHistoryList();
     const competences = [...edited.keywords, ...edited.languages];
-    onSaveClick({ ...edited, competences,education_histories, work_experiences });
+    onSaveClick({
+      ...edited,
+      competences,
+      education_histories,
+      work_experiences,
+    });
   };
 
   // filter languages that are not already in edited.languages by name
@@ -193,14 +198,26 @@ function ProfilePageEdit({
       <Languages>
         <h2>Language proficiencies</h2>
         {/* TODO: create a listing component so items can be removed */}
-        {edited.languages.map(language => (<p key={language.id}>{language.name}</p>))}
-        <SelectInputField options={languagesToAdd} onSelect={onLanguageAdd} label="Pick new language proficiency"/>
+        {edited.languages.map((language) => (
+          <p key={language.id}>{language.name}</p>
+        ))}
+        <SelectInputField
+          options={languagesToAdd}
+          onSelect={onLanguageAdd}
+          label="Pick new language proficiency"
+        />
       </Languages>
       <Keywords>
         <h2>Keywords</h2>
         {/* TODO: create a listing component so items can be removed */}
-        {edited.keywords.map(keyword => (<p key={keyword.id}>{keyword.name}</p>))}
-        <SelectInputField options={keywordsToAdd} onSelect={onKeywordAdd} label="Pick new keyword"/>
+        {edited.keywords.map((keyword) => (
+          <p key={keyword.id}>{keyword.name}</p>
+        ))}
+        <SelectInputField
+          options={keywordsToAdd}
+          onSelect={onKeywordAdd}
+          label="Pick new keyword"
+        />
       </Keywords>
       <Bio>
         <h2>Bio</h2>
@@ -209,16 +226,16 @@ function ProfilePageEdit({
       <Work>
         <HistoryListEdit
           type={HISTORY_TYPE.work}
-          hisoryItems={workHistory.hisoryItems}
-          ref={workHisoryRef}
+          historyItems={workHistory.historyItems}
+          ref={workHistoryRef}
         />
       </Work>
 
       <Education>
         <HistoryListEdit
           type={HISTORY_TYPE.education}
-          hisoryItems={educationHistory.hisoryItems}
-          ref={educationHisoryRef}
+          historyItems={educationHistory.historyItems}
+          ref={educationHistoryRef}
         />
       </Education>
 
