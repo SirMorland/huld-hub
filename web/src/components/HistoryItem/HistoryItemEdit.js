@@ -71,7 +71,7 @@ const HistoryItemEdit = forwardRef((props, ref) => {
         <span>
           <IconButton
             data-testid="btn-delete"
-            color="secondary"
+            color="error"
             aria-label="cancel"
             sx={{ padding: "0" }}
             onClick={() => props.removeItemByIndex(props.index)}
