@@ -69,3 +69,17 @@ export const getCompetencesWithCategoryNames = (categories, competences) => {
     });
   return [];
 };
+
+/**
+ * A function that delays for the giving time
+ *
+ * @param {number} timeout time to delay
+ * @param {Fuction} func function to be executed after timeout
+ * @returns
+ */
+export const delay = (timeout, func) =>
+  new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(func && func());
+    }, timeout);
+  });
