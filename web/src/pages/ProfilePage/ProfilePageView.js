@@ -9,7 +9,6 @@ import ItemList from "../../components/ItemList";
 import Title from "../../components/Title/Title";
 import UserContactinfo from '../../components/UserContactinfo';
 import ActionButtonContainer from "../../components/ActionButtonContainer";
-import useHistoryList, { HISTORY_TYPE } from '../../hooks/useHistoryList';
 
 const h2 = {
   margin: 0,
