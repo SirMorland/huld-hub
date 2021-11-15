@@ -35,7 +35,6 @@ function App() {
   }, [_setJwt]);
 
   const removeJwt = useCallback(() => {
-    console.log("removeJwt");
     Cookies.remove("hub-jwt");
     _setJwt(null);
   }, [_setJwt]);

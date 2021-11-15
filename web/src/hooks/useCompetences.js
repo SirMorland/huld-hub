@@ -1,19 +1,19 @@
 import {useEffect, useState} from "react";
 import { useHistory } from "react-router";
-import {getProfile, NotFoundError, UnauthorizedError} from '../api';
+import {getCategoryCompetences, NotFoundError, UnauthorizedError} from '../api';
 
-const useProfile = (id, jwt) => {
-  const [profile, setProfile] = useState(null);
+const useCompetences = (category, jwt) => {
+  const [competences, setCompetences] = useState([]);
   const history = useHistory();
   useEffect(()=>{
-    const fetchProfile = async (id) => {
+    const fetchCompetenceCategories = async () => {
       try {
-        const json = await getProfile(id, jwt);
-        setProfile(json);
+        const json = await getCategoryCompetences(category, jwt);
+        setCompetences(json);
       } catch (error) {
         switch (true) {
           case error instanceof NotFoundError:
-            setProfile(false);
+            setCompetences([]);
             break;
           case error instanceof UnauthorizedError: //TODO: this does not necessarily mean the email is not confirmed
             history.push("/almost-done"); //We should return more accurate errors to deduce why user is not authorized
@@ -23,9 +23,9 @@ const useProfile = (id, jwt) => {
         }
       }
     };
-    if (jwt) fetchProfile(id);
-  }, [id, history, jwt]);
-  return [profile, setProfile];
+    if (jwt) fetchCompetenceCategories();
+  }, [history, jwt, category]);
+  return competences;
 };
 
-export default useProfile;
+export default useCompetences;

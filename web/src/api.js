@@ -67,7 +67,7 @@ export const postProfile = async (profile, jwt) => {
 }
 
 export const getCompetenceCategories = async (jwt) => {
-  const url = `${process.env.REACT_APP_BACKEND_HOST}/competence-categories`;
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/competence-categories?name=keywords&name=coding%20languages`;
   const response = await fetch(url, {
     headers: {
       "Authorization": `Bearer ${jwt}`
@@ -85,6 +85,27 @@ export const getCompetenceCategories = async (jwt) => {
       throw new Error(response.status);
   }
 }
+
+export const getCategoryCompetences = async (category, jwt) => {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/competences?category.name=${category}`;
+  const response = await fetch(url, {
+    headers: {
+      "Authorization": `Bearer ${jwt}`
+    }
+  });
+
+  switch(response.status) {
+    case 200:
+      return await response.json();
+    case 401:
+      throw new UnauthorizedError();
+    case 404:
+      throw new NotFoundError();
+    default:
+      throw new Error(response.status);
+  }
+}
+
 
 export class EmailOrPasswordInvalidError extends Error {};
 export class EmailWrongDomainError extends Error {};

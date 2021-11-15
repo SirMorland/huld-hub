@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks'
-import useProfile from '../useProfile';
+import useCompetences from '../useCompetences';
 
 
 beforeEach(() => {
@@ -16,16 +16,16 @@ afterAll(() => {
 describe('useCompetenceCategories hook', () => {
 
   it('should return an empty array when hub-jtw is not defined', () => {
-    const { result } = renderHook(() => useProfile(1))
-    expect(result.current[0]).toEqual(null);
+    const { result } = renderHook(() => useCompetences('cat'))
+    expect(result.current.length).toEqual(0);
   })
   it('should return categories list when hub-jwt is defined and the jwt is proper', async () => {
-    const mockProfile = [{ id: 1, name: 'cat' }];
-    fetch.mockResponseOnce(JSON.stringify(mockProfile), { status: 200 });
+    const mockCompetences = [{ id: 1, name: 'cat' }];
+    fetch.mockResponseOnce(JSON.stringify(mockCompetences), { status: 200 });
 
-    const { result, waitForNextUpdate } = renderHook(() => useProfile(1, 'jwt'))
+    const { result, waitForNextUpdate } = renderHook(() => useCompetences('cat','jwt'));
     await waitForNextUpdate();
-    expect(result.current[0]).toEqual(mockProfile);
+    expect(result.current).toEqual(mockCompetences);
   });
 
 })

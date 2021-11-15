@@ -3,8 +3,9 @@ import { useHistory } from "react-router-dom";
 import Cookies from 'js-cookie';
 
 import { Box } from '@mui/system';
-import { Button, Grid, Link, TextField, Typography } from '@mui/material';
+import { Button, Grid, Link, Typography } from '@mui/material';
 
+import TextField from '../components/TextField';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
 import { EmailTakenError, EmailWrongDomainError } from '../api';
@@ -57,10 +58,10 @@ export default function RegistrationForm({ onSubmit }) {
                         <Grid item xs={12}>
                             <TextField
                                 required
-                                fullWidth
                                 id="email"
                                 type="email"
                                 label="Email Address"
+                                placeholder="john.doe@huld.io"
                                 name="email"
                                 value={email}
                                 onChange={e => setEmail(e.target.value)}
@@ -82,11 +83,11 @@ export default function RegistrationForm({ onSubmit }) {
                         <Grid item xs={12}>
                             <TextField
                                 required
-                                fullWidth
                                 type="password"
                                 id="password"
                                 name="password"
                                 label="Password"
+                                placeholder="********"
                                 value={password}
                                 onChange={e => setPassword(e.target.value)}
                             />
@@ -94,11 +95,11 @@ export default function RegistrationForm({ onSubmit }) {
                         <Grid item xs={12}>
                             <TextField
                                 required
-                                fullWidth
                                 type="password"
                                 id="reEnterPassword"
                                 name="reEnterPassword"
                                 label="Re-Enter Password"
+                                placeholder="********"
                                 value={reEnterPassword}
                                 onChange={e => setReEnterPassword(e.target.value)}
                             />

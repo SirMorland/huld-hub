@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 
-import { Button, Grid, Link, TextField, Typography } from '@mui/material';
+import { Button, Grid, Link, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 
+import TextField from '../components/TextField';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
 import { EmailOrPasswordInvalidError } from '../api';
@@ -46,10 +47,10 @@ export default function LoginForm({ onSubmit }) {
                         <Grid item xs={12}>
                             <TextField
                                 required
-                                fullWidth
                                 id="email"
                                 type="email"
                                 label="Email Address"
+                                placeholder="john.doe@huld.io"
                                 name="email"
                                 value={email}
                                 onChange={e => setEmail(e.target.value)}
@@ -58,11 +59,11 @@ export default function LoginForm({ onSubmit }) {
                         <Grid item xs={12}>
                             <TextField
                                 required
-                                fullWidth
                                 type="password"
                                 id="password"
                                 name="password"
                                 label="Password"
+                                placeholder="********"
                                 value={password}
                                 onChange={e => setPassword(e.target.value)}
                             />
