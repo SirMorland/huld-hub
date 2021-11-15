@@ -30,11 +30,11 @@ const EmptyHistory = styled(Typography)(({ theme }) => ({
 }));
 
 const Body = styled("div")({
-  marginTop: "8px",
+  // marginTop: "8px",
 });
 
 const Header = styled(Typography)({
-  marginTop: "24px",
+  // marginTop: "24px",
 });
 
 const HistoryListEdit = forwardRef((props, ref) => {
@@ -94,7 +94,7 @@ const HistoryListEdit = forwardRef((props, ref) => {
         color="primary"
         onClick={addNewItem}
         sx={{
-          margin: "24px 0",
+          marginTop: "24px",
           whiteSpace: "nowrap",
         }}
       >

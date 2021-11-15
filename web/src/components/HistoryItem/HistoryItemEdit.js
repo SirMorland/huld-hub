@@ -14,7 +14,7 @@ const Header = styled(Typography)({
   display: "flex",
   flexDirection: "row",
   alignItems: "center",
-  margin: "24px 0",
+  margin: "16px 0",
 });
 
 const Body = styled("div")({
