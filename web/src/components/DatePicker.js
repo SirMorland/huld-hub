@@ -12,7 +12,7 @@ const DateInputDiv = styled("div")({
   margin: "4px 0",
 });
 
-function DatePicker({ label, ...props }) {
+function DatePicker({ label, textInputProps, ...props }) {
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
   const MuiDatePicker = isSmallScreen ? MobileDatePicker : DesktopDatePicker;
@@ -24,9 +24,7 @@ function DatePicker({ label, ...props }) {
   };
 
   return (
-    <LocalizationProvider
-      dateAdapter={AdapterDateFns}
-    >
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
       <div data-testid="date-locale-provider">
         {label && (
           <Typography
@@ -45,7 +43,7 @@ function DatePicker({ label, ...props }) {
             renderInput={({ inputProps, ...params }) => (
               <TextField
                 fullWidth
-                {...params}
+                {...{ ...params, ...textInputProps }}
                 placeholder="dd.mm.yyyy"
                 inputProps={{ ...inputProps, "data-testid": "date-input" }}
               />

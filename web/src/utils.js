@@ -7,13 +7,15 @@ import theme from "./theme";
 import React from "react";
 import { UserContext } from "./App";
 
-export const fetchPost = (url, body) => {
+export const fetchPost = (url, body, jwt, method) => {
+  const headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  }
+  if (jwt) headers["Authorization"] = `Bearer ${jwt}`;
   return fetch(url, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    method: method || "POST",
+    headers,
     body: JSON.stringify(body),
   });
 };
@@ -32,7 +34,7 @@ export const renderWithRouter = (children) => {
 };
 export const renderHelper = (children, context) => {
   const contextValue = {
-    setJwt: () => {},
+    setJwt: () => { },
     jwt: "jwt",
     ...context,
   };
@@ -60,7 +62,7 @@ export const getCompetencesWithCategoryNames = (categories, competences) => {
   )
     return competences.map((competence) => {
       const category = categories.find(
-        (category) => category.id === competence.category
+        (category) => category.id === competence.category || category.id
       );
       return {
         ...competence,
@@ -69,3 +71,11 @@ export const getCompetencesWithCategoryNames = (categories, competences) => {
     });
   return [];
 };
+
+export const formatProfileForSave = (profile) => {
+  delete profile.keywords;
+  delete profile.languages;
+  delete profile.user;
+  // TODO: format more things here
+  return profile;
+}

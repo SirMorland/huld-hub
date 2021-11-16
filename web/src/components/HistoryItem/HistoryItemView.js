@@ -19,7 +19,13 @@ const DateSpan = styled("span")({
   whiteSpace: "nowrap",
 });
 
-function HistoryItem(props) {
+/**
+ * A component that renders a history items of a user
+ *
+ * @param {{ id: number | string; organisation: string; title: string; start_date: string; end_date: string; description: string; }} props
+ * @returns {JSX.Element}
+ */
+function HistoryItemView(props) {
   return (
     <div id={`history-${props.historyItem.id}`} data-testid="history-item">
       <Header variant="h3">
@@ -46,7 +52,7 @@ function HistoryItem(props) {
   );
 }
 
-export const HistoryItemProps = PropTypes.shape({
+export const HistoryItemViewProps = PropTypes.shape({
   organisation: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   start_date: PropTypes.string.isRequired,
@@ -55,8 +61,8 @@ export const HistoryItemProps = PropTypes.shape({
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 });
 
-HistoryItem.propTypes = {
-  historyItem: HistoryItemProps,
+HistoryItemView.propTypes = {
+  historyItem: HistoryItemViewProps,
 };
 
-export default HistoryItem;
+export default HistoryItemView;

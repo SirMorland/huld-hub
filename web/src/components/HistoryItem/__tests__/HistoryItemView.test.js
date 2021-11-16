@@ -1,6 +1,6 @@
 import { cleanup } from "@testing-library/react";
 import { renderWithTheme, getYear } from "../../../utils";
-import HistoryItem from "../HistoryItem.js";
+import HistoryItemView from "../HistoryItemView.js";
 
 const testData = {
   id: 1,
@@ -15,7 +15,7 @@ const testData = {
 describe("HistoryItem component", () => {
   let container = null;
   beforeEach(() => {
-    container = renderWithTheme(<HistoryItem historyItem={testData} />);
+    container = renderWithTheme(<HistoryItemView historyItem={testData} />);
   });
   afterAll(cleanup);
   it("should render organisation correctly", () => {
