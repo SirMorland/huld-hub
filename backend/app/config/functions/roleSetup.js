@@ -28,6 +28,16 @@ const enableApplicationPermissions = async (role) => {
   );
 };
 
+const enableUploadPermissions = async (role) => {
+  const permissionQuery = strapi.query("permission", "users-permissions");
+  const uploadPermission = await permissionQuery.findOne({
+    type: "upload",
+    action: "upload",
+    role,
+  });
+  await permissionQuery.update({ id: uploadPermission.id }, { enabled: true });
+};
+
 /**
  * create admin and employee roles if they are not yet created
  * enable all application permissions to them
@@ -36,9 +46,10 @@ const enableApplicationPermissions = async (role) => {
  */
 const roleSetup = async (roles) => {
   await Promise.all(roles.map(async (role) => {
-    let customeRole = await findRoleByName(role.name);
-    if (!customeRole) customeRole = await createRole(role);
-    await enableApplicationPermissions(customeRole.id);
+    let customRole = await findRoleByName(role.name);
+    if (!customRole) customRole = await createRole(role);
+    await enableApplicationPermissions(customRole.id);
+    await enableUploadPermissions(customRole.id);
   }));
   // no role provided will enable application permissions to every role, uncomment this to apply
   // await enableApplicationPermissions();
