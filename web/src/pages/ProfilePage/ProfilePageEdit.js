@@ -1,6 +1,7 @@
 import { Button, TextField } from "@mui/material";
 import React, { useState, useRef } from "react";
 import { styled } from "@mui/system";
+import Typography from "@mui/material/Typography";
 
 import Page from "../../components/Page/Page";
 import ActionButtonContainer from "../../components/ActionButtonContainer";
@@ -8,6 +9,7 @@ import { DoubleFieldContainer, Grid } from "../../components/GenericComponents";
 import SelectInputField from "../../components/SelectAutocompleteField";
 import HistoryListEdit from "../../components/HistoryList/HistoryListEdit";
 import { HISTORY_TYPE } from "../../hooks/useHistoryList";
+import ItemListEdit from "../../components/ItemListEdit";
 
 const BasicInfo = styled(Grid)`
   @media (min-width: 768px) {
@@ -131,6 +133,20 @@ function ProfilePageEdit({
     });
   };
 
+  const onKeywordRemove = (keywords) => {
+    setEdited({
+      ...edited,
+      keywords,
+    });
+  }
+
+  const onLanguageRemove = (languages) => {
+    setEdited({
+      ...edited,
+      languages,
+    });
+  }
+
   return (
     <form onSubmit={onSave}>
       <Page>
@@ -197,29 +213,16 @@ function ProfilePageEdit({
           <h2>Skills</h2>
         </Skills>
         <Languages>
-          <h2>Language proficiencies</h2>
-          {/* TODO: create a listing component so items can be removed */}
-          {edited.languages.map((language) => (
-            <p key={language.id}>{language.name}</p>
-          ))}
-          <SelectInputField
-            options={languagesToAdd}
-            onSelect={onLanguageAdd}
-            label="Pick new language proficiency"
-          />
+          <Typography variant="h2">Language proficiencies</Typography>
+          <ItemListEdit items={edited.languages} onRemove={onLanguageRemove}/>
+          <SelectInputField options={languagesToAdd} onSelect={onLanguageAdd} label="Pick new language proficiency"/>
         </Languages>
         <Keywords>
-          <h2>Keywords</h2>
-          {/* TODO: create a listing component so items can be removed */}
-          {edited.keywords.map((keyword) => (
-            <p key={keyword.id}>{keyword.name}</p>
-          ))}
-          <SelectInputField
-            options={keywordsToAdd}
-            onSelect={onKeywordAdd}
-            label="Pick new keyword"
-          />
+          <Typography variant="h2">Keywords</Typography>
+          <ItemListEdit items={edited.keywords} onRemove={onKeywordRemove}/>
+          <SelectInputField options={keywordsToAdd} onSelect={onKeywordAdd} label="Pick new keyword"/>
         </Keywords>
+        
         <Bio>
           <h2>Bio</h2>
         </Bio>
