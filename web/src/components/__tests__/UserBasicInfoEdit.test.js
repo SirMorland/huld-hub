@@ -23,11 +23,11 @@ const UpdateFunction = async (profile) => {
 describe("UserContactinfo component", () => {
   afterEach(cleanup);
   it("should render without crashing", () => {
-    const { container } = renderWithTheme(<UserBasicInfoEdit  edited={profile} setEdited={UpdateFunction} />);
+    const { container } = renderWithTheme(<UserBasicInfoEdit  basicInfo={profile} setBasicInfo={UpdateFunction} />);
     expect(container).toBeTruthy();
   });
   it("should render profile data in input fields", () => {
-    const { getByDisplayValue } = renderWithTheme(<UserBasicInfoEdit  edited={profile} setEdited={UpdateFunction} />);
+    const { getByDisplayValue } = renderWithTheme(<UserBasicInfoEdit  basicInfo={profile} setBasicInfo={UpdateFunction} />);
     expect(getByDisplayValue(profile.email)).toBeInTheDocument();
     expect(getByDisplayValue(profile.slack)).toBeInTheDocument();
     expect(getByDisplayValue(profile.github)).toBeInTheDocument();

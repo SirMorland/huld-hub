@@ -1,19 +1,19 @@
-import { DoubleFieldContainer } from "./GenericComponents";
+import { DoubleFieldContainer, Grid } from "./GenericComponents";
 import TextField  from "./TextField";
 
-export default function UserBasicInfoEdit({edited,setEdited } ) {
+export default function UserBasicInfoEdit({basicInfo,setBasicInfo } ) {
     return (
-      <>
+      <Grid>
          <DoubleFieldContainer>
             <TextField
                 required
                 fullWidth
                 id="first_name_Edit"
                 type="text"
-                label="first name"
+                label="First name"
                 name="first_name"
-                value={edited.first_name}
-                onChange={e => setEdited(prev => ({...prev, first_name: e.target.value}))}
+                value={basicInfo.first_name}
+                onChange={e => setBasicInfo(prev => ({...prev, first_name: e.target.value}))}
               />
            <TextField
               required
@@ -22,8 +22,8 @@ export default function UserBasicInfoEdit({edited,setEdited } ) {
               type="text"
               label="Last name"
               name="last_name"
-              value={edited.last_name}
-              onChange={e => setEdited(prev => ({...prev, last_name: e.target.value}))}
+              value={basicInfo.last_name}
+              onChange={e => setBasicInfo(prev => ({...prev, last_name: e.target.value}))}
             />
           </DoubleFieldContainer>
           <DoubleFieldContainer>
@@ -33,8 +33,8 @@ export default function UserBasicInfoEdit({edited,setEdited } ) {
               type="text"
               label="Title"
               name="title"
-              value={edited.title}
-              onChange={e => setEdited(prev => ({...prev, title: e.target.value}))}
+              value={basicInfo.title}
+              onChange={e => setBasicInfo(prev => ({...prev, title: e.target.value}))}
             />
           </DoubleFieldContainer>
           <DoubleFieldContainer>
@@ -44,27 +44,27 @@ export default function UserBasicInfoEdit({edited,setEdited } ) {
                 type="text"
                 label="Site"
                 name="address"
-                value={edited.address}
-                onChange={e => setEdited(prev => ({...prev, address: e.target.value}))}
+                value={basicInfo.address}
+                onChange={e => setBasicInfo(prev => ({...prev, address: e.target.value}))}
             />
             <TextField
                 fullWidth
                 id="phone_Edit"
-                type="text"
+                type="tel"
                 label="Phone"
                 name="phone"
-                value={edited.phone}
-                onChange={e => setEdited(prev => ({...prev, phone: e.target.value}))}
+                value={basicInfo.phone}
+                onChange={e => setBasicInfo(prev => ({...prev, phone: e.target.value}))}
             />
           </DoubleFieldContainer>
           <DoubleFieldContainer>
             <TextField
                 id="email_Edit"
-                type="text"
+                type="email"
                 label="Email"
                 name="email"
-                value={edited.email}
-                onChange={e => setEdited(prev => ({...prev, email: e.target.value}))}
+                value={basicInfo.email}
+                onChange={e => setBasicInfo(prev => ({...prev, email: e.target.value}))}
             />
             <TextField
                 fullWidth
@@ -72,8 +72,8 @@ export default function UserBasicInfoEdit({edited,setEdited } ) {
                 type="text"
                 label="Slack"
                 name="slack"
-                value={edited.slack}
-                onChange={e => setEdited(prev => ({...prev, slack: e.target.value}))}
+                value={basicInfo.slack}
+                onChange={e => setBasicInfo(prev => ({...prev, slack: e.target.value}))}
             />
           </DoubleFieldContainer>
           <DoubleFieldContainer>
@@ -83,19 +83,21 @@ export default function UserBasicInfoEdit({edited,setEdited } ) {
                 type="text"
                 label="LinkedIn"
                 name="linkedin"
-                value={edited.linkedin}
-                onChange={e => setEdited(prev => ({...prev, linkedin: e.target.value}))}
+                value={basicInfo.linkedin}
+                onChange={e => setBasicInfo(prev => ({...prev, linkedin: e.target.value}))}
             />
             <TextField
                 fullWidth
                 id="github_Edit"
                 type="text"
-                label="Github"
+                label="GitHub"
                 name="github"
-                value={edited.github}
-                onChange={e => setEdited(prev => ({...prev, github: e.target.value}))}
+                value={basicInfo.github}
+                onChange={e => setBasicInfo(prev => ({...prev, github: e.target.value}))}
             />
           </DoubleFieldContainer>
-      </>
+      </Grid>
     );
   }
+
+  
