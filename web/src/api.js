@@ -61,17 +61,44 @@ export const getProfile = async (id, jwt) => {
   }
 }
 
+export const postProfile = async (profile, jwt) => {
+  // TODO: implement this
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/user-profiles/${profile.id}`;
+  const response = await fetchPost(url, profile, jwt, "PUT");
+  return await handleBasicReponse(response);
+}
+
 export const getCompetenceCategories = async (jwt) => {
-  const url = `${process.env.REACT_APP_BACKEND_HOST}/competence-categories`;
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/competence-categories?name=keywords&name=coding%20languages`;
   const response = await fetch(url, {
     headers: {
       "Authorization": `Bearer ${jwt}`
     }
   });
+  return await handleBasicReponse(response);
+}
 
+export const getCategoryCompetences = async (category, jwt) => {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/competences?category.name=${category}`;
+  const response = await fetch(url, {
+    headers: {
+      "Authorization": `Bearer ${jwt}`
+    }
+  });
+  return await handleBasicReponse(response);
+}
+
+
+export class EmailOrPasswordInvalidError extends Error {};
+export class EmailWrongDomainError extends Error {};
+export class EmailTakenError extends Error {};
+export class UnauthorizedError extends Error {};
+export class NotFoundError extends Error {};
+
+const handleBasicReponse = (response) => {
   switch(response.status) {
     case 200:
-      return await response.json();
+      return response.json();
     case 401:
       throw new UnauthorizedError();
     case 404:
@@ -80,9 +107,3 @@ export const getCompetenceCategories = async (jwt) => {
       throw new Error(response.status);
   }
 }
-
-export class EmailOrPasswordInvalidError extends Error {};
-export class EmailWrongDomainError extends Error {};
-export class EmailTakenError extends Error {};
-export class UnauthorizedError extends Error {};
-export class NotFoundError extends Error {};

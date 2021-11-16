@@ -9,9 +9,9 @@ import LoginForm from "./pages/Login";
 import RegistrationForm from "./pages/Register";
 import AlmostDone from "./pages/AlmostDone";
 import EmailConfirmed from './pages/EmailConfirmed';
-import ProfilePage from "./pages/ProfilePage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
 
-import { login, register } from './api';
+import { login, register, postProfile } from './api';
 import theme from './theme';
 import Page from './components/Page/Page';
 import useUser from './hooks/useUser';
@@ -35,7 +35,6 @@ function App() {
   }, [_setJwt]);
 
   const removeJwt = useCallback(() => {
-    console.log("removeJwt");
     Cookies.remove("hub-jwt");
     _setJwt(null);
   }, [_setJwt]);
@@ -56,7 +55,7 @@ function App() {
         <Switch>
           <Route exact path="/">
             {user ?
-              <ProfilePage id={user.profile} />
+              <ProfilePage id={user.profile} onSave={postProfile} />
               :
               (jwt ?
                 <Redirect to="/almost-done" />
@@ -86,7 +85,7 @@ function App() {
           <Route exact path="/almost-done" component={AlmostDone} />
           <Route exact path="/email-confirmed" component={EmailConfirmed} />
           <Route exact path="/:id">
-            <ProfilePage />
+            <ProfilePage onSave={postProfile} />
           </Route>
         </Switch>
       </ThemeProvider>
