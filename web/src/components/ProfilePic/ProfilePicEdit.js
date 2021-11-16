@@ -4,39 +4,49 @@ import { styled } from '@mui/system';
 import IconButton from '@mui/material/IconButton';
 
 const StyledAvatar = styled(Avatar)`
-    margin-right: 32px;
     width: 128px;
     height: 128px;
 `;
-const ProfilePicEdit = forwardRef(({ profileImage }, ref) => {
-    const [file, setFile] = useState(profileImage);
 
+const StyledButton = styled(IconButton)`
+    padding: 0;
+    &:hover, &:focus{
+        &:after {
+            display: flex;
+            content: "Upload new profile image";
+            font-weight: bold;
+            background-color: rgba(0,0,0, 0.5);
+            width: 128px;
+            height: 128px;
+            position: absolute;
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            align-items: center;
+        }
+    }
+`;
+
+const ProfilePicEdit = forwardRef(({ profileImage }, ref) => {
+    const [file, setFile] = useState(null);
+    const imageUrl = process.env.REACT_APP_BACKEND_HOST + profileImage.url;
     useImperativeHandle(
         ref,
         () => ({
-            getImage: () => {
-                if (file) {
-                    const formData = new FormData()
-                    formData.append('files', file[0])
-                    return formData;
-                }
-                else {
-                    return null;
-                }
-            },
+            getFile: () => (file) ? file : null
         }),
         [file]
     );
     return (
         <div>
             <input
-                type="file" onChange={(e) => setFile(e.target.files)} id="upload"
+                type="file" onChange={(e) => setFile(e.target.files[0])} id="upload"
                 accept="image/*" style={{ display: "none" }}
             />
             <label htmlFor="upload">
-                <IconButton aria-label="upload picture" component="span">
-                    <StyledAvatar id="avatar" src={file ? URL.createObjectURL(file[0]) : null} />
-                </IconButton>
+                <StyledButton aria-label="upload picture" component="span">
+                    <StyledAvatar id="avatar" src={file ? URL.createObjectURL(file) : imageUrl} />
+                </StyledButton>
             </label>
             <label htmlFor="avatar" />
         </div>

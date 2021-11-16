@@ -68,6 +68,23 @@ export const postProfile = async (profile, jwt) => {
   return await handleBasicReponse(response);
 }
 
+export const uploadPicture = (file, jwt) => new Promise((resolve,reject) => {
+  const formData = new FormData();
+  formData.append("files", file);
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/upload`;
+  const request = new XMLHttpRequest();
+  request.open("POST", url);
+  request.setRequestHeader("Authorization", `Bearer ${jwt}`);
+  request.send(formData);
+  request.addEventListener("load", () => {
+    if (request.status === 200) {
+      resolve(request.response);
+    } else {
+      reject(request.status);
+    }
+  });
+})
+
 export const getCompetenceCategories = async (jwt) => {
   const url = `${process.env.REACT_APP_BACKEND_HOST}/competence-categories?name=keywords&name=coding%20languages`;
   const response = await fetch(url, {

@@ -11,7 +11,6 @@ import ProfilePageEdit from "./ProfilePageEdit";
 import ProfilePageView from "./ProfilePageView";
 
 import { UserContext } from "../../App";
-import { formatProfileForSave } from "../../utils";
 import useGetCompetencesByCategory from "../../hooks/useGetCompetencesByCategory";
 import { HISTORY_TYPE } from "../../hooks/useHistoryList";
 
@@ -29,8 +28,8 @@ function ProfilePage({ id, onSave }) {
 
   const [edit, setEdit] = useState(false);
   const onSaveClick = async (profile) => {
-    const profileToBeSaved = formatProfileForSave(profile);
-    setProfile(await onSave(profileToBeSaved, jwt));
+    const newProfile = await onSave(profile);
+    setProfile(newProfile);
     setEdit(false);
   }
 

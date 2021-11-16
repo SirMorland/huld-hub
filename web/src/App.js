@@ -11,10 +11,11 @@ import AlmostDone from "./pages/AlmostDone";
 import EmailConfirmed from './pages/EmailConfirmed';
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 
-import { login, register, postProfile } from './api';
+import { login, register, postProfile, uploadPicture } from './api';
 import theme from './theme';
 import Page from './components/Page/Page';
 import useUser from './hooks/useUser';
+import { formatProfileForSave } from './utils';
 
 export const UserContext = React.createContext(null);
 
@@ -49,13 +50,23 @@ function App() {
     );
   }
 
+  const onProfileSave = async (profile) => {
+    // if profile.file exists, we need to upload the picture and set the new image to the new media id
+    if (profile.file) {
+      const newPic = JSON.parse(await uploadPicture(profile.file, jwt));
+      profile.image = newPic[0].id;
+    }
+    const profileToBeSaved = formatProfileForSave(profile);
+    return await postProfile(profileToBeSaved, jwt);
+  }
+
   return (
     <UserContext.Provider value={{ user, setJwt, jwt, removeJwt }}>
       <ThemeProvider theme={theme}>
         <Switch>
           <Route exact path="/">
             {user ?
-              <ProfilePage id={user.profile} onSave={postProfile} />
+              <ProfilePage id={user.profile} onSave={onProfileSave} />
               :
               (jwt ?
                 <Redirect to="/almost-done" />

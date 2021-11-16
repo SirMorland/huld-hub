@@ -105,14 +105,14 @@ function ProfilePageEdit({
     evt.preventDefault();
     const education_histories = educationHistoryRef.current.getHistoryList();
     const work_experiences = workHistoryRef.current.getHistoryList();
-    const image = profileImageRef.current.getImage();
+    const file = profileImageRef.current.getFile();
     const competences = [...edited.keywords, ...edited.languages];
     onSaveClick({
       ...edited,
       competences,
       education_histories,
       work_experiences,
-      image
+      file,
     });
   };
 
