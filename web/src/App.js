@@ -53,8 +53,8 @@ function App() {
   const onProfileSave = async (profile) => {
     // if profile.file exists, we need to upload the picture and set the new image to the new media id
     if (profile.file) {
-      const newPic = JSON.parse(await uploadPicture(profile.file, jwt));
-      profile.image = newPic[0].id;
+      const [newPic] = await uploadPicture(profile.file, jwt);
+      profile.image = newPic.id;
     }
     const profileToBeSaved = formatProfileForSave(profile);
     return await postProfile(profileToBeSaved, jwt);

@@ -10,7 +10,7 @@ const StyledAvatar = styled(Avatar)`
 
 const StyledButton = styled(IconButton)`
     padding: 0;
-    &:hover, &:focus{
+    &:hover {
         &:after {
             display: flex;
             content: "Upload new profile image";
