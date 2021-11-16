@@ -184,7 +184,7 @@ function ProfilePageEdit({ profile, onSaveClick, onCancelClick, allLanguages, al
         <SelectInputField options={languagesToAdd} onSelect={onLanguageAdd} label="Pick new language proficiency"/>
       </Languages>
       <Keywords>
-        <h4>Keywords</h4>
+        <Typography variant="h2">Keywords</Typography>
         <ItemListEdit items={edited.keywords} onRemove={onKeywordRemove}/>
         <SelectInputField options={keywordsToAdd} onSelect={onKeywordAdd} label="Pick new keyword"/>
       </Keywords>
