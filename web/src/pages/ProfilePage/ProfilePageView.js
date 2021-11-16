@@ -4,18 +4,14 @@ import { Button } from "@mui/material";
 import { styled } from "@mui/system";
 
 import Page from '../../components/Page/Page';
+import ProfileInfo from "../../components/ProfileInfo/ProfileInfo";
 import HistoryListView from "../../components/HistoryList/HistoryListView";
-import ItemList from "../../components/ItemList";
+import ItemListView from "../../components/ItemListView";
 import Title from "../../components/Title/Title";
 import UserContactinfo from '../../components/UserContactinfo';
 import ActionButtonContainer from "../../components/ActionButtonContainer";
 
-const h2 = {
-  margin: 0,
-};
-const p = {
-  margin: 0,
-};
+
 
 const HeaderContentContainer = styled('div')`
   display: flex;
@@ -92,28 +88,16 @@ function ProfilePageView({ profile, onEditClick }) {
       </HeaderContentContainer>
     }>
       <Skills>
-        <h2 style={h2}>Skills</h2>
-        <p style={p}>Skill 1</p>
-        <p style={p}>Skill 2</p>
-        <p style={p}>Skill 3</p>
+      <ProfileInfo title="Skills" data={profile && profile.skills}/>
       </Skills>
       <Languages>
-        {languages.length > 0 && <ItemList title="Language proficiencies" items={languages} />}
+        <ItemListView title="Language proficiencies" items={languages} noItemDescription="No Language Proficiencies Provided" />
       </Languages>
       <Keywords>
-        {keywords.length > 0 && <ItemList List title="Keywords" items={keywords} />}
+        <ItemListView List title="Keywords" items={keywords} noItemDescription="No Keywords Provided" />
       </Keywords>
       <Bio>
-        <h2 style={h2}>Bio</h2>
-        <p style={p}>
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-          nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-          sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-          rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-          ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-          sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-          dolore magna aliquyam erat, sed diam voluptua.
-        </p>
+      <ProfileInfo title="Bio" data={profile && profile.bio}/>
       </Bio>
 
       <Work>
