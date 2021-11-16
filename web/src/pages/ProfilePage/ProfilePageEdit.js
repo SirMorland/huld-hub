@@ -133,7 +133,7 @@ function ProfilePageEdit({
   };
 
   return (
-    <Box component="form" onSubmit={onSave}>
+    <form onSubmit={onSave}>
       <Page>
         <BasicInfo>
           <DoubleFieldContainer>
@@ -255,7 +255,7 @@ function ProfilePageEdit({
           </Button>
         </ActionButtonContainer>
       </Page>
-    </Box>
+    </form>
   );
 }
 
