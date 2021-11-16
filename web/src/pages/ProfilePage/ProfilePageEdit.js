@@ -9,7 +9,7 @@ import { DoubleFieldContainer, Grid } from "../../components/GenericComponents";
 import SelectInputField from "../../components/SelectAutocompleteField";
 import HistoryListEdit from "../../components/HistoryList/HistoryListEdit";
 import { HISTORY_TYPE } from "../../hooks/useHistoryList";
-import ProfilePicEdit from "../../components/ProfilePic/ProfilePicEdit";
+import ProfilePicEdit from "../../components/ProfilePicEdit";
 import ItemListEdit from "../../components/ItemListEdit";
 
 const ProfilePicture = styled("div")`
