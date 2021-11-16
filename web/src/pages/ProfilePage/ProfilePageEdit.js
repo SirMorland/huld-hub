@@ -89,6 +89,7 @@ function ProfilePageEdit({
   const educationHistoryRef = useRef();
 
   const [edited, setEdited] = useState(userProfile);
+  const [profileBio, setProfileBio] = useState(edited.bio || "")
 
   const onSave = () => {
     const education_histories = educationHistoryRef.current.getHistoryList();
@@ -99,6 +100,7 @@ function ProfilePageEdit({
       competences,
       education_histories,
       work_experiences,
+      bio: profileBio,
     });
   };
 
@@ -130,6 +132,7 @@ function ProfilePageEdit({
       keywords: [...edited.keywords, keyword],
     });
   };
+
 
   return (
     <Page>
@@ -220,7 +223,15 @@ function ProfilePageEdit({
         />
       </Keywords>
       <Bio>
-        <h2>Bio</h2>
+      <TextField
+        textarea
+                required
+                id="Profile_Info_Edit"
+                type="text"
+                label="Bio"
+                placeholder="Few words about yourself"
+                value={profileBio}
+                onChange={e => setProfileBio(e.target.value)}/>
       </Bio>
 
       <Work>
