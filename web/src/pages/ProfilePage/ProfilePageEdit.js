@@ -9,7 +9,16 @@ import { DoubleFieldContainer, Grid } from "../../components/GenericComponents";
 import SelectInputField from "../../components/SelectAutocompleteField";
 import HistoryListEdit from "../../components/HistoryList/HistoryListEdit";
 import { HISTORY_TYPE } from "../../hooks/useHistoryList";
+import ProfilePicEdit from "../../components/ProfilePic/ProfilePicEdit";
 
+const ProfilePicture = styled("div")`
+  @media (min-width: 768px) {
+    grid-column-start: 1;
+  }
+  @media (min-width: 1152px) {
+    grid-column-start: 1;
+  }
+`;
 const BasicInfo = styled(Grid)`
   @media (min-width: 768px) {
     grid-column-start: 1;
@@ -87,18 +96,21 @@ function ProfilePageEdit({
   const { educationHistory, workHistory, ...userProfile } = profile;
   const workHistoryRef = useRef();
   const educationHistoryRef = useRef();
+  const profileImageRef = useRef();
 
   const [edited, setEdited] = useState(userProfile);
 
   const onSave = () => {
     const education_histories = educationHistoryRef.current.getHistoryList();
     const work_experiences = workHistoryRef.current.getHistoryList();
+    const image = profileImageRef.current.getImage();
     const competences = [...edited.keywords, ...edited.languages];
     onSaveClick({
       ...edited,
       competences,
       education_histories,
       work_experiences,
+      image
     });
   };
 
@@ -133,6 +145,9 @@ function ProfilePageEdit({
 
   return (
     <Page>
+      <ProfilePicture>
+        <ProfilePicEdit profileImage={edited.image} ref={profileImageRef} />
+      </ProfilePicture>
       <BasicInfo>
         <DoubleFieldContainer>
           <TextField
