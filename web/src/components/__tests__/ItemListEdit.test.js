@@ -1,6 +1,6 @@
 import { cleanup } from "@testing-library/react";
-import { renderWithTheme, capitalizeFirstLetters } from "../../utils";
-import ItemList from "../ItemList.js";
+import { renderWithTheme } from "../../utils";
+import ItemListEdit from "../ItemListEdit.js";
 
 const mockData = {
   "title": "keywords",
@@ -23,19 +23,24 @@ const mockData = {
       }
   ]
 }
-describe("EducationHitoryList component", () => {
+describe.only("ItemlistEdit component", () => {
   afterEach(cleanup);
   it("should render without crashing", () => {
-    const { container } = renderWithTheme(<ItemList title={mockData.title} items={mockData.items} />);
+    const { container } = renderWithTheme(<ItemListEdit items={mockData.items} onRemove={()=>{}}/>);
     expect(container).toBeTruthy();
   });
-  it("should render title", () => {
-    const { getByText } = renderWithTheme(<ItemList title={mockData.title} items={mockData.items} />);
-    expect(getByText(capitalizeFirstLetters(mockData.title))).toBeInTheDocument();
-  });
   it("should render items", () => {
-    const { getByText } = renderWithTheme(<ItemList title={mockData.title} items={mockData.items} />);
+    const { getByText } = renderWithTheme(<ItemListEdit items={mockData.items} onRemove={()=>{}} />);
     expect(getByText(mockData.items[0].name)).toBeInTheDocument();
     expect(getByText(mockData.items[1].name)).toBeInTheDocument();
+  })
+  it("should remove correct item, and call onRemove with correct items", () =>{
+    const onRemove = jest.fn();
+    const { getAllByLabelText } = renderWithTheme(<ItemListEdit items={mockData.items} onRemove={onRemove}/>);
+    const deleteButtons = getAllByLabelText('delete');
+    expect(deleteButtons.length).toEqual(2);
+    deleteButtons[0].click();
+    mockData.items.splice(0,1);
+    expect(onRemove).toBeCalledWith(mockData.items);
   })
 });

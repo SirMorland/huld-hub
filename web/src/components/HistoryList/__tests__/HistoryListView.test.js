@@ -1,6 +1,6 @@
 import { cleanup, getByTestId } from "@testing-library/react";
 import { renderWithTheme, getYear } from "../../../utils";
-import HistoryList from "../HistoryList.js";
+import HistoryListView from "../HistoryListView.js";
 
 const testData = {
   title: "Education History",
@@ -45,11 +45,11 @@ const testData = {
   ],
 };
 
-describe("HistoryList component", () => {
+describe("HistoryListView component", () => {
   afterEach(cleanup);
   it("should render correct title", () => {
     const { getByTestId } = renderWithTheme(
-      <HistoryList
+      <HistoryListView
         title={testData.title}
         noItemDescription={testData.noItemDescription}
       />
@@ -60,42 +60,42 @@ describe("HistoryList component", () => {
   });
   it("should render no education data", () => {
     const { getByTestId } = renderWithTheme(
-      <HistoryList
+      <HistoryListView
         title={testData.title}
         noItemDescription={testData.noItemDescription}
       />
     );
-    const historyListEl = getByTestId("history-items");
-    expect(historyListEl).toBeTruthy();
-    expect(historyListEl.children).toHaveLength(1);
+    const HistoryListViewEl = getByTestId("history-items");
+    expect(HistoryListViewEl).toBeTruthy();
+    expect(HistoryListViewEl.children).toHaveLength(1);
     const noItemDescription = getByTestId("no-item-description");
     expect(noItemDescription).toHaveTextContent(testData.noItemDescription);
   });
   it("should render correct number of history items", () => {
     const { getByTestId } = renderWithTheme(
-      <HistoryList
+      <HistoryListView
         title={testData.title}
         historyItems={testData.historyItems}
         noItemDescription={testData.noItemDescription}
       />
     );
-    const historyListEl = getByTestId("history-items");
-    expect(historyListEl).toBeTruthy();
-    expect(historyListEl.children).toHaveLength(testData.historyItems.length);
+    const HistoryListViewEl = getByTestId("history-items");
+    expect(HistoryListViewEl).toBeTruthy();
+    expect(HistoryListViewEl.children).toHaveLength(testData.historyItems.length);
   });
   it("should render correct history item data", () => {
     const { getAllByTestId } = renderWithTheme(
-      <HistoryList
+      <HistoryListView
         title={testData.title}
         historyItems={testData.historyItems}
         noItemDescription={testData.noItemDescription}
       />
     );
-    const historyListEl = getAllByTestId("history-item");
-    expect(historyListEl).toBeTruthy();
-    expect(historyListEl).toHaveLength(testData.historyItems.length);
+    const HistoryListViewEl = getAllByTestId("history-item");
+    expect(HistoryListViewEl).toBeTruthy();
+    expect(HistoryListViewEl).toHaveLength(testData.historyItems.length);
 
-    historyListEl.forEach((educationHitoryItem, index) => {
+    HistoryListViewEl.forEach((educationHitoryItem, index) => {
       const organisationEl = getByTestId(educationHitoryItem, "organisation");
       expect(organisationEl).toBeTruthy();
       expect(organisationEl).toHaveTextContent(

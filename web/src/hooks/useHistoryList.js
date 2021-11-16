@@ -1,16 +1,16 @@
 import { useMemo } from "react";
 import { capitalizeFirstLetters } from "../utils";
 
-const HISTORY_TYPE = {
+export const HISTORY_TYPE = {
   education: "education",
   work: "work",
 };
 
 /**
- * A function that produces the props for using HistoryList component
+ * A function that produces the props for using HistoryListView component
  *
  * @param {Array<object>} historyItems - Array of history items
- * @param {*} type - type of history items
+ * @param {"work" | "education"} type - type of history items
  * @returns {object}
  */
 const getHistoryProps = (historyItems = [], type) => {
@@ -30,6 +30,14 @@ const getHistoryProps = (historyItems = [], type) => {
   };
 };
 
+
+/**
+ * A custome hook for extracting and creating the props for the HistoryListView component from the profile object
+ * 
+ * @param {object} profile user profile object
+ * @param {"work" | "education"} type - history list type
+ * @returns {object}
+ */
 const useHistoryList = (profile, type) => {
   const historyList = useMemo(
     () =>

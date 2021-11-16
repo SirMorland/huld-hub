@@ -1,15 +1,16 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import {getCategoryCompetences, NotFoundError, UnauthorizedError} from '../api';
+import { getCategoryCompetences, NotFoundError, UnauthorizedError } from '../api';
 
 const useCompetences = (category, jwt) => {
   const [competences, setCompetences] = useState([]);
   const history = useHistory();
-  useEffect(()=>{
+  useEffect(() => {
     const fetchCompetenceCategories = async () => {
       try {
         const json = await getCategoryCompetences(category, jwt);
-        setCompetences(json);
+        const categoryCompetences = json.map(competence => ({ ...competence, category: competence.category.id }));
+        setCompetences(categoryCompetences);
       } catch (error) {
         switch (true) {
           case error instanceof NotFoundError:

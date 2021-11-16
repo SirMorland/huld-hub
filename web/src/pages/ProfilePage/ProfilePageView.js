@@ -1,30 +1,22 @@
-import React, { useMemo } from "react";
+import React from "react";
 
 import { Button } from "@mui/material";
 import { styled } from "@mui/system";
 
 import Page from '../../components/Page/Page';
-import HistoryList from "../../components/HistoryList/HistoryList";
-import ItemList from "../../components/ItemList";
+import ProfileInfo from "../../components/ProfileInfo/ProfileInfo";
+import HistoryListView from "../../components/HistoryList/HistoryListView";
+import ItemListView from "../../components/ItemListView";
 import Title from "../../components/Title/Title";
 import UserContactinfo from '../../components/UserContactinfo';
 import ActionButtonContainer from "../../components/ActionButtonContainer";
 
-const h2 = {
-  margin: 0,
-};
-const p = {
-  margin: 0,
-};
 
-const HeaderLeft = styled('div')`
-  width: 50%;
-  float: left;
-`;
 
-const HeaderRight = styled('div')`
-  width: 50%;
-  float: left;
+const HeaderContentContainer = styled('div')`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const Skills = styled('div')`
@@ -78,97 +70,38 @@ const Education = styled("div")`
   }
 `;
 
-const HISTORY_TYPE = {
-  education: "Education",
-  work: "Work",
-};
-/**
- * A function that produces the props for using HistoryList component
- *
- * @param {Array<object>} historyItems - Array of history items
- * @param {*} type - type of history items
- * @returns {object}
- */
-const getHistoryProps = (historyItems = [], type) => {
-  return {
-    title: `${type} History`,
-    noItemDescription: `No ${type} History Provided`,
-    historyItems: historyItems.map((historyItem) => ({
-      id: historyItem.id,
-      organisation:
-        historyItem[type === HISTORY_TYPE.education ? "school" : "company"],
-      title:
-        historyItem[type === HISTORY_TYPE.education ? "degree" : "position"],
-      description: historyItem.description,
-      start_date: historyItem.start_date,
-      end_date: historyItem.end_date,
-    })),
-  };
-};
 
 function ProfilePageView({ profile, onEditClick }) {
-  const { languages, keywords } = profile;
-  const educationHistory = useMemo(
-    () =>
-      getHistoryProps(
-        profile ? profile.education_histories : [],
-        HISTORY_TYPE.education
-      ),
-    [profile]
-  );
-
-  const workHistory = useMemo(
-    () =>
-      getHistoryProps(
-        profile ? profile.work_experiences : [],
-        HISTORY_TYPE.work
-      ),
-    [profile]
-  );
+  const { languages, keywords, educationHistory, workHistory } = profile;
+  
   return (
     <Page header={
       profile &&
-      <React.Fragment>
-        <HeaderLeft>
-          {profile.first_name && profile.last_name && <Title
-            first_name={profile.first_name}
-            last_name={profile.last_name}
-            title={profile.title}
-            image={profile.image && `${process.env.REACT_APP_BACKEND_HOST}${profile.image.formats.small.url}`}
-          />}
-        </HeaderLeft>
-        <HeaderRight>
-          <UserContactinfo {...profile} ></UserContactinfo>
-        </HeaderRight>
-      </React.Fragment>
+      <HeaderContentContainer>
+        <Title
+          first_name={profile.first_name}
+          last_name={profile.last_name}
+          title={profile.title}
+          image={profile.image && `${process.env.REACT_APP_BACKEND_HOST}${profile.image.formats.small.url}`}
+        />
+        <UserContactinfo {...profile} ></UserContactinfo>
+      </HeaderContentContainer>
     }>
       <Skills>
-        <h2 style={h2}>Skills</h2>
-        <p style={p}>Skill 1</p>
-        <p style={p}>Skill 2</p>
-        <p style={p}>Skill 3</p>
+      <ProfileInfo title="Skills" data={profile && profile.skills}/>
       </Skills>
       <Languages>
-        {languages.length > 0 && <ItemList title="Language proficiencies" items={languages} />}
+        <ItemListView title="Language proficiencies" items={languages} noItemDescription="No Language Proficiencies Provided" />
       </Languages>
       <Keywords>
-        {keywords.length > 0 && <ItemList List title="Keywords" items={keywords} />}
+        <ItemListView List title="Keywords" items={keywords} noItemDescription="No Keywords Provided" />
       </Keywords>
       <Bio>
-        <h2 style={h2}>Bio</h2>
-        <p style={p}>
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-          nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-          sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-          rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-          ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-          sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-          dolore magna aliquyam erat, sed diam voluptua.
-        </p>
+      <ProfileInfo title="Bio" data={profile && profile.bio}/>
       </Bio>
 
       <Work>
-        <HistoryList
+        <HistoryListView
           title={workHistory.title}
           historyItems={workHistory.historyItems}
           noItemDescription={workHistory.noItemDescription}
@@ -176,7 +109,7 @@ function ProfilePageView({ profile, onEditClick }) {
       </Work>
 
       <Education>
-        <HistoryList
+        <HistoryListView
           title={educationHistory.title}
           historyItems={educationHistory.historyItems}
           noItemDescription={educationHistory.noItemDescription}
