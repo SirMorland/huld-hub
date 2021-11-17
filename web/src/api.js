@@ -93,27 +93,29 @@ const getPropertyContains = (property, keywords) => {
 }
 
 export const search = async (query, jwt) => {
-  const keywords = query.split(",").map(keyword => keyword.trim());
-
-  const qr = qs.stringify({
-    _where: {
-      _or: [
-        getPropertyContains("competences.name", keywords),
-        getPropertyContains("bio", keywords),
-        getPropertyContains("title", keywords),
-        getPropertyContains("skills", keywords),
-      ],
-    },
-  });
-
-  const url = `${process.env.REACT_APP_BACKEND_HOST}/user-profiles?${qr}`;
-  const response = await fetch(url, {
-    headers: {
-      "Authorization": `Bearer ${jwt}`
-    }
-  });
-
-  return await handleBasicReponse(response);
+  if (query) {
+    const keywords = query.split(",").map(keyword => keyword.trim());
+  
+    const qr = qs.stringify({
+      _where: {
+        _or: [
+          getPropertyContains("competences.name", keywords),
+          getPropertyContains("bio", keywords),
+          getPropertyContains("title", keywords),
+          getPropertyContains("skills", keywords),
+        ],
+      },
+    });
+  
+    const url = `${process.env.REACT_APP_BACKEND_HOST}/user-profiles?${qr}`;
+    const response = await fetch(url, {
+      headers: {
+        "Authorization": `Bearer ${jwt}`
+      }
+    });
+  
+    return await handleBasicReponse(response);
+  }
 }
 
 
