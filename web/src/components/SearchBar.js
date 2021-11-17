@@ -25,7 +25,8 @@ const StyledIconButton = styled(IconButton)(`
 const SearchBar = () => {
   const [state , setState ] = useState();
   const onInputChange = (event) => {
-    setState(event.target.value);
+    const  searchKey = event.target.value.split(","); 
+    setState(searchKey);
   }
   const onSearch = () => {
     console.log(state);
