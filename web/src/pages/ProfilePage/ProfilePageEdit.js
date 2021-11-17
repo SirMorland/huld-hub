@@ -75,7 +75,7 @@ const Work = styled("div")`
   }
   @media (min-width: 1152px) {
     grid-column-start: 2;
-    grid-row: span 4;
+    grid-row: span 7;
   }
 `;
 const Education = styled("div")`
@@ -84,7 +84,7 @@ const Education = styled("div")`
   }
   @media (min-width: 1152px) {
     grid-column-start: 3;
-    grid-row: span 4;
+    grid-row: span 7;
   }
 `;
 
