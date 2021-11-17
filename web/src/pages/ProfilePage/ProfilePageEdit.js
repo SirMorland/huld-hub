@@ -1,4 +1,6 @@
-import { Button, TextField } from "@mui/material";
+import { Button } from "@mui/material";
+import TextField from "../../components/TextField";
+import { Typography } from "@mui/material";
 import React, { useState, useRef } from "react";
 
 import { styled } from "@mui/system";
@@ -90,6 +92,7 @@ function ProfilePageEdit({
 
   const [edited, setEdited] = useState(userProfile);
   const [profileBio, setProfileBio] = useState(edited.bio || "")
+  const [newSkills, setnewSkills] = useState(edited.skills || "")
 
   const onSave = () => {
     const education_histories = educationHistoryRef.current.getHistoryList();
@@ -101,6 +104,7 @@ function ProfilePageEdit({
       education_histories,
       work_experiences,
       bio: profileBio,
+      skills: newSkills
     });
   };
 
@@ -196,7 +200,15 @@ function ProfilePageEdit({
       </ContactInfo>
 
       <Skills>
-        <h2>Skills</h2>
+      <Typography variant="h2"> Skills </Typography>
+      <TextField
+        textarea
+                required
+                id="Profile_Skills_Edit"
+                type="text"
+                placeholder="Few skills about yourself"
+                value={newSkills}
+                onChange={e => setnewSkills(e.target.value)}/>
       </Skills>
       <Languages>
         <h2>Language proficiencies</h2>
@@ -223,12 +235,12 @@ function ProfilePageEdit({
         />
       </Keywords>
       <Bio>
+        <Typography variant="h2"> Bio </Typography>
       <TextField
         textarea
                 required
                 id="Profile_Info_Edit"
                 type="text"
-                label="Bio"
                 placeholder="Few words about yourself"
                 value={profileBio}
                 onChange={e => setProfileBio(e.target.value)}/>
