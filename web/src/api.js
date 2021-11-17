@@ -121,14 +121,3 @@ const handleBasicReponse = (response) => {
       throw new Error(response.status);
   }
 }
-
-export const uploadImage = async (profile, file, event) => {
-  event.preventDefault();
-
-  const formData = new FormData();
-  formData.append('file', file[0]);
-
-  const url = `${process.env.REACT_APP_BACKEND_HOST}/user-profiles/${profile.image.formats.small.url}`;
-  const response = await fetchPost(url, formData);
-  return await handleBasicReponse(response);
-}
