@@ -7,6 +7,9 @@ const OutlinedInput = styled(MuiOutlinedInput)(({ theme }) => ({
   "& .MuiOutlinedInput-input::placeholder": {
     color: theme.palette.grey[500],
   },
+  "& .MuiOutlinedInput-input": {
+    background: "white"
+  },
   margin: "4px 0",
 }));
 
