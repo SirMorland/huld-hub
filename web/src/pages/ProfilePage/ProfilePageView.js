@@ -11,12 +11,7 @@ import Title from "../../components/Title/Title";
 import UserContactinfo from '../../components/UserContactinfo';
 import ActionButtonContainer from "../../components/ActionButtonContainer";
 
-const h2 = {
-  margin: 0,
-};
-const p = {
-  margin: 0,
-};
+
 
 const HeaderContentContainer = styled('div')`
   display: flex;
