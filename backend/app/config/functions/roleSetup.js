@@ -35,7 +35,7 @@ const enableUploadPermissions = async (role) => {
     action: "upload",
     role,
   });
-  await permissionQuery.update({ id: uploadPermission.id }, { enabled: true });
+  if (uploadPermission && permissionQuery) await permissionQuery.update({ id: uploadPermission.id }, { enabled: true });
 };
 
 /**
