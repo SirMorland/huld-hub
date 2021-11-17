@@ -66,7 +66,9 @@ describe("DatePicker Component", () => {
     fireEvent.click(calenderIconEl);
     fireEvent.click(screen.getByText(testData.randomDay));
 
-    await waitFor(() => expect(onChange).toHaveBeenCalledTimes(1));
-    expect(onChange).toHaveReturnedWith(`${testData.randomDay}.${testData.date.getMonth()}.${testData.date.getFullYear()}`);
+    await waitFor(() => {
+      expect(onChange).toHaveBeenCalledTimes(1);
+      expect(onChange).toHaveReturnedWith(`${testData.randomDay}.${testData.date.getMonth()}.${testData.date.getFullYear()}`);
+    });
   });
 });
