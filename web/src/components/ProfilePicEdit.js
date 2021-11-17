@@ -29,7 +29,7 @@ const StyledButton = styled(IconButton)`
 
 const ProfilePicEdit = forwardRef(({ profileImage }, ref) => {
     const [file, setFile] = useState(null);
-    const imageUrl = process.env.REACT_APP_BACKEND_HOST + profileImage.url;
+    const imageUrl = profileImage ? process.env.REACT_APP_BACKEND_HOST + profileImage.url : '';
     useImperativeHandle(
         ref,
         () => ({
