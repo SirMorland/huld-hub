@@ -16,7 +16,6 @@ import { login, register, postProfile, uploadPicture, search } from './api';
 import theme from './theme';
 import Page from './components/Page/Page';
 import useUser from './hooks/useUser';
-import { formatProfileForSave } from './utils';
 
 export const UserContext = React.createContext(null);
 
@@ -51,23 +50,13 @@ function App() {
     );
   }
 
-  const onProfileSave = async (profile) => {
-    // if profile.file exists, we need to upload the picture and set the new image to the new media id
-    if (profile.file) {
-      const [newPic] = await uploadPicture(profile.file, jwt);
-      profile.image = newPic.id;
-    }
-    const profileToBeSaved = formatProfileForSave(profile);
-    return await postProfile(profileToBeSaved, jwt);
-  }
-
   return (
     <UserContext.Provider value={{ user, setJwt, jwt, removeJwt }}>
       <ThemeProvider theme={theme}>
         <Switch>
           <Route exact path="/">
             {user ?
-              <ProfilePage id={user.profile} onSave={onProfileSave} />
+              <ProfilePage id={user.profile} uploadPicture={uploadPicture} postProfile={postProfile} />
               :
               (jwt ?
                 <Redirect to="/almost-done" />
