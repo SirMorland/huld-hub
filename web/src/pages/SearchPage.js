@@ -40,6 +40,9 @@ function SearchPage({ onSearch }) {
               {results.map(result =>
                 <li key={result.id}>
                   <p>{result.first_name} {result.last_name}</p>
+                  <p>{result.title}</p>
+                  <p>{result.bio}</p>
+                  <p>{result.skills}</p>
                   <p>
                   {result.competences.map(competence => <span key={competence.id}>{competence.name}, </span>)}
                   </p>
