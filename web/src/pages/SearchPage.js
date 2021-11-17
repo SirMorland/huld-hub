@@ -38,7 +38,12 @@ function SearchPage({ onSearch }) {
           (results.length > 0 ?
             <ul>
               {results.map(result =>
-                <li key={result.id}>{result.first_name} {result.last_name}</li>
+                <li key={result.id}>
+                  <p>{result.first_name} {result.last_name}</p>
+                  <p>
+                  {result.competences.map(competence => <span key={competence.id}>{competence.name}, </span>)}
+                  </p>
+                </li>
               )}
             </ul>
           :
