@@ -88,6 +88,14 @@ export const getCategoryCompetences = async (category, jwt) => {
   return await handleBasicReponse(response);
 }
 
+export const searchProfiles = async (keyword, jwt) => {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/search-profiles`;
+  const body = {
+    keyword
+  };
+  const response = await fetchPost(url, body, jwt);
+  return await handleBasicReponse(response);
+};
 
 export class EmailOrPasswordInvalidError extends Error {};
 export class EmailWrongDomainError extends Error {};

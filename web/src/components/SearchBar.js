@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { TextField } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { styled } from "@mui/system";
+import useSearchProfiles from "../hooks/useSearchProfiles";
+import { UserContext } from "../App";
 
 const Wrapper = styled("div")(`
     display: flex;
@@ -23,6 +25,8 @@ const StyledIconButton = styled(IconButton)(`
 `);
 
 const SearchBar = () => {
+  const { jwt } = useContext(UserContext);
+
   const [state , setState ] = useState();
   const onInputChange = (event) => {
     const  searchKey = event.target.value.split(","); 
