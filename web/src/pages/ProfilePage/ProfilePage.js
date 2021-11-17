@@ -13,11 +13,7 @@ import ProfilePageView from "./ProfilePageView";
 import { UserContext } from "../../App";
 import { formatProfileForSave } from "../../utils";
 import useGetCompetencesByCategory from "../../hooks/useGetCompetencesByCategory";
-
-const HISTORY_TYPE = {
-  education: "education",
-  work: "work",
-};
+import { HISTORY_TYPE } from "../../hooks/useHistoryList";
 
 function ProfilePage({ id, onSave }) {
   let history = useHistory();

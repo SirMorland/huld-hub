@@ -6,7 +6,7 @@ import { styled } from "@mui/system";
 import Page from '../../components/Page/Page';
 import ProfileInfo from "../../components/ProfileInfo/ProfileInfo";
 import HistoryListView from "../../components/HistoryList/HistoryListView";
-import ItemList from "../../components/ItemList";
+import ItemListView from "../../components/ItemListView";
 import Title from "../../components/Title/Title";
 import UserContactinfo from '../../components/UserContactinfo';
 import ActionButtonContainer from "../../components/ActionButtonContainer";
@@ -57,7 +57,7 @@ const Work = styled("div")`
   }
   @media (min-width: 1152px) {
     grid-column-start: 2;
-    grid-row: span 4;
+    grid-row: span 5;
   }
 `;
 const Education = styled("div")`
@@ -66,7 +66,7 @@ const Education = styled("div")`
   }
   @media (min-width: 1152px) {
     grid-column-start: 3;
-    grid-row: span 4;
+    grid-row: span 5;
   }
 `;
 
@@ -91,10 +91,10 @@ function ProfilePageView({ profile, onEditClick }) {
       <ProfileInfo title="Skills" data={profile && profile.skills}/>
       </Skills>
       <Languages>
-        {languages.length > 0 && <ItemList title="Language proficiencies" items={languages} />}
+        <ItemListView title="Language proficiencies" items={languages} noItemDescription="No Language Proficiencies Provided" />
       </Languages>
       <Keywords>
-        {keywords.length > 0 && <ItemList List title="Keywords" items={keywords} />}
+        <ItemListView List title="Keywords" items={keywords} noItemDescription="No Keywords Provided" />
       </Keywords>
       <Bio>
       <ProfileInfo title="Bio" data={profile && profile.bio}/>

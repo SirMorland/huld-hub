@@ -10,8 +10,9 @@ import RegistrationForm from "./pages/Register";
 import AlmostDone from "./pages/AlmostDone";
 import EmailConfirmed from './pages/EmailConfirmed';
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import SearchPage from './pages/SearchPage';
 
-import { login, register, postProfile } from './api';
+import { login, register, postProfile, search } from './api';
 import theme from './theme';
 import Page from './components/Page/Page';
 import useUser from './hooks/useUser';
@@ -84,6 +85,17 @@ function App() {
           </Route>
           <Route exact path="/almost-done" component={AlmostDone} />
           <Route exact path="/email-confirmed" component={EmailConfirmed} />
+          <Route exact path="/search">
+            {user ?
+              <SearchPage onSearch={search} />
+            :
+              (jwt ?
+                <Redirect to="/almost-done" />
+                :
+                <Redirect to="/login" />
+              )
+            }
+          </Route>
           <Route exact path="/:id">
             <ProfilePage onSave={postProfile} />
           </Route>

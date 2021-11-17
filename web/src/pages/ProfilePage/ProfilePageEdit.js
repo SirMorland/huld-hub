@@ -1,16 +1,17 @@
 import { Button } from "@mui/material";
 import TextField from "../../components/TextField";
-import { Typography } from "@mui/material";
 import React, { useState, useRef } from "react";
-
 import { styled } from "@mui/system";
+import Typography from "@mui/material/Typography";
 
 import Page from "../../components/Page/Page";
 import ActionButtonContainer from "../../components/ActionButtonContainer";
-import { DoubleFieldContainer, Grid } from "../../components/GenericComponents";
+import {  Grid } from "../../components/GenericComponents";
 import SelectInputField from "../../components/SelectAutocompleteField";
 import HistoryListEdit from "../../components/HistoryList/HistoryListEdit";
 import { HISTORY_TYPE } from "../../hooks/useHistoryList";
+import ItemListEdit from "../../components/ItemListEdit";
+import UserBasicInfoEdit from "../../components/UserBasicInfoEdit";
 
 const BasicInfo = styled(Grid)`
   @media (min-width: 768px) {
@@ -20,15 +21,15 @@ const BasicInfo = styled(Grid)`
     grid-column-start: 1;
   }
 `;
-const ContactInfo = styled(Grid)`
-  @media (min-width: 768px) {
-    grid-column-start: 2;
-  }
-  @media (min-width: 1152px) {
-    grid-column-start: 1;
-  }
-`;
-const Skills = styled("div")`
+// const ContactInfo = styled(Grid)`
+//   @media (min-width: 768px) {
+//     grid-column-start: 2;
+//   }
+//   @media (min-width: 1152px) {
+//     grid-column-start: 1;
+//   }
+// `;
+const Skills = styled('div')`
   @media (min-width: 768px) {
     grid-column-start: 1;
   }
@@ -66,7 +67,7 @@ const Work = styled("div")`
   }
   @media (min-width: 1152px) {
     grid-column-start: 2;
-    grid-row: span 4;
+    grid-row: span 7;
   }
 `;
 const Education = styled("div")`
@@ -75,7 +76,7 @@ const Education = styled("div")`
   }
   @media (min-width: 1152px) {
     grid-column-start: 3;
-    grid-row: span 4;
+    grid-row: span 7;
   }
 `;
 
@@ -94,12 +95,20 @@ function ProfilePageEdit({
   const [profileBio, setProfileBio] = useState(edited.bio || "")
   const [newSkills, setnewSkills] = useState(edited.skills || "")
 
-  const onSave = () => {
+  const [basicInfo, setBasicInfo] = useState({
+    first_name: edited.first_name, last_name: edited.last_name,
+    title: edited.title, address: edited.address, phone: edited.phone,
+    email: edited.email, slack: edited.slack, linkedin: edited.linkedin, github: edited.github
+  });
+
+  const onSave = (evt) => {
+    evt.preventDefault();
     const education_histories = educationHistoryRef.current.getHistoryList();
     const work_experiences = workHistoryRef.current.getHistoryList();
     const competences = [...edited.keywords, ...edited.languages];
     onSaveClick({
       ...edited,
+      ...basicInfo,
       competences,
       education_histories,
       work_experiences,
@@ -137,72 +146,32 @@ function ProfilePageEdit({
     });
   };
 
+  const onKeywordRemove = (keywords) => {
+    setEdited({
+      ...edited,
+      keywords,
+    });
+  }
+
+  const onLanguageRemove = (languages) => {
+    setEdited({
+      ...edited,
+      languages,
+    });
+  }
 
   return (
-    <Page>
-      <BasicInfo>
-        <DoubleFieldContainer>
+    <form onSubmit={onSave}>
+      <Page>
+        
+        <BasicInfo>
+            <UserBasicInfoEdit basicInfo={basicInfo} setBasicInfo={setBasicInfo} ></UserBasicInfoEdit>
+        </BasicInfo>
+      
+        <Skills>
+         <Typography variant="h2"> Skills </Typography>
           <TextField
-            required
-            fullWidth
-            id="first_name"
-            type="text"
-            label="First name"
-            name="first_name"
-            value={edited.first_name}
-            onChange={(e) =>
-              setEdited((prev) => ({ ...prev, first_name: e.target.value }))
-            }
-          />
-          <TextField
-            required
-            fullWidth
-            id="last_name"
-            type="text"
-            label="Last name"
-            name="last_name"
-            value={edited.last_name}
-            onChange={(e) =>
-              setEdited((prev) => ({ ...prev, last_name: e.target.value }))
-            }
-          />
-        </DoubleFieldContainer>
-        <TextField
-          required
-          fullWidth
-          id="title"
-          type="text"
-          label="Title"
-          name="title"
-          value={edited.title}
-          onChange={(e) =>
-            setEdited((prev) => ({ ...prev, title: e.target.value }))
-          }
-        />
-      </BasicInfo>
-
-      <ContactInfo>
-        <DoubleFieldContainer>
-          <TextField
-            required
-            fullWidth
-            id="email"
-            type="email"
-            label="Email"
-            name="email"
-            value={edited.email || ""}
-            onChange={(e) =>
-              setEdited((prev) => ({ ...prev, email: e.target.value }))
-            }
-          />
-          <div />
-        </DoubleFieldContainer>
-      </ContactInfo>
-
-      <Skills>
-      <Typography variant="h2"> Skills </Typography>
-      <TextField
-        textarea
+            textarea
                 required
                 id="Profile_Skills_Edit"
                 type="text"
@@ -210,72 +179,61 @@ function ProfilePageEdit({
                 value={newSkills}
                 onChange={e => setnewSkills(e.target.value)}/>
       </Skills>
-      <Languages>
-        <h2>Language proficiencies</h2>
-        {/* TODO: create a listing component so items can be removed */}
-        {edited.languages.map((language) => (
-          <p key={language.id}>{language.name}</p>
-        ))}
-        <SelectInputField
-          options={languagesToAdd}
-          onSelect={onLanguageAdd}
-          label="Pick new language proficiency"
-        />
-      </Languages>
-      <Keywords>
-        <h2>Keywords</h2>
-        {/* TODO: create a listing component so items can be removed */}
-        {edited.keywords.map((keyword) => (
-          <p key={keyword.id}>{keyword.name}</p>
-        ))}
-        <SelectInputField
-          options={keywordsToAdd}
-          onSelect={onKeywordAdd}
-          label="Pick new keyword"
-        />
-      </Keywords>
-      <Bio>
-        <Typography variant="h2"> Bio </Typography>
-      <TextField
-        textarea
+       
+        <Languages>
+          <Typography variant="h2">Language proficiencies</Typography>
+          <ItemListEdit items={edited.languages} onRemove={onLanguageRemove} />
+          <SelectInputField options={languagesToAdd} onSelect={onLanguageAdd} label="Pick new language proficiency" />
+        </Languages>
+        <Keywords>
+          <Typography variant="h2">Keywords</Typography>
+          <ItemListEdit items={edited.keywords} onRemove={onKeywordRemove} />
+          <SelectInputField options={keywordsToAdd} onSelect={onKeywordAdd} label="Pick new keyword" />
+        </Keywords>
+
+        <Bio>
+          <Typography variant="h2"> Bio </Typography>
+          <TextField
+            textarea
                 required
                 id="Profile_Info_Edit"
                 type="text"
                 placeholder="Few words about yourself"
                 value={profileBio}
                 onChange={e => setProfileBio(e.target.value)}/>
-      </Bio>
+        </Bio>
 
-      <Work>
-        <HistoryListEdit
-          type={HISTORY_TYPE.work}
-          historyItems={workHistory.historyItems}
-          ref={workHistoryRef}
-        />
-      </Work>
+        <Work>
+          <HistoryListEdit
+            type={HISTORY_TYPE.work}
+            historyItems={workHistory.historyItems}
+            ref={workHistoryRef}
+          />
+        </Work>
 
-      <Education>
-        <HistoryListEdit
-          type={HISTORY_TYPE.education}
-          historyItems={educationHistory.historyItems}
-          ref={educationHistoryRef}
-        />
-      </Education>
+        <Education>
+          <HistoryListEdit
+            type={HISTORY_TYPE.education}
+            historyItems={educationHistory.historyItems}
+            ref={educationHistoryRef}
+          />
+        </Education>
 
-      <ActionButtonContainer>
-        <Button fullWidth variant="contained" color="primary" onClick={onSave}>
-          Save
-        </Button>
-        <Button
-          fullWidth
-          variant="contained"
-          color="error"
-          onClick={onCancelClick}
-        >
-          Cancel
-        </Button>
-      </ActionButtonContainer>
-    </Page>
+        <ActionButtonContainer>
+          <Button fullWidth variant="contained" type="submit" color="primary">
+            Save
+          </Button>
+          <Button
+            fullWidth
+            variant="contained"
+            color="error"
+            onClick={onCancelClick}
+          >
+            Cancel
+          </Button>
+        </ActionButtonContainer>
+      </Page>
+    </form>
   );
 }
 
