@@ -108,7 +108,7 @@ const getPropertyContains = (property, keywords) => {
 
 export const search = async (query, jwt) => {
   if (query) {
-    const keywords = query.split(",").map(keyword => keyword.trim());
+    const keywords = query.map(keyword => keyword.trim());
   
     const qr = qs.stringify({
       _where: {

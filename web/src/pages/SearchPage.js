@@ -14,15 +14,16 @@ const HeaderContentContainer = styled('form')`
 function SearchPage({ onSearch }) {
   const { jwt } = useContext(UserContext);
 
-  let [query, setQuery] = useState("");
+  let [query, setQuery] = useState([]);
   let [results, setResults] = useState(null);
-  let [keywords, setKeywords] = useState([]);
+ 
 
   const search = async event => {
     event.preventDefault();
+    console.log(query);
     let results = await onSearch(query, jwt);
     // splitting query into keyword array
-    setKeywords(query.split(","));
+    
     
     //TO:DO check for errors, i.e., not authenticated or authorized
     setResults(results);
