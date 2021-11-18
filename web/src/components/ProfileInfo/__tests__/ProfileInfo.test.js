@@ -8,15 +8,13 @@ describe('ProfileInfo', () => {
         <ProfileInfo />
     );
     expect(getByTestId("title").innerHTML).toBe("");
-    expect(getByTestId("data").innerHTML).toBe("");
-
+    expect(getByTestId("data").innerHTML).toBe("<span></span>");
   });
   it('Should render content when props are passed', () => {
     const { getByTestId } = renderHelper(
         <ProfileInfo title="bio" data="text" />
     );
     expect(getByTestId("title").innerHTML).toBe("bio");
-    expect(getByTestId("data").innerHTML).toBe("text");
-
+    expect(getByTestId("data").innerHTML).toBe("<span>text</span>");
   });
 });

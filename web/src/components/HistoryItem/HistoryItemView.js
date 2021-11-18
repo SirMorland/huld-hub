@@ -46,7 +46,9 @@ function HistoryItemView(props) {
         </DateSpan>
       </Header>
       <Description variant="body1" data-testid="description">
-        {props.historyItem.description}
+        {props.historyItem.description.split("\n").map((line, i) => (
+          <span key={i}>{line}</span>
+        ))}
       </Description>
     </div>
   );
