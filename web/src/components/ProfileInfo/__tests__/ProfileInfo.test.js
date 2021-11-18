@@ -14,6 +14,7 @@ describe('ProfileInfo', () => {
     const { getByTestId } = renderHelper(
         <ProfileInfo title="bio" data="text" />
     );
+    
     expect(getByTestId("title").innerHTML).toBe("bio");
     expect(getByTestId("data").innerHTML).toBe("<span>text</span>");
   });
