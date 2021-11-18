@@ -7,10 +7,10 @@ import { Box } from '@mui/system';
 import TextField from '../components/TextField';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
-import { EmailOrPasswordInvalidError } from '../api';
+import { login, EmailOrPasswordInvalidError } from '../api';
 import { useUserContext } from '../userContext';
 
-export default function LoginForm({ onSubmit }) {
+export default function LoginForm() {
     const location = useLocation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -21,7 +21,7 @@ export default function LoginForm({ onSubmit }) {
         event.preventDefault();
 
         try {
-            const json = await onSubmit(email, password);
+            const json = await login(email, password);
             setJwt(json.jwt);
             history.push(`/profile/${user.id}`);
         } catch (error) {

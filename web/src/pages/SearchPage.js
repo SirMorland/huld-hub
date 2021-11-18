@@ -3,6 +3,7 @@ import { styled } from "@mui/system";
 
 import Page from "../components/Page/Page";
 import TextField from "../components/TextField";
+import { search } from "../api";
 
 import { useUserContext } from "../userContext";
 
@@ -11,23 +12,23 @@ const HeaderContentContainer = styled('form')`
   margin: auto;
 `;
 
-function SearchPage({ onSearch }) {
+function SearchPage() {
   const { jwt } = useUserContext();
 
   let [query, setQuery] = useState("");
   let [results, setResults] = useState(null);
 
-  const search = async event => {
+  const onSearch = async event => {
     event.preventDefault();
 
-    let results = await onSearch(query, jwt);
+    let results = await search(query, jwt);
     //TO:DO check for errors, i.e., not authenticated or authorized
     setResults(results);
   }
 
   return (
     <Page header={
-      <HeaderContentContainer onSubmit={search} >
+      <HeaderContentContainer onSubmit={onSearch} >
         {/* TO:DO replace with search bar component */}
         <TextField value={query} onChange={e => setQuery(e.target.value)} />
       </HeaderContentContainer>

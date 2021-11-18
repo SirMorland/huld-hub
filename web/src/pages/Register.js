@@ -8,9 +8,9 @@ import { Button, Grid, Link, Typography } from '@mui/material';
 import TextField from '../components/TextField';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
-import { EmailTakenError, EmailWrongDomainError } from '../api';
+import { register, EmailTakenError, EmailWrongDomainError } from '../api';
 
-export default function RegistrationForm({ onSubmit }) {
+export default function RegistrationForm() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -28,7 +28,7 @@ export default function RegistrationForm({ onSubmit }) {
             setPasswordError("Passwords do not match! Please check");
         } else if (email && password && password === reEnterPassword) {
             try {
-                const json = await onSubmit(email, password);
+                const json = await register(email, password);
                 Cookies.set("hub-jwt", json.jwt);
                 history.push("/almost-done");
             } catch  (error) {

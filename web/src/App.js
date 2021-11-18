@@ -11,7 +11,6 @@ import EmailConfirmed from "./pages/EmailConfirmed";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import SearchPage from "./pages/SearchPage";
 
-import { login, register, search } from "./api";
 import theme from "./theme";
 import useUser from "./hooks/useUser";
 import { UserProvider, useUserContext } from "./userContext";
@@ -68,17 +67,17 @@ function App() {
           </Route>
           <Route exact path="/login">
             <AuthUser>
-              <LoginForm onSubmit={login} />
+              <LoginForm />
             </AuthUser>
           </Route>
           <Route exact path="/register">
             <AuthUser>
-              <RegistrationForm onSubmit={register} />
+              <RegistrationForm />
             </AuthUser>
           </Route>
           <Route exact path="/search">
             <AuthUser>
-              <SearchPage onSearch={search} />
+              <SearchPage />
             </AuthUser>
           </Route>
 
