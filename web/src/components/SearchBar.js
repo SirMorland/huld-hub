@@ -4,7 +4,6 @@ import { TextField } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { styled } from "@mui/system";
-import useSearchProfiles from "../hooks/useSearchProfiles";
 import { UserContext } from "../App";
 
 const Wrapper = styled("div")(`
@@ -24,30 +23,21 @@ const StyledIconButton = styled(IconButton)(`
   cursor: pointer;
 `);
 
-const SearchBar = () => {
-  const { jwt } = useContext(UserContext);
-
-  const [state , setState ] = useState();
-  const onInputChange = (event) => {
-    const  searchKey = event.target.value.split(","); 
-    setState(searchKey);
-  }
-  const onSearch = () => {
-    console.log(state);
-  };
-
+const SearchBar = ({ searchValue, setQuery, onSearch }) => {
   return (
     <Wrapper>
-      <TextField onChange={onInputChange} fullWidth id="search_keyword" type="text" label="" name="search_keyword" />
-      <StyledIconButton aria-label="search" onClick={() => { onSearch(); }} >
+      <TextField value={searchValue} onChange={(e) => { setQuery(e.target.value); }} fullWidth placeholder="Front-end,HTML,CSS"/>
+      <StyledIconButton  aria-label="search" onClick={() => { onSearch(); }} >
         <StyledIcon />
       </StyledIconButton>
     </Wrapper>
   );
 };
 
-SearchBar.propTypes = {};
-
-SearchBar.defaultProps = {};
+SearchBar.propTypes = {
+  searchValue: PropTypes.string.isRequired,
+  setQuery: PropTypes.func.isRequired,
+  onSearch: PropTypes.func.isRequired,
+};
 
 export default SearchBar;

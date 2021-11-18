@@ -3,6 +3,7 @@ import { styled } from "@mui/system";
 
 import Page from "../components/Page/Page";
 import TextField from "../components/TextField";
+import SearchBar from "../components/SearchBar";
 
 import { UserContext } from "../App";
 
@@ -29,7 +30,8 @@ function SearchPage({ onSearch }) {
     <Page header={
       <HeaderContentContainer onSubmit={search} >
         {/* TO:DO replace with search bar component */}
-        <TextField value={query} onChange={e => setQuery(e.target.value)} />
+        {/* <TextField value={query} onChange={e => setQuery(e.target.value)} /> */}
+        <SearchBar searchValue={query} setQuery={setQuery} onSearch={()=>{}}/>
       </HeaderContentContainer>
     }>
       {/* TO:DO replace with nice looking search results */}
