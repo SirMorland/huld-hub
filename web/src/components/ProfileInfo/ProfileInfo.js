@@ -13,9 +13,13 @@ const ProfileInfo = ({ title, data = "" }) => {
         {title}
       </Typography>
       <StyledTypography data-testid="data">
-        {data.split("\n").map((line, i) => (
-          <span key={i}>{line}</span>
-        ))}
+        {data &&
+          data.split("\n").map((line, i) => (
+            <span key={i}>
+              {line}
+              <br />
+            </span>
+          ))}
       </StyledTypography>
     </div>
   );
