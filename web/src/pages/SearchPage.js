@@ -19,8 +19,7 @@ function SearchPage({ onSearch }) {
   let [results, setResults] = useState(null);
 
   const search = async event => {
-    // event.preventDefault();
-
+    event.preventDefault();
     let results = await onSearch(query, jwt);
     //TO:DO check for errors, i.e., not authenticated or authorized
     setResults(results);
@@ -29,8 +28,6 @@ function SearchPage({ onSearch }) {
   return (
     <Page header={
       <HeaderContentContainer onSubmit={search} >
-        {/* TO:DO replace with search bar component */}
-        {/* <TextField value={query} onChange={e => setQuery(e.target.value)} /> */}
         <SearchBar searchValue={query} setQuery={setQuery} onSearch={search}/>
       </HeaderContentContainer>
     }>

@@ -27,7 +27,7 @@ const SearchBar = ({ searchValue, setQuery, onSearch }) => {
   return (
     <Wrapper>
       <TextField value={searchValue} onChange={(e) => { setQuery(e.target.value); }} fullWidth placeholder="Front-end,HTML,CSS"/>
-      <StyledIconButton  aria-label="search" onClick={() => { onSearch(); }} >
+      <StyledIconButton  aria-label="search" onClick={(e) => { onSearch(e); }} >
         <StyledIcon />
       </StyledIconButton>
     </Wrapper>
