@@ -22,12 +22,11 @@ const testData = {
   ],
 };
 
-
 describe("DatePicker Component", () => {
   afterAll(cleanup);
 
   it("should render date picker", () => {
-    const { getByTestId } = renderWithTheme(<DatePicker />);
+    const { getByTestId } = renderWithTheme(<DatePicker onChange={() => {}} />);
     const dateLocaleEl = getByTestId("date-locale-provider");
     expect(dateLocaleEl).toBeTruthy();
     expect(dateLocaleEl.children).toHaveLength(1);
@@ -35,7 +34,7 @@ describe("DatePicker Component", () => {
   });
   it("should render date picker and label", () => {
     const { getByTestId } = renderWithTheme(
-      <DatePicker label={testData.label} />
+      <DatePicker label={testData.label} onChange={() => {}} />
     );
     const dateLocaleEl = getByTestId("date-locale-provider");
     expect(dateLocaleEl).toBeTruthy();
@@ -48,27 +47,33 @@ describe("DatePicker Component", () => {
 
   it("should render date picker modal", () => {
     const { getByTestId } = renderWithTheme(
-      <DatePicker label={testData.label} />
+      <DatePicker label={testData.label} onChange={() => {}} />
     );
     const calenderIconEl = getByTestId("CalendarIcon");
     fireEvent.click(calenderIconEl);
     expect(screen.getByText(testData.date.getFullYear())).toBeTruthy();
-    expect(screen.getByText(testData.monthNames[testData.date.getMonth()])).toBeTruthy();
+    expect(
+      screen.getByText(testData.monthNames[testData.date.getMonth()])
+    ).toBeTruthy();
     expect(screen.getByText(testData.date.getDate())).toBeTruthy();
   });
 
   it("should call onChange function with correct value", async () => {
-    const onChange = jest.fn((date) => `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`);
+    const onChange = jest.fn(
+      (date) => `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`
+    );
     const { getByTestId } = renderWithTheme(
-      <DatePicker label={testData.label}  onChange={onChange}/>
+      <DatePicker label={testData.label} onChange={onChange} />
     );
     const calenderIconEl = getByTestId("CalendarIcon");
-    fireEvent.click(calenderIconEl);
-    fireEvent.click(screen.getByText(testData.randomDay));
-
-    await waitFor(() => {
-      expect(onChange).toHaveBeenCalledTimes(1);
-      expect(onChange).toHaveReturnedWith(`${testData.randomDay}.${testData.date.getMonth()}.${testData.date.getFullYear()}`);
-    });
+    
+    await waitFor(() => fireEvent.click(calenderIconEl));
+    await waitFor(() => fireEvent.click(screen.getByText(testData.randomDay)));
+    await waitFor(() => expect(onChange).toHaveBeenCalledTimes(1));
+    expect(onChange).toHaveReturnedWith(
+      `${
+        testData.randomDay
+      }.${testData.date.getMonth()}.${testData.date.getFullYear()}`
+    );
   });
 });
