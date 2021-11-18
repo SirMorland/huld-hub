@@ -35,7 +35,7 @@ const SearchBar = ({ keywords, setKeywords }) => {
     <Wrapper>
       <TextField
         required
-        inputProps={{ "data-testid": "search-input" }}
+        aria-label="search-input"
         value={query} 
         onChange={onChange} 
         placeholder="Front-end, HTML, CSS" />
