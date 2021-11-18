@@ -10,4 +10,12 @@ describe.only("SearchBar component", () => {
     const { container } = renderWithTheme(<SearchBar searchValue={mockSearchKeyword} setQuery={()=>{}} onSearch={()=>{}}/>);
     expect(container).toBeTruthy();
   });
+  it("should call onSearch when click search button", () =>{
+    const onSearch = jest.fn();
+    const { getAllByLabelText } = renderWithTheme(<SearchBar searchValue={mockSearchKeyword} setQuery={()=>{}} onSearch={onSearch}/>);
+    const searchButtons = getAllByLabelText('search');
+    expect(searchButtons.length).toEqual(1);
+    searchButtons[0].click();
+    expect(onSearch).toBeCalled();
+  })
 });
