@@ -76,6 +76,7 @@ export const formatProfileForSave = (profile) => {
   delete profile.keywords;
   delete profile.languages;
   delete profile.user;
+  delete profile.file;
   // TODO: format more things here
   return profile;
 }

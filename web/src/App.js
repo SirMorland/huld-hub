@@ -12,7 +12,7 @@ import EmailConfirmed from './pages/EmailConfirmed';
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import SearchPage from './pages/SearchPage';
 
-import { login, register, postProfile, search } from './api';
+import { login, register, postProfile, uploadPicture, search } from './api';
 import theme from './theme';
 import Page from './components/Page/Page';
 import useUser from './hooks/useUser';
@@ -56,7 +56,7 @@ function App() {
         <Switch>
           <Route exact path="/">
             {user ?
-              <ProfilePage id={user.profile} onSave={postProfile} />
+              <ProfilePage id={user.profile} uploadPicture={uploadPicture} postProfile={postProfile} />
               :
               (jwt ?
                 <Redirect to="/almost-done" />

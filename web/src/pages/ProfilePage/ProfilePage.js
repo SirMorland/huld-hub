@@ -11,11 +11,11 @@ import ProfilePageEdit from "./ProfilePageEdit";
 import ProfilePageView from "./ProfilePageView";
 
 import { UserContext } from "../../App";
-import { formatProfileForSave } from "../../utils";
 import useGetCompetencesByCategory from "../../hooks/useGetCompetencesByCategory";
 import { HISTORY_TYPE } from "../../hooks/useHistoryList";
+import { formatProfileForSave } from "../../utils";
 
-function ProfilePage({ id, onSave }) {
+function ProfilePage({ id, postProfile, uploadPicture }) {
   let history = useHistory();
   let match = useRouteMatch();
 
@@ -28,9 +28,16 @@ function ProfilePage({ id, onSave }) {
   const competenceCategories = useCompetenceCategories(jwt);
 
   const [edit, setEdit] = useState(false);
+  
   const onSaveClick = async (profile) => {
+    // if profile.file exists, we need to upload the picture and set the new image to the new media id
+    if (profile.file) {
+      const [newPic] = await uploadPicture(profile.file, jwt);
+      profile.image = newPic.id;
+    }
     const profileToBeSaved = formatProfileForSave(profile);
-    setProfile(await onSave(profileToBeSaved, jwt));
+    const newProfile = await postProfile(profileToBeSaved, jwt);
+    setProfile(newProfile);
     setEdit(false);
   }
 
@@ -53,7 +60,7 @@ function ProfilePage({ id, onSave }) {
     return <h1>404</h1>;
   }
 
-  const profileProps = {...profile, languages, keywords, educationHistory, workHistory};
+  const profileProps = { ...profile, languages, keywords, educationHistory, workHistory };
 
   if (edit) {
     return (
