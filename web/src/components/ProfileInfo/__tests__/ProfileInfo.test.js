@@ -8,7 +8,7 @@ describe('ProfileInfo', () => {
         <ProfileInfo />
     );
     expect(getByTestId("title").innerHTML).toBe("");
-    expect(getByTestId("data").innerHTML).toBe("");
+    expect(getByTestId("no-item-description").innerHTML).toBe("No  provided");
   });
   it('Should render content when props are passed', () => {
     const { getByTestId } = renderHelper(
