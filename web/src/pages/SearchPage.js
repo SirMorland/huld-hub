@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import { styled } from "@mui/system";
 
 import Page from "../components/Page/Page";
-import TextField from "../components/TextField";
 import SearchBar from "../components/SearchBar";
 
 import { UserContext } from "../App";
