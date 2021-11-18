@@ -28,21 +28,24 @@ const StyledIconButton = styled(IconButton)(`
   }
 `);
 
-const SearchBar = ({ keywords, setKeywords, onSubmit }) => {
-  const [query, setQuery] = React.useState(keywords.join(", "));
-  const onChange = (e) => {
-    setQuery(e.target.value);
-    setKeywords(e.target.value.split(",").map((s) => s.trim()));
-  }
+const SearchBar = ({ onSubmit }) => {
+  const [query, setQuery] = React.useState("");
+
+  const submit = (e) => {
+    e.preventDefault();
+    const keywords = query.split(",").map((s) => s.trim());
+    onSubmit(keywords);
+  };
   return (
-    <Wrapper onSubmit={onSubmit}>
+    <Wrapper onSubmit={submit}>
       <TextField
         required
         aria-label="search-input"
         value={query}
-        onChange={onChange}
-        placeholder="Front-end, HTML, CSS" />
-      <StyledIconButton aria-label="search" type="submit" >
+        onChange={({ target }) => setQuery(target.value)}
+        placeholder="Front-end, HTML, CSS"
+      />
+      <StyledIconButton aria-label="search" type="submit">
         <StyledIcon />
       </StyledIconButton>
     </Wrapper>
@@ -50,15 +53,11 @@ const SearchBar = ({ keywords, setKeywords, onSubmit }) => {
 };
 
 SearchBar.propTypes = {
-  keywords: PropTypes.arrayOf(PropTypes.string),
-  setKeywords: PropTypes.func,
   onSubmit: PropTypes.func,
 };
 
 SearchBar.defaultProps = {
-  keywords: [],
-  setKeywords: () => { },
-  onSubmit: () => { },
-}
+  onSubmit: () => {},
+};
 
 export default SearchBar;

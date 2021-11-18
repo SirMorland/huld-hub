@@ -87,7 +87,7 @@ function App() {
           <Route exact path="/email-confirmed" component={EmailConfirmed} />
           <Route exact path="/search">
             {user ?
-              <SearchPage onSearch={search} />
+              <SearchPage search={search} />
             :
               (jwt ?
                 <Redirect to="/almost-done" />
