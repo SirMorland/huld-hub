@@ -28,7 +28,7 @@ const StyledIconButton = styled(IconButton)(`
 const SearchBar = ({ searchValue, setQuery, onSearch }) => {
   return (
     <Wrapper>
-      <TextField value={searchValue} onChange={(e) => { setQuery(e.target.value.split(",")); }} placeholder="Ex: Front-end,HTML,CSS"/>
+      <TextField value={searchValue} onChange={(e) => { setQuery(e.target.value); }} placeholder="Ex: Front-end,HTML,CSS"/>
       <StyledIconButton  aria-label="search" onClick={(e) => { onSearch(e); }} >
         <StyledIcon />
       </StyledIconButton>
