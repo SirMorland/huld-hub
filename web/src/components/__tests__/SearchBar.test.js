@@ -28,4 +28,12 @@ describe.only("SearchBar component", () => {
     expect(setKeywords).toHaveBeenCalledWith(keywords);
   });
 
+  it("should run onSubmit when the form is submitted", () => {
+    const onSubmit = jest.fn();
+    const { container } = renderWithTheme(<SearchBar onSubmit={onSubmit} />);
+    const searchForm = container.querySelector('form');
+    fireEvent.submit(searchForm);
+    expect(onSubmit).toHaveBeenCalled();
+  })
+
 });

@@ -6,7 +6,7 @@ import SearchBar from "../components/SearchBar";
 
 import { UserContext } from "../App";
 
-const HeaderContentContainer = styled('form')`
+const HeaderContentContainer = styled('div')`
   max-width: 576px;
   margin: auto;
 `;
@@ -27,8 +27,8 @@ function SearchPage({ onSearch }) {
 
   return (
     <Page header={
-      <HeaderContentContainer onSubmit={search} >
-        <SearchBar keywords={keywords} setKeywords={setKeywords}/>
+      <HeaderContentContainer>
+        <SearchBar keywords={keywords} setKeywords={setKeywords} onSubmit={search}/>
       </HeaderContentContainer>
     }>
       {/* TO:DO replace with nice looking search results */}
