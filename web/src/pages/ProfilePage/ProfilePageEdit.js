@@ -9,9 +9,18 @@ import {  Grid } from "../../components/GenericComponents";
 import SelectInputField from "../../components/SelectAutocompleteField";
 import HistoryListEdit from "../../components/HistoryList/HistoryListEdit";
 import { HISTORY_TYPE } from "../../hooks/useHistoryList";
+import ProfilePicEdit from "../../components/ProfilePicEdit";
 import ItemListEdit from "../../components/ItemListEdit";
 import UserBasicInfoEdit from "../../components/UserBasicInfoEdit";
 
+const ProfilePicture = styled("div")`
+  @media (min-width: 768px) {
+    grid-column-start: 1;
+  }
+  @media (min-width: 1152px) {
+    grid-column-start: 1;
+  }
+`;
 const BasicInfo = styled(Grid)`
   @media (min-width: 768px) {
     grid-column-start: 1;
@@ -89,6 +98,7 @@ function ProfilePageEdit({
   const { educationHistory, workHistory, ...userProfile } = profile;
   const workHistoryRef = useRef();
   const educationHistoryRef = useRef();
+  const profileImageRef = useRef();
 
   const [edited, setEdited] = useState(userProfile);
 
@@ -102,6 +112,7 @@ function ProfilePageEdit({
     evt.preventDefault();
     const education_histories = educationHistoryRef.current.getHistoryList();
     const work_experiences = workHistoryRef.current.getHistoryList();
+    const file = profileImageRef.current.getFile();
     const competences = [...edited.keywords, ...edited.languages];
     onSaveClick({
       ...edited,
@@ -109,6 +120,7 @@ function ProfilePageEdit({
       competences,
       education_histories,
       work_experiences,
+      file,
     });
   };
 
@@ -158,7 +170,11 @@ function ProfilePageEdit({
   return (
     <form onSubmit={onSave}>
       <Page>
-        
+
+      <ProfilePicture>
+        <ProfilePicEdit profileImage={edited.image} ref={profileImageRef} />
+      </ProfilePicture>
+
         <BasicInfo>
             <UserBasicInfoEdit basicInfo={basicInfo} setBasicInfo={setBasicInfo} ></UserBasicInfoEdit>
         </BasicInfo>
