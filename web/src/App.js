@@ -96,7 +96,7 @@ function App() {
               )
             }
           </Route>
-          <Route exact path="/:id">
+          <Route exact path="/profile/:id">
             <ProfilePage onSave={postProfile} />
           </Route>
         </Switch>
