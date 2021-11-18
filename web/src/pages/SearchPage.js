@@ -14,22 +14,21 @@ const HeaderContentContainer = styled('form')`
 function SearchPage({ onSearch }) {
   const { jwt } = useContext(UserContext);
 
-  let [query, setQuery] = useState("");
-  let [results, setResults] = useState(null);
+  const [keywords, setKeywords] = useState([]);
+  const [results, setResults] = useState(null);
 
   const search = async event => {
     event.preventDefault();
-    if(query.length > 0 ){
-      let results = await onSearch(query, jwt);
-      //TO:DO check for errors, i.e., not authenticated or authorized
-      setResults(results);
+    if (keywords.length !== 0) {
+      const profiles = await onSearch(keywords, jwt);
+      setResults(profiles);
     }
   }
 
   return (
     <Page header={
       <HeaderContentContainer onSubmit={search} >
-        <SearchBar searchValue={query} setQuery={setQuery} onSearch={search}/>
+        <SearchBar keywords={keywords} setKeywords={setKeywords}/>
       </HeaderContentContainer>
     }>
       {/* TO:DO replace with nice looking search results */}

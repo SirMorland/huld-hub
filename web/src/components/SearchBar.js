@@ -25,11 +25,21 @@ const StyledIconButton = styled(IconButton)(`
   cursor: pointer;
 `);
 
-const SearchBar = ({ searchValue, setQuery, onSearch }) => {
+const SearchBar = ({ keywords, setKeywords }) => {
+  const [query, setQuery] = React.useState(keywords.join(", "));
+  const onChange = (e) => {
+    setQuery(e.target.value);
+    setKeywords(e.target.value.split(",").map((s) => s.trim()));
+  }
   return (
     <Wrapper>
-      <TextField value={searchValue} onChange={(e) => { setQuery(e.target.value); }} placeholder="Ex: Front-end,HTML,CSS"/>
-      <StyledIconButton  aria-label="search" onClick={(e) => { onSearch(e); }} >
+      <TextField
+        required
+        inputProps={{ "data-testid": "search-input" }}
+        value={query} 
+        onChange={onChange} 
+        placeholder="Front-end, HTML, CSS" />
+      <StyledIconButton aria-label="search" type="submit" >
         <StyledIcon />
       </StyledIconButton>
     </Wrapper>
@@ -37,9 +47,13 @@ const SearchBar = ({ searchValue, setQuery, onSearch }) => {
 };
 
 SearchBar.propTypes = {
-  searchValue: PropTypes.string.isRequired,
-  setQuery: PropTypes.func.isRequired,
-  onSearch: PropTypes.func.isRequired,
+  keywords: PropTypes.arrayOf(PropTypes.string),
+  setKeywords: PropTypes.func,
 };
+
+SearchBar.defaultProps = {
+  keywords: [],
+  setKeywords: () => { },
+}
 
 export default SearchBar;
