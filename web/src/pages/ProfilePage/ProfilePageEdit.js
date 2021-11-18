@@ -1,4 +1,5 @@
 import { Button } from "@mui/material";
+import TextField from "../../components/TextField";
 import React, { useState, useRef } from "react";
 import { styled } from "@mui/system";
 import Typography from "@mui/material/Typography";
@@ -101,6 +102,8 @@ function ProfilePageEdit({
   const profileImageRef = useRef();
 
   const [edited, setEdited] = useState(userProfile);
+  const [profileBio, setProfileBio] = useState(edited.bio || "")
+  const [newSkills, setnewSkills] = useState(edited.skills || "")
 
   const [basicInfo, setBasicInfo] = useState({
     first_name: edited.first_name, last_name: edited.last_name,
@@ -120,6 +123,8 @@ function ProfilePageEdit({
       competences,
       education_histories,
       work_experiences,
+      bio: profileBio,
+      skills: newSkills,
       file,
     });
   };
@@ -178,9 +183,19 @@ function ProfilePageEdit({
         <BasicInfo>
             <UserBasicInfoEdit basicInfo={basicInfo} setBasicInfo={setBasicInfo} ></UserBasicInfoEdit>
         </BasicInfo>
+      
         <Skills>
-          <h2>Skills</h2>
-        </Skills>
+         <Typography variant="h2"> Skills </Typography>
+          <TextField
+            textarea
+                required
+                id="Profile_Skills_Edit"
+                type="text"
+                placeholder="Few skills about yourself"
+                value={newSkills}
+                onChange={e => setnewSkills(e.target.value)}/>
+      </Skills>
+       
         <Languages>
           <Typography variant="h2">Language proficiencies</Typography>
           <ItemListEdit items={edited.languages} onRemove={onLanguageRemove} />
@@ -193,7 +208,15 @@ function ProfilePageEdit({
         </Keywords>
 
         <Bio>
-          <h2>Bio</h2>
+          <Typography variant="h2"> Bio </Typography>
+          <TextField
+            textarea
+                required
+                id="Profile_Info_Edit"
+                type="text"
+                placeholder="Few words about yourself"
+                value={profileBio}
+                onChange={e => setProfileBio(e.target.value)}/>
         </Bio>
 
         <Work>
