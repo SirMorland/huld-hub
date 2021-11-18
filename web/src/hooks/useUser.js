@@ -17,14 +17,14 @@ const useUser = (jwt) => {
         } catch (e) {
         } 
       } else {
-        setUser(false);
+        setUser(null);
       }
     }
 
     if (jwt) {
       fetchUser(jwt);
     } else {
-      setUser(false);
+      setUser(null);
     }
   }, [jwt]);
   return user;

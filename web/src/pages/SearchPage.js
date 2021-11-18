@@ -1,10 +1,10 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { styled } from "@mui/system";
 
 import Page from "../components/Page/Page";
 import TextField from "../components/TextField";
 
-import { UserContext } from "../App";
+import { useUserContext } from "../userContext";
 
 const HeaderContentContainer = styled('form')`
   max-width: 576px;
@@ -12,7 +12,7 @@ const HeaderContentContainer = styled('form')`
 `;
 
 function SearchPage({ onSearch }) {
-  const { jwt } = useContext(UserContext);
+  const { jwt } = useUserContext();
 
   let [query, setQuery] = useState("");
   let [results, setResults] = useState(null);

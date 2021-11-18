@@ -132,7 +132,7 @@ export default function RegistrationForm({ onSubmit }) {
                     <br />
                     <Grid container justifyContent="center">
                         <Grid item>
-                            <Link href="/" variant="body2" color="secondary">
+                            <Link to="/login" variant="body2" color="secondary">
                                 Already a member? Login instead
                             </Link>
                         </Grid>

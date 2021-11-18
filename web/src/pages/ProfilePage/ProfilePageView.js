@@ -3,23 +3,21 @@ import React from "react";
 import { Button } from "@mui/material";
 import { styled } from "@mui/system";
 
-import Page from '../../components/Page/Page';
+import Page from "../../components/Page/Page";
 import ProfileInfo from "../../components/ProfileInfo/ProfileInfo";
 import HistoryListView from "../../components/HistoryList/HistoryListView";
 import ItemListView from "../../components/ItemListView";
 import Title from "../../components/Title/Title";
-import UserContactinfo from '../../components/UserContactinfo';
+import UserContactinfo from "../../components/UserContactinfo";
 import ActionButtonContainer from "../../components/ActionButtonContainer";
 
-
-
-const HeaderContentContainer = styled('div')`
+const HeaderContentContainer = styled("div")`
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
-const Skills = styled('div')`
+const Skills = styled("div")`
   @media (min-width: 768px) {
     grid-column-start: 1;
   }
@@ -70,34 +68,48 @@ const Education = styled("div")`
   }
 `;
 
-
-function ProfilePageView({ profile, onEditClick }) {
+function ProfilePageView({ profile, onEditClick, isMyPage }) {
   const { languages, keywords, educationHistory, workHistory } = profile;
-  
+
   return (
-    <Page header={
-      profile &&
-      <HeaderContentContainer>
-        <Title
-          first_name={profile.first_name}
-          last_name={profile.last_name}
-          title={profile.title}
-          image={profile.image && `${process.env.REACT_APP_BACKEND_HOST}${profile.image.formats.small.url}`}
-        />
-        <UserContactinfo {...profile} ></UserContactinfo>
-      </HeaderContentContainer>
-    }>
+    <Page
+      header={
+        profile && (
+          <HeaderContentContainer>
+            <Title
+              first_name={profile.first_name}
+              last_name={profile.last_name}
+              title={profile.title}
+              image={
+                profile.image &&
+                `${process.env.REACT_APP_BACKEND_HOST}${profile.image.formats.small.url}`
+              }
+            />
+            <UserContactinfo {...profile}></UserContactinfo>
+          </HeaderContentContainer>
+        )
+      }
+    >
       <Skills>
-      <ProfileInfo title="Skills" data={profile && profile.skills}/>
+        <ProfileInfo title="Skills" data={profile && profile.skills} />
       </Skills>
       <Languages>
-        <ItemListView title="Language proficiencies" items={languages} noItemDescription="No Language Proficiencies Provided" />
+        <ItemListView
+          title="Language proficiencies"
+          items={languages}
+          noItemDescription="No Language Proficiencies Provided"
+        />
       </Languages>
       <Keywords>
-        <ItemListView List title="Keywords" items={keywords} noItemDescription="No Keywords Provided" />
+        <ItemListView
+          List
+          title="Keywords"
+          items={keywords}
+          noItemDescription="No Keywords Provided"
+        />
       </Keywords>
       <Bio>
-      <ProfileInfo title="Bio" data={profile && profile.bio}/>
+        <ProfileInfo title="Bio" data={profile && profile.bio} />
       </Bio>
 
       <Work>
@@ -116,16 +128,18 @@ function ProfilePageView({ profile, onEditClick }) {
         />
       </Education>
 
-      <ActionButtonContainer>
-        <Button
-          fullWidth
-          variant="contained"
-          color="primary"
-          onClick={onEditClick}
-        >
-          Edit
-        </Button>
-      </ActionButtonContainer>
+      {isMyPage && (
+        <ActionButtonContainer>
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={onEditClick}
+          >
+            Edit
+          </Button>
+        </ActionButtonContainer>
+      )}
     </Page>
   );
 }

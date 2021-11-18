@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 
 import { Button, Grid, Link, Typography } from '@mui/material';
@@ -8,7 +8,7 @@ import TextField from '../components/TextField';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
 import { EmailOrPasswordInvalidError } from '../api';
-import { UserContext } from '../App';
+import { useUserContext } from '../userContext';
 
 export default function LoginForm({ onSubmit }) {
     const location = useLocation();
@@ -16,14 +16,14 @@ export default function LoginForm({ onSubmit }) {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const history = useHistory();
-    const { setJwt } = useContext(UserContext);
+    const { setJwt, user } = useUserContext();
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         try {
             const json = await onSubmit(email, password);
             setJwt(json.jwt);
-            history.push("/");
+            history.push(`/profile/${user.id}`);
         } catch (error) {
             switch (true) {
                 case error instanceof EmailOrPasswordInvalidError:

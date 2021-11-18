@@ -5,7 +5,7 @@ import { ThemeProvider } from "@mui/material";
 
 import theme from "./theme";
 import React from "react";
-import { UserContext } from "./App";
+import { UserProvider } from "./userContext";
 
 export const fetchPost = (url, body, jwt, method) => {
   const headers = {
@@ -41,9 +41,9 @@ export const renderHelper = (children, context) => {
   return render(
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <UserContext.Provider value={contextValue}>
+        <UserProvider value={contextValue}>
           {children}
-        </UserContext.Provider>
+        </UserProvider>
       </BrowserRouter>
     </ThemeProvider>
   );

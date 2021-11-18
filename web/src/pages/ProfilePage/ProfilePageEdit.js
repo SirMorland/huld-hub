@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 
 import Page from "../../components/Page/Page";
 import ActionButtonContainer from "../../components/ActionButtonContainer";
-import {  Grid } from "../../components/GenericComponents";
+import { Grid } from "../../components/GenericComponents";
 import SelectInputField from "../../components/SelectAutocompleteField";
 import HistoryListEdit from "../../components/HistoryList/HistoryListEdit";
 import { HISTORY_TYPE } from "../../hooks/useHistoryList";
@@ -38,7 +38,7 @@ const BasicInfo = styled(Grid)`
 //     grid-column-start: 1;
 //   }
 // `;
-const Skills = styled('div')`
+const Skills = styled("div")`
   @media (min-width: 768px) {
     grid-column-start: 1;
   }
@@ -95,6 +95,7 @@ function ProfilePageEdit({
   onCancelClick,
   allLanguages,
   allKeywords,
+  jwt
 }) {
   const { educationHistory, workHistory, ...userProfile } = profile;
   const workHistoryRef = useRef();
@@ -102,22 +103,28 @@ function ProfilePageEdit({
   const profileImageRef = useRef();
 
   const [edited, setEdited] = useState(userProfile);
-  const [profileBio, setProfileBio] = useState(edited.bio || "")
-  const [newSkills, setnewSkills] = useState(edited.skills || "")
+  const [profileBio, setProfileBio] = useState(edited.bio || "");
+  const [newSkills, setnewSkills] = useState(edited.skills || "");
 
   const [basicInfo, setBasicInfo] = useState({
-    first_name: edited.first_name, last_name: edited.last_name,
-    title: edited.title, address: edited.address, phone: edited.phone,
-    email: edited.email, slack: edited.slack, linkedin: edited.linkedin, github: edited.github
+    first_name: edited.first_name || "",
+    last_name: edited.last_name || "",
+    title: edited.title || "",
+    address: edited.address || "",
+    phone: edited.phone || "",
+    email: edited.email || "",
+    slack: edited.slack || "",
+    linkedin: edited.linkedin || "",
+    github: edited.github || "",
   });
 
-  const onSave = (evt) => {
+  const onSave = async (evt) => {
     evt.preventDefault();
     const education_histories = educationHistoryRef.current.getHistoryList();
     const work_experiences = workHistoryRef.current.getHistoryList();
     const file = profileImageRef.current.getFile();
     const competences = [...edited.keywords, ...edited.languages];
-    onSaveClick({
+    const profile = {
       ...edited,
       ...basicInfo,
       competences,
@@ -126,7 +133,8 @@ function ProfilePageEdit({
       bio: profileBio,
       skills: newSkills,
       file,
-    });
+    };
+    onSaveClick(profile);
   };
 
   // filter languages that are not already in edited.languages by name
@@ -163,60 +171,72 @@ function ProfilePageEdit({
       ...edited,
       keywords,
     });
-  }
+  };
 
   const onLanguageRemove = (languages) => {
     setEdited({
       ...edited,
       languages,
     });
-  }
+  };
 
   return (
     <form onSubmit={onSave}>
       <Page>
-
-      <ProfilePicture>
-        <ProfilePicEdit profileImage={edited.image} ref={profileImageRef} />
-      </ProfilePicture>
+        <ProfilePicture>
+          <ProfilePicEdit profileImage={edited.image} ref={profileImageRef} />
+        </ProfilePicture>
 
         <BasicInfo>
-            <UserBasicInfoEdit basicInfo={basicInfo} setBasicInfo={setBasicInfo} ></UserBasicInfoEdit>
+          <UserBasicInfoEdit
+            basicInfo={basicInfo}
+            setBasicInfo={setBasicInfo}
+          ></UserBasicInfoEdit>
         </BasicInfo>
-      
+
         <Skills>
-         <Typography variant="h2"> Skills </Typography>
+          <Typography variant="h2"> Skills </Typography>
           <TextField
             textarea
-                required
-                id="Profile_Skills_Edit"
-                type="text"
-                placeholder="Few skills about yourself"
-                value={newSkills}
-                onChange={e => setnewSkills(e.target.value)}/>
-      </Skills>
-       
+            required
+            id="Profile_Skills_Edit"
+            type="text"
+            placeholder="Few skills about yourself"
+            value={newSkills}
+            onChange={(e) => setnewSkills(e.target.value)}
+          />
+        </Skills>
+
         <Languages>
           <Typography variant="h2">Language proficiencies</Typography>
           <ItemListEdit items={edited.languages} onRemove={onLanguageRemove} />
-          <SelectInputField options={languagesToAdd} onSelect={onLanguageAdd} label="Pick new language proficiency" />
+          <SelectInputField
+            options={languagesToAdd}
+            onSelect={onLanguageAdd}
+            label="Pick new language proficiency"
+          />
         </Languages>
         <Keywords>
           <Typography variant="h2">Keywords</Typography>
           <ItemListEdit items={edited.keywords} onRemove={onKeywordRemove} />
-          <SelectInputField options={keywordsToAdd} onSelect={onKeywordAdd} label="Pick new keyword" />
+          <SelectInputField
+            options={keywordsToAdd}
+            onSelect={onKeywordAdd}
+            label="Pick new keyword"
+          />
         </Keywords>
 
         <Bio>
           <Typography variant="h2"> Bio </Typography>
           <TextField
             textarea
-                required
-                id="Profile_Info_Edit"
-                type="text"
-                placeholder="Few words about yourself"
-                value={profileBio}
-                onChange={e => setProfileBio(e.target.value)}/>
+            required
+            id="Profile_Info_Edit"
+            type="text"
+            placeholder="Few words about yourself"
+            value={profileBio}
+            onChange={(e) => setProfileBio(e.target.value)}
+          />
         </Bio>
 
         <Work>

@@ -1,33 +1,30 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import Cookies from 'js-cookie';
 
 import { Button, Typography } from '@mui/material';
 
-import { UserContext } from '../App';
+import { useUserContext } from '../userContext';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
 
 export default function AlmostDone() {
-	const { user } = useContext(UserContext);
+	const { user, jwt } = useUserContext();
 	const history = useHistory();
 
 	const [email, setEmail] = useState(null);
 
 	useEffect(() => {
-		let jwt = Cookies.get("hub-jwt");
-
 		if (jwt) {
 			let { email } = JSON.parse(atob(jwt.split('.')[1])); //TODO: maybe use an actual jwt parser library
 			setEmail(email);
 		} else {
 			history.push("/login");
 		}
-	}, [history]);
+	}, [history, jwt]);
 
 	useEffect(() => {
 		if (user) {
-			history.push("/");
+			history.push(`/profile/${user.id}`);
 		}
 	}, [user, history]);
 

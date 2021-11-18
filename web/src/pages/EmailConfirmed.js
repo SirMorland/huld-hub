@@ -2,13 +2,15 @@ import React from 'react';
 import Cookies from 'js-cookie';
 
 import { Typography } from '@mui/material';
-
+import { useUserContext } from '../userContext';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
 import { Link } from 'react-router-dom';
 
 export default function EmailConfirmed() {
+  const { setJwt, user } = useUserContext();
     const jwt = Cookies.get("hub-jwt");
+    jwt && setJwt(jwt)
 
     return (
         <PageWrapper>
@@ -27,7 +29,7 @@ export default function EmailConfirmed() {
                 </Typography>
                 <br />
                 {jwt ?
-                    <Link to="/">Go to my profile</Link>
+                    <Link to={`/profile/${user.id}`}>Go to my profile</Link>
                 :
                     <Link to="/login">Go to login page</Link>
                 }
