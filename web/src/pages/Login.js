@@ -42,7 +42,7 @@ export default function LoginForm() {
                 <Typography component="h1" variant="h5" color="primary">
                     Log in to Hub
                 </Typography>
-                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3, width: '100%' }}>
+                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3, width: '100%' }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField

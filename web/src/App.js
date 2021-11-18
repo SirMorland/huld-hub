@@ -20,12 +20,10 @@ const AuthUser = ({ children }) => {
   const path = location.pathname;
   const { user, jwt } = useUserContext();
 
-
-  if (!jwt && (path !== "/login" || path !== "login"))
+  if (!jwt) {
+    if (path === "/login" || path === "/register") return children;
     return <Redirect to="/login" />;
-
-  if (!jwt && (path !== "/register" || path !== "register"))
-    return <Redirect to="/register" />;
+  }
 
   if (!user) return <Redirect to="/almost-done" />;
 

@@ -24,7 +24,6 @@ function ProfilePage() {
   const isMyPage = parseInt(pageId) === parseInt(user.id)
 
   const [profile, setProfile] = useProfile(pageId, jwt);
-  console.log(profile)
 
   const allLanguages = useCompetences("coding languages", jwt);
   const allKeywords = useCompetences("keywords", jwt);
