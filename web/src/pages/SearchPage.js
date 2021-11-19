@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { styled } from "@mui/system";
-
 import Page from "../components/Page/Page";
-import TextField from "../components/TextField";
 import { search } from "../api";
+import SearchBar from "../components/SearchBar";
 
 import { useUserContext } from "../userContext";
 
-const HeaderContentContainer = styled('form')`
+const HeaderContentContainer = styled("div")`
   max-width: 576px;
   margin: auto;
 `;
@@ -15,47 +14,52 @@ const HeaderContentContainer = styled('form')`
 function SearchPage() {
   const { jwt } = useUserContext();
 
-  let [query, setQuery] = useState("");
-  let [results, setResults] = useState(null);
+  const [keywords, setKeywords] = useState([]);
+  const [results, setResults] = useState(null);
 
-  const onSearch = async event => {
-    event.preventDefault();
-
-    let results = await search(query, jwt);
-    //TO:DO check for errors, i.e., not authenticated or authorized
-    setResults(results);
-  }
+  const onSearch = async (query) => {
+    setKeywords(query);
+    if (keywords.length !== 0) {
+      const profiles = await search(keywords, jwt);
+      setResults(profiles);
+    }
+  };
 
   return (
-    <Page header={
-      <HeaderContentContainer onSubmit={onSearch} >
-        {/* TO:DO replace with search bar component */}
-        <TextField value={query} onChange={e => setQuery(e.target.value)} />
-      </HeaderContentContainer>
-    }>
+    <Page
+      header={
+        <HeaderContentContainer>
+          <SearchBar onSubmit={onSearch} />
+        </HeaderContentContainer>
+      }
+    >
       {/* TO:DO replace with nice looking search results */}
       <div>
-        {results ?
-          (results.length > 0 ?
+        {results ? (
+          results.length > 0 ? (
             <ul>
-              {results.map(result =>
+              {results.map((result) => (
                 <li key={result.id}>
-                  <p>{result.first_name} {result.last_name}</p>
+                  <p>
+                    {result.first_name} {result.last_name}
+                  </p>
                   <p>{result.title}</p>
                   <p>{result.bio}</p>
                   <p>{result.skills}</p>
                   <p>
-                  {result.competences.map(competence => <span key={competence.id}>{competence.name}, </span>)}
+                    {result.competences.map((competence) => (
+                      <span key={competence.id}>{competence.name}, </span>
+                    ))}
                   </p>
                 </li>
-              )}
+              ))}
             </ul>
-          :
+          ) : (
             <p>No results</p>
           )
-        :
+        ) : (
           <p>Start by searching something...</p>
-        }
+        )}
       </div>
     </Page>
   );

@@ -106,9 +106,8 @@ const getPropertyContains = (property, keywords) => {
   return { _or: [...keywords.map(keyword => ({ [`${property}_contains`]: keyword })) ]}
 }
 
-export const search = async (query, jwt) => {
-  if (query) {
-    const keywords = query.split(",").map(keyword => keyword.trim());
+export const search = async (keywords, jwt) => {
+  if (keywords && keywords.length) {
   
     const qr = qs.stringify({
       _where: {
