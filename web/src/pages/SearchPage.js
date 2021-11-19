@@ -2,6 +2,8 @@ import { useContext, useState } from "react";
 import { styled } from "@mui/system";
 import Page from "../components/Page/Page";
 import SearchBar from "../components/SearchBar";
+import SearchItems from "../components/SearchResult/SearchItems";
+import useCompetenceCategories from "../hooks/useCompetenceCategories";
 
 import { UserContext } from "../App";
 
@@ -12,9 +14,19 @@ const HeaderContentContainer = styled("div")`
 
 function SearchPage({ search }) {
   const { jwt } = useContext(UserContext);
+  
 
   const [keywords, setKeywords] = useState([]);
   const [results, setResults] = useState(null);
+  const competenceCategories = useCompetenceCategories(jwt);
+
+  // useEffect(() => {
+  //   if(params.search)
+  //   return () => {
+  //     cleanup
+  //   }
+  // }, [input])
+
 
   const onSearch = async (query) => {
     setKeywords(query);
@@ -60,6 +72,7 @@ function SearchPage({ search }) {
           <p>Start by searching something...</p>
         )}
       </div>
+      <SearchItems results={results} searchTerms={keywords} competenceCategories={competenceCategories} />
     </Page>
   );
 }
