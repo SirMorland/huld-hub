@@ -121,7 +121,14 @@ function SearchItem(props) {
 }
 
 SearchItem.propTypes = {
-  
+  first_name: PropTypes.string,
+  last_name: PropTypes.string,
+  title: PropTypes.string,
+  image: PropTypes.any,
+  searchTerms: PropTypes.array,
+  id: PropTypes.number,
+  competenceCategories: PropTypes.array,
+  competences: PropTypes.array,
 };
 
 export default SearchItem;
