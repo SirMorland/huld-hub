@@ -17,13 +17,13 @@ import { HISTORY_TYPE } from "../../hooks/useHistoryList";
 
 function ProfilePage() {
   let match = useRouteMatch();
-  const pageId = match.params.id;
+  const profileId = match.params.profileId;
 
   const { jwt, user } = useUserContext();
 
-  const isMyPage = user && parseInt(pageId) === parseInt(user.profile)
+  const isMyPage = user && parseInt(profileId) === parseInt(user.profile)
 
-  const [profile, setProfile] = useProfile(pageId, jwt);
+  const [profile, setProfile] = useProfile(profileId, jwt);
 
   const allLanguages = useCompetences("coding languages", jwt);
   const allKeywords = useCompetences("keywords", jwt);
