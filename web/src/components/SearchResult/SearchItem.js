@@ -24,7 +24,6 @@ const InfoTitle = styled(Typography)`
 
 const ProfileLink = styled(Link)(({ theme }) => ({
   color: theme.palette.secondary.main,
-  fontSize: "24px",
   textDecoration: "none",
   marginLeft: "auto",
 }));
@@ -105,7 +104,7 @@ function SearchItem(props) {
           </InfoName>
           <InfoTitle>{match(title, " ")}</InfoTitle>
         </div>
-        <ProfileLink to={`/profile/${id}`}>link</ProfileLink>
+        <ProfileLink to={`/profile/${id}`}>Profile</ProfileLink>
       </Header>
       <Body>
         <Typography variant="body2">
