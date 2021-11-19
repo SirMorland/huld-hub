@@ -18,8 +18,8 @@ function SearchPage({ search }) {
 
   const onSearch = async (query) => {
     setKeywords(query);
-    if (keywords.length !== 0) {
-      const profiles = await search(keywords, jwt);
+    if (query.length !== 0) {
+      const profiles = await search(query, jwt);
       setResults(profiles);
     }
   };
