@@ -67,7 +67,7 @@ function SearchItem(props) {
 
   const searchTermsLowerCase = searchTerms.join(",").toLowerCase();
 
-  const match = (data = "", delimeter) => {
+  const match = (data = "", delimeter = "") => {
     const spitWords = data.split(delimeter);
     return spitWords.map((word, i, { length }) => {
       if (searchTermsLowerCase.includes(word.toLowerCase())) {
@@ -100,7 +100,7 @@ function SearchItem(props) {
         />
         <div>
           <InfoName>
-            {match(first_name)} {match(last_name)}
+            {match(first_name, " ")} {match(last_name, " ")}
           </InfoName>
           <InfoTitle>{match(title, " ")}</InfoTitle>
         </div>

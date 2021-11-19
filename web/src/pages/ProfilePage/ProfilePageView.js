@@ -128,8 +128,8 @@ function ProfilePageView({ profile, onEditClick, isMyPage }) {
         />
       </Education>
 
-      {isMyPage && (
-        <ActionButtonContainer>
+      <ActionButtonContainer>
+        {isMyPage && (
           <Button
             fullWidth
             variant="contained"
@@ -138,8 +138,8 @@ function ProfilePageView({ profile, onEditClick, isMyPage }) {
           >
             Edit
           </Button>
-        </ActionButtonContainer>
-      )}
+        )}
+      </ActionButtonContainer>
     </Page>
   );
 }
