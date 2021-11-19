@@ -61,7 +61,7 @@ function App() {
     <UserProvider value={{ user, setJwt, jwt, removeJwt }}>
       <ThemeProvider theme={theme}>
         <Switch>
-          <Route exact path="/profile/:id">
+          <Route exact path="/profile/:profileId">
             <AuthUser>
               <ProfilePage />
             </AuthUser>

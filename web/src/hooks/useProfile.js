@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import { getProfile, NotFoundError, UnauthorizedError } from "../api";
+import { getProfileById, NotFoundError, UnauthorizedError } from "../api";
 
-const useProfile = (id, jwt) => {
+const useProfile = (profileId, jwt) => {
   const [profile, setProfile] = useState(null);
   const history = useHistory();
   useEffect(() => {
-    const fetchProfile = async (id) => {
+    const fetchProfile = async (profileId) => {
       try {
-        const json = await getProfile(id, jwt);
+        const json = await getProfileById(profileId, jwt);
         setProfile(json);
       } catch (error) {
         switch (true) {
@@ -23,8 +23,8 @@ const useProfile = (id, jwt) => {
         }
       }
     };
-    if (jwt) fetchProfile(id);
-  }, [id, history, jwt]);
+    if (jwt) fetchProfile(profileId);
+  }, [profileId, history, jwt]);
   return [profile, setProfile];
 };
 
