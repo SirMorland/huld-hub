@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
-import Cookies from 'js-cookie';
 
 import { Box } from '@mui/system';
 import { Button, Grid, Link, Typography } from '@mui/material';
@@ -9,6 +8,7 @@ import TextField from '../components/TextField';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
 import { register, EmailTakenError, EmailWrongDomainError } from '../api';
+import { useUserContext } from '../userContext';
 
 export default function RegistrationForm() {
 
@@ -18,7 +18,7 @@ export default function RegistrationForm() {
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const history = useHistory();
-
+    const { setJwt } = useUserContext();
     const handleSubmit = async (event) => {
         event.preventDefault();
         setEmailError('');
@@ -29,7 +29,7 @@ export default function RegistrationForm() {
         } else if (email && password && password === reEnterPassword) {
             try {
                 const json = await register(email, password);
-                Cookies.set("hub-jwt", json.jwt);
+                setJwt(json.jwt);
                 history.push("/almost-done");
             } catch  (error) {
                 switch(true) {
