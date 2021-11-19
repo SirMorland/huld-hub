@@ -66,10 +66,26 @@ function SearchItem(props) {
     "keywords"
   );
 
-  console.log(props);
+  const searchTermsLowerCase = searchTerms.join(",").toLowerCase();
 
-  const match = (data = "") => {
-    data.split();
+  const match = (data = "", delimeter) => {
+    const spitWords = data.split(delimeter);
+    return spitWords.map((word, i, { length }) => {
+      if (searchTermsLowerCase.includes(word.toLowerCase())) {
+        return (
+          <Match key={i}>
+            {word}
+            {i < length - 1 ? delimeter : ""}
+          </Match>
+        );
+      }
+      return (
+        <span key={i}>
+          {word}
+          {i < length - 1 ? delimeter : ""}
+        </span>
+      );
+    });
   };
 
   return (
@@ -85,23 +101,27 @@ function SearchItem(props) {
         />
         <div>
           <InfoName>
-            {first_name} {last_name}
+            {match(first_name)} {match(last_name)}
           </InfoName>
-          <InfoTitle>{title}</InfoTitle>
+          <InfoTitle>{match(title, " ")}</InfoTitle>
         </div>
         <ProfileLink to={`/profile/${id}`}>link</ProfileLink>
       </Header>
       <Body>
         <Typography variant="body2">
           Language proficiencies:{" "}
-          {languages.map((language) => language.name).join(", ")}{" "}
+          {match(languages.map((language) => language.name).join(", "), ", ")}
         </Typography>
-        <Typography variant="body2">Keywords: {keywords.map((key) => key.name).join(",")}</Typography>
+        <Typography variant="body2">
+          Keywords: {match(keywords.map((key) => key.name).join(", "), ", ")}
+        </Typography>
       </Body>
     </div>
   );
 }
 
-SearchItem.propTypes = {};
+SearchItem.propTypes = {
+  
+};
 
 export default SearchItem;
