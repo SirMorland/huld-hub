@@ -5,11 +5,9 @@ import { useUserContext } from '../userContext';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
 import { Link } from 'react-router-dom';
-import useProfile from '../hooks/useProfile';
 
 export default function EmailConfirmed() {
-    const { user, jwt } = useUserContext();
-    const profile = useProfile(user && user.id, jwt);
+    const { user } = useUserContext();
     return (
         <PageWrapper>
             <DialogWrapper>
@@ -26,8 +24,8 @@ export default function EmailConfirmed() {
                     Finish up by filling your profile with your information.
                 </Typography>
                 <br />
-                {profile 
-                ? <Link to={`/profile/${profile.id}`}>Go to my profile</Link> 
+                {user  
+                ? <Link to={`/profile/${user.profile}`}>Go to my profile</Link> 
                 : <Link to="/login">Go to login page</Link>}
             </DialogWrapper>
         </PageWrapper>
