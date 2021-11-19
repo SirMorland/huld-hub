@@ -14,19 +14,10 @@ const HeaderContentContainer = styled("div")`
 
 function SearchPage({ search }) {
   const { jwt } = useContext(UserContext);
-  
 
   const [keywords, setKeywords] = useState([]);
   const [results, setResults] = useState(null);
   const competenceCategories = useCompetenceCategories(jwt);
-
-  // useEffect(() => {
-  //   if(params.search)
-  //   return () => {
-  //     cleanup
-  //   }
-  // }, [input])
-
 
   const onSearch = async (query) => {
     setKeywords(query);
@@ -44,35 +35,11 @@ function SearchPage({ search }) {
         </HeaderContentContainer>
       }
     >
-      {/* TO:DO replace with nice looking search results */}
-      <div>
-        {results ? (
-          results.length > 0 ? (
-            <ul>
-              {results.map((result) => (
-                <li key={result.id}>
-                  <p>
-                    {result.first_name} {result.last_name}
-                  </p>
-                  <p>{result.title}</p>
-                  <p>{result.bio}</p>
-                  <p>{result.skills}</p>
-                  <p>
-                    {result.competences.map((competence) => (
-                      <span key={competence.id}>{competence.name}, </span>
-                    ))}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No results</p>
-          )
-        ) : (
-          <p>Start by searching something...</p>
-        )}
-      </div>
-      <SearchItems results={results} searchTerms={keywords} competenceCategories={competenceCategories} />
+      <SearchItems
+        results={results}
+        searchTerms={keywords}
+        competenceCategories={competenceCategories}
+      />
     </Page>
   );
 }
