@@ -27,10 +27,8 @@ const AuthUser = ({ children }) => {
 
   if (user && !user.confirmed) return <Redirect to="/almost-done" />;
 
-  if (user && user.confirmed && path.includes('search')) return children;
 
-  if (user && user.confirmed && (!path.includes('profile'))) {
-    console.log('redirect');
+  if (user && user.confirmed && (!path.includes('profile') && !path.includes('search'))) {
     return <Redirect to={`/profile/${user.profileId}`} />;
   }
 
