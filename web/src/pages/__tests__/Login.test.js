@@ -1,14 +1,16 @@
 import React from 'react';
-// import { act } from 'react-dom/test-utils';
-// import { fireEvent, screen } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
+import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import LoginForm from "../Login";
 
-// import { EmailOrPasswordInvalidError } from '../../api';
 import { renderHelper } from '../../utils';
 
 describe('Login Form', () => {
+    beforeEach(() => {
+        fetch.resetMocks();
+    });
     it('should render login form', () => {
         const { getByText } = renderHelper(<LoginForm />);
 
@@ -28,44 +30,48 @@ describe('Login Form', () => {
         expect(getByText("LOG IN")).toBeInTheDocument();
     });
 
-    // it('should submit when form inputs contain text', async () => {
-    //     const onSubmit = jest.fn();
+    const mockUser = {
+        jwt: 'asd',
+        user: {
+            id: 1
+        }
+    };
+    it('should submit when form inputs contain text', async () => {
 
-    //     const { getByText, queryByText } = renderHelper(<LoginForm onSubmit={onSubmit} />);
+        const { getByText, queryByText } = renderHelper(<LoginForm/>);
 
-    //     await act(async () => {
-    //         fireEvent.change(screen.getByLabelText(/Email/i), {
-    //             target: { value: 'shaquille' },
-    //         });
+        await act(async () => {
+            fireEvent.change(screen.getByLabelText(/Email/i), {
+                target: { value: 'shaquille' },
+            });
 
-    //         fireEvent.change(screen.getByLabelText(/Password/i), {
-    //             target: { value: 'oatmeal' },
-    //         })
-    //     });
+            fireEvent.change(screen.getByLabelText(/Password/i), {
+                target: { value: 'oatmeal' },
+            })
+        });
 
-    //     await act(async () => {
-    //         fireEvent.submit(getByText(/^Log in$/i));
-    //     });
+        fetch.mockResponseOnce(JSON.stringify(mockUser),{status: 200});
 
-    //     expect(queryByText("User Name is required")).not.toBeInTheDocument();
-    //     expect(queryByText("Password is required")).not.toBeInTheDocument();
-    //     expect(onSubmit).toBeCalled();
-    // });
+        await act(async () => {
+            fireEvent.submit(getByText(/^Log in$/i));
+        });
 
-    // it('should show error message if incorrect email or password', async () => {
-    //     const onSubmit = jest.fn();
-    //     onSubmit.mockImplementation(() => {
-    //         throw new EmailOrPasswordInvalidError();
-    //     });
+        expect(queryByText("User Name is required")).not.toBeInTheDocument();
+        expect(queryByText("Password is required")).not.toBeInTheDocument();
+    });
 
-    //     const { getByText, queryByText } = renderHelper(<LoginForm onSubmit={onSubmit} />);
+    it('should show error message if incorrect email or password', async () => {
 
-    //     expect(queryByText(/Incorrect email or password!/i)).not.toBeInTheDocument();
+        fetch.mockResponseOnce(JSON.stringify({}),{status: 400});
 
-    //     await act(async () => {
-    //         fireEvent.submit(getByText(/^Log in$/i));
-    //     });
+        const { getByText, queryByText } = renderHelper(<LoginForm/>);
 
-    //     expect(queryByText(/Incorrect email or password!/i)).toBeInTheDocument();
-    // });
+        expect(queryByText(/Incorrect email or password!/i)).not.toBeInTheDocument();
+
+        await act(async () => {
+            fireEvent.submit(getByText(/^Log in$/i));
+        });
+
+        expect(queryByText(/Incorrect email or password!/i)).toBeInTheDocument();
+    });
 });
