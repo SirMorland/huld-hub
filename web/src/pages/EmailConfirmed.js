@@ -25,7 +25,7 @@ export default function EmailConfirmed() {
                 </Typography>
                 <br />
                 {user  
-                ? <Link to={`/profile/${user.profile}`}>Go to my profile</Link> 
+                ? <Link to={`/profile/${user.profileId}`}>Go to my profile</Link> 
                 : <Link to="/login">Go to login page</Link>}
             </DialogWrapper>
         </PageWrapper>

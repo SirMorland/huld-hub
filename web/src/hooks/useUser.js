@@ -13,6 +13,7 @@ const useUser = (jwt) => {
       if (response.status === 200) {
         try {
           let json = await response.json();
+          json.profileId = json.profile
           setUser(json);
         } catch (e) {
         } 
