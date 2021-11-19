@@ -69,7 +69,6 @@ export default function RegistrationForm() {
                             {emailError &&
                                 <React.Fragment>
                                     <br />
-                                    <br />
                                     <Grid container justifyContent="center">
                                         <Grid item>
                                             <Typography component="p" variant="body2" color="error">
@@ -105,7 +104,6 @@ export default function RegistrationForm() {
                             />
                             {passwordError &&
                                 <React.Fragment>
-                                    <br />
                                     <br />
                                     <Grid container justifyContent="center">
                                         <Grid item>
