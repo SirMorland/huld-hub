@@ -41,7 +41,7 @@ export const register = async (email, password) => {
   }
 }
 
-export const getProfile = async (id, jwt) => {
+export const getProfileById = async (id, jwt) => {
   const url = `${process.env.REACT_APP_BACKEND_HOST}/user-profiles/${id}`;
   const response = await fetch(url, {
     headers: {
