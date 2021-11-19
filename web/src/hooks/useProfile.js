@@ -9,8 +9,7 @@ const useProfile = (id, jwt) => {
     const fetchProfile = async (id) => {
       try {
         const json = await getProfile(id, jwt);
-        const [profile] = json;
-        setProfile(profile);
+        setProfile(json);
       } catch (error) {
         switch (true) {
           case error instanceof NotFoundError:

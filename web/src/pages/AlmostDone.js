@@ -24,7 +24,7 @@ export default function AlmostDone() {
 
 	useEffect(() => {
 		if (user) {
-			history.push(`/profile/${user.id}`);
+			history.push(`/profile/${user.profile}`);
 		}
 	}, [user, history]);
 

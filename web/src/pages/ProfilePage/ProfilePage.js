@@ -21,7 +21,7 @@ function ProfilePage() {
 
   const { jwt, user } = useUserContext();
 
-  const isMyPage = parseInt(pageId) === parseInt(user.id)
+  const isMyPage = user && parseInt(pageId) === parseInt(user.profile)
 
   const [profile, setProfile] = useProfile(pageId, jwt);
 
