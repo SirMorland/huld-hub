@@ -77,7 +77,6 @@ function ProfilePage() {
       <ProfilePageEdit
         profile={profileProps}
         onSaveClick={onSaveClick}
-        jwt={jwt}
         onCancelClick={() => setEdit(false)}
         allLanguages={allLanguages}
         allKeywords={allKeywords}

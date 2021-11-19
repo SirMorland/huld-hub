@@ -95,7 +95,6 @@ function ProfilePageEdit({
   onCancelClick,
   allLanguages,
   allKeywords,
-  jwt
 }) {
   const { educationHistory, workHistory, ...userProfile } = profile;
   const workHistoryRef = useRef();
