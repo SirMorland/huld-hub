@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useHistory, useLocation } from "react-router";
 import PropTypes from "prop-types";
 import TextField from "../components/TextField";
 import IconButton from "@mui/material/IconButton";
@@ -28,11 +29,30 @@ const StyledIconButton = styled(IconButton)(`
   }
 `);
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+const queryKey = "search";
+
 const SearchBar = ({ onSubmit }) => {
+  const params = useQuery();
+  const history = useHistory();
   const [query, setQuery] = React.useState("");
 
+  useEffect(() => {
+    const queryValue = params.get(queryKey);
+    if(queryValue){
+      setQuery(queryValue)
+      onSubmit(queryValue.split(",").map((s) => s.trim()))
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const submit = (e) => {
-    e.preventDefault();
+    e && e.preventDefault();
+    const params = new URLSearchParams();
+    params.append(queryKey, query);
+    history.push({ search: params.toString() });
     const keywords = query.split(",").map((s) => s.trim());
     onSubmit(keywords);
   };
