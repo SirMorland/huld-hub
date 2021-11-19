@@ -23,7 +23,7 @@ export default function LoginForm() {
         try {
             const json = await login(email, password);
             setJwt(json.jwt);
-            history.push(`/profile/${user.id}`);
+            history.push(`/profile/${user.profile}`);
         } catch (error) {
             switch (true) {
                 case error instanceof EmailOrPasswordInvalidError:
