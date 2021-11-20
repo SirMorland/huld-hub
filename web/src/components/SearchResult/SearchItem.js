@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import { styled } from "@mui/system";
 import Avatar from "@mui/material/Avatar";
@@ -67,25 +67,28 @@ function SearchItem(props) {
 
   const searchTermsLowerCase = searchTerms.join(",").toLowerCase();
 
-  const match = (data = "", delimeter) => {
-    const spitWords = data.split(delimeter);
-    return spitWords.map((word, i, { length }) => {
-      if (searchTermsLowerCase.includes(word.toLowerCase())) {
+  const match = useCallback(
+    (data = "", delimeter = "") => {
+      const spitWords = data.split(delimeter);
+      return spitWords.map((word, i, { length }) => {
+        if (searchTermsLowerCase.includes(word.toLowerCase())) {
+          return (
+            <Match key={i}>
+              {word}
+              {i < length - 1 ? delimeter : ""}
+            </Match>
+          );
+        }
         return (
-          <Match key={i}>
+          <span key={i}>
             {word}
             {i < length - 1 ? delimeter : ""}
-          </Match>
+          </span>
         );
-      }
-      return (
-        <span key={i}>
-          {word}
-          {i < length - 1 ? delimeter : ""}
-        </span>
-      );
-    });
-  };
+      });
+    },
+    [searchTermsLowerCase]
+  );
 
   return (
     <div>
@@ -94,15 +97,15 @@ function SearchItem(props) {
           alt="Profile Picture"
           src={
             image &&
-            `${process.env.REACT_APP_BACKEND_HOST}${image.formats.small.url}`
+            `${process.env.REACT_APP_BACKEND_HOST}${image.formats.thumbnail.url}`
           }
           data-testid="avatar"
         />
         <div>
-          <InfoName>
-            {match(first_name)} {match(last_name)}
+          <InfoName variant="body1">
+            {match(first_name, " ")} {match(last_name, " ")}
           </InfoName>
-          <InfoTitle>{match(title, " ")}</InfoTitle>
+          <InfoTitle variant="body1">{match(title, " ")}</InfoTitle>
         </div>
         <ProfileLink to={`/profile/${id}`}>Profile</ProfileLink>
       </Header>

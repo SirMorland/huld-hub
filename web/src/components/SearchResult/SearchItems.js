@@ -2,12 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/system";
-import Divider from "@mui/material/Divider";
+import MuiDivider from "@mui/material/Divider";
 
 import SearchItem from "./SearchItem";
 
 const EmptyHistory = styled(Typography)(({ theme }) => ({
   color: theme.palette.grey.main,
+}));
+
+const Divider = styled(MuiDivider)(({ theme }) => ({
+  color: theme.palette.grey[100],
+  margin: "24px 0",
+  fontsize: "2px"
 }));
 
 function SearchItems(props) {
