@@ -11,7 +11,7 @@ services:
     entrypoint: ["/bin/bash", "-c"]
     command:
       - |
-        rm cypress/reports/mocha/*.json
+        rm -f cypress/reports/mocha/*.json
         npx cypress run
         npx mochawesome-merge "cypress/reports/mocha/*.json" > cypress/mochawesome.json
         npx marge cypress/mochawesome.json -o cypress/mochawesome-report	

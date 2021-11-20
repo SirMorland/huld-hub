@@ -33,3 +33,10 @@ jobs:
       run: |
         cd cypress
         docker-compose up
+    
+    - name: Cypress report
+      uses: dmitry/cypress-report-action@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        pathname: cypress/cypress/cypress/mochawesome.json
+      if: always()
