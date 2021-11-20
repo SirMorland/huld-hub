@@ -19,7 +19,7 @@ const Container = styled("div")({
 
 /**
  * 
- * @param {StyledComponent<OutlinedInputProps & MUIStyledCommonProps<Theme>, {}, {}>} param0 
+ * @param {{textarea: boolean; label: string; placeholder: string; error: boolean; required: boolean; type: string; value: string; onChange: Function; }} param0 
  * @returns 
  */
 function TextField({ label, textarea, ...props }) {
