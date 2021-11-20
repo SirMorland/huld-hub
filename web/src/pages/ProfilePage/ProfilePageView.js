@@ -82,7 +82,7 @@ function ProfilePageView({ profile, onEditClick, isMyPage }) {
               title={profile.title}
               image={
                 profile.image &&
-                `${process.env.REACT_APP_BACKEND_HOST}${profile.image.formats.small.url}`
+                `${process.env.REACT_APP_BACKEND_HOST}${profile.image.url}`
               }
             />
             <UserContactinfo {...profile}></UserContactinfo>
