@@ -1,0 +1,19 @@
+version: '3'
+services:
+  cypress:
+    image: cypress
+    build: ./cypress
+    container_name: huldhub_cypress
+    ports:
+      - 7777:7777
+    environment:
+      - CYPRESS_baseUrl=http://react-app:80
+    command: npx cypress run
+    volumes:
+      - ./cypress/cypress:/app/cypress
+      - ./cypress/cypress.json:/app/cypress.json
+
+networks:
+  default:
+    external: true
+    name: huldhub_network

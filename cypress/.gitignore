@@ -1,0 +1,7 @@
+docker-compose.override.yml
+
+/cypress/node_modules
+
+/cypress/cypress/results
+/cypress/cypress/screenshots
+/cypress/cypress/videos

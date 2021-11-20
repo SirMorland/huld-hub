@@ -1,0 +1,8 @@
+{
+	"email": "ted.tester@huld.io",
+	"incorrectEmail": "ted.tester@gmail.com",
+	"password": "password",
+	"incorrectPassword": "pasword",
+	"firstName": "Ted",
+	"lastName": "Tester"
+}

@@ -18,14 +18,21 @@ jobs:
     - name: Start backend
       run: |
         cd backend
-        docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+        cp app/.env.cypress app/.env
+        docker-compose -f docker-compose.yml -f docker-compose.prod.yml -f docker-compose.cypress.yml up -d
 
     - name: Start frontend
       run: |
         cd web
-        docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+        cp .env.cypress .env
+        docker-compose -f docker-compose.yml -f docker-compose.prod.yml -f docker-compose.cypress.yml up -d
 
     - name: Wait that containers have started
       run: |
         docker run --network container:huldhub_backend appropriate/curl -s --retry 10 --retry-connrefused http://localhost:1337/ping
         docker run --network container:huldhub_frontend appropriate/curl -s --retry 10 --retry-connrefused http://localhost:80/ping
+
+    - name: Run Cypress tests
+      run: |
+        cd cypress
+        docker-compose up

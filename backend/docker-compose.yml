@@ -31,3 +31,7 @@ services:
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       retries: 10
+
+networks:
+  default:
+    name: huldhub_network
