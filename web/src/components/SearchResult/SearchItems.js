@@ -19,8 +19,8 @@ const Divider = styled(MuiDivider)(({ theme }) => ({
 function SearchItems(props) {
   const { results, competenceCategories, searchTerms } = props;
   return (
-    <div>
-      {results ? (
+    <div data-testid="search-results">
+      {results && results.length > 0 ? (
         results.map((profile, i, { length }) => (
           <span key={profile.id}>
             <SearchItem
