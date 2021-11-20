@@ -31,10 +31,6 @@ module.exports = (on, config) => {
 
   on('task', {
     getEmail() {
-      while(!receivedEmail) {
-        cy.wait(1000);
-      }
-
       const email = receivedEmail;
       receivedEmail = null;
       return email;

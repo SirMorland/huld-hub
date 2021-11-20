@@ -1,8 +1,12 @@
 {
 	"baseUrl": "http://localhost:80",
-	"reporter": "junit",
+	"reporter": "mochawesome",
 	"reporterOptions": {
-		"mochaFile": "cypress/results/output.xml"
+		"reportDir": "cypress/reports/mocha",
+		"quiet": true,
+		"overwrite": false,
+		"html": false,
+		"json": true
 	},
 	"testFiles": [
 		"register.spec.js",

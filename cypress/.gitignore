@@ -2,6 +2,8 @@ docker-compose.override.yml
 
 /cypress/node_modules
 
-/cypress/cypress/results
+/cypress/cypress/mochawesome.json
+/cypress/cypress/mochawesome-report
+/cypress/cypress/reports
 /cypress/cypress/screenshots
 /cypress/cypress/videos

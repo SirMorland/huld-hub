@@ -47,6 +47,8 @@ describe("Registration", () => {
 	});
 
 	it("should confirm email", function () {
+		cy.wait(1000);
+
 		cy.task("getEmail").then(email => {
 			const [address] = email.match(/http[^<]+/);
 			cy.visit(address);

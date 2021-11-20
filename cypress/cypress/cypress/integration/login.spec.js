@@ -1,4 +1,4 @@
-describe("Registration", () => {
+describe("Login", () => {
 	beforeEach(() => {
 		cy.fixture("user").as("user");
 
