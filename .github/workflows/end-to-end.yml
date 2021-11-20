@@ -25,7 +25,7 @@ jobs:
       run: |
         cd web
         cp .env.cypress .env
-        docker-compose -f docker-compose.yml -f docker-compose.prod.yml -f docker-compose.cypress.yml up -d
+        docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 
     - name: Wait that containers have started
       run: |
