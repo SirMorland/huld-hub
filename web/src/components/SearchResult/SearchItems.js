@@ -13,14 +13,14 @@ const EmptyHistory = styled(Typography)(({ theme }) => ({
 const Divider = styled(MuiDivider)(({ theme }) => ({
   color: theme.palette.grey[100],
   margin: "24px 0",
-  fontsize: "2px"
+  fontSize: "2px"
 }));
 
 function SearchItems(props) {
   const { results, competenceCategories, searchTerms } = props;
   return (
-    <div>
-      {results ? (
+    <div data-testid="search-results">
+      {results && results.length > 0 ? (
         results.map((profile, i, { length }) => (
           <span key={profile.id}>
             <SearchItem
