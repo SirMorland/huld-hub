@@ -135,12 +135,12 @@ function SearchItem(props) {
       <Body>
         {renderLanguages.hasMatch && (
           <Typography variant="body2">
-            Language proficiencies: {renderLanguages.render}
+            <strong>Language proficiencies:</strong> {renderLanguages.render}
           </Typography>
         )}
         {renderKeywords.hasMatch && (
           <Typography variant="body2">
-            Keywords: {renderKeywords.render}
+            <strong>Keywords:</strong> {renderKeywords.render}
           </Typography>
         )}
       </Body>
