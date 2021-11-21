@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import { styled } from "@mui/system";
 import Avatar from "@mui/material/Avatar";
@@ -68,10 +68,10 @@ function SearchItem(props) {
   const searchTermsLowerCase = searchTerms.join(",").toLowerCase();
 
   const match = useCallback(
-    (data = "", delimeter = "") => {
-      const spitWords = data.split(delimeter);
-      return spitWords.map((word, i, { length }) => {
+    (data = [], delimeter = " ", hasMatch = false) => {
+      const render = data.map((word, i, { length }) => {
         if (searchTermsLowerCase.includes(word.toLowerCase())) {
+          hasMatch = true;
           return (
             <Match key={i}>
               {word}
@@ -86,8 +86,28 @@ function SearchItem(props) {
           </span>
         );
       });
+
+      return { render, hasMatch };
     },
     [searchTermsLowerCase]
+  );
+
+  const renderLanguages = useMemo(
+    () =>
+      match(
+        languages.map((language) => language.name.trim()),
+        ", "
+      ),
+    [languages, match]
+  );
+
+  const renderKeywords = useMemo(
+    () =>
+      match(
+        keywords.map((key) => key.name.trim()),
+        ", "
+      ),
+    [keywords, match]
   );
 
   return (
@@ -103,20 +123,26 @@ function SearchItem(props) {
         />
         <div>
           <InfoName variant="body1">
-            {match(first_name, " ")} {match(last_name, " ")}
+            {match(first_name.split(" "), " ").render}{" "}
+            {match(last_name.split(" "), " ").render}
           </InfoName>
-          <InfoTitle variant="body1">{match(title, " ")}</InfoTitle>
+          <InfoTitle variant="body1">
+            {match(title.split(" "), " ").render}
+          </InfoTitle>
         </div>
         <ProfileLink to={`/profile/${id}`}>Profile</ProfileLink>
       </Header>
       <Body>
-        <Typography variant="body2">
-          Language proficiencies:{" "}
-          {match(languages.map((language) => language.name).join(", "), ", ")}
-        </Typography>
-        <Typography variant="body2">
-          Keywords: {match(keywords.map((key) => key.name).join(", "), ", ")}
-        </Typography>
+        {renderLanguages.hasMatch && (
+          <Typography variant="body2">
+            Language proficiencies: {renderLanguages.render}
+          </Typography>
+        )}
+        {renderKeywords.hasMatch && (
+          <Typography variant="body2">
+            Keywords: {renderKeywords.render}
+          </Typography>
+        )}
       </Body>
     </div>
   );
