@@ -2,6 +2,8 @@ import { useContext, useState } from "react";
 import { styled } from "@mui/system";
 import Page from "../components/Page/Page";
 import SearchBar from "../components/SearchBar";
+import SearchItems from "../components/SearchResult/SearchItems";
+import useCompetenceCategories from "../hooks/useCompetenceCategories";
 
 import { UserContext } from "../App";
 
@@ -15,11 +17,12 @@ function SearchPage({ search }) {
 
   const [keywords, setKeywords] = useState([]);
   const [results, setResults] = useState(null);
+  const competenceCategories = useCompetenceCategories(jwt);
 
   const onSearch = async (query) => {
     setKeywords(query);
-    if (keywords.length !== 0) {
-      const profiles = await search(keywords, jwt);
+    if (query.length !== 0) {
+      const profiles = await search(query, jwt);
       setResults(profiles);
     }
   };
@@ -32,34 +35,11 @@ function SearchPage({ search }) {
         </HeaderContentContainer>
       }
     >
-      {/* TO:DO replace with nice looking search results */}
-      <div>
-        {results ? (
-          results.length > 0 ? (
-            <ul>
-              {results.map((result) => (
-                <li key={result.id}>
-                  <p>
-                    {result.first_name} {result.last_name}
-                  </p>
-                  <p>{result.title}</p>
-                  <p>{result.bio}</p>
-                  <p>{result.skills}</p>
-                  <p>
-                    {result.competences.map((competence) => (
-                      <span key={competence.id}>{competence.name}, </span>
-                    ))}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No results</p>
-          )
-        ) : (
-          <p>Start by searching something...</p>
-        )}
-      </div>
+      <SearchItems
+        results={results}
+        searchTerms={keywords}
+        competenceCategories={competenceCategories}
+      />
     </Page>
   );
 }
