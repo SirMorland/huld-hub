@@ -1,7 +1,6 @@
-import { cleanup, render } from "@testing-library/react";
+import { cleanup } from "@testing-library/react";
 import { renderHelper } from "../../../utils";
 import SearchItem from "../SearchItem";
-import { createMemoryHistory } from 'history';
 
 const testData = {
   searchTerms: ["javascript", "css"],
