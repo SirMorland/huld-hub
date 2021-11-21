@@ -13,7 +13,7 @@ const EmptyHistory = styled(Typography)(({ theme }) => ({
 const Divider = styled(MuiDivider)(({ theme }) => ({
   color: theme.palette.grey[100],
   margin: "24px 0",
-  fontsize: "2px"
+  fontSize: "2px"
 }));
 
 function SearchItems(props) {
