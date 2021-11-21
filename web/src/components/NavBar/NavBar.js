@@ -27,6 +27,11 @@ const StyledHeader = styled('header')`
       justify-content: space-between;
       display: flex;
   }
+
+  @media print
+  {    
+    display: none !important;
+  }
 `;
 const StyledContent = styled('div')`
   width: 100%;

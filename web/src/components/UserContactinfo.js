@@ -20,6 +20,11 @@ const ContactText = styled(Typography)`
   text-align: right;
   font-size: 16px;
   line-height: 1;
+
+  @media print{
+    color: black;
+    text-align: left;
+  }
 `;
 
 const StyledIcon = `
@@ -27,6 +32,9 @@ const StyledIcon = `
   height: 16px;
   vertical-align: bottom;
   margin-left: 8px;
+  @media print{
+    margin-right: 8px;
+  }
 `;
 
 const ContactLocationIcon = styled(LocationOnIcon)(StyledIcon);
@@ -36,39 +44,77 @@ const ContactGithubIcon = styled(GitHubIcon)(StyledIcon);
 const ContactLinkedInIcon = styled(LinkedInIcon)(StyledIcon);
 const ContactMdiIcon = styled(Icon)(StyledIcon);
 
-export default function UserContactinfo(profile) {
-  return (
-    <Container>
-      {profile.address && (
-        <ContactText>
-          {profile.address}<ContactLocationIcon />
-        </ContactText>
-      )}
-      {profile.email && (
-        <ContactText>
-          {profile.email}<ContactEmailIcon />
-        </ContactText>
-      )}
-      {profile.phone && (
-        <ContactText>
-          {profile.phone}<ContactPhoneIcon />
-        </ContactText>
-      )}
-      {profile.slack && (
-        <ContactText>
-          {profile.slack}<ContactMdiIcon path={mdiSlack} />
-        </ContactText>
-      )}
-      {profile.github && (
-        <ContactText>
-          {profile.github}<ContactGithubIcon />
-        </ContactText>
-      )}
-      {profile.linkedin && (
-        <ContactText>
-          {profile.linkedin}<ContactLinkedInIcon />
-        </ContactText>
-      )}
-    </Container>
-  );
+export default function UserContactinfo({profile, iconSide}) {
+  if (iconSide === "right"){
+    return (
+      <Container>
+        {profile.address && (
+          <ContactText>
+            {profile.address}<ContactLocationIcon />
+          </ContactText>
+        )}
+        {profile.email && (
+          <ContactText>
+            {profile.email}<ContactEmailIcon />
+          </ContactText>
+        )}
+        {profile.phone && (
+          <ContactText>
+            {profile.phone}<ContactPhoneIcon />
+          </ContactText>
+        )}
+        {profile.slack && (
+          <ContactText>
+            {profile.slack}<ContactMdiIcon path={mdiSlack} />
+          </ContactText>
+        )}
+        {profile.github && (
+          <ContactText>
+            {profile.github}<ContactGithubIcon />
+          </ContactText>
+        )}
+        {profile.linkedin && (
+          <ContactText>
+            {profile.linkedin}<ContactLinkedInIcon />
+          </ContactText>
+        )}
+      </Container>
+    );
+  }else{
+    return (
+      <Container>
+        {profile.address && (
+          <ContactText>
+            <ContactLocationIcon />{profile.address}
+          </ContactText>
+        )}
+        {profile.email && (
+          <ContactText>
+            <ContactEmailIcon />{profile.email}
+          </ContactText>
+        )}
+        {profile.phone && (
+          <ContactText>
+            <ContactPhoneIcon />{profile.phone}
+          </ContactText>
+        )}
+        {profile.slack && (
+          <ContactText>
+            <ContactMdiIcon path={mdiSlack} />{profile.slack}
+          </ContactText>
+        )}
+        {profile.github && (
+          <ContactText>
+            <ContactGithubIcon />{profile.github}
+          </ContactText>
+        )}
+        {profile.linkedin && (
+          <ContactText>
+            <ContactLinkedInIcon />{profile.linkedin}
+          </ContactText>
+        )}
+      </Container>
+    );
+  }
+ 
 }

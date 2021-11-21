@@ -4,6 +4,7 @@ import { Button } from "@mui/material";
 import { styled } from "@mui/system";
 
 import Page from '../../components/Page/Page';
+import PrintPage from '../../components/Page/PrintPage';
 import ProfileInfo from "../../components/ProfileInfo/ProfileInfo";
 import HistoryListView from "../../components/HistoryList/HistoryListView";
 import ItemListView from "../../components/ItemListView";
@@ -17,6 +18,9 @@ const HeaderContentContainer = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media print{
+    display: none;
+  }
 `;
 
 const Skills = styled('div')`
@@ -73,60 +77,64 @@ const Education = styled("div")`
 
 function ProfilePageView({ profile, onEditClick }) {
   const { languages, keywords, educationHistory, workHistory } = profile;
-  
+
   return (
-    <Page header={
-      profile &&
-      <HeaderContentContainer>
-        <Title
-          first_name={profile.first_name}
-          last_name={profile.last_name}
-          title={profile.title}
-          image={profile.image && `${process.env.REACT_APP_BACKEND_HOST}${profile.image.formats.small.url}`}
-        />
-        <UserContactinfo {...profile} ></UserContactinfo>
-      </HeaderContentContainer>
-    }>
-      <Skills>
-      <ProfileInfo title="Skills" data={profile && profile.skills}/>
-      </Skills>
-      <Languages>
-        <ItemListView title="Language proficiencies" items={languages} noItemDescription="No Language Proficiencies Provided" />
-      </Languages>
-      <Keywords>
-        <ItemListView List title="Keywords" items={keywords} noItemDescription="No Keywords Provided" />
-      </Keywords>
-      <Bio>
-      <ProfileInfo title="Bio" data={profile && profile.bio}/>
-      </Bio>
+    <React.Fragment>
+      <Page header={
+        profile &&
+        <HeaderContentContainer>
+          <Title
+            first_name={profile.first_name}
+            last_name={profile.last_name}
+            title={profile.title}
+            image={profile.image && `${process.env.REACT_APP_BACKEND_HOST}${profile.image.formats.small.url}`}
+          />
+          <UserContactinfo profile={profile} iconSide={"right"} ></UserContactinfo>
+        </HeaderContentContainer>
+      }>
+        <Skills>
+          <ProfileInfo title="Skills" data={profile && profile.skills} />
+        </Skills>
+        <Languages>
+          <ItemListView title="Language proficiencies" items={languages} noItemDescription="No Language Proficiencies Provided" />
+        </Languages>
+        <Keywords>
+          <ItemListView List title="Keywords" items={keywords} noItemDescription="No Keywords Provided" />
+        </Keywords>
+        <Bio>
+          <ProfileInfo title="Bio" data={profile && profile.bio} />
+        </Bio>
 
-      <Work>
-        <HistoryListView
-          title={workHistory.title}
-          historyItems={workHistory.historyItems}
-          noItemDescription={workHistory.noItemDescription}
-        />
-      </Work>
+        <Work>
+          <HistoryListView
+            title={workHistory.title}
+            historyItems={workHistory.historyItems}
+            noItemDescription={workHistory.noItemDescription}
+          />
+        </Work>
 
-      <Education>
-        <HistoryListView
-          title={educationHistory.title}
-          historyItems={educationHistory.historyItems}
-          noItemDescription={educationHistory.noItemDescription}
-        />
-      </Education>
+        <Education>
+          <HistoryListView
+            title={educationHistory.title}
+            historyItems={educationHistory.historyItems}
+            noItemDescription={educationHistory.noItemDescription}
+          />
+        </Education>
 
-      <ActionButtonContainer>
-        <Button
-          fullWidth
-          variant="contained"
-          color="primary"
-          onClick={onEditClick}
-        >
-          Edit
-        </Button>
-      </ActionButtonContainer>
-    </Page>
+        <ActionButtonContainer>
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={onEditClick}
+          >
+            Edit
+          </Button>
+          <Button onClick={() => window.print()}>PRINT</Button>
+        </ActionButtonContainer>
+      </Page>
+      <PrintPage {...profile}></PrintPage>
+    </React.Fragment>
   );
 }
 

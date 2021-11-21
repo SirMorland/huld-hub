@@ -11,6 +11,11 @@ const StyledContainer = styled('div')`
   @media (min-width: 768px){
     bottom: 32px;
   }
+
+  @media print
+  {    
+    display: none;
+  }
 `;
 
 const ActionButtonContainer = ({ children }) => {
