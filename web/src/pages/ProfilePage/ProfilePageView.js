@@ -74,6 +74,9 @@ const Education = styled("div")`
   }
 `;
 
+function Print(){
+  window.print();
+}
 
 function ProfilePageView({ profile, onEditClick }) {
   const { languages, keywords, educationHistory, workHistory } = profile;
@@ -130,7 +133,12 @@ function ProfilePageView({ profile, onEditClick }) {
           >
             Edit
           </Button>
-          <Button onClick={() => window.print()}>PRINT</Button>
+          <Button  fullWidth
+            variant="contained"
+            color="secondary"
+            onClick={Print}
+          >Print
+          </Button>
         </ActionButtonContainer>
       </Page>
       <PrintPage {...profile}></PrintPage>

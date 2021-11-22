@@ -10,22 +10,27 @@ import { Avatar } from "@mui/material";
 
 const Container = styled("div")`
     display: none;
+    height: auto;
+    @page {
+        size: auto;
+        margin: 8mm 8mm 8mm 8mm;  
+    }
     @media print{
-        display: block;
+       display: block;
     }
 `;
 
 const Column1 = styled("div")`
     width: 45%;
+    height: 100%;
     float: left;
-    border-right: 2px solid rgb(232,232,232);
     padding-right:30px;
 `;
 
 const Column2 = styled("div")`
     width: 55%;
+    height: 100%;
     float: right;
-    margin-left: -1px
     border-left: 2px solid 	rgb(232,232,232);
     padding-left:40px;
 `;
@@ -35,25 +40,8 @@ const StyledAvatar = styled(Avatar)`
     width: 224px;
     height: 256px;
 `;
-const Contacts = styled('div')`
-    margin-top: 40px;
-`;
-const Skills = styled('div')`
-    margin-top: 40px;
-`;
-const Languages = styled("div")`
-    margin-top: 40px;
-`;
-const Keywords = styled("div")`
-    margin-top: 40px;
-`;
-const Bio = styled("div")`
-    margin-top: 40px;
-`;
-const Work = styled("div")`
-    margin-top: 40px;
-`;
-const Education = styled("div")`
+
+const TextContainer = styled('div')`
     margin-top: 40px;
 `;
 const StyledHeader = styled(Typography)(({ theme }) => `
@@ -76,22 +64,22 @@ function PrintPage(profile) {
             <Column1>
                 <StyledAvatar
                     alt="Profile Picture"
-                    src={profile.image && `${process.env.REACT_APP_BACKEND_HOST}${profile.image.formats.small.url}`}
+                    src={profile.image && `${process.env.REACT_APP_BACKEND_HOST}${profile.image.url}`}
                     data-testid="avatar"
                     variant="square"
                 />
-                <Contacts>
+                <TextContainer>
                     <UserContactinfo  profile={profile} iconSide={"left"}  ></UserContactinfo>
-                </Contacts>
-                <Skills>
+                </TextContainer>
+                <TextContainer>
                     <ProfileInfo title="Skills" data={profile && profile.skills} />
-                </Skills>
-                <Languages>
+                </TextContainer>
+                <TextContainer>
                     <ItemListView title="Language proficiencies" items={languages} noItemDescription="No Language Proficiencies Provided" />
-                </Languages>
-                <Keywords>
+                </TextContainer>
+                <TextContainer>
                     <ItemListView List title="Keywords" items={keywords} noItemDescription="No Keywords Provided" />
-                </Keywords>
+                </TextContainer>
             </Column1>
             <Column2>
                 <StyledHeader>
@@ -100,23 +88,23 @@ function PrintPage(profile) {
                 <StyledSubHeader>
                     {profile.title}
                 </StyledSubHeader>
-                <Bio>
-                    <ProfileInfo title="Bio" data={profile && profile.bio} />
-                </Bio>
-                <Work>
+                <TextContainer>
+                    <ProfileInfo data={profile && profile.bio} />
+                </TextContainer>
+                <TextContainer>
                     <HistoryListView
                         title={workHistory.title}
                         historyItems={workHistory.historyItems}
                         noItemDescription={workHistory.noItemDescription}
                     />
-                </Work>
-                <Education>
+                </TextContainer>
+                <TextContainer>
                     <HistoryListView
                         title={educationHistory.title}
                         historyItems={educationHistory.historyItems}
                         noItemDescription={educationHistory.noItemDescription}
                     />
-                </Education>
+                </TextContainer>
             </Column2>
         </Container>
     );
