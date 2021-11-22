@@ -68,7 +68,7 @@ const Education = styled("div")`
   }
 `;
 
-function ProfilePageView({ profile, onEditClick }) {
+function ProfilePageView({ profile, onEditClick, isMyPage }) {
   const { languages, keywords, educationHistory, workHistory } = profile;
 
   return (
@@ -82,7 +82,7 @@ function ProfilePageView({ profile, onEditClick }) {
               title={profile.title}
               image={
                 profile.image &&
-                `${process.env.REACT_APP_BACKEND_HOST}${profile.image.formats.small.url}`
+                `${process.env.REACT_APP_BACKEND_HOST}${profile.image.url}`
               }
             />
             <UserContactinfo {...profile}></UserContactinfo>
@@ -129,14 +129,16 @@ function ProfilePageView({ profile, onEditClick }) {
       </Education>
 
       <ActionButtonContainer>
-        <Button
-          fullWidth
-          variant="contained"
-          color="primary"
-          onClick={onEditClick}
-        >
-          Edit
-        </Button>
+        {isMyPage && (
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={onEditClick}
+          >
+            Edit
+          </Button>
+        )}
       </ActionButtonContainer>
     </Page>
   );

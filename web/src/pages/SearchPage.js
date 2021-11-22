@@ -1,19 +1,20 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { styled } from "@mui/system";
 import Page from "../components/Page/Page";
+import { search } from "../api";
 import SearchBar from "../components/SearchBar";
 import SearchItems from "../components/SearchResult/SearchItems";
 import useCompetenceCategories from "../hooks/useCompetenceCategories";
 
-import { UserContext } from "../App";
+import { useUserContext } from "../userContext";
 
 const HeaderContentContainer = styled("div")`
   max-width: 576px;
   margin: auto;
 `;
 
-function SearchPage({ search }) {
-  const { jwt } = useContext(UserContext);
+function SearchPage() {
+  const { jwt } = useUserContext();
 
   const [keywords, setKeywords] = useState([]);
   const [results, setResults] = useState(null);

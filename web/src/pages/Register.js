@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
-import Cookies from 'js-cookie';
 
 import { Box } from '@mui/system';
 import { Button, Grid, Link, Typography } from '@mui/material';
@@ -8,9 +7,10 @@ import { Button, Grid, Link, Typography } from '@mui/material';
 import TextField from '../components/TextField';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
-import { EmailTakenError, EmailWrongDomainError } from '../api';
+import { register, EmailTakenError, EmailWrongDomainError } from '../api';
+import { useUserContext } from '../userContext';
 
-export default function RegistrationForm({ onSubmit }) {
+export default function RegistrationForm() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -18,7 +18,7 @@ export default function RegistrationForm({ onSubmit }) {
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const history = useHistory();
-
+    const { setJwt } = useUserContext();
     const handleSubmit = async (event) => {
         event.preventDefault();
         setEmailError('');
@@ -28,8 +28,8 @@ export default function RegistrationForm({ onSubmit }) {
             setPasswordError("Passwords do not match! Please check");
         } else if (email && password && password === reEnterPassword) {
             try {
-                const json = await onSubmit(email, password);
-                Cookies.set("hub-jwt", json.jwt);
+                const json = await register(email, password);
+                setJwt(json.jwt);
                 history.push("/almost-done");
             } catch  (error) {
                 switch(true) {
@@ -53,7 +53,7 @@ export default function RegistrationForm({ onSubmit }) {
                 <Typography component="h1" variant="h5" color="primary">
                     Register to Hub
                 </Typography>
-                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
@@ -68,7 +68,6 @@ export default function RegistrationForm({ onSubmit }) {
                             />
                             {emailError &&
                                 <React.Fragment>
-                                    <br />
                                     <br />
                                     <Grid container justifyContent="center">
                                         <Grid item>
@@ -106,7 +105,6 @@ export default function RegistrationForm({ onSubmit }) {
                             {passwordError &&
                                 <React.Fragment>
                                     <br />
-                                    <br />
                                     <Grid container justifyContent="center">
                                         <Grid item>
                                             <Typography component="p" variant="body2" color="error">
@@ -132,7 +130,7 @@ export default function RegistrationForm({ onSubmit }) {
                     <br />
                     <Grid container justifyContent="center">
                         <Grid item>
-                            <Link href="/" variant="body2" color="secondary">
+                            <Link to="/login" variant="body2" color="secondary">
                                 Already a member? Login instead
                             </Link>
                         </Grid>

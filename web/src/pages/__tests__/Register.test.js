@@ -5,10 +5,18 @@ import '@testing-library/jest-dom';
 
 import RegistrationForm from "../Register";
 
-import { EmailTakenError, EmailWrongDomainError } from '../../api';
 import { renderHelper } from '../../utils';
 
 describe('Registration Form', () => {
+    beforeEach(() => {
+        fetch.resetMocks();
+    });
+    const mockUser = {
+        jwt: 'asd',
+        user: {
+            id: 1
+        }
+    };
     it('should render registration form', () => {
         const { getByText } = renderHelper(<RegistrationForm />);
         expect(getByText('Register to Hub')).toBeInTheDocument();
@@ -25,11 +33,8 @@ describe('Registration Form', () => {
     });
 
     it('should submit when form inputs contain text', async () => {
-        const onSubmit = jest.fn();
 
-        const { getByText, queryByText } = renderHelper(
-            <RegistrationForm onSubmit={onSubmit} />
-        );
+        const { getByText, queryByText } = renderHelper(<RegistrationForm />);
 
         await act(async () => {
             fireEvent.change(screen.getByLabelText(/Email/i), {
@@ -45,21 +50,18 @@ describe('Registration Form', () => {
             })
         });
 
+        fetch.mockResponseOnce(JSON.stringify(mockUser), { status: 200 });
         await act(async () => {
             fireEvent.submit(getByText(/^Register$/i));
         });
 
         expect(queryByText("User Name is required")).not.toBeInTheDocument();
         expect(queryByText("Password is required")).not.toBeInTheDocument();
-        expect(onSubmit).toBeCalled();
     });
 
     it('should check that passwords match', async () => {
-        const onSubmit = jest.fn();
 
-        const { getByText, queryByText } = renderHelper(
-            <RegistrationForm onSubmit={onSubmit} />
-        );
+        const { getByText, queryByText } = renderHelper(<RegistrationForm />);
 
         await act(async () => {
             fireEvent.change(screen.getByLabelText(/Email/i), {
@@ -85,15 +87,18 @@ describe('Registration Form', () => {
     });
 
     it('should check that email is in right domain', async () => {
-        const onSubmit = jest.fn();
         const errorMessage = "Please provide valid email address i.e youremail@huld.io";
-        onSubmit.mockImplementation(() => {
-            throw new EmailWrongDomainError(errorMessage);
-        });
+        const mockResponse = {
+            data: [{
+                messages: [{
+                    id: "Auth.form.error.email.format",
+                    message: errorMessage,
+                }]
+            }]
+        };
+        fetch.mockResponseOnce(JSON.stringify(mockResponse), { status: 400 });
 
-        const { getByText, queryByText } = renderHelper(
-            <RegistrationForm onSubmit={onSubmit} />
-        );
+        const { getByText, queryByText } = renderHelper(<RegistrationForm />);
 
         await act(async () => {
             fireEvent.change(screen.getByLabelText(/Email/i), {
@@ -119,15 +124,16 @@ describe('Registration Form', () => {
     });
 
     it('should check that email is not taken', async () => {
-        const onSubmit = jest.fn();
-        onSubmit.mockImplementation(() => {
-            throw new EmailTakenError();
-        });
+        const mockResponse = {
+            data: [{
+                messages: [{
+                    id: "Auth.form.error.email.taken",
+                }]
+            }]
+        };
+        const { getByText, queryByText } = renderHelper(<RegistrationForm />);
 
-        const { getByText, queryByText } = renderHelper(
-            <RegistrationForm onSubmit={onSubmit} />
-        );
-
+        fetch.mockResponseOnce(JSON.stringify(mockResponse), { status: 400 });
         await act(async () => {
             fireEvent.change(screen.getByLabelText(/Email/i), {
                 target: { value: 'shaquille' },

@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import { styled } from '@mui/system';
 
 import NavBar from './NavBar/NavBar';
 
-import { UserContext } from '../App';
+import { useUserContext } from '../userContext';
 
 const StyledContainer = styled('div')(({ theme }) => `
     position: absolute;
@@ -18,7 +18,7 @@ const StyledContainer = styled('div')(({ theme }) => `
 `);
 
 export default function PageWrapper({ children }) {
-  const { user, removeJwt, jwt } = useContext(UserContext);
+  const { user, removeJwt, jwt } = useUserContext();
   const onLogOutClick = () => {
     removeJwt();
   }

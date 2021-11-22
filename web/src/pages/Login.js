@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 
 import { Button, Grid, Link, Typography } from '@mui/material';
@@ -7,23 +7,23 @@ import { Box } from '@mui/system';
 import TextField from '../components/TextField';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
-import { EmailOrPasswordInvalidError } from '../api';
-import { UserContext } from '../App';
+import { login, EmailOrPasswordInvalidError } from '../api';
+import { useUserContext } from '../userContext';
 
-export default function LoginForm({ onSubmit }) {
+export default function LoginForm() {
     const location = useLocation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const history = useHistory();
-    const { setJwt } = useContext(UserContext);
+    const { setJwt, user } = useUserContext();
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         try {
-            const json = await onSubmit(email, password);
+            const json = await login(email, password);
             setJwt(json.jwt);
-            history.push("/");
+            history.push(`/profile/${user.profileId}`);
         } catch (error) {
             switch (true) {
                 case error instanceof EmailOrPasswordInvalidError:
@@ -42,7 +42,7 @@ export default function LoginForm({ onSubmit }) {
                 <Typography component="h1" variant="h5" color="primary">
                     Log in to Hub
                 </Typography>
-                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3, width: '100%' }}>
+                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3, width: '100%' }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
