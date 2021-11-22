@@ -15,19 +15,27 @@ import theme from "./theme";
 import useUser from "./hooks/useUser";
 import { UserProvider, useUserContext } from "./userContext";
 
+/**
+ * Protects specific routes by checking if user is logged in with valid jwt token
+ * 
+ * @param {React.ReactNode} param0 
+ * @returns 
+ */
 const AuthUser = ({ children }) => {
   const location = useLocation();
   const path = location.pathname;
   const { user, jwt } = useUserContext();
 
+  // Checks if the jwt token extist
   if (!jwt) {
     if (path === "/login" || path === "/register") return children;
     return <Redirect to="/login" />;
   }
 
+  // Checks is user is confirmed and is logged in
   if (user && !user.confirmed) return <Redirect to="/almost-done" />;
 
-
+  // Redirects user to profile page if they try to access routes that don't exist
   if (user && user.confirmed && (!path.includes('profile') && !path.includes('search'))) {
     return <Redirect to={`/profile/${user.profileId}`} />;
   }
