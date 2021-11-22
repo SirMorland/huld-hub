@@ -113,9 +113,11 @@ export const search = async (keywords, jwt) => {
       _where: {
         _or: [
           getPropertyContains("competences.name", keywords),
-          getPropertyContains("bio", keywords),
           getPropertyContains("title", keywords),
-          getPropertyContains("skills", keywords),
+          getPropertyContains("first_name", keywords),
+          getPropertyContains("last_name", keywords),
+          // getPropertyContains("bio", keywords),
+          // getPropertyContains("skills", keywords),
         ],
       },
     });
