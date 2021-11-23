@@ -19,14 +19,12 @@ const Container = styled("div")`
        display: block;
     }
 `;
-
 const Column1 = styled("div")`
     width: 45%;
     height: 100%;
     float: left;
     padding-right:30px;
 `;
-
 const Column2 = styled("div")`
     width: 55%;
     height: 100%;
@@ -34,13 +32,11 @@ const Column2 = styled("div")`
     border-left: 2px solid 	rgb(232,232,232);
     padding-left:40px;
 `;
-
 const StyledAvatar = styled(Avatar)`
     margin-right: 32px;
     width: 224px;
     height: 256px;
 `;
-
 const TextContainer = styled('div')`
     margin-top: 40px;
 `;
