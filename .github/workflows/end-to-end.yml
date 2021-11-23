@@ -20,14 +20,18 @@ jobs:
         cd backend
         cp app/.env.cypress app/.env
         docker-compose -f docker-compose.yml -f docker-compose.prod.yml -f docker-compose.cypress.yml up -d
-        docker-compose down
-        docker-compose -f docker-compose.yml -f docker-compose.prod.yml -f docker-compose.cypress.yml up -d
 
     - name: Start frontend
       run: |
         cd web
         cp .env.cypress .env
         docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+    
+    - name: Restart backend
+      run: |
+        cd backend
+        docker-compose down
+        docker-compose -f docker-compose.yml -f docker-compose.prod.yml -f docker-compose.cypress.yml up -d
 
     - name: Run Cypress tests
       run: |
