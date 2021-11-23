@@ -30,8 +30,8 @@ jobs:
     - name: Restart backend
       run: |
         cd backend
-        docker-compose down
-        docker-compose -f docker-compose.yml -f docker-compose.prod.yml -f docker-compose.cypress.yml up -d
+        docker-compose stop
+        docker-compose start
 
     - name: Run Cypress tests
       run: |
