@@ -58,24 +58,27 @@ function PrintPage(profile) {
     return (
         <Container>
             <Column1>
+                {profile.image && (
                 <StyledAvatar
                     alt="Profile Picture"
-                    src={profile.image && `${process.env.REACT_APP_BACKEND_HOST}${profile.image.url}`}
+                    src={`${process.env.REACT_APP_BACKEND_HOST}${profile.image.url}`}
                     data-testid="avatar"
                     variant="square"
-                />
+                />)}
                 <TextContainer>
                     <UserContactinfo  profile={profile} iconSide={"left"}  ></UserContactinfo>
                 </TextContainer>
                 <TextContainer>
-                    <ProfileInfo title="Skills" data={profile && profile.skills} />
+                    <ProfileInfo title="Skills" data={profile.skills} />
                 </TextContainer>
+                {languages && languages.length > 0 && (
                 <TextContainer>
-                    <ItemListView title="Language proficiencies" items={languages} noItemDescription="No Language Proficiencies Provided" />
-                </TextContainer>
+                    <ItemListView title="Language proficiencies" items={languages} />
+                </TextContainer>)}
+                {keywords && keywords.length > 0 && (
                 <TextContainer>
-                    <ItemListView List title="Keywords" items={keywords} noItemDescription="No Keywords Provided" />
-                </TextContainer>
+                    <ItemListView List title="Keywords" items={keywords} />
+                </TextContainer>)}
             </Column1>
             <Column2>
                 <StyledHeader>
@@ -87,20 +90,20 @@ function PrintPage(profile) {
                 <TextContainer>
                     <ProfileInfo data={profile && profile.bio} />
                 </TextContainer>
+                {workHistory.historyItems && workHistory.historyItems.length > 0 && (
                 <TextContainer>
                     <HistoryListView
                         title={workHistory.title}
                         historyItems={workHistory.historyItems}
-                        noItemDescription={workHistory.noItemDescription}
                     />
-                </TextContainer>
+                </TextContainer>)}
+                {educationHistory.historyItems && educationHistory.historyItems.length > 0 && (
                 <TextContainer>
                     <HistoryListView
                         title={educationHistory.title}
                         historyItems={educationHistory.historyItems}
-                        noItemDescription={educationHistory.noItemDescription}
                     />
-                </TextContainer>
+                </TextContainer>)}
             </Column2>
         </Container>
     );

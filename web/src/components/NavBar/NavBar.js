@@ -30,7 +30,7 @@ const StyledHeader = styled('header')`
 
   @media print
   {    
-    display: none !important;
+    display: none;
   }
 `;
 const StyledContent = styled('div')`

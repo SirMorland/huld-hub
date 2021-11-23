@@ -53,7 +53,7 @@ const profile = {
 
 describe("UserContactinfo component", () => {
     afterEach(cleanup);
-    it("should render without crashing", () => {
+    it("should render page without crashing", () => {
         const { container } = renderWithTheme(<PrintPage {...profile} />);
         expect(container).toBeTruthy();
     });
