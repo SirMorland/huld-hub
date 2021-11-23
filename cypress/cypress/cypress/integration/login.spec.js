@@ -28,7 +28,7 @@ describe("Login", () => {
 
 		cy.get("button").click();
 
-		cy.location("pathname").should("equal", "/");
+		cy.location("pathname").should("contain", "/profile/");
 		cy.contains(`${firstName.toLowerCase()} ${lastName.toLowerCase()}`);
 	});
 });

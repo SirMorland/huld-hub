@@ -64,7 +64,7 @@ describe("Registration", () => {
 
 		cy.get("a:contains('Go to my profile')").click();
 
-		cy.location("pathname").should("equal", "/");
+		cy.location("pathname").should("contain", "/profile/");
 		cy.contains(`${firstName.toLowerCase()} ${lastName.toLowerCase()}`);
 	});
 
