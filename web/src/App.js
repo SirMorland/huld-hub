@@ -1,23 +1,47 @@
+import React, { useEffect, useState, useCallback } from "react";
+import { Switch, Route, Redirect, useLocation } from "react-router-dom";
+import Cookies from "js-cookie";
 
-import React, { useEffect, useState, useCallback } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import Cookies from 'js-cookie';
-
-import { ThemeProvider } from '@mui/material';
+import { ThemeProvider } from "@mui/material";
 
 import LoginForm from "./pages/Login";
 import RegistrationForm from "./pages/Register";
 import AlmostDone from "./pages/AlmostDone";
-import EmailConfirmed from './pages/EmailConfirmed';
+import EmailConfirmed from "./pages/EmailConfirmed";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
-import SearchPage from './pages/SearchPage';
+import SearchPage from "./pages/SearchPage";
 
-import { login, register, postProfile, uploadPicture, search } from './api';
-import theme from './theme';
-import Page from './components/Page/Page';
-import useUser from './hooks/useUser';
+import theme from "./theme";
+import useUser from "./hooks/useUser";
+import { UserProvider, useUserContext } from "./userContext";
 
-export const UserContext = React.createContext(null);
+/**
+ * Protects specific routes by checking if user is logged in with valid jwt token
+ * 
+ * @param {React.ReactNode} param0 
+ * @returns 
+ */
+const AuthUser = ({ children }) => {
+  const location = useLocation();
+  const path = location.pathname;
+  const { user, jwt } = useUserContext();
+
+  // Checks if the jwt token extist
+  if (!jwt) {
+    if (path === "/login" || path === "/register") return children;
+    return <Redirect to="/login" />;
+  }
+
+  // Checks is user is confirmed and is logged in
+  if (user && !user.confirmed) return <Redirect to="/almost-done" />;
+
+  // Redirects user to profile page if they try to access routes that don't exist
+  if (user && user.confirmed && (!path.includes('profile') && !path.includes('search'))) {
+    return <Redirect to={`/profile/${user.profileId}`} />;
+  }
+
+  return children;
+};
 
 function App() {
   const [jwt, _setJwt] = useState(Cookies.get("hub-jwt"));
@@ -28,80 +52,54 @@ function App() {
     _setJwt(Cookies.get("hub-jwt"));
   }, [_setJwt]);
 
-  const setJwt = useCallback((jwt) => {
-    if (jwt) {
-      Cookies.set("hub-jwt", jwt);
-      _setJwt(jwt);
-    }
-  }, [_setJwt]);
+  const setJwt = useCallback(
+    (jwt) => {
+      if (jwt) {
+        Cookies.set("hub-jwt", jwt);
+        _setJwt(jwt);
+      }
+    },
+    [_setJwt]
+  );
 
   const removeJwt = useCallback(() => {
     Cookies.remove("hub-jwt");
     _setJwt(null);
   }, [_setJwt]);
 
-  if (user === null) {
-    return (
-      <UserContext.Provider value={{ user, setJwt, jwt, removeJwt }}>
-        <ThemeProvider theme={theme}>
-          <Page />
-        </ThemeProvider>
-      </UserContext.Provider>
-    );
-  }
-
   return (
-    <UserContext.Provider value={{ user, setJwt, jwt, removeJwt }}>
+    <UserProvider value={{ user, setJwt, jwt, removeJwt }}>
       <ThemeProvider theme={theme}>
         <Switch>
-          <Route exact path="/">
-            {user ?
-              <ProfilePage id={user.profile} uploadPicture={uploadPicture} postProfile={postProfile} />
-              :
-              (jwt ?
-                <Redirect to="/almost-done" />
-                :
-                <Redirect to="/login" />
-              )
-            }
+          <Route exact path="/profile/:profileId">
+            <AuthUser>
+              <ProfilePage />
+            </AuthUser>
           </Route>
           <Route exact path="/login">
-            {user ?
-              <Redirect to="/" />
-              :
-              <LoginForm onSubmit={login} />
-            }
+            <AuthUser>
+              <LoginForm />
+            </AuthUser>
           </Route>
           <Route exact path="/register">
-            {user ?
-              <Redirect to="/" />
-              :
-              (jwt ?
-                <Redirect to="/almost-done" />
-                :
-                <RegistrationForm onSubmit={register} />
-              )
-            }
+            <AuthUser>
+              <RegistrationForm />
+            </AuthUser>
           </Route>
+          <Route exact path="/search">
+            <AuthUser>
+              <SearchPage />
+            </AuthUser>
+          </Route>
+
           <Route exact path="/almost-done" component={AlmostDone} />
           <Route exact path="/email-confirmed" component={EmailConfirmed} />
-          <Route exact path="/search">
-            {user ?
-              <SearchPage onSearch={search} />
-            :
-              (jwt ?
-                <Redirect to="/almost-done" />
-                :
-                <Redirect to="/login" />
-              )
-            }
-          </Route>
-          <Route exact path="/:id">
-            <ProfilePage onSave={postProfile} />
+          <Route>
+            <Redirect to="/login" />;
           </Route>
         </Switch>
       </ThemeProvider>
-    </UserContext.Provider>
+    </UserProvider>
   );
 }
 

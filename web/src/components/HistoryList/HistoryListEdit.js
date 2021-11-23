@@ -15,14 +15,25 @@ import HistoryItemEdit, {
 import { capitalizeFirstLetters } from "../../utils";
 import { HISTORY_TYPE } from "../../hooks/useHistoryList";
 
+/**
+ * A function that formats the history items to the correct structure for saving
+ * 
+ * @param {Array<any>} data - array of history items
+ * @param {"work" | "education"} type - type of the history items
+ * @returns 
+ */
 const historyProfileFormat = (data = [], type) =>
-  data.map(({ organisation, title, start_date, end_date, description }) => ({
-    [type === HISTORY_TYPE.work ? "company" : "school"]: organisation,
-    [type === HISTORY_TYPE.work ? "position" : "degree"]: title,
-    start_date: start_date && start_date.toISOString(),
-    end_date: end_date && end_date.toISOString(),
-    description,
-  }));
+  data
+    .sort(
+      (item1, item2) => item2.start_date.getTime() - item1.start_date.getTime()
+    )
+    .map(({ organisation, title, start_date, end_date, description }) => ({
+      [type === HISTORY_TYPE.work ? "company" : "school"]: organisation,
+      [type === HISTORY_TYPE.work ? "position" : "degree"]: title,
+      start_date: start_date.toISOString(),
+      end_date: end_date && end_date.toISOString(),
+      description,
+    }));
 
 const EmptyHistory = styled(Typography)(({ theme }) => ({
   color: theme.palette.grey.main,
@@ -38,14 +49,17 @@ const Header = styled(Typography)({
 });
 
 const HistoryListEdit = forwardRef((props, ref) => {
+  // reverse the history item so that the most relevant appears first
   const [historyItems, setHistoryItem] = useState(
-    props.historyItems.map((historyItems) => ({
+    props.historyItems.slice().reverse().map((historyItems) => ({
       ...historyItems,
+      // Add the map id for rerenderung and caching purposes
       mapId: Math.floor(Math.random() * 100000),
     })) || []
   );
   const historyItemRefs = useRef([]);
 
+  // fuction that gets the history item data using the refs
   const getHistoryListData = () => {
     const data = historyItemRefs.current.map((historyItem) =>
       historyItem.current.getValue()
@@ -53,6 +67,7 @@ const HistoryListEdit = forwardRef((props, ref) => {
     return data;
   };
 
+  // ref that is used the get all history item data in the correct format
   useImperativeHandle(
     ref,
     () => ({

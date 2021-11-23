@@ -41,7 +41,7 @@ export const register = async (email, password) => {
   }
 }
 
-export const getProfile = async (id, jwt) => {
+export const getProfileById = async (id, jwt) => {
   const url = `${process.env.REACT_APP_BACKEND_HOST}/user-profiles/${id}`;
   const response = await fetch(url, {
     headers: {
@@ -106,17 +106,18 @@ const getPropertyContains = (property, keywords) => {
   return { _or: [...keywords.map(keyword => ({ [`${property}_contains`]: keyword })) ]}
 }
 
-export const search = async (query, jwt) => {
-  if (query) {
-    const keywords = query.split(",").map(keyword => keyword.trim());
+export const search = async (keywords, jwt) => {
+  if (keywords && keywords.length) {
   
     const qr = qs.stringify({
       _where: {
         _or: [
           getPropertyContains("competences.name", keywords),
-          getPropertyContains("bio", keywords),
           getPropertyContains("title", keywords),
-          getPropertyContains("skills", keywords),
+          getPropertyContains("first_name", keywords),
+          getPropertyContains("last_name", keywords),
+          // getPropertyContains("bio", keywords),
+          // getPropertyContains("skills", keywords),
         ],
       },
     });
