@@ -342,7 +342,7 @@ describe("user-profiles", () => {
 
   afterAll(async () => {
     removeAll("user", "users-permissions");
-    removeAll("roles", "users-permissions");
+    removeAll("role", "users-permissions");
     removeAll("user-profiles");
   });
 
@@ -351,7 +351,7 @@ describe("user-profiles", () => {
       id: employee.id,
     });
     const first_name = 'employee2';
-    await request(strapi.server) // app server is an instance of Class: http.Server
+    request(strapi.server) // app server is an instance of Class: http.Server
       .put(`/user-profiles/${employee.profile}}`)
       .set("accept", "application/json")
       .set("Content-Type", "application/json")
@@ -368,7 +368,7 @@ describe("user-profiles", () => {
       id: admin.id,
     });
     const first_name = 'employee3';
-    await request(strapi.server) // app server is an instance of Class: http.Server
+    request(strapi.server) // app server is an instance of Class: http.Server
       .put(`/user-profiles/${employee.profile}}`)
       .set("accept", "application/json")
       .set("Content-Type", "application/json")
@@ -384,7 +384,7 @@ describe("user-profiles", () => {
     const jwt = strapi.plugins["users-permissions"].services.jwt.issue({
       id: employee.id,
     });
-    await request(strapi.server) // app server is an instance of Class: http.Server
+    request(strapi.server) // app server is an instance of Class: http.Server
       .put(`/user-profiles/${admin.profile}}`)
       .set("accept", "application/json")
       .set("Content-Type", "application/json")
