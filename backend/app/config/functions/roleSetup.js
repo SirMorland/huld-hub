@@ -7,8 +7,9 @@ const findRoleByName = (name) => {
  * @param {{name: string; description: string; type: string}} role role object
  * @returns Promise that resolves into
  */
-const createRole = (role) => {
-  return strapi.query("role", "users-permissions").create(role);
+const createRole = async (role) => {
+  await strapi.plugins["users-permissions"].services.userspermissions.createRole(role);
+  await strapi.plugins["users-permissions"].services.userspermissions.updatePermissions();
 };
 
 /**
@@ -47,7 +48,10 @@ const enableUploadPermissions = async (role) => {
 const roleSetup = async (roles) => {
   await Promise.all(roles.map(async (role) => {
     let customRole = await findRoleByName(role.name);
-    if (!customRole) customRole = await createRole(role);
+    if (!customRole) {
+      await createRole(role);
+      customRole = await findRoleByName(role.name);
+    } 
     await enableApplicationPermissions(customRole.id);
     await enableUploadPermissions(customRole.id);
   }));
