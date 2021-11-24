@@ -351,7 +351,7 @@ describe("user-profiles", () => {
       id: employee.id,
     });
     const first_name = 'employee2';
-    request(strapi.server) // app server is an instance of Class: http.Server
+    await request(strapi.server) // app server is an instance of Class: http.Server
       .put(`/user-profiles/${employee.profile.id}`)
       .set("accept", "application/json")
       .set("Content-Type", "application/json")
@@ -359,7 +359,7 @@ describe("user-profiles", () => {
       .send({ first_name })
       .expect(200)
       .then((data) => {
-        expect(data.body.first_name).toBeDefined(first_name);
+        expect(data.body.first_name).toBe(first_name);
       });
   });
 
@@ -368,7 +368,7 @@ describe("user-profiles", () => {
       id: admin.id,
     });
     const first_name = 'employee3';
-    request(strapi.server) // app server is an instance of Class: http.Server
+    await request(strapi.server) // app server is an instance of Class: http.Server
       .put(`/user-profiles/${employee.profile.id}`)
       .set("accept", "application/json")
       .set("Content-Type", "application/json")
@@ -376,7 +376,7 @@ describe("user-profiles", () => {
       .send({ first_name })
       .expect(200)
       .then((data) => {
-        expect(data.body.first_name).toBeDefined(first_name);
+        expect(data.body.first_name).toBe(first_name);
       });
   });
 
@@ -384,7 +384,7 @@ describe("user-profiles", () => {
     const jwt = strapi.plugins["users-permissions"].services.jwt.issue({
       id: employee.id,
     });
-    request(strapi.server) // app server is an instance of Class: http.Server
+    await request(strapi.server) // app server is an instance of Class: http.Server
       .put(`/user-profiles/${admin.profile.id}`)
       .set("accept", "application/json")
       .set("Content-Type", "application/json")
