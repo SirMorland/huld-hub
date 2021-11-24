@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/ping": {
+    "/email-domain": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -52,15 +52,11 @@
         },
         "summary": "",
         "tags": [
-          "Ping"
+          "Email-domain"
         ],
         "parameters": []
       }
     }
   },
-  "tags": [
-    {
-      "name": "Ping"
-    }
-  ]
+  "tags": []
 }

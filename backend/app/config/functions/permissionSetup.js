@@ -17,7 +17,7 @@ const permissionSetup = async () => {
     let promises = [];
 
     switch(permission.controller) {
-      case 'ping':
+      case 'email-domain':
         promises.push(setPermission(permission.id, {enabled: true}));
         break;
       default:

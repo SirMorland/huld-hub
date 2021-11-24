@@ -133,6 +133,12 @@ export const search = async (keywords, jwt) => {
   }
 }
 
+export const getEmailDomain = async () => {
+  const response = await fetch(`${process.env.REACT_APP_BACKEND_HOST}/email-domain`);
+  const text = await response.text();
+  return text;
+}
+
 
 export class EmailOrPasswordInvalidError extends Error { };
 export class EmailWrongDomainError extends Error { };
