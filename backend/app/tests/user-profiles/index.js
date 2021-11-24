@@ -336,8 +336,8 @@ describe("user-profiles", () => {
     await roleSetup([DEFAULT_ROLES.ADMIN, DEFAULT_ROLES.EMPLOYEE]);
     await userSetup(DEFAULT_USERS);
     await profileSetup(DEFAULT_PROFILES);
-    employee = findUserByUsername(DEFAULT_ROLES.EMPLOYEE.name);
-    admin = findUserByUsername(DEFAULT_ROLES.EMPLOYEE.name);
+    employee = await findUserByUsername('huld-employee');
+    admin = await findUserByUsername('huld-admin');
   });
 
   afterAll(async () => {
@@ -352,7 +352,7 @@ describe("user-profiles", () => {
     });
     const first_name = 'employee2';
     request(strapi.server) // app server is an instance of Class: http.Server
-      .put(`/user-profiles/${employee.profile}}`)
+      .put(`/user-profiles/${employee.profile.id}`)
       .set("accept", "application/json")
       .set("Content-Type", "application/json")
       .set("Authorization", "Bearer " + jwt)
@@ -369,7 +369,7 @@ describe("user-profiles", () => {
     });
     const first_name = 'employee3';
     request(strapi.server) // app server is an instance of Class: http.Server
-      .put(`/user-profiles/${employee.profile}}`)
+      .put(`/user-profiles/${employee.profile.id}`)
       .set("accept", "application/json")
       .set("Content-Type", "application/json")
       .set("Authorization", "Bearer " + jwt)
@@ -385,7 +385,7 @@ describe("user-profiles", () => {
       id: employee.id,
     });
     request(strapi.server) // app server is an instance of Class: http.Server
-      .put(`/user-profiles/${admin.profile}}`)
+      .put(`/user-profiles/${admin.profile.id}`)
       .set("accept", "application/json")
       .set("Content-Type", "application/json")
       .set("Authorization", "Bearer " + jwt)
