@@ -130,7 +130,7 @@ export default function RegistrationForm() {
                     <br />
                     <Grid container justifyContent="center">
                         <Grid item>
-                            <Link to="/login" variant="body2" color="secondary">
+                            <Link href="/login" variant="body2" color="secondary">
                                 Already a member? Login instead
                             </Link>
                         </Grid>

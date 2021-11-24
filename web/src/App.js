@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Switch, Route, Redirect, useLocation } from "react-router-dom";
+import { Switch, Route, Redirect, useHistory, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 
 import { ThemeProvider } from "@mui/material";
@@ -10,6 +10,9 @@ import AlmostDone from "./pages/AlmostDone";
 import EmailConfirmed from "./pages/EmailConfirmed";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import SearchPage from "./pages/SearchPage";
+import AdminPage from "./pages/AdminPage";
+
+import Page from "./components/Page/Page";
 
 import theme from "./theme";
 import useUser from "./hooks/useUser";
@@ -26,24 +29,40 @@ const AuthUser = ({ children }) => {
   const path = location.pathname;
   const { user, jwt } = useUserContext();
 
-  // Checks if the jwt token extist
-  if (!jwt) {
-    if (path === "/login" || path === "/register") return children;
-    return <Redirect to="/login" />;
+  if(user === null) {
+    return null;
   }
 
-  // Checks is user is confirmed and is logged in
-  if (user && !user.confirmed) return <Redirect to="/almost-done" />;
-
-  // Redirects user to profile page if they try to access routes that don't exist
-  if (user && user.confirmed && (!path.includes('profile') && !path.includes('search'))) {
-    return <Redirect to={`/profile/${user.profileId}`} />;
+  if(jwt && user?.confirmed) {
+    if(path === "/" || path === "/login" || path === "/register" || path === "/almost-done") {
+      // Logged in users are redirected to their profile page from Root, Login, Register and Almost done pages
+      return <Redirect to={`/profile/${user.profileId}`} />;
+    }
+    if(path === "/admin" && user.role.type !== "admin") {
+      // Logged in users without admin role trying to access Admin page are shown an error page 
+      return <Page><h1>401</h1></Page> //TODO: use actual error page
+    }
+  } else if(jwt) {
+    if(path !== "/almost-done") {
+      // Unauthenticated users with jwt set are redirected to Almost done page
+      return <Redirect to="/almost-done" />;
+    }
+  } else {
+    if(path === "/" || path === "/almost-done") {
+      // Unauthenticated users trying to access Roor or Almost done page are redirected to Login page
+      return <Redirect to="/login" />;
+    }
+    if(path !== "/login" && path !== "/register" && path !== "/email-confirmed") {
+      // Unauthenticated users trying to access some other page than Login, Register or Email confirmed are shown an error page
+      return <Page><h1>401</h1></Page> //TODO: use actual error page
+    }
   }
 
   return children;
 };
 
 function App() {
+  const history = useHistory();
   const [jwt, _setJwt] = useState(Cookies.get("hub-jwt"));
 
   const user = useUser(jwt);
@@ -65,39 +84,30 @@ function App() {
   const removeJwt = useCallback(() => {
     Cookies.remove("hub-jwt");
     _setJwt(null);
-  }, [_setJwt]);
+    history.push("/login");
+  }, [_setJwt, history]);
 
   return (
     <UserProvider value={{ user, setJwt, jwt, removeJwt }}>
       <ThemeProvider theme={theme}>
-        <Switch>
-          <Route exact path="/profile/:profileId">
-            <AuthUser>
-              <ProfilePage />
-            </AuthUser>
-          </Route>
-          <Route exact path="/login">
-            <AuthUser>
-              <LoginForm />
-            </AuthUser>
-          </Route>
-          <Route exact path="/register">
-            <AuthUser>
-              <RegistrationForm />
-            </AuthUser>
-          </Route>
-          <Route exact path="/search">
-            <AuthUser>
-              <SearchPage />
-            </AuthUser>
-          </Route>
+        <AuthUser>
+          <Switch>
+            <Route exact path="/login" component={LoginForm}  />
+            <Route exact path="/register" component={RegistrationForm} />
+            <Route exact path="/almost-done" component={AlmostDone} />
+            <Route exact path="/email-confirmed" component={EmailConfirmed} />
 
-          <Route exact path="/almost-done" component={AlmostDone} />
-          <Route exact path="/email-confirmed" component={EmailConfirmed} />
-          <Route>
-            <Redirect to="/login" />;
-          </Route>
-        </Switch>
+            <Route exact path="/profile/:profileId" component={ProfilePage} />
+            <Route exact path="/search" component={SearchPage} />
+            <Route exact path="/admin" component={AdminPage} />
+
+            <Route>
+              <Page>
+                <h1>404</h1>
+              </Page>
+            </Route>
+          </Switch>
+        </AuthUser>
       </ThemeProvider>
     </UserProvider>
   );
