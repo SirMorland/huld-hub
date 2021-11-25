@@ -1,6 +1,6 @@
 import React, { useContext, createContext } from "react";
 
-export const UserContext = createContext({user: null, setJwt: null, jwt: null, removeJwt: null});
+export const UserContext = createContext({user: null, setJwt: null, jwt: null, logout: null});
 UserContext.displayName = "User-Context";
 
 export const useUserContext = () => useContext(UserContext);

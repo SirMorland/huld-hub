@@ -81,14 +81,14 @@ function App() {
     [_setJwt]
   );
 
-  const removeJwt = useCallback(() => {
+  const logout = useCallback(() => {
     Cookies.remove("hub-jwt");
     _setJwt(null);
     history.push("/login");
   }, [_setJwt, history]);
 
   return (
-    <UserProvider value={{ user, setJwt, jwt, removeJwt }}>
+    <UserProvider value={{ user, setJwt, jwt, logout }}>
       <ThemeProvider theme={theme}>
         <AuthUser>
           <Switch>
