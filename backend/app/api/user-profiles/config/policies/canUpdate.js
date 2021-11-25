@@ -5,7 +5,7 @@ module.exports = async (ctx, next) => {
     if (user.role.type !== 'admin') {
       const [profile] = await strapi.services['user-profiles'].find({
         id,
-        'user.id': ctx.state.user.id,
+        'user.id': user.id,
       });
       if (profile) return await next();
     } else return await next();
