@@ -40,6 +40,17 @@ const enableFindUsers = async (role) => {
   await permissionQuery.update({ id }, { enabled: true });
 };
 
+const enableUpdateUsers = async (role) => {
+  const permissionQuery = strapi.query("permission", "users-permissions");
+  const { id } = await permissionQuery.findOne({
+    role,
+    type: "users-permissions",
+    controller: "user",
+    action: "update",
+  });
+  await permissionQuery.update({ id }, { enabled: true });
+};
+
 const enableUploadPermissions = async (role) => {
   const permissionQuery = strapi.query("permission", "users-permissions");
   const uploadPermission = await permissionQuery.findOne({
@@ -65,7 +76,10 @@ const roleSetup = async (roles) => {
     } 
     await enableApplicationPermissions(customRole.id);
     await enableUploadPermissions(customRole.id);
-    if (role.canFindUsers) await enableFindUsers(customRole.id);
+    if (role.type === 'admin') {
+      await enableFindUsers(customRole.id);
+      await enableUpdateUsers(customRole.id);
+    }
   }));
   // no role provided will enable application permissions to every role, uncomment this to apply
   // await enableApplicationPermissions();
