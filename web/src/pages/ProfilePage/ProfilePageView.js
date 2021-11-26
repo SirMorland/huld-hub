@@ -132,6 +132,7 @@ function ProfilePageView({ profile, onEditClick, isMyPage }) {
         {isMyPage && (
           <Button
             fullWidth
+            size="small"
             variant="contained"
             color="secondary"
             onClick={onEditClick}

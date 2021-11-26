@@ -16,7 +16,7 @@ const StyledContainer = styled('div') (({ theme }) => `
 
   @media (min-width: 768px){
     bottom: 0px;
-    padding: 32px;
+    padding: 5px;
   }
 `);
 
