@@ -3,6 +3,7 @@ const DEFAULT_ROLES = {
     name: "Admin",
     descripton: "Admin user",
     type: "admin",
+    canFindUsers: true,
   },
 
   EMPLOYEE: {
