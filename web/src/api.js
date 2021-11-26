@@ -15,7 +15,19 @@ export const login = async (email, password) => {
   }
 }
 
+/**
+ * Promote users, demote users, add and remove keywords + coding languages
+ * @param {Object} param0 
+ * @param {String} param0.jwt valid JWT
+ * @param {Array<{id}>} param0.adminUsers list of users to be added as admin
+ * @param {Array<{id}>} param0.employeeUsers list of users to be demote from admin
+ * @param {Array<{name:string}>} param0.keywords list of keywords to be added
+ * @param {Array<{name:string}>} param0.codingLanguages list of coding languages to be added
+ * @param {Array<{id:string}>} param0.removedKeywords list of keywords to be removed
+ * @param {Array<{id:string}>} param0.removedCodingLanguages list of coding languages to be removed
+ */
 export const onAdminPageSave = async ({
+  jwt,
   adminUsers,
   employeeUsers,
   keywords,
@@ -23,12 +35,35 @@ export const onAdminPageSave = async ({
   codingLanguages,
   codingLanguagesToBeRemoved,
 }) => {
-  // TODO: implement save users that are promoted to be admins
-  // TODO: implement save users that are demoted from being admins
-  // TODO: implement new keywords 
-  // TODO: implement remove keywords 
-  // TODO: implement save coding languages
-  // TODO: implement remove coding languages
+  // fetch roles
+  const roles = await getRoles(jwt);
+  const adminRole = roles.find(role => role.type === 'admin');
+  const employeeRole = roles.find(role => role.type === 'employee');
+  // implement save users that are promoted to be admins
+  const promotionPromises = adminUsers.map(user => updateUserRole(jwt, user.id, adminRole.id));
+  // save users that are demoted from being admins
+  const demotionPromises = employeeUsers.map(user => updateUserRole(jwt, user.id, employeeRole.id));
+
+  const categories = await getCompetenceCategories(jwt);
+  const codingLanguageCategory = categories.find(category => category.name === 'coding-languages');
+  const keywordsCategory = categories.find(category => category.name === 'keywords');
+  // new keywords 
+  const newKeywordsPromises = keywords.map(keyword => addCompetence(jwt, keyword, keywordsCategory.id));
+  // remove keywords 
+  const removeKeywordsPromises = keywordsToBeRemoved.map(keyword => removeCompetence(jwt, keyword));
+  // save coding languages
+  const newCodingLanguagePromises = codingLanguages.map(codingLanguage => addCompetence(jwt, codingLanguage, codingLanguageCategory.id));
+  // remove coding languages
+  const removeCodingLanguagePromises = codingLanguagesToBeRemoved.map(codingLanguage => removeCompetence(jwt, codingLanguage));
+
+  await Promise.all([
+    ...promotionPromises,
+    ...demotionPromises,
+    ...newKeywordsPromises,
+    ...removeKeywordsPromises,
+    ...newCodingLanguagePromises,
+    ...removeCodingLanguagePromises,
+  ]);
 }
 
 export const getAllUsers = async (jwt) => {
@@ -41,7 +76,24 @@ export const getAllUsers = async (jwt) => {
   return await handleBasicReponse(response);
 }
 
-export const addCompetence = async (name, category, jwt) => {
+export const updateUserRole = async (jwt, user, role) => {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/users/${user.id}`;
+  const body = { role };
+  const response = await fetchPost(url, body, jwt, "PUT");
+  return await handleBasicReponse(response);
+}
+
+const getRoles = async (jwt) => {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/users-permissions/roles`;
+  const response = await fetch(url, {
+    headers: {
+      "Authorization": `Bearer ${jwt}`
+    }
+  });
+  return await handleBasicReponse(response);
+}
+
+export const addCompetence = async (jwt, name, category) => {
   const url = `${process.env.REACT_APP_BACKEND_HOST}/competences`;
   const body = {
     name,
@@ -51,9 +103,10 @@ export const addCompetence = async (name, category, jwt) => {
   const response = await fetchPost(url, body, jwt);
   return await handleBasicReponse(response);
 };
-export const removeCompetence = async (id, jwt) => {
+export const removeCompetence = async (jwt, id) => {
   const url = `${process.env.REACT_APP_BACKEND_HOST}/competences/${id}`;
   const response = await fetch(url, {
+    method: 'DELETE',
     headers: {
       Authorization: `Bearer ${jwt}`,
     },
