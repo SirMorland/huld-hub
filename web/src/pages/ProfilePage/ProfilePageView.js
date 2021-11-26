@@ -131,8 +131,10 @@ function ProfilePageView({ profile, onEditClick, canEdit }) {
       <ActionButtonContainer>
         {canEdit && (
           <Button
+            fullWidth
+            size="small"
             variant="contained"
-            color="primary"
+            color="secondary"
             onClick={onEditClick}
           >
             Edit
