@@ -133,6 +133,27 @@ export const search = async (keywords, jwt) => {
   }
 }
 
+export const addCompetence = async (name, category, jwt) => {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/competences`;
+  const body = {
+    name,
+    description: name,
+    category,
+  };
+  const response = await fetchPost(url, body, jwt);
+
+  return await handleBasicReponse(response);
+};
+
+export const removeCompetence = async (id, jwt) => {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/competences/${id}`;
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
+  return await handleBasicReponse(response);
+};
 
 export class EmailOrPasswordInvalidError extends Error { };
 export class EmailWrongDomainError extends Error { };
