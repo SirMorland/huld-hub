@@ -37,6 +37,17 @@ const StyledIcon = `
   }
 `;
 
+const PrintIcon = styled('div')`
+  float:left;
+  width: 15%;
+`;
+
+const PrintText = styled('div')`
+  float:right;
+  width: 85%;
+  word-break:break-all;
+`;
+
 const ContactLocationIcon = styled(LocationOnIcon)(StyledIcon);
 const ContactEmailIcon = styled(EmailIcon)(StyledIcon);
 const ContactPhoneIcon = styled(PhoneIcon)(StyledIcon);
@@ -85,32 +96,38 @@ export default function UserContactinfo({profile, iconSide}) {
       <Container>
         {profile.address && (
           <ContactText>
-            <ContactLocationIcon />{profile.address}
+            <PrintIcon><ContactLocationIcon /></PrintIcon>
+            <PrintText> {profile.address}</PrintText>
           </ContactText>
         )}
         {profile.email && (
           <ContactText>
-            <ContactEmailIcon />{profile.email}
+            <PrintIcon><ContactEmailIcon /></PrintIcon>
+            <PrintText> {profile.email}</PrintText>
           </ContactText>
         )}
         {profile.phone && (
           <ContactText>
-            <ContactPhoneIcon />{profile.phone}
+            <PrintIcon><ContactPhoneIcon /></PrintIcon>
+            <PrintText> {profile.phone}</PrintText>
           </ContactText>
         )}
         {profile.slack && (
           <ContactText>
-            <ContactMdiIcon path={mdiSlack} />{profile.slack}
+            <PrintIcon> <ContactMdiIcon path={mdiSlack} /></PrintIcon>
+            <PrintText> {profile.slack}</PrintText>
           </ContactText>
         )}
         {profile.github && (
           <ContactText>
-            <ContactGithubIcon />{profile.github}
+            <PrintIcon><ContactGithubIcon /></PrintIcon>
+            <PrintText> {profile.github}</PrintText>
           </ContactText>
         )}
         {profile.linkedin && (
           <ContactText>
-            <ContactLinkedInIcon />{profile.linkedin}
+            <PrintIcon><ContactLinkedInIcon /></PrintIcon>
+            <PrintText> {profile.linkedin}</PrintText>
           </ContactText>
         )}
       </Container>

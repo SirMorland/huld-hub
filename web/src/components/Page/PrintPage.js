@@ -11,29 +11,30 @@ import { Avatar } from "@mui/material";
 const Container = styled("div")`
     display: none;
     height: auto;
+    margin: 10mm 10mm 10mm 10mm;  
     @page {
         size: auto;
-        margin: 8mm 8mm 8mm 8mm;  
+        margin: 10mm 10mm 10mm 10mm;  
     }
     @media print{
        display: block;
     }
 `;
 const Column1 = styled("div")`
-    width: 45%;
+    width: 40%;
     height: 100%;
     float: left;
     padding-right:30px;
 `;
+
 const Column2 = styled("div")`
-    width: 55%;
+    width: 60%;
     height: 100%;
     float: right;
     border-left: 2px solid 	rgb(232,232,232);
     padding-left:40px;
 `;
 const StyledAvatar = styled(Avatar)`
-    margin-right: 32px;
     width: 224px;
     height: 256px;
 `;
