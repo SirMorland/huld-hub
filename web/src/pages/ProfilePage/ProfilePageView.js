@@ -68,7 +68,7 @@ const Education = styled("div")`
   }
 `;
 
-function ProfilePageView({ profile, onEditClick, isMyPage }) {
+function ProfilePageView({ profile, onEditClick, canEdit }) {
   const { languages, keywords, educationHistory, workHistory } = profile;
 
   return (
@@ -129,7 +129,7 @@ function ProfilePageView({ profile, onEditClick, isMyPage }) {
       </Education>
 
       <ActionButtonContainer>
-        {isMyPage && (
+        {canEdit && (
           <Button
             fullWidth
             size="small"
