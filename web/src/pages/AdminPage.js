@@ -49,19 +49,23 @@ function AdminPage() {
   const emailDomain = useEmailDomain();
 
   const { jwt } = useUserContext();
-  const [languages, setLanguages] = useCompetences("coding languages", jwt);
-  const [keywords, setKeywords] = useCompetences("keywords", jwt);
-  
+
+  const allLanguages = useCompetences("coding languages", jwt);
+  const allKeywords = useCompetences("keywords", jwt);
+  const [languages, setLanguages] = useCompetences([]);
+  const [keywords, setKeywords] = useCompetences([]);
+
+  console.log(allLanguages, allKeywords);
   const onLanguageAdd = (newLanguage) => {
     setLanguages({
-      ...languages,
+      ...allLanguages,
       newLanguage,
     });
   };
 
   const onKeywordAdd = (newKeyword) => {
-    setLanguages({
-      ...keywords,
+    setKeywords({
+      ...allKeywords,
       newKeyword,
     });
   };
@@ -93,14 +97,16 @@ function AdminPage() {
         <Typography variant="h2" colour="primary">
           Language proficiencies
         </Typography>
-        {languages && (<ItemListEdit items={languages} onRemove={onLanguageRemove} />)}
+        {languages && (
+          <ItemListEdit items={languages} onRemove={onLanguageRemove} />
+        )}
         <TextField
           required
           fullWidth
-          id="first_name_Edit"
+          id="language_add"
           type="text"
-          label="First name"
-          name="first_name"
+          label=""
+          name="language"
           value=""
           onChange={(e) => {
             onLanguageAdd(e.target.value);
@@ -111,14 +117,16 @@ function AdminPage() {
         <Typography variant="h2" colour="primary">
           Keywords
         </Typography>
-        {keywords && (<ItemListEdit items={keywords} onRemove={onKeywordRemove} />) }
+        {keywords && (
+          <ItemListEdit items={keywords} onRemove={onKeywordRemove} />
+        )}
         <TextField
           required
           fullWidth
-          id="first_name_Edit"
+          id="keyword_add"
           type="text"
-          label="First name"
-          name="first_name"
+          label=""
+          name="keyword"
           value=""
           onChange={(e) => {
             onKeywordAdd(e.target.value);
