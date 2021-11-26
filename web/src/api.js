@@ -15,6 +15,52 @@ export const login = async (email, password) => {
   }
 }
 
+export const onAdminPageSave = async ({
+  adminUsers,
+  employeeUsers,
+  keywords,
+  keywordsToBeRemoved,
+  codingLanguages,
+  codingLanguagesToBeRemoved,
+}) => {
+  // TODO: implement save users that are promoted to be admins
+  // TODO: implement save users that are demoted from being admins
+  // TODO: implement new keywords 
+  // TODO: implement remove keywords 
+  // TODO: implement save coding languages
+  // TODO: implement remove coding languages
+}
+
+export const getAllUsers = async (jwt) => {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/users`;
+  const response = await fetch(url, {
+    headers: {
+      "Authorization": `Bearer ${jwt}`
+    }
+  });
+  return await handleBasicReponse(response);
+}
+
+export const addCompetence = async (name, category, jwt) => {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/competences`;
+  const body = {
+    name,
+    description: name,
+    category,
+  };
+  const response = await fetchPost(url, body, jwt);
+  return await handleBasicReponse(response);
+};
+export const removeCompetence = async (id, jwt) => {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/competences/${id}`;
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
+  return await handleBasicReponse(response);
+};
+
 export const register = async (email, password) => {
   const url = `${process.env.REACT_APP_BACKEND_HOST}/auth/local/register`;
   const body = {
