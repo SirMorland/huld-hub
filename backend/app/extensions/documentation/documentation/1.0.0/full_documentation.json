@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/10/2021 3:54:27 PM"
+    "x-generation-date": "11/24/2021 1:08:58 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -1080,7 +1080,7 @@
         ]
       }
     },
-    "/ping": {
+    "/email-domain": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -1132,7 +1132,7 @@
         },
         "summary": "",
         "tags": [
-          "Ping"
+          "Email-domain"
         ],
         "parameters": []
       }
@@ -4638,9 +4638,6 @@
   "tags": [
     {
       "name": "Competences"
-    },
-    {
-      "name": "Ping"
     },
     {
       "name": "Email - Email"

@@ -6,7 +6,6 @@ import { CssBaseline } from '@mui/material';
 
 
 import App from './App';
-import Ping from './Ping';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
@@ -14,7 +13,6 @@ ReactDOM.render(
     <CssBaseline />
     <BrowserRouter>
       <Switch>
-        <Route exact path="/ping" component={Ping} />
         <Route component={App} />
       </Switch>
     </BrowserRouter>

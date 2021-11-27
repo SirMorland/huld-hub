@@ -89,14 +89,11 @@ const NavBar = ({ children, onLogOutClick, loggedIn, role }) => {
         <HeaderLink to="/">
           Hub
         </HeaderLink>
-        {loggedIn && <StyledUl>
-          {role === 'admin' && <StyledLi><StyledLink to="/admin">Admin</StyledLink></StyledLi>}
-          <StyledLi><StyledButton type="button" onClick={onLogOutClick}>Log out</StyledButton></StyledLi>
-          <StyledLi>
-            <StyledLink to="/search">
-              <StyledSearchIcon />
-            </StyledLink>
-          </StyledLi>
+        {loggedIn &&
+          <StyledUl>
+            {role === 'admin' && <StyledLi><StyledLink to="/admin">Admin</StyledLink></StyledLi>}
+            <StyledLi><StyledButton type="button" onClick={onLogOutClick}>Log out</StyledButton></StyledLi>
+            {role && <StyledLi><StyledLink to="/search"><StyledSearchIcon /></StyledLink></StyledLi>}
         </StyledUl>}
       </StyledHeader>
       {children &&

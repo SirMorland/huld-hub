@@ -2,8 +2,8 @@
 	"routes": [
 	  {
       "method": "GET",
-      "path": "/ping",
-      "handler": "ping.ping",
+      "path": "/email-domain",
+      "handler": "email-domain.email-domain",
       "config": {
         "policies": []
       }
