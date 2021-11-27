@@ -4,7 +4,7 @@ import { styled } from "@mui/system";
 
 import Page from "../components/Page/Page";
 import ActionButtonContainer from "../components/ActionButtonContainer";
-import useEmailDomain from "../hooks/useEmailDomai";
+import useEmailDomain from "../hooks/useEmailDomain";
 import CompetenceEdit from "../components/CompetenceEdit";
 import useCompetences from "../hooks/useCompetences";
 import { useUserContext } from "../userContext";
