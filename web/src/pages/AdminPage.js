@@ -5,7 +5,7 @@ import { styled } from "@mui/system";
 import Page from "../components/Page/Page";
 import ActionButtonContainer from "../components/ActionButtonContainer";
 import useEmailDomain from "../hooks/useEmailDomai";
-import CompetenceEdit from "../components/CompetenceEdit/CompetenceEdit";
+import CompetenceEdit from "../components/CompetenceEdit";
 import useCompetences from "../hooks/useCompetences";
 import { useUserContext } from "../userContext";
 
@@ -77,27 +77,31 @@ function AdminPage() {
   const onLanguageAdd = (newLanguage) => {
     console.log(newLanguage);
     // TODO: send POST request to server
-    setLanguages((prevLanguages) => [...prevLanguages, newLanguage]);
+    setLanguages((prevLanguages) => [
+      ...prevLanguages,
+      { name: newLanguage, id: prevLanguages.length },
+    ]);
   };
 
-  const onKeywordRemove = (index) => {
-    const item = keywords.find((_, i) => i === index);
-    console.log(item);
+  const onKeywordRemove = (itemToRemove) => {
+    console.log(itemToRemove);
     // TODO: send DELETE request to server
-    setKeywords((prevItems) => prevItems.filter((_, i) => i !== index));
+    setKeywords((prevItems) => prevItems.filter((item) => item.id !== itemToRemove.id));
   };
 
   const onKeywordAdd = (newKeyword) => {
     console.log(newKeyword);
     // TODO: send POST request to server
-    setKeywords((prevKeywords) => [...prevKeywords, newKeyword]);
+    setKeywords((prevKeywords) => [
+      ...prevKeywords,
+      { name: newKeyword, id: prevKeywords.length },
+    ]);
   };
 
-  const onLanguageRemove = (index) => {
-    const item = languages.find((_, i) => i === index);
-    console.log(item);
+  const onLanguageRemove = (itemToRemove) => {
+    console.log(itemToRemove);
     // TODO: send DELETE request to server
-    setLanguages((prevItems) => prevItems.filter((_, i) => i !== index));
+    setLanguages((prevItems) => prevItems.filter((item) => item.id !== itemToRemove.id));
   };
 
   return (

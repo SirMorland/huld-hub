@@ -1,42 +1,11 @@
 import React, { useState } from "react";
-import TextField from "../TextField";
+import PropTypes from "prop-types";
+import TextField from "./TextField";
 import styled from "@mui/system/styled";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import DoDisturbOnIcon from "@mui/icons-material/DoDisturbOn";
-import IconButton from "@mui/material/IconButton";
-import { capitalizeFirstLetters } from "../../utils";
-
-const StyledIcon = styled(DoDisturbOnIcon)(`
-  font-size: 20px;
-`);
-
-const Wrapper = styled("div")(`
-  margin: 8px 0px;
-`);
-
-export const ItemListEdit = ({ items, onRemove }) => {
-  return (
-    <Wrapper>
-      {items &&
-        items.length > 0 &&
-        items.map((item, index) => (
-          <div key={index} data-textid={`item-${index}`}>
-            <IconButton
-              size="small"
-              aria-label="delete"
-              color="error"
-              onClick={onRemove.bind(null, index)}
-              data-testid="delete-item-btn"
-            >
-              <StyledIcon />
-            </IconButton>
-            <span data-testid="item-name">{item.name}</span>
-          </div>
-        ))}
-    </Wrapper>
-  );
-};
+import ItemListEdit from "./ItemListEdit";
+import { capitalizeFirstLetters } from "../utils";
 
 const StyledForm = styled("form")({
   display: "flex",
@@ -68,7 +37,7 @@ function CompetenceEdit(props) {
       <ItemListEdit items={items} onRemove={onRemove} />
       <StyledForm onSubmit={submit}>
         <StyledTextField
-          id="new-competence-item"
+          data-testid="new-competence-item"
           placeholder={`Create new ${type}`}
           required
           value={newItem}
@@ -86,5 +55,24 @@ function CompetenceEdit(props) {
     </div>
   );
 }
+
+CompetenceEdit.default = {
+  items: [],
+  onRemove: () => {},
+  onAdd: () => {},
+  type: "",
+};
+
+CompetenceEdit.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  onRemove: PropTypes.func.isRequired,
+  onAdd: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired,
+};
 
 export default CompetenceEdit;
