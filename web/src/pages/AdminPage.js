@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 
 import Page from "../components/Page/Page";
 import ActionButtonContainer from "../components/ActionButtonContainer";
 import useEmailDomain from "../hooks/useEmailDomai";
-import ItemListEdit from "../components/ItemListEdit";
-import TextField from "../components/TextField";
+import CompetenceEdit from "../components/CompetenceEdit/CompetenceEdit";
 import useCompetences from "../hooks/useCompetences";
 import { useUserContext } from "../userContext";
 
@@ -45,39 +44,62 @@ const Keywords = styled("div")`
   }
 `;
 
+const COMPETENCE_TYPE = {
+  languages: {
+    serverName: "coding languages",
+    clientName: "languages proficiencies",
+  },
+  keywords: "keywords",
+};
+
 function AdminPage() {
   const emailDomain = useEmailDomain();
 
   const { jwt } = useUserContext();
 
-  const allLanguages = useCompetences("coding languages", jwt);
-  const allKeywords = useCompetences("keywords", jwt);
-  const [languages, setLanguages] = useCompetences([]);
-  const [keywords, setKeywords] = useCompetences([]);
+  const allLanguages = useCompetences(
+    COMPETENCE_TYPE.languages.serverName,
+    jwt
+  );
+  const allKeywords = useCompetences(COMPETENCE_TYPE.keywords, jwt);
 
-  console.log(allLanguages, allKeywords);
+  const [languages, setLanguages] = useState(allLanguages || []);
+  const [keywords, setKeywords] = useState(allKeywords || []);
+
+  useEffect(() => {
+    setKeywords(allKeywords);
+  }, [allKeywords]);
+
+  useEffect(() => {
+    setLanguages(allLanguages);
+  }, [allLanguages]);
+
   const onLanguageAdd = (newLanguage) => {
-    setLanguages({
-      ...allLanguages,
-      newLanguage,
-    });
+    console.log(newLanguage);
+    // TODO: send POST request to server
+    setLanguages((prevLanguages) => [...prevLanguages, newLanguage]);
+  };
+
+  const onKeywordRemove = (index) => {
+    const item = keywords.find((_, i) => i === index);
+    console.log(item);
+    // TODO: send DELETE request to server
+    setKeywords((prevItems) => prevItems.filter((_, i) => i !== index));
   };
 
   const onKeywordAdd = (newKeyword) => {
-    setKeywords({
-      ...allKeywords,
-      newKeyword,
-    });
+    console.log(newKeyword);
+    // TODO: send POST request to server
+    setKeywords((prevKeywords) => [...prevKeywords, newKeyword]);
   };
 
-  const onKeywordRemove = (keywords) => {
-    setKeywords(keywords);
+  const onLanguageRemove = (index) => {
+    const item = languages.find((_, i) => i === index);
+    console.log(item);
+    // TODO: send DELETE request to server
+    setLanguages((prevItems) => prevItems.filter((_, i) => i !== index));
   };
 
-  const onLanguageRemove = (languages) => {
-    setLanguages(languages);
-  };
-  console.log(languages, keywords);
   return (
     <Page>
       <Admins>
@@ -94,43 +116,19 @@ function AdminPage() {
         </Typography>
       </Domains>
       <Languages>
-        <Typography variant="h2" colour="primary">
-          Language proficiencies
-        </Typography>
-        {languages && (
-          <ItemListEdit items={languages} onRemove={onLanguageRemove} />
-        )}
-        <TextField
-          required
-          fullWidth
-          id="language_add"
-          type="text"
-          label=""
-          name="language"
-          value=""
-          onChange={(e) => {
-            onLanguageAdd(e.target.value);
-          }}
+        <CompetenceEdit
+          type={COMPETENCE_TYPE.languages.clientName}
+          onRemove={onLanguageRemove}
+          onAdd={onLanguageAdd}
+          items={languages}
         />
       </Languages>
       <Keywords>
-        <Typography variant="h2" colour="primary">
-          Keywords
-        </Typography>
-        {keywords && (
-          <ItemListEdit items={keywords} onRemove={onKeywordRemove} />
-        )}
-        <TextField
-          required
-          fullWidth
-          id="keyword_add"
-          type="text"
-          label=""
-          name="keyword"
-          value=""
-          onChange={(e) => {
-            onKeywordAdd(e.target.value);
-          }}
+        <CompetenceEdit
+          type={COMPETENCE_TYPE.keywords}
+          onRemove={onKeywordRemove}
+          onAdd={onKeywordAdd}
+          items={keywords}
         />
       </Keywords>
       <ActionButtonContainer>
