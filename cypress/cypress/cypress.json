@@ -1,0 +1,15 @@
+{
+	"baseUrl": "http://localhost:80",
+	"reporter": "mochawesome",
+	"reporterOptions": {
+		"reportDir": "cypress/reports/mocha",
+		"quiet": true,
+		"overwrite": false,
+		"html": false,
+		"json": true
+	},
+	"testFiles": [
+		"register.spec.js",
+		"login.spec.js"
+	]
+}

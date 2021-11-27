@@ -43,6 +43,8 @@ describe("Login and Register User", () => {
     // Test that there is no user
     expect(usersBeforeRegister).toHaveLength(0);
 
+    // mock send confirmation email because we don't have a real email service in the test
+    strapi.plugins["users-permissions"].services.user.sendConfirmationEmail = jest.fn();
     // Make request to register endpoint
     await request(strapi.server) // app server is an instance of Class: http.Server
       .post("/auth/local/register")
@@ -56,7 +58,7 @@ describe("Login and Register User", () => {
         expect(data.body.user.username).toBe(registeredUser.username);
         expect(data.body.user.email).toBe(registeredUser.email);
         // expect(data.body.user.confirmed).toBe(null);
-      }).catch(console.log);
+      });
 
     // Get the current number of users
     const usersAfterRegister = await strapi.plugins[

@@ -254,14 +254,15 @@ function ProfilePageEdit({
           />
         </Education>
 
-        <ActionButtonContainer>
-          <Button fullWidth variant="contained" type="submit" color="primary">
+        <ActionButtonContainer >
+          <Button fullWidth variant="contained" type="submit" color="secondary" size="small">
             Save
           </Button>
           <Button
             fullWidth
+            size="small"
             variant="contained"
-            color="error"
+            color="third"
             onClick={onCancelClick}
           >
             Cancel

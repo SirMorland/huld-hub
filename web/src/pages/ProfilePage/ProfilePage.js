@@ -22,7 +22,9 @@ function ProfilePage() {
 
   const { jwt, user } = useUserContext();
 
-  const isMyPage = user && parseInt(profileId) === parseInt(user.profile)
+  // user can edit the profile is the current user is the profile owner or if the user is an admin
+  const canEdit = user 
+    && (parseInt(profileId) === parseInt(user.profile) || user.role.type === "admin");
 
   const [profile, setProfile] = useProfile(profileId, jwt);
 
@@ -33,7 +35,7 @@ function ProfilePage() {
   const [edit, setEdit] = useState(false);
 
   const onSaveClick = async (profile) => {
-    if(isMyPage){
+    if (canEdit) {
       // if profile.file exists, we need to upload the picture and set the new image to the new media id
       if (profile.file) {
         const [newPic] = await uploadPicture(profile.file, jwt);
@@ -88,7 +90,7 @@ function ProfilePage() {
       <ProfilePageView
         profile={profileProps}
         onEditClick={() => setEdit(true)}
-        isMyPage={isMyPage}
+        canEdit={canEdit}
       />
     );
   }
