@@ -103,6 +103,7 @@ export const addCompetence = async (jwt, name, category) => {
   const response = await fetchPost(url, body, jwt);
   return await handleBasicReponse(response);
 };
+
 export const removeCompetence = async (jwt, id) => {
   const url = `${process.env.REACT_APP_BACKEND_HOST}/competences/${id}`;
   const response = await fetch(url, {
