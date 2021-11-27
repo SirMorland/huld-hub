@@ -63,7 +63,7 @@ const SearchBar = ({ onSubmit }) => {
         aria-label="search-input"
         value={query}
         onChange={({ target }) => setQuery(target.value)}
-        placeholder="Front-end, HTML, CSS"
+        placeholder="e.g. name, languages, keywords, title"
       />
       <StyledIconButton aria-label="search" type="submit">
         <StyledIcon />
