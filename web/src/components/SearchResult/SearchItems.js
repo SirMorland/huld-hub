@@ -35,7 +35,7 @@ function SearchItems(props) {
         <EmptyHistory variant="body1" data-testid="no-item-description">
           {searchTerms.length > 0
             ? "No Match Found"
-            : "Search employee database..."}
+            : "Start by searching something..."}
         </EmptyHistory>
       )}
     </div>
