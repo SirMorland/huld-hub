@@ -1,5 +1,9 @@
 const request = require("supertest");
+const { roleSetup } = require("../../config/functions/roleSetup");
+const { userSetup, findUserByUsername } = require("../../config/functions/userSetup");
+const profileSetup = require("../../config/functions/profileSetup");
 const { grantPrivileges, getPermissionValues } = require("../helpers/strapi");
+const { DEFAULT_ROLES, DEFAULT_USERS, DEFAULT_PROFILES } = require("../../config/functions/defaultData");
 
 describe("user-profiles api", () => {
   // before all tests set public rold to have access to find and create of comptences api
@@ -108,7 +112,7 @@ describe("user-profiles api", () => {
       .get("/user-profiles")
       .expect(200)
       .then((data) => {
-        
+
         expect(data.body).toHaveLength(1);
         expect(data.body[0].first_name).toBe(profileData.first_name);
         expect(data.body[0].last_name).toBe(profileData.last_name);
@@ -313,5 +317,79 @@ describe("user-profiles api", () => {
           competence.id
         );
       });
+  });
+});
+
+const removeAll = async (service, plugin) => {
+  const data = await strapi.query(service, plugin).find();
+  const promises = data.map(({ id }) =>
+    strapi.query(service, plugin).delete({ id })
+  );
+  await Promise.all(promises);
+};
+
+describe("user-profiles", () => {
+  let employee;
+  let admin;
+
+  beforeAll(async () => {
+    await roleSetup([DEFAULT_ROLES.ADMIN, DEFAULT_ROLES.EMPLOYEE]);
+    await userSetup(DEFAULT_USERS);
+    await profileSetup(DEFAULT_PROFILES);
+    employee = await findUserByUsername('huld-employee');
+    admin = await findUserByUsername('huld-admin');
+  });
+
+  afterAll(async () => {
+    removeAll("user", "users-permissions");
+    removeAll("role", "users-permissions");
+    removeAll("user-profiles");
+  });
+
+  it('should be editable by profile owner', async () => {
+    const jwt = strapi.plugins["users-permissions"].services.jwt.issue({
+      id: employee.id,
+    });
+    const first_name = 'employee2';
+    await request(strapi.server) // app server is an instance of Class: http.Server
+      .put(`/user-profiles/${employee.profile.id}`)
+      .set("accept", "application/json")
+      .set("Content-Type", "application/json")
+      .set("Authorization", "Bearer " + jwt)
+      .send({ first_name })
+      .expect(200)
+      .then((data) => {
+        expect(data.body.first_name).toBe(first_name);
+      });
+  });
+
+  it('should be editable by an admin', async () => {
+    const jwt = strapi.plugins["users-permissions"].services.jwt.issue({
+      id: admin.id,
+    });
+    const first_name = 'employee3';
+    await request(strapi.server) // app server is an instance of Class: http.Server
+      .put(`/user-profiles/${employee.profile.id}`)
+      .set("accept", "application/json")
+      .set("Content-Type", "application/json")
+      .set("Authorization", "Bearer " + jwt)
+      .send({ first_name })
+      .expect(200)
+      .then((data) => {
+        expect(data.body.first_name).toBe(first_name);
+      });
+  });
+
+  it('should not be editable by another employee', async () => {
+    const jwt = strapi.plugins["users-permissions"].services.jwt.issue({
+      id: employee.id,
+    });
+    await request(strapi.server) // app server is an instance of Class: http.Server
+      .put(`/user-profiles/${admin.profile.id}`)
+      .set("accept", "application/json")
+      .set("Content-Type", "application/json")
+      .set("Authorization", "Bearer " + jwt)
+      .send({ first_name : 'hacked' })
+      .expect(401);
   });
 });

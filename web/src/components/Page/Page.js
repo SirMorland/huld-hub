@@ -30,13 +30,10 @@ const StyledMain = styled('main')`
 
 
 const Page = ({ header, children }) => {
-  const { user, removeJwt, jwt } = useUserContext();
-  const onLogOutClick = () => {
-    removeJwt();
-  }
+  const { user, logout, jwt } = useUserContext();
   return (
 		<React.Fragment>
-      <NavBar onLogOutClick={onLogOutClick} loggedIn={!!jwt} role={user?.role?.type} >
+      <NavBar onLogOutClick={logout} loggedIn={!!jwt} role={user?.role?.type} >
         {header}
       </NavBar>
 			<StyledMain>

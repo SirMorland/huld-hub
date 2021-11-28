@@ -7,8 +7,9 @@ const findRoleByName = (name) => {
  * @param {{name: string; description: string; type: string}} role role object
  * @returns Promise that resolves into
  */
-const createRole = (role) => {
-  return strapi.query("role", "users-permissions").create(role);
+const createRole = async (role) => {
+  await strapi.plugins["users-permissions"].services.userspermissions.createRole(role);
+  await strapi.plugins["users-permissions"].services.userspermissions.updatePermissions();
 };
 
 /**
@@ -26,6 +27,28 @@ const enableApplicationPermissions = async (role) => {
       permissionQuery.update({ id }, { enabled: true })
     )
   );
+};
+
+const enableFindUsers = async (role) => {
+  const permissionQuery = strapi.query("permission", "users-permissions");
+  const { id } = await permissionQuery.findOne({
+    role,
+    type: "users-permissions",
+    controller: "user",
+    action: "find",
+  });
+  await permissionQuery.update({ id }, { enabled: true });
+};
+
+const enableUpdateUsers = async (role) => {
+  const permissionQuery = strapi.query("permission", "users-permissions");
+  const { id } = await permissionQuery.findOne({
+    role,
+    type: "users-permissions",
+    controller: "user",
+    action: "update",
+  });
+  await permissionQuery.update({ id }, { enabled: true });
 };
 
 const enableUploadPermissions = async (role) => {
@@ -47,9 +70,16 @@ const enableUploadPermissions = async (role) => {
 const roleSetup = async (roles) => {
   await Promise.all(roles.map(async (role) => {
     let customRole = await findRoleByName(role.name);
-    if (!customRole) customRole = await createRole(role);
+    if (!customRole) {
+      await createRole(role);
+      customRole = await findRoleByName(role.name);
+    } 
     await enableApplicationPermissions(customRole.id);
     await enableUploadPermissions(customRole.id);
+    if (role.type === 'admin') {
+      await enableFindUsers(customRole.id);
+      await enableUpdateUsers(customRole.id);
+    }
   }));
   // no role provided will enable application permissions to every role, uncomment this to apply
   // await enableApplicationPermissions();

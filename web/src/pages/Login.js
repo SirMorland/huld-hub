@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 
 import { Button, Grid, Link, Typography } from '@mui/material';
 import { Box } from '@mui/system';
@@ -15,15 +15,13 @@ export default function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const history = useHistory();
-    const { setJwt, user } = useUserContext();
+    const { setJwt } = useUserContext();
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         try {
             const json = await login(email, password);
             setJwt(json.jwt);
-            history.push(`/profile/${user.profileId}`);
         } catch (error) {
             switch (true) {
                 case error instanceof EmailOrPasswordInvalidError:

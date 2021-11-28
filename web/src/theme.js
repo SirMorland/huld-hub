@@ -8,6 +8,7 @@ const theme = createTheme({
     },
     secondary: {
       main: "#FF5E89",
+      contrastText: "#fff"
     },
     error: {
       main: "#F73D3D",
@@ -21,6 +22,11 @@ const theme = createTheme({
     },
     background: {
       default: "#FFFFFF",
+    },
+    third:{
+      main: "#00173A",
+      contrastText: "#fff"
+
     },
   },
   typography: {

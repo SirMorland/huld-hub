@@ -6,3 +6,8 @@ services:
     build:
       context:  ./
     restart: always
+
+networks:
+  default:
+    external: true
+    name: huldhub_network
