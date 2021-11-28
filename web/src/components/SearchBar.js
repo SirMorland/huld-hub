@@ -63,13 +63,15 @@ const SearchBar = ({ onSubmit }) => {
           onChange={({ target }) => setQuery(target.value)}
           placeholder="e.g. John, fullstack, CSS, iOS"
         />
-        <Typography
-          variant="caption"
-          color="white"
-          sx={{ whiteSpace: "nowrap" }}
-        >
-          Separate search terms with a comma (,)
-        </Typography>
+        {query && (
+          <Typography
+            variant="caption"
+            color="white"
+            sx={{ whiteSpace: "nowrap" }}
+          >
+            Separate search terms with a comma (,)
+          </Typography>
+        )}
       </InputWrapper>
       <StyledButton
         aria-label="search"
