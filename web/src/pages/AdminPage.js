@@ -1,9 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { styled } from "@mui/system";
 
 import Page from "../components/Page/Page";
-import ActionButtonContainer from "../components/ActionButtonContainer";
 import useEmailDomain from "../hooks/useEmailDomain";
 import CompetenceEdit from "../components/CompetenceEdit";
 import useCompetences from "../hooks/useCompetences";
@@ -202,11 +201,6 @@ function AdminPage() {
           items={keywords}
         />
       </Keywords>
-      <ActionButtonContainer>
-        <Button fullWidth variant="contained" type="submit" color="primary">
-          Save
-        </Button>
-      </ActionButtonContainer>
     </Page>
   );
 }
