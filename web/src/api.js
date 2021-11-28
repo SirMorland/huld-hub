@@ -264,6 +264,16 @@ export const getEmailDomain = async () => {
   return text;
 }
 
+export const sendConfirmationEmail = async (email) => {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/auth/send-email-confirmation`;
+  const body = {
+    email: email
+  };
+
+  const response = await fetchPost(url, body);
+  return await handleBasicReponse(response);
+}
+
 
 export class EmailOrPasswordInvalidError extends Error { };
 export class EmailWrongDomainError extends Error { };

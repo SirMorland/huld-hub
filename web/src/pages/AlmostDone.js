@@ -5,6 +5,7 @@ import { Button, Typography } from '@mui/material';
 import { useUserContext } from '../userContext';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
+import { sendConfirmationEmail } from '../api';
 
 export default function AlmostDone() {
 
@@ -19,10 +20,11 @@ export default function AlmostDone() {
 		setEmail(email);
 	}, [jwt]);
 
-	const sendConfirmationEmail = () => {
-		console.log(email);
-		// TODO send a post request to /auth/send-email-confirmation
+	const HandleSendConfirmationEmail = () => {
+		//console.log(email);
+		// send a post request to /auth/send-email-confirmation
 		// the body is an object with {email: email}
+		sendConfirmationEmail(email);
 	};
 
 	return (
@@ -45,7 +47,7 @@ export default function AlmostDone() {
 					type="button"
 					fullWidth
 					variant="contained"
-					onClick={sendConfirmationEmail}
+					onClick={HandleSendConfirmationEmail}
 					color="primary"
 					sx={{ mt: 3, mb: 2 }}
 				>
