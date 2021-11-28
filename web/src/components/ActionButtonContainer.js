@@ -11,12 +11,12 @@ const StyledContainer = styled('div') (({ theme }) => `
   z-index: 1;
   justify-content: right;
   background-color: ${theme.palette.primary.main};
-  padding: 16px;
-
+  padding: 12px 18px;
+  opacity: 0.95;
 
   @media (min-width: 768px){
     bottom: 0px;
-    padding: 5px;
+    padding: 10px 32px;
   }
 `);
 
