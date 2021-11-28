@@ -66,6 +66,10 @@ export const onAdminPageSave = async ({
   ]);
 }
 
+/**
+* Fetch all users
+* @param {string} jwt authoriazation token
+*/
 export const getAllUsers = async (jwt) => {
   const url = `${process.env.REACT_APP_BACKEND_HOST}/users`;
   const response = await fetch(url, {
@@ -76,6 +80,12 @@ export const getAllUsers = async (jwt) => {
   return await handleBasicReponse(response);
 }
 
+/**
+* update input user with a new role
+* @param {string} jwt authoriazation token
+* @param {Object.<id:string | number>} user object for updating
+* @param {string} id of the user role to be updated
+*/
 export const updateUserRole = async (jwt, user, role) => {
   const url = `${process.env.REACT_APP_BACKEND_HOST}/users/${user.id}`;
   const body = { role };
@@ -83,6 +93,10 @@ export const updateUserRole = async (jwt, user, role) => {
   return await handleBasicReponse(response);
 }
 
+/**
+* get all user roles
+* @param {string} jwt authoriazation token
+*/
 const getRoles = async (jwt) => {
   const url = `${process.env.REACT_APP_BACKEND_HOST}/users-permissions/roles`;
   const response = await fetch(url, {
@@ -93,6 +107,12 @@ const getRoles = async (jwt) => {
   return await handleBasicReponse(response);
 }
 
+/**
+* Add a new competence with name and category
+* @param {string} jwt authoriazation token
+* @param {string} competence name
+* @param {string} id of the category
+*/
 export const addCompetence = async (jwt, name, category) => {
   const url = `${process.env.REACT_APP_BACKEND_HOST}/competences`;
   const body = {
@@ -104,6 +124,11 @@ export const addCompetence = async (jwt, name, category) => {
   return await handleBasicReponse(response);
 };
 
+/**
+* Remove a new competence by its id
+* @param {string} jwt authoriazation token
+* @param {string} id competence id
+*/
 export const removeCompetence = async (jwt, id) => {
   const url = `${process.env.REACT_APP_BACKEND_HOST}/competences/${id}`;
   const response = await fetch(url, {
