@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Button, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 
@@ -53,7 +53,8 @@ const COMPETENCE_TYPE = {
 };
 
 function AdminPage() {
-  const emailDomain = useEmailDomain();
+  const domain = useEmailDomain();
+  const allEmailDomains = useMemo(() => [{ name: `@${domain}`, id: 0 }], [domain]);
 
   const { jwt } = useUserContext();
 
@@ -65,6 +66,7 @@ function AdminPage() {
 
   const [languages, setLanguages] = useState(allLanguages || []);
   const [keywords, setKeywords] = useState(allKeywords || []);
+  const [emailDomains, setEmailDomains] = useState(allEmailDomains || []);
 
   useEffect(() => {
     setKeywords(allKeywords);
@@ -73,6 +75,27 @@ function AdminPage() {
   useEffect(() => {
     setLanguages(allLanguages);
   }, [allLanguages]);
+
+  useEffect(() => {
+    setEmailDomains(allEmailDomains);
+  }, [allEmailDomains]);
+
+  const onEmailDomainAdd = (newEmailDomain) => {
+    console.log(newEmailDomain);
+    // TODO: send POST request to server
+    setEmailDomains((prevEmailDomains) => [
+      ...prevEmailDomains,
+      { name: newEmailDomain, id: prevEmailDomains.length },
+    ]);
+  };
+
+  const onEmailDomainsRemove = (itemToRemove) => {
+    console.log(itemToRemove);
+    // TODO: send DELETE request to server
+    setEmailDomains((prevItems) =>
+      prevItems.filter((item) => item.id !== itemToRemove.id)
+    );
+  };
 
   const onLanguageAdd = (newLanguage) => {
     console.log(newLanguage);
@@ -83,10 +106,20 @@ function AdminPage() {
     ]);
   };
 
+  const onLanguageRemove = (itemToRemove) => {
+    console.log(itemToRemove);
+    // TODO: send DELETE request to server
+    setLanguages((prevItems) =>
+      prevItems.filter((item) => item.id !== itemToRemove.id)
+    );
+  };
+
   const onKeywordRemove = (itemToRemove) => {
     console.log(itemToRemove);
     // TODO: send DELETE request to server
-    setKeywords((prevItems) => prevItems.filter((item) => item.id !== itemToRemove.id));
+    setKeywords((prevItems) =>
+      prevItems.filter((item) => item.id !== itemToRemove.id)
+    );
   };
 
   const onKeywordAdd = (newKeyword) => {
@@ -98,12 +131,6 @@ function AdminPage() {
     ]);
   };
 
-  const onLanguageRemove = (itemToRemove) => {
-    console.log(itemToRemove);
-    // TODO: send DELETE request to server
-    setLanguages((prevItems) => prevItems.filter((item) => item.id !== itemToRemove.id));
-  };
-
   return (
     <Page>
       <Admins>
@@ -112,12 +139,12 @@ function AdminPage() {
         </Typography>
       </Admins>
       <Domains>
-        <Typography variant="h2" colour="primary">
-          Allowed email domain
-        </Typography>
-        <Typography variant="p" colour="primary">
-          {emailDomain}
-        </Typography>
+        <CompetenceEdit
+          type="allowed email domain"
+          onRemove={onEmailDomainsRemove}
+          onAdd={onEmailDomainAdd}
+          items={emailDomains}
+        />
       </Domains>
       <Languages>
         <CompetenceEdit
