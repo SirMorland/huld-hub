@@ -8,12 +8,13 @@ import SearchItem from "./SearchItem";
 
 const EmptyHistory = styled(Typography)(({ theme }) => ({
   color: theme.palette.grey.main,
+  whiteSpace: "nowrap",
 }));
 
 const Divider = styled(MuiDivider)(({ theme }) => ({
   color: theme.palette.grey[100],
   margin: "24px 0",
-  fontSize: "2px"
+  fontSize: "2px",
 }));
 
 function SearchItems(props) {
