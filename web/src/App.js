@@ -11,6 +11,7 @@ import EmailConfirmed from "./pages/EmailConfirmed";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import SearchPage from "./pages/SearchPage";
 import AdminPage from "./pages/AdminPage";
+import ForgotPassword from "./pages/ForgotPassword"
 
 import Page from "./components/Page/Page";
 
@@ -52,7 +53,7 @@ const AuthUser = ({ children }) => {
       // Unauthenticated users trying to access Roor or Almost done page are redirected to Login page
       return <Redirect to="/login" />;
     }
-    if(path !== "/login" && path !== "/register" && path !== "/email-confirmed") {
+    if(path !== "/login" && path !== "/register" && path !== "/email-confirmed" && path !== "/forgotpassword") {
       // Unauthenticated users trying to access some other page than Login, Register or Email confirmed are shown an error page
       return <Page><h1>401</h1></Page> //TODO: use actual error page
     }
@@ -100,6 +101,7 @@ function App() {
             <Route exact path="/profile/:profileId" component={ProfilePage} />
             <Route exact path="/search" component={SearchPage} />
             <Route exact path="/admin" component={AdminPage} />
+            <Route exact path="/forgotpassword" component={ForgotPassword} />
 
             <Route>
               <Page>
