@@ -7,7 +7,9 @@ import ActionButtonContainer from "../components/ActionButtonContainer";
 import useEmailDomain from "../hooks/useEmailDomain";
 import CompetenceEdit from "../components/CompetenceEdit";
 import useCompetences from "../hooks/useCompetences";
+import useCompetenceCategories from "../hooks/useCompetenceCategories";
 import { useUserContext } from "../userContext";
+import { addCompetence, removeCompetence } from "../api";
 
 const Admins = styled("div")`
   @media (min-width: 768px) {
@@ -54,10 +56,13 @@ const COMPETENCE_TYPE = {
 
 function AdminPage() {
   const domain = useEmailDomain();
-  const allEmailDomains = useMemo(() => [{ name: `@${domain}`, id: 0 }], [domain]);
+  const allEmailDomains = useMemo(
+    () => [{ name: `@${domain}`, id: 0 }],
+    [domain]
+  );
 
   const { jwt } = useUserContext();
-
+  const allCompetenceCategories = useCompetenceCategories(jwt);
   const allLanguages = useCompetences(
     COMPETENCE_TYPE.languages.serverName,
     jwt
@@ -97,38 +102,73 @@ function AdminPage() {
     );
   };
 
-  const onLanguageAdd = (newLanguage) => {
-    console.log(newLanguage);
-    // TODO: send POST request to server
-    setLanguages((prevLanguages) => [
-      ...prevLanguages,
-      { name: newLanguage, id: prevLanguages.length },
-    ]);
+  const onLanguageAdd = async (newLanguage) => {
+    // Prevent adding the same language
+    if (
+      languages.some(
+        (language) =>
+          language.name.toLowerCase().trim() ===
+          newLanguage.toLowerCase().trim()
+      )
+    )
+      return;
+
+    const languageCategory = allCompetenceCategories.find(
+      (category) => category.name === COMPETENCE_TYPE.languages.serverName
+    );
+
+    // Make resquest to server to add the language
+    const addedLanguage = await addCompetence(
+      jwt,
+      newLanguage,
+      languageCategory.id
+    );
+
+    // Update UI
+    setLanguages((prevLanguages) => [...prevLanguages, addedLanguage]);
   };
 
-  const onLanguageRemove = (itemToRemove) => {
-    console.log(itemToRemove);
-    // TODO: send DELETE request to server
+  const onLanguageRemove = async (itemToRemove) => {
+
+    const removedItem = await removeCompetence(jwt, itemToRemove.id)
+
     setLanguages((prevItems) =>
-      prevItems.filter((item) => item.id !== itemToRemove.id)
+      prevItems.filter((item) => item.id !== removedItem.id)
     );
   };
 
-  const onKeywordRemove = (itemToRemove) => {
-    console.log(itemToRemove);
-    // TODO: send DELETE request to server
+  const onKeywordAdd = async (newKeyword) => {
+    // Prevent adding the same keyword twice
+    if (
+      keywords.some(
+        (keyword) =>
+          keyword.name.toLowerCase().trim() === newKeyword.toLowerCase().trim()
+      )
+    )
+      return;
+
+    const keywordCategory = allCompetenceCategories.find(
+      (category) => category.name === COMPETENCE_TYPE.keywords
+    );
+
+    // Make resquest to server to add the language
+    const addedKeyword = await addCompetence(
+      jwt,
+      newKeyword,
+      keywordCategory.id
+    );
+    
+    // Update the UI
+    setKeywords((prevKeywords) => [...prevKeywords, addedKeyword]);
+  };
+
+  const onKeywordRemove = async (itemToRemove) => {
+
+    const removedItem = await removeCompetence(jwt, itemToRemove.id)
+
     setKeywords((prevItems) =>
-      prevItems.filter((item) => item.id !== itemToRemove.id)
+      prevItems.filter((item) => item.id !== removedItem.id)
     );
-  };
-
-  const onKeywordAdd = (newKeyword) => {
-    console.log(newKeyword);
-    // TODO: send POST request to server
-    setKeywords((prevKeywords) => [
-      ...prevKeywords,
-      { name: newKeyword, id: prevKeywords.length },
-    ]);
   };
 
   return (
