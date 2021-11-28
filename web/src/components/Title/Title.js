@@ -7,6 +7,9 @@ import { Typography } from '@mui/material';
 const StyledContainer = styled('div')`
   display: flex;
   align-items: center;
+  @media print{
+      display: none;
+  }
 `;
 const NameContainer = styled('div')`
   display: flex;
