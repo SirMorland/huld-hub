@@ -261,7 +261,7 @@ describe("SearchItems component", () => {
   afterEach(cleanup);
   it("should render correct when nothing is searched", () => {
     const { getByText } = renderHelper(<SearchItems />);
-    expect(getByText("Start by searching something...")).toBeTruthy();
+    expect(getByText("Search employee database...")).toBeTruthy();
   });
 
   it("should render correct when no search result is found", () => {
