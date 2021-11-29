@@ -274,6 +274,18 @@ export const sendPasswordReset = async (email) => {
   return await handleBasicReponse(response);
 }
 
+export const resetPassword = async (code, password, reEnterPassword) => {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/auth/reset-password`;
+  const body = {
+    code: code,
+    password: password,
+    passwordConfirmation: reEnterPassword
+  };
+
+  const response = await fetchPost(url, body);
+  return await handleBasicReponse(response);
+}
+
 
 export class EmailOrPasswordInvalidError extends Error { };
 export class EmailWrongDomainError extends Error { };
