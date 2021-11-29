@@ -165,17 +165,17 @@ function ProfilePageEdit({
     });
   };
 
-  const onKeywordRemove = (keywords) => {
+  const onKeywordRemove = (itemToRemove) => {
     setEdited({
       ...edited,
-      keywords,
+      keywords: edited.keywords.filter((item) => item.id !== itemToRemove.id),
     });
   };
 
-  const onLanguageRemove = (languages) => {
+  const onLanguageRemove = (itemToRemove) => {
     setEdited({
       ...edited,
-      languages,
+      languages: edited.languages.filter((item) => item.id !== itemToRemove.id),
     });
   };
 

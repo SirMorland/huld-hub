@@ -40,7 +40,6 @@ describe.only("ItemlistEdit component", () => {
     const deleteButtons = getAllByLabelText('delete');
     expect(deleteButtons.length).toEqual(2);
     deleteButtons[0].click();
-    mockData.items.splice(0,1);
-    expect(onRemove).toBeCalledWith(mockData.items);
+    expect(onRemove).toBeCalledWith(mockData.items[0]);
   })
 });
