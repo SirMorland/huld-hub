@@ -101,7 +101,7 @@ export default function PasswordResetLinkForm() {
                     {"Email has been sent"}
                 </DialogTitle>
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
+                    <DialogContentText color="text" id="alert-dialog-description">
                         Reset link for the password has been sent to the described email.
                     </DialogContentText>
                 </DialogContent>
