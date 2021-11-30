@@ -19,10 +19,11 @@ export default function AlmostDone() {
 
 	const [email, setEmail] = useState(null);
 	const [open, setOpen] = React.useState(false);
+	const [SendError, setSendError] = useState('');
 
 	const handleClose = () => {
 		setOpen(false);
-	  };
+	};
 
 	useEffect(() => {
 		// Extract the email from the jwt token to be used for resending confirm email
@@ -34,10 +35,16 @@ export default function AlmostDone() {
 		//console.log(email);
 		// send a post request to /auth/send-email-confirmation
 		// the body is an object with {email: email}
-		const json = await sendConfirmationEmail(email);
-		if (json){
-			setOpen(true);
+		setSendError('');
+		try {
+			const json = await sendConfirmationEmail(email);
+			if (json) {
+				setOpen(true);
+			}
+		} catch (error) {
+			setSendError('Encountered an error when attempting to send email');
 		}
+
 	};
 
 	return (
@@ -66,6 +73,13 @@ export default function AlmostDone() {
 				>
 					Resend confirmation email
 				</Button>
+				{SendError &&
+					<React.Fragment>
+						<Typography component="p" variant="body2" color="error">
+							{SendError}
+						</Typography>
+					</React.Fragment>
+				}
 			</DialogWrapper>
 			<Dialog
 				open={open}
