@@ -12,7 +12,7 @@ const Wrapper = styled('div')(`
   margin: 8px 0px;
 `);
 
-const ItemListEdit = ({items, onRemove}) => {
+const ItemListEdit = ({ items, onRemove }) => {
   const onRemoveItem = (index) => {
     // remove item from items
     items.splice(index, 1);
@@ -22,9 +22,9 @@ const ItemListEdit = ({items, onRemove}) => {
   return (
     <Wrapper>
       {
-        items && items.map((item,index) => 
+        items && items.map((item, index) =>
           <div key={index}>
-            <IconButton size="small" aria-label="delete" color="error" onClick={() => {onRemoveItem(index)}}>
+            <IconButton size="small" aria-label="delete" color="error" onClick={() => { onRemoveItem(index) }}>
               <StyledIcon />
             </IconButton>
             {item.name}
