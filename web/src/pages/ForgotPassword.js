@@ -107,7 +107,7 @@ export default function PasswordResetLinkForm() {
                 </DialogContent>
                 <DialogActions>  
                     <Button onClick={handleClose} autoFocus>
-                        close
+                        Close
                     </Button>
                 </DialogActions>
             </Dialog>

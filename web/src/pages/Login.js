@@ -71,7 +71,7 @@ export default function LoginForm() {
                                 <Grid item>
                                     <Typography component="p" variant="body2" color="error">
                                         {error && `${error} `}
-                                        <Link href="/forgotpassword" variant="body2" color="secondary">
+                                        <Link href="/forgot-password" variant="body2" color="secondary">
                                             Forgot Password?
                                         </Link>
                                     </Typography>

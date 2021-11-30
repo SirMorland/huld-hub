@@ -28,7 +28,7 @@ export default function ResetPasswordForm() {
             try {
                 const json = await resetPassword(code,password, reEnterPassword);
                 if (json){
-                    history.push("/passwordchanged");
+                    history.push("/password-changed");
                 }
             } catch (error) {
                 setPasswordError("Encountered an error when attempting to change password");
