@@ -5,6 +5,7 @@ import { styled } from "@mui/system";
 import Page from "../components/Page/Page";
 import useEmailDomain from "../hooks/useEmailDomain";
 import useGetAllUsers from "../hooks/useGetAllUsers";
+import useGetRoles from "../hooks/useGetRoles";
 
 import { useUserContext } from "../userContext";
 import SelectAutocompleteField from "../components/SelectAutocompleteField";
@@ -66,6 +67,7 @@ function AdminPage() {
 
   const { jwt } = useUserContext();
   const allCompetenceCategories = useCompetenceCategories(jwt);
+
   const allLanguages = useCompetences(
     COMPETENCE_TYPE.languages.serverName,
     jwt
@@ -175,6 +177,7 @@ function AdminPage() {
   };
 
   const allUsers = useGetAllUsers(jwt);
+  const { ADMIN, EMPLOYEE } = useGetRoles(jwt);
   const [users, setUsers] = useState(allUsers || []);
 
   console.log(users)
@@ -190,7 +193,6 @@ function AdminPage() {
   })
   );
 
-  console.log(admin)
   //filtering employees from all users
   const employees = users.filter(user => user.role.type === "employee").map(user => ({
     name: user.username,
@@ -200,15 +202,19 @@ function AdminPage() {
   );;
 
   //removal from Admin list
-  const onRemove = async (itemToRemove) => {
+  const onRemove = async (itemNotRemoved) => {
+
+    const itemToRemove = users.find(user => !itemNotRemoved.some(a => a.id === user.id));
     console.log(itemToRemove)
-    const updatedItem = updateUserRole(jwt, itemToRemove, itemToRemove.role.id);
-    setUsers((prevItems) => [...prevItems, updatedItem]);
+    const updatedItem = await updateUserRole(jwt, itemToRemove, EMPLOYEE?.id);
+    console.log(updatedItem);
+    setUsers(prevItems => prevItems.map(item => item.id === updatedItem.id ? updatedItem : item))
   }
 
-  const onSelect = async (itemToAdd) => {
-    const updatedItem = await updateUserRole(jwt, itemToAdd.id, itemToAdd.role.id)
-    setUsers((prevItems) => [...prevItems, updatedItem]);
+  const onSelect = async (itemSelected) => {
+    const updatedItem = await updateUserRole(jwt, itemSelected, ADMIN?.id);
+    console.log(updatedItem);
+    setUsers(prevItems => prevItems.map(item => item.id === updatedItem.id ? updatedItem : item))
   }
 
   return (

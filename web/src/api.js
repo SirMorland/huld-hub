@@ -98,7 +98,7 @@ export const updateUserRole = async (jwt, user, role) => {
 * get all user roles
 * @param {string} jwt authoriazation token
 */
-const getRoles = async (jwt) => {
+export const getRoles = async (jwt) => {
   const url = `${process.env.REACT_APP_BACKEND_HOST}/users-permissions/roles`;
   const response = await fetch(url, {
     headers: {
