@@ -67,9 +67,8 @@ const roleSetup = async (roles) => {
       await createRole(role);
       customRole = await findRoleByName(role.name);
     } 
-    await enableUploadPermissions(customRole.id);
+    if (role.canUpload) await enableUploadPermissions(customRole.id);
 
-    await enableApplicationPermissions(customRole.id, 'competence-categories', ['find']);
     if (role.applicationPermissions) {
       await Promise.all(
         role.applicationPermissions.map(async (permission) => {

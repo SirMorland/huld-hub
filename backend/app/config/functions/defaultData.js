@@ -3,6 +3,7 @@ const DEFAULT_ROLES = {
     name: "Admin",
     descripton: "Admin user",
     type: "admin",
+    canUpload: true,
     applicationPermissions: [
       {
         controller: 'competences',
@@ -37,6 +38,7 @@ const DEFAULT_ROLES = {
     name: "Employee",
     descripton: "Employee user",
     type: "employee",
+    canUpload: true,
     applicationPermissions: [
       {
         controller: 'competences',
@@ -52,6 +54,16 @@ const DEFAULT_ROLES = {
       }
     ],
   },
+  
+  PUBLIC: {
+    name: "Public",
+    usersPermissions: [
+      {
+        controller: 'auth',
+        action: 'sendemailconfirmation',
+      },
+    ]
+  }
 };
 
 const DEFAULT_USERS = [
