@@ -30,14 +30,14 @@ const BasicInfo = styled(Grid)`
     grid-column-start: 1;
   }
 `;
-// const ContactInfo = styled(Grid)`
-//   @media (min-width: 768px) {
-//     grid-column-start: 2;
-//   }
-//   @media (min-width: 1152px) {
-//     grid-column-start: 1;
-//   }
-// `;
+const ContactInfo = styled(Grid)`
+  @media (min-width: 768px) {
+    grid-column-start: 2;
+  }
+  @media (min-width: 1152px) {
+    grid-column-start: 1;
+  }
+`;
 const Skills = styled("div")`
   @media (min-width: 768px) {
     grid-column-start: 1;
@@ -190,8 +190,16 @@ function ProfilePageEdit({
           <UserBasicInfoEdit
             basicInfo={basicInfo}
             setBasicInfo={setBasicInfo}
+            type={"Basicinfo"}
           ></UserBasicInfoEdit>
         </BasicInfo>
+        <ContactInfo>
+          <UserBasicInfoEdit
+            basicInfo={basicInfo}
+            setBasicInfo={setBasicInfo}
+            type={"Contactinfo"}
+          ></UserBasicInfoEdit>
+        </ContactInfo>
 
         <Skills>
           <Typography variant="h2"> Skills </Typography>

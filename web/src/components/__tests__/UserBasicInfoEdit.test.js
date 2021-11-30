@@ -27,15 +27,18 @@ describe("UserContactinfo component", () => {
     expect(container).toBeTruthy();
   });
   it("should render profile data in input fields", () => {
-    const { getByDisplayValue } = renderWithTheme(<UserBasicInfoEdit  basicInfo={profile} setBasicInfo={UpdateFunction} />);
+    const { getByDisplayValue } = renderWithTheme(<UserBasicInfoEdit  basicInfo={profile} setBasicInfo={UpdateFunction} type={"Basicinfo"} />);
+    expect(getByDisplayValue(profile.first_name)).toBeInTheDocument();
+    expect(getByDisplayValue(profile.last_name)).toBeInTheDocument();
+    expect(getByDisplayValue(profile.title)).toBeInTheDocument();
+  });
+  it("should render profile data in input fields", () => {
+    const { getByDisplayValue } = renderWithTheme(<UserBasicInfoEdit  basicInfo={profile} setBasicInfo={UpdateFunction} type={"Contactinfo"} />);
     expect(getByDisplayValue(profile.email)).toBeInTheDocument();
     expect(getByDisplayValue(profile.slack)).toBeInTheDocument();
     expect(getByDisplayValue(profile.github)).toBeInTheDocument();
     expect(getByDisplayValue(profile.phone)).toBeInTheDocument();
     expect(getByDisplayValue(profile.address)).toBeInTheDocument();
-    expect(getByDisplayValue(profile.first_name)).toBeInTheDocument();
-    expect(getByDisplayValue(profile.last_name)).toBeInTheDocument();
-    expect(getByDisplayValue(profile.title)).toBeInTheDocument();
     expect(getByDisplayValue(profile.linkedin)).toBeInTheDocument();
   });
  
