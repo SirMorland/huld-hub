@@ -43,7 +43,7 @@ const AuthUser = ({ children }) => {
       return <Page><h1>401</h1></Page> //TODO: use actual error page
     }
   } else if(jwt) {
-    if(path !== "/almost-done") {
+    if(path !== "/almost-done" && user?.confirmed === false) {
       // Unauthenticated users with jwt set are redirected to Almost done page
       return <Redirect to="/almost-done" />;
     }
