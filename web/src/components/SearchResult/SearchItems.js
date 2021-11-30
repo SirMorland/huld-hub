@@ -8,12 +8,13 @@ import SearchItem from "./SearchItem";
 
 const EmptyHistory = styled(Typography)(({ theme }) => ({
   color: theme.palette.grey.main,
+  whiteSpace: "nowrap",
 }));
 
 const Divider = styled(MuiDivider)(({ theme }) => ({
   color: theme.palette.grey[100],
   margin: "24px 0",
-  fontSize: "2px"
+  fontSize: "2px",
 }));
 
 function SearchItems(props) {
@@ -35,7 +36,7 @@ function SearchItems(props) {
         <EmptyHistory variant="body1" data-testid="no-item-description">
           {searchTerms.length > 0
             ? "No Match Found"
-            : "Start by searching something..."}
+            : "Search employee database..."}
         </EmptyHistory>
       )}
     </div>
