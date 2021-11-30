@@ -202,11 +202,8 @@ function AdminPage() {
   );;
 
   //removal from Admin list
-  const onRemove = async (itemNotRemoved) => {
-
-    const itemToRemove = users.find(user => !itemNotRemoved.some(a => a.id === user.id));
-    console.log(itemToRemove)
-    const updatedItem = await updateUserRole(jwt, itemToRemove, EMPLOYEE?.id);
+  const onRemove = async (demotedUser) => {
+    const updatedItem = await updateUserRole(jwt, demotedUser, EMPLOYEE?.id);
     console.log(updatedItem);
     setUsers(prevItems => prevItems.map(item => item.id === updatedItem.id ? updatedItem : item))
   }
