@@ -29,24 +29,13 @@ const enableApplicationPermissions = async (role) => {
   );
 };
 
-const enableFindUsers = async (role) => {
+const enablePermission = async (role, type, controller, action) => {
   const permissionQuery = strapi.query("permission", "users-permissions");
   const { id } = await permissionQuery.findOne({
     role,
-    type: "users-permissions",
-    controller: "user",
-    action: "find",
-  });
-  await permissionQuery.update({ id }, { enabled: true });
-};
-
-const enableUpdateUsers = async (role) => {
-  const permissionQuery = strapi.query("permission", "users-permissions");
-  const { id } = await permissionQuery.findOne({
-    role,
-    type: "users-permissions",
-    controller: "user",
-    action: "update",
+    type,
+    controller,
+    action,
   });
   await permissionQuery.update({ id }, { enabled: true });
 };
@@ -77,8 +66,9 @@ const roleSetup = async (roles) => {
     await enableApplicationPermissions(customRole.id);
     await enableUploadPermissions(customRole.id);
     if (role.type === 'admin') {
-      await enableFindUsers(customRole.id);
-      await enableUpdateUsers(customRole.id);
+      await enablePermission(customRole.id, 'users-permissions', 'userspermissions', 'getroles');
+      await enablePermission(customRole.id, 'users-permissions', 'user', 'update');
+      await enablePermission(customRole.id, 'users-permissions', 'user', 'find');
     }
   }));
   // no role provided will enable application permissions to every role, uncomment this to apply
