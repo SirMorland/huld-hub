@@ -1,5 +1,4 @@
 import NavBar from "../NavBar";
-import { fireEvent } from '@testing-library/react';
 import { renderHelper } from '../../../utils';
 
 describe('NavBar', () => {
