@@ -3,13 +3,67 @@ const DEFAULT_ROLES = {
     name: "Admin",
     descripton: "Admin user",
     type: "admin",
+    canUpload: true,
+    applicationPermissions: [
+      {
+        controller: 'competences',
+        actions: ['find', 'create', 'delete'],
+      },
+      {
+        controller: 'comptence-categories',
+        actions: ['find'],
+      },
+      {
+        controller: 'user-profiles',
+        actions: ['find', 'update', 'delete', 'findone'],
+      }
+    ],
+    usersPermissions: [
+      {
+        controller: 'user',
+        action: 'update',
+      },
+      {
+        controller: 'user',
+        action: 'find',
+      },
+      {
+        controller: 'userspermissions',
+        action: 'getroles',
+      }
+    ]
   },
 
   EMPLOYEE: {
     name: "Employee",
     descripton: "Employee user",
     type: "employee",
+    canUpload: true,
+    applicationPermissions: [
+      {
+        controller: 'competences',
+        actions: ['find'],
+      },
+      {
+        controller: 'comptence-categories',
+        actions: ['find'],
+      },
+      {
+        controller: 'user-profiles',
+        actions: ['find', 'update', 'findone'],
+      }
+    ],
   },
+  
+  PUBLIC: {
+    name: "Public",
+    usersPermissions: [
+      {
+        controller: 'auth',
+        action: 'sendemailconfirmation',
+      },
+    ]
+  }
 };
 
 const DEFAULT_USERS = [

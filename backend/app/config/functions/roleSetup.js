@@ -7,46 +7,39 @@ const findRoleByName = (name) => {
  * @param {{name: string; description: string; type: string}} role role object
  * @returns Promise that resolves into
  */
-const createRole = async (role) => {
-  await strapi.plugins["users-permissions"].services.userspermissions.createRole(role);
+const createRole = async ({name, description, type}) => {
+  await strapi.plugins["users-permissions"].services.userspermissions.createRole({name, description, type});
   await strapi.plugins["users-permissions"].services.userspermissions.updatePermissions();
 };
 
 /**
- * Apply all permissions in the application to the role
+ * Apply permissions in the application to the role
  * @param {string} role roleId
+ * @param {string} controller controller name
+ * @param {Array<string>} actions actions to be enabled
  */
-const enableApplicationPermissions = async (role) => {
+const enableApplicationPermissions = async (role, controller, actions) => {
   const permissionQuery = strapi.query("permission", "users-permissions");
   const applicationPermissions = await permissionQuery.find({
     type: "application",
     role,
+    controller,
   });
+  const filter = ({action}) => actions.includes(action);
   await Promise.all(
-    applicationPermissions.map(({ id }) =>
+    applicationPermissions.filter(filter).map(({ id }) =>
       permissionQuery.update({ id }, { enabled: true })
     )
   );
 };
 
-const enableFindUsers = async (role) => {
+const enableUsersPermissions = async (role, controller, action) => {
   const permissionQuery = strapi.query("permission", "users-permissions");
   const { id } = await permissionQuery.findOne({
     role,
-    type: "users-permissions",
-    controller: "user",
-    action: "find",
-  });
-  await permissionQuery.update({ id }, { enabled: true });
-};
-
-const enableUpdateUsers = async (role) => {
-  const permissionQuery = strapi.query("permission", "users-permissions");
-  const { id } = await permissionQuery.findOne({
-    role,
-    type: "users-permissions",
-    controller: "user",
-    action: "update",
+    type: 'users-permissions',
+    controller,
+    action,
   });
   await permissionQuery.update({ id }, { enabled: true });
 };
@@ -74,15 +67,23 @@ const roleSetup = async (roles) => {
       await createRole(role);
       customRole = await findRoleByName(role.name);
     } 
-    await enableApplicationPermissions(customRole.id);
-    await enableUploadPermissions(customRole.id);
-    if (role.type === 'admin') {
-      await enableFindUsers(customRole.id);
-      await enableUpdateUsers(customRole.id);
+    if (role.canUpload) await enableUploadPermissions(customRole.id);
+
+    if (role.applicationPermissions) {
+      await Promise.all(
+        role.applicationPermissions.map(async (permission) => {
+          await enableApplicationPermissions(customRole.id, permission.controller, permission.actions);
+        })
+      );
+    }
+    if (role.usersPermissions) {
+      await Promise.all(
+        role.usersPermissions.map(async (permission) => {
+          await enableUsersPermissions(customRole.id, permission.controller, permission.action);
+        })
+      );
     }
   }));
-  // no role provided will enable application permissions to every role, uncomment this to apply
-  // await enableApplicationPermissions();
 };
 
 
