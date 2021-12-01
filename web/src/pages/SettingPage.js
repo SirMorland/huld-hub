@@ -94,7 +94,7 @@ function SettingPage() {
           </Grid>
           <Grid item xs={12}>
             <Button type="submit" fullWidth variant="contained" color="primary">
-              Save
+              SAVE
             </Button>
           </Grid>
         </Grid>
@@ -109,7 +109,7 @@ function SettingPage() {
             color="error"
             onClick={logout}
           >
-            Logout
+            LOGOUT
           </Button>
         </Grid>
       </Grid>
