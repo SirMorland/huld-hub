@@ -264,6 +264,15 @@ export const getEmailDomain = async () => {
   return text;
 }
 
+export const sendConfirmationEmail = async (email) => {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/auth/send-email-confirmation`;  const body = {
+    email: email
+  };
+
+  const response = await fetchPost(url, body);
+  return await handleBasicReponse(response);
+}
+
 export const sendPasswordReset = async (email) => {
   const url = `${process.env.REACT_APP_BACKEND_HOST}/auth/forgot-password`;
   const body = {
