@@ -16,7 +16,6 @@ import ForgotPassword from "./pages/ForgotPassword"
 import ResetPassword from "./pages/ResetPassword"
 import PasswordChanged from "./pages/PasswordChanged"
 
-import Page from "./components/Page/Page";
 
 
 import theme from "./theme";
