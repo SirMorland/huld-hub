@@ -87,6 +87,7 @@ export const getAllUsers = async (jwt) => {
 * @param {string} id of the user role to be updated
 */
 export const updateUserRole = async (jwt, user, role) => {
+  console.log(user)
   const url = `${process.env.REACT_APP_BACKEND_HOST}/users/${user.id}`;
   const body = { role };
   const response = await fetchPost(url, body, jwt, "PUT");
@@ -97,7 +98,7 @@ export const updateUserRole = async (jwt, user, role) => {
 * get all user roles
 * @param {string} jwt authoriazation token
 */
-const getRoles = async (jwt) => {
+export const getRoles = async (jwt) => {
   const url = `${process.env.REACT_APP_BACKEND_HOST}/users-permissions/roles`;
   const response = await fetch(url, {
     headers: {
@@ -194,17 +195,17 @@ export const postProfile = async (profile, jwt) => {
 }
 
 export const uploadPicture = async (file, jwt) => {
-    const body = new FormData();
-    body.append("files", file);
-    const url = `${process.env.REACT_APP_BACKEND_HOST}/upload`;
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${jwt}`
-      },
-      body,
-    });
-    return await handleBasicReponse(response);
+  const body = new FormData();
+  body.append("files", file);
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/upload`;
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${jwt}`
+    },
+    body,
+  });
+  return await handleBasicReponse(response);
 };
 
 export const getCompetenceCategories = async (jwt) => {
@@ -228,12 +229,12 @@ export const getCategoryCompetences = async (category, jwt) => {
 }
 
 const getPropertyContains = (property, keywords) => {
-  return { _or: [...keywords.map(keyword => ({ [`${property}_contains`]: keyword })) ]}
+  return { _or: [...keywords.map(keyword => ({ [`${property}_contains`]: keyword }))] }
 }
 
 export const search = async (keywords, jwt) => {
   if (keywords && keywords.length) {
-  
+
     const qr = qs.stringify({
       _where: {
         _or: [
@@ -246,14 +247,14 @@ export const search = async (keywords, jwt) => {
         ],
       },
     });
-  
+
     const url = `${process.env.REACT_APP_BACKEND_HOST}/user-profiles?${qr}`;
     const response = await fetch(url, {
       headers: {
         "Authorization": `Bearer ${jwt}`
       }
     });
-  
+
     return await handleBasicReponse(response);
   }
 }

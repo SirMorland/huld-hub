@@ -4,11 +4,16 @@ import { styled } from "@mui/system";
 
 import Page from "../components/Page/Page";
 import useEmailDomain from "../hooks/useEmailDomain";
+import useGetAllUsers from "../hooks/useGetAllUsers";
+import useGetRoles from "../hooks/useGetRoles";
+
+import { useUserContext } from "../userContext";
+import SelectAutocompleteField from "../components/SelectAutocompleteField";
+import ItemListEdit from "../components/ItemListEdit";
 import CompetenceEdit from "../components/CompetenceEdit";
 import useCompetences from "../hooks/useCompetences";
 import useCompetenceCategories from "../hooks/useCompetenceCategories";
-import { useUserContext } from "../userContext";
-import { addCompetence, removeCompetence } from "../api";
+import { addCompetence, removeCompetence, updateUserRole } from "../api";
 
 const Admins = styled("div")`
   @media (min-width: 768px) {
@@ -62,6 +67,7 @@ function AdminPage() {
 
   const { jwt } = useUserContext();
   const allCompetenceCategories = useCompetenceCategories(jwt);
+
   const allLanguages = useCompetences(
     COMPETENCE_TYPE.languages.serverName,
     jwt
@@ -156,7 +162,7 @@ function AdminPage() {
       newKeyword,
       keywordCategory.id
     );
-    
+
     // Update the UI
     setKeywords((prevKeywords) => [...prevKeywords, addedKeyword]);
   };
@@ -170,12 +176,54 @@ function AdminPage() {
     );
   };
 
+  const allUsers = useGetAllUsers(jwt);
+  const { ADMIN, EMPLOYEE } = useGetRoles(jwt);
+  const [users, setUsers] = useState(allUsers || []);
+
+  console.log(users)
+  useEffect(() => {
+    setUsers(allUsers)
+  }, [allUsers]);
+
+  //filtering admin from all users
+  const admin = users.filter(user => user.role.type === "admin").map(user => ({
+    name: user.username,
+    id: user.id,
+    role: user.role
+  })
+  );
+
+  //filtering employees from all users
+  const employees = users.filter(user => user.role.type === "employee").map(user => ({
+    name: user.username,
+    id: user.id,
+    role: user.role
+  })
+  );;
+
+  //removal from Admin list
+  const onRemove = async (demotedUser) => {
+    const updatedItem = await updateUserRole(jwt, demotedUser, EMPLOYEE?.id);
+    console.log(updatedItem);
+    setUsers(prevItems => prevItems.map(item => item.id === updatedItem.id ? updatedItem : item))
+  }
+
+  const onSelect = async (itemSelected) => {
+    const updatedItem = await updateUserRole(jwt, itemSelected, ADMIN?.id);
+    console.log(updatedItem);
+    setUsers(prevItems => prevItems.map(item => item.id === updatedItem.id ? updatedItem : item))
+  }
+
   return (
     <Page>
       <Admins>
-        <Typography variant="h2" colour="primary">
-          Admins
-        </Typography>
+        <Typography variant="h2" colour="primary">Admins</Typography>
+        <ItemListEdit items={admin} onRemove={onRemove} />
+        <SelectAutocompleteField
+          options={employees}
+          onSelect={onSelect}
+          label="Pick an user to become Admin"
+        />
       </Admins>
       <Domains>
         <CompetenceEdit
