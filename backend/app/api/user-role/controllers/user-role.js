@@ -2,7 +2,8 @@
 
 module.exports = {
   update: (ctx) => {
-    const { role } = ctx.params;
-    return strapi.plugins["users-permissions"].controllers.user.update({...ctx, params: { role }});
+    const { role } = ctx.request.body;
+    ctx.request.body = { role };
+    return strapi.plugins["users-permissions"].controllers.user.update(ctx);
   }
 };
