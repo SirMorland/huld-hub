@@ -18,6 +18,11 @@ const StyledContainer = styled('div') (({ theme }) => `
     bottom: 0px;
     padding: 10px 32px;
   }
+
+  @media print
+  {    
+    display: none;
+  }
 `);
 
 const ActionButtonContainer = ({ children }) => {

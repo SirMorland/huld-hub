@@ -16,11 +16,11 @@ const profile = {
 describe("UserContactinfo component", () => {
   afterEach(cleanup);
   it("should render without crashing", () => {
-    const { container } = renderWithTheme(<UserContactinfo {...profile} />);
+    const { container } = renderWithTheme(<UserContactinfo profile={profile}  iconSide={"right"} />);
     expect(container).toBeTruthy();
   });
   it("should render all items", () => {
-    const { getByText } = renderWithTheme(<UserContactinfo {...profile} />);
+    const { getByText } = renderWithTheme(<UserContactinfo profile={profile}  iconSide={"right"} />);
     expect(getByText(profile.email)).toBeInTheDocument();
     expect(getByText(profile.slack)).toBeInTheDocument();
     expect(getByText(profile.github)).toBeInTheDocument();

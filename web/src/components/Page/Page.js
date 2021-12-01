@@ -22,6 +22,10 @@ const StyledMain = styled('main')`
     margin: 32px auto 112px auto;
     padding: 0 32px;
   }
+
+  @media print {
+    display: none;
+  }
 `;
 
 

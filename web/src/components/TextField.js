@@ -8,21 +8,17 @@ const OutlinedInput = styled(MuiOutlinedInput)(({ theme }) => ({
     color: theme.palette.grey[500],
   },
   "& .MuiOutlinedInput-input": {
-    background: "white"
+    background: "white",
   },
   margin: "4px 0",
 }));
 
-const Container = styled("div")({
-  // some styling
-})
-
 /**
- * 
- * @param {{textarea: boolean; label: string; placeholder: string; error: boolean; required: boolean; type: string; value: string; onChange: Function; }} param0 
- * @returns 
+ *
+ * @param {{textarea: boolean; label: string; placeholder: string; error: boolean; required: boolean; type: string; value: string; onChange: Function; }} param0
+ * @returns
  */
-function TextField({ label, textarea, ...props }) {
+function TextField({ label, textarea, className, ...props }) {
   const inputProps = {
     fullWidth: true,
     placeholder: label,
@@ -30,7 +26,7 @@ function TextField({ label, textarea, ...props }) {
     ...props,
   };
   return (
-    <Container data-testid="textfield-container">
+    <div data-testid="textfield-container" className={className}>
       {label && (
         <Typography
           component="label"
@@ -45,7 +41,7 @@ function TextField({ label, textarea, ...props }) {
         {...inputProps}
         inputProps={{ "data-testid": "textfield-input" }}
       />
-    </Container>
+    </div>
   );
 }
 

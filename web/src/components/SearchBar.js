@@ -2,31 +2,28 @@ import React, { useEffect } from "react";
 import { useHistory, useLocation } from "react-router";
 import PropTypes from "prop-types";
 import TextField from "../components/TextField";
-import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
+import { Typography } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { styled } from "@mui/system";
 
 const Wrapper = styled("form")(`
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-auto-flow: column;
-  align-items: center;
-  gap: 16px;
+  display: flex;
+  align-items: start;
+`);
+
+const InputWrapper = styled("div")({
+  flexGrow: 1,
+});
+
+const StyledButton = styled(Button)(`
+  margin-left: 16px;
+  margin-top: 4px;
+  height: 56px;
 `);
 
 const StyledIcon = styled(ArrowForwardIosIcon)(`
   color: #fff;
-`);
-
-const StyledIconButton = styled(IconButton)(`
-  background-color: #0047F2;
-  border-radius: 0;
-  width: 56px;
-  height: 56px;
-  cursor: pointer;
-  &:hover, &:focus {
-    background-color: #012c95;
-  }
 `);
 
 function useQuery() {
@@ -41,11 +38,11 @@ const SearchBar = ({ onSubmit }) => {
 
   useEffect(() => {
     const queryValue = params.get(queryKey);
-    if(queryValue){
-      setQuery(queryValue)
-      onSubmit(queryValue.split(",").map((s) => s.trim()))
+    if (queryValue) {
+      setQuery(queryValue);
+      onSubmit(queryValue.split(",").map((s) => s.trim()));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const submit = (e) => {
@@ -58,16 +55,32 @@ const SearchBar = ({ onSubmit }) => {
   };
   return (
     <Wrapper onSubmit={submit}>
-      <TextField
-        required
-        aria-label="search-input"
-        value={query}
-        onChange={({ target }) => setQuery(target.value)}
-        placeholder="Front-end, HTML, CSS"
-      />
-      <StyledIconButton aria-label="search" type="submit">
+      <InputWrapper>
+        <TextField
+          required
+          aria-label="search-input"
+          value={query}
+          onChange={({ target }) => setQuery(target.value)}
+          placeholder="e.g. John, fullstack, CSS, iOS"
+        />
+        {query && (
+          <Typography
+            variant="caption"
+            color="white"
+            sx={{ whiteSpace: "nowrap" }}
+          >
+            Separate search terms with a comma (,)
+          </Typography>
+        )}
+      </InputWrapper>
+      <StyledButton
+        aria-label="search"
+        type="submit"
+        variant="contained"
+        color="primary"
+      >
         <StyledIcon />
-      </StyledIconButton>
+      </StyledButton>
     </Wrapper>
   );
 };

@@ -15,6 +15,11 @@ const StyledHeaderContainer = styled('div')(({ theme }) => `
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media print
+  {    
+    display: none;
+  }
 `);
 
 const StyledHeader = styled('header')`
