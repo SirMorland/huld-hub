@@ -65,7 +65,11 @@ function ProfilePage() {
 
   if (profile === false) {
     // TODO: render actual 404 page
-    return <Page><ErrorPage /></Page>;
+    return (
+      <ErrorPage 
+        errorCode={404}
+      />
+    );
   }
 
   const profileProps = {

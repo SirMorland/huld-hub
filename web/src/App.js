@@ -42,7 +42,10 @@ const AuthUser = ({ children }) => {
     }
     if(path === "/admin" && user.role.type !== "admin") {
       // Logged in users without admin role trying to access Admin page are shown an error page 
-      return <Page><h1>401</h1></Page> //TODO: use actual error page
+      return (
+        <ErrorPage 
+          errorCode={403}/> //TODO: use actual error page
+      );
     }
   } else if(jwt) {
     if(path !== "/almost-done") {
@@ -56,7 +59,10 @@ const AuthUser = ({ children }) => {
     }
     if(path !== "/login" && path !== "/register" && path !== "/email-confirmed") {
       // Unauthenticated users trying to access some other page than Login, Register or Email confirmed are shown an error page
-      return <Page><ErrorPage /></Page> //TODO: use actual error page
+      return (
+        <ErrorPage 
+          errorCode={403}/> //TODO: use actual error page
+      );
     }
   }
 
@@ -104,9 +110,7 @@ function App() {
             <Route exact path="/admin" component={AdminPage} />
 
             <Route>
-              <Page>
                 <ErrorPage />
-              </Page>
             </Route>
           </Switch>
         </AuthUser>
