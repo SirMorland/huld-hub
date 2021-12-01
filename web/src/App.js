@@ -11,7 +11,7 @@ import EmailConfirmed from "./pages/EmailConfirmed";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import SearchPage from "./pages/SearchPage";
 import AdminPage from "./pages/AdminPage";
-
+import SettingPage from "./pages/SettingPage";
 import Page from "./components/Page/Page";
 
 import theme from "./theme";
@@ -100,7 +100,7 @@ function App() {
             <Route exact path="/profile/:profileId" component={ProfilePage} />
             <Route exact path="/search" component={SearchPage} />
             <Route exact path="/admin" component={AdminPage} />
-
+            <Route exact path="/settings" component={SettingPage} />
             <Route>
               <Page>
                 <h1>404</h1>

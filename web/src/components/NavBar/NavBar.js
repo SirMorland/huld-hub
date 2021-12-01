@@ -58,7 +58,6 @@ const headerTypography = (theme) => ({
   verticalAlign: "bottom",
 });
 
-const StyledButton = styled('button')(({ theme }) => headerTypography(theme));
 const StyledLink = styled(Link)(({ theme }) => headerTypography(theme));
 
 const HeaderLink = styled(StyledLink)({
@@ -97,7 +96,7 @@ const NavBar = ({ children, onLogOutClick, loggedIn, role }) => {
         {loggedIn &&
           <StyledUl>
             {role === 'admin' && <StyledLi><StyledLink to="/admin">Admin</StyledLink></StyledLi>}
-            <StyledLi><StyledButton type="button" onClick={onLogOutClick}>Log out</StyledButton></StyledLi>
+            <StyledLi><StyledLink to="/settings">Settings</StyledLink></StyledLi>
             {role && <StyledLi><StyledLink to="/search"><StyledSearchIcon /></StyledLink></StyledLi>}
         </StyledUl>}
       </StyledHeader>
