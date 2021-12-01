@@ -10,7 +10,6 @@ import { postProfile, uploadPicture } from "../../api";
 
 import ProfilePageEdit from "./ProfilePageEdit";
 import ProfilePageView from "./ProfilePageView";
-import Page from "../../components/Page/Page";
 
 import { useUserContext } from "../../userContext";
 import useGetCompetencesByCategory from "../../hooks/useGetCompetencesByCategory";
