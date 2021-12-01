@@ -94,6 +94,19 @@ export const updateUserRole = async (jwt, user, role) => {
 }
 
 /**
+* update input user with a new password
+* @param {string} jwt authoriazation token
+* @param {Object.<id:string | number>} user object for updating
+* @param {string} password of the user to be updated
+*/
+export const updateUserPassword = async (jwt, user, password) => {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/users/${user.id}`;
+  const body = { password };
+  const response = await fetchPost(url, body, jwt, "PUT");
+  return await handleBasicReponse(response);
+}
+
+/**
 * get all user roles
 * @param {string} jwt authoriazation token
 */

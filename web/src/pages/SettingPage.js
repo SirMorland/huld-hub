@@ -5,12 +5,13 @@ import { styled } from "@mui/system";
 import TextField from "../components/TextField";
 import { useUserContext } from "../userContext";
 import { Box } from "@mui/system";
+import { updateUserPassword, NotFoundError } from "../api";
 
 const StyledSuccess = styled(Typography)`
   color: #28a745;
 `;
 function SettingPage() {
-  const { logout, jwt } = useUserContext();
+  const { user, logout, jwt } = useUserContext();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
@@ -26,11 +27,22 @@ function SettingPage() {
       }
 
       if (isError === false) {
+        await updateUserPassword(jwt, user, password);
+        setPassword("");
+        setConfirmPassword("");
         setError("");
         setSuccess("Your password has been changed");
-        //TODO: Call api here
       }
-    } catch (error) {}
+    } catch (error) {
+      switch (true) {
+        case error instanceof NotFoundError:
+          setError("Unable to change your password");
+          break;
+        default:
+          setError("Unknown error");
+          break;
+      }
+    }
   };
 
   return (
