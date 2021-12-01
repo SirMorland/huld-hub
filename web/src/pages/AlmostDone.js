@@ -27,8 +27,13 @@ export default function AlmostDone() {
 
 	useEffect(() => {
 		// Extract the email from the jwt token to be used for resending confirm email
-		let { email } = JSON.parse(atob(jwt.split('.')[1])); //TODO: maybe use an actual jwt parser library
-		setEmail(email);
+		try{
+			let { email } = JSON.parse(atob(jwt.split('.')[1])); //TODO: maybe use an actual jwt parser library
+			setEmail(email);
+		}catch (error){
+			setEmail('');
+		}
+	
 	}, [jwt]);
 
 	const HandleSendConfirmationEmail = async () => {
