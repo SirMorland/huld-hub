@@ -110,7 +110,7 @@ function App() {
             <Route exact path="/admin" component={AdminPage} />
 
             <Route>
-                <ErrorPage />
+                <ErrorPage errorCode={404} />
             </Route>
           </Switch>
         </AuthUser>
