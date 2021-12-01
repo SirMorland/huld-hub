@@ -23,7 +23,7 @@ const profileSetup = require('./profileSetup');
 module.exports = async () => {
 
   await permissionSetup();
-  await roleSetup([DEFAULT_ROLES.ADMIN, DEFAULT_ROLES.EMPLOYEE]);
+  await roleSetup([DEFAULT_ROLES.ADMIN, DEFAULT_ROLES.EMPLOYEE, DEFAULT_ROLES.PUBLIC]);
   await defaultSettings(DEFAULT_SETTINGS);
 
   if (process.env.NODE_ENV === "development") {
