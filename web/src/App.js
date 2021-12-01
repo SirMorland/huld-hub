@@ -42,8 +42,8 @@ const AuthUser = ({ children }) => {
       // Logged in users without admin role trying to access Admin page are shown an error page 
       return <Page><h1>401</h1></Page> //TODO: use actual error page
     }
-  } else if(jwt) {
-    if(path !== "/almost-done" && user?.confirmed === false) {
+  } else if(jwt && user?.confirmed === false) {
+    if(path !== "/almost-done") {
       // Unauthenticated users with jwt set are redirected to Almost done page
       return <Redirect to="/almost-done" />;
     }
