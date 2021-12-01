@@ -87,8 +87,7 @@ export const getAllUsers = async (jwt) => {
 * @param {string} id of the user role to be updated
 */
 export const updateUserRole = async (jwt, user, role) => {
-  console.log(user)
-  const url = `${process.env.REACT_APP_BACKEND_HOST}/users/${user.id}`;
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/user-role/${user.id}`;
   const body = { role };
   const response = await fetchPost(url, body, jwt, "PUT");
   return await handleBasicReponse(response);
