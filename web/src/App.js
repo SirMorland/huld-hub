@@ -11,8 +11,10 @@ import EmailConfirmed from "./pages/EmailConfirmed";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import SearchPage from "./pages/SearchPage";
 import AdminPage from "./pages/AdminPage";
+import ErrorPage from "./pages/ErrorPage";
 
 import Page from "./components/Page/Page";
+
 
 import theme from "./theme";
 import useUser from "./hooks/useUser";
@@ -54,7 +56,7 @@ const AuthUser = ({ children }) => {
     }
     if(path !== "/login" && path !== "/register" && path !== "/email-confirmed") {
       // Unauthenticated users trying to access some other page than Login, Register or Email confirmed are shown an error page
-      return <Page><h1>401</h1></Page> //TODO: use actual error page
+      return <Page><ErrorPage /></Page> //TODO: use actual error page
     }
   }
 
@@ -103,7 +105,7 @@ function App() {
 
             <Route>
               <Page>
-                <h1>404</h1>
+                <ErrorPage />
               </Page>
             </Route>
           </Switch>

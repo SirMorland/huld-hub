@@ -15,6 +15,7 @@ import Page from "../../components/Page/Page";
 import { useUserContext } from "../../userContext";
 import useGetCompetencesByCategory from "../../hooks/useGetCompetencesByCategory";
 import { HISTORY_TYPE } from "../../hooks/useHistoryList";
+import ErrorPage from "../ErrorPage";
 
 function ProfilePage() {
   let match = useRouteMatch();
@@ -64,7 +65,7 @@ function ProfilePage() {
 
   if (profile === false) {
     // TODO: render actual 404 page
-    return <Page><h1>404</h1></Page>;
+    return <Page><ErrorPage /></Page>;
   }
 
   const profileProps = {
