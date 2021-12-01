@@ -13,15 +13,16 @@ import { HISTORY_TYPE } from "../../hooks/useHistoryList";
 import ProfilePicEdit from "../../components/ProfilePicEdit";
 import ItemListEdit from "../../components/ItemListEdit";
 import UserBasicInfoEdit from "../../components/UserBasicInfoEdit";
+import UserContactInfoEdit from "../../components/UserContactInfoEdit"
 
-const ProfilePicture = styled("div")`
-  @media (min-width: 768px) {
-    grid-column-start: 1;
-  }
-  @media (min-width: 1152px) {
-    grid-column-start: 1;
-  }
-`;
+// const ProfilePicture = styled("div")`
+//   @media (min-width: 768px) {
+//     grid-column-start: 1;
+//   }
+//   @media (min-width: 1152px) {
+//     grid-column-start: 1;
+//   }
+// `;
 const BasicInfo = styled(Grid)`
   @media (min-width: 768px) {
     grid-column-start: 1;
@@ -182,23 +183,18 @@ function ProfilePageEdit({
   return (
     <form onSubmit={onSave}>
       <Page>
-        <ProfilePicture>
-          <ProfilePicEdit profileImage={edited.image} ref={profileImageRef} />
-        </ProfilePicture>
-
         <BasicInfo>
+          <ProfilePicEdit profileImage={edited.image} ref={profileImageRef} />
           <UserBasicInfoEdit
             basicInfo={basicInfo}
             setBasicInfo={setBasicInfo}
-            type={"Basicinfo"}
           ></UserBasicInfoEdit>
         </BasicInfo>
         <ContactInfo>
-          <UserBasicInfoEdit
+          <UserContactInfoEdit
             basicInfo={basicInfo}
             setBasicInfo={setBasicInfo}
-            type={"Contactinfo"}
-          ></UserBasicInfoEdit>
+          ></UserContactInfoEdit>
         </ContactInfo>
 
         <Skills>
