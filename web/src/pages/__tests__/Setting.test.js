@@ -7,7 +7,7 @@ import Setting from "../SettingPage";
 
 import { renderHelper } from "../../utils";
 
-describe("Login Form", () => {
+describe("Setting page", () => {
   beforeEach(() => {
     fetch.resetMocks();
   });
