@@ -1,5 +1,5 @@
 import React from "react";
-import { DoubleFieldContainer, Grid } from "./GenericComponents";
+import { DoubleFieldContainer } from "./GenericComponents";
 import TextField from "./TextField";
 
 export default function UserBasicInfoEdit({ basicInfo, setBasicInfo }) {
