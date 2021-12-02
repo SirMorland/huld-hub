@@ -31,7 +31,7 @@ export default function AlmostDone() {
 			let { email } = JSON.parse(atob(jwt.split('.')[1])); //TODO: maybe use an actual jwt parser library
 			setEmail(email);
 		}catch (error){
-			setEmail('');
+			setEmail('.');
 		}
 	
 	}, [jwt]);
