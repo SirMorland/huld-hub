@@ -87,7 +87,6 @@ export const getAllUsers = async (jwt) => {
 * @param {string} id of the user role to be updated
 */
 export const updateUserRole = async (jwt, user, role) => {
-  console.log(user)
   const url = `${process.env.REACT_APP_BACKEND_HOST}/users/${user.id}`;
   const body = { role };
   const response = await fetchPost(url, body, jwt, "PUT");
@@ -266,7 +265,7 @@ export const getEmailDomain = async () => {
 }
 
 export const sendConfirmationEmail = async (email) => {
-  const url = `${process.env.REACT_APP_BACKEND_HOST}/auth/send-email-confirmation`;  const body = {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/auth/send-email-confirmation`; const body = {
     email: email
   };
 

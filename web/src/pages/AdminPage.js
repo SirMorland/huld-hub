@@ -180,7 +180,6 @@ function AdminPage() {
   const { ADMIN, EMPLOYEE } = useGetRoles(jwt);
   const [users, setUsers] = useState(allUsers || []);
 
-  console.log(users)
   useEffect(() => {
     setUsers(allUsers)
   }, [allUsers]);
@@ -199,7 +198,7 @@ function AdminPage() {
     id: user.id,
     role: user.role
   })
-  );;
+  );
 
   //removal from Admin list
   const onRemove = async (demotedUser) => {
