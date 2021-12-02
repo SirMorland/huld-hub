@@ -16,6 +16,10 @@ const DEFAULT_ROLES = {
       {
         controller: 'user-profiles',
         actions: ['find', 'update', 'delete', 'findone'],
+      },
+      {
+        controller: 'user-password',
+        actions: ['update'],
       }
     ],
     usersPermissions: [

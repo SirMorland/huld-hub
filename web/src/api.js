@@ -100,7 +100,7 @@ export const updateUserRole = async (jwt, user, role) => {
 * @param {string} password of the user to be updated
 */
 export const updateUserPassword = async (jwt, user, password) => {
-  const url = `${process.env.REACT_APP_BACKEND_HOST}/users/${user.id}`;
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/user-password/${user.id}`;
   const body = { password };
   const response = await fetchPost(url, body, jwt, "PUT");
   return await handleBasicReponse(response);
