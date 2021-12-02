@@ -47,6 +47,14 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "DELETE",
+      "path": "/user-profiles/deleteprofile/:id",
+      "handler": "user-profiles.deleteprofile",
+      "config": {
+        "policies": ["canDelete"]
+      }
     }
   ]
 }
