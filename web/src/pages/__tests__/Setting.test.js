@@ -24,12 +24,12 @@ describe("Setting page", () => {
 
   it("renders a submit SAVE button", () => {
     const { getByText } = renderHelper(<Setting />);
-    expect(getByText("SAVE")).toBeInTheDocument();
+    expect(getByText("Save")).toBeInTheDocument();
   });
 
-  it("renders a submit LOGOUT button", () => {
+  it("renders a submit Log out button", () => {
     const { getByText } = renderHelper(<Setting />);
-    expect(getByText("LOGOUT")).toBeInTheDocument();
+    expect(getByText("Log out")).toBeInTheDocument();
   });
 
   const mockUser = {
@@ -52,7 +52,7 @@ describe("Setting page", () => {
     });
     fetch.mockResponseOnce(JSON.stringify(mockUser), { status: 200 });
     await act(async () => {
-      fireEvent.submit(getByText("SAVE"));
+      fireEvent.submit(getByText("Save"));
     });
     expect(queryByText("New password is required")).not.toBeInTheDocument();
     expect(queryByText("Confirm password is required")).not.toBeInTheDocument();
@@ -71,7 +71,7 @@ describe("Setting page", () => {
     });
     expect(queryByText(/Passwords don't match!/i)).not.toBeInTheDocument();
     await act(async () => {
-      fireEvent.submit(getByText("SAVE"));
+      fireEvent.submit(getByText("Save"));
     });
     expect(queryByText(/Passwords don't match!/i)).toBeInTheDocument();
   });
