@@ -11,11 +11,12 @@ import EmailConfirmed from "./pages/EmailConfirmed";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import SearchPage from "./pages/SearchPage";
 import AdminPage from "./pages/AdminPage";
+import ErrorPage from "./pages/ErrorPage";
 import ForgotPassword from "./pages/ForgotPassword"
 import ResetPassword from "./pages/ResetPassword"
 import PasswordChanged from "./pages/PasswordChanged"
 
-import Page from "./components/Page/Page";
+
 
 import theme from "./theme";
 import useUser from "./hooks/useUser";
@@ -46,7 +47,10 @@ const AuthUser = ({ children }) => {
       }
       if (path === "/admin" && user.role.type !== "admin") {
         // Logged in users without admin role trying to access Admin page are shown an error page 
-        return <Page><h1>401</h1></Page> //TODO: use actual error page
+        return (
+          <ErrorPage 
+            errorCode={403}/> //TODO: use actual error page
+        ); //TODO: use actual error page
       }
     } else if (path !== "/almost-done") { // unconfimred user
       // Unconfirmed users with jwt set are redirected to Almost done page
@@ -60,7 +64,10 @@ const AuthUser = ({ children }) => {
     if(path !== "/login" && path !== "/register" && path !== "/email-confirmed" 
       && path !== "/forgot-password" && path !== "/reset-password" && path !== "/password-changed") {
       // Unauthenticated users trying to access some other page than Login, Register or Email confirmed are shown an error page
-      return <Page><h1>401</h1></Page> //TODO: use actual error page
+      return (
+        <ErrorPage 
+          errorCode={403}/> //TODO: use actual error page
+      );
     }
   }
 
@@ -111,9 +118,7 @@ function App() {
             <Route exact path="/admin" component={AdminPage} />
 
             <Route>
-              <Page>
-                <h1>404</h1>
-              </Page>
+                <ErrorPage errorCode={404} />
             </Route>
           </Switch>
         </AuthUser>
