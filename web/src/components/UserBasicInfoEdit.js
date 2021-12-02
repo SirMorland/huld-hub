@@ -1,9 +1,10 @@
+import React from "react";
 import { DoubleFieldContainer, Grid } from "./GenericComponents";
 import TextField from "./TextField";
 
 export default function UserBasicInfoEdit({ basicInfo, setBasicInfo }) {
   return (
-    <Grid>
+    <React.Fragment>
       <DoubleFieldContainer>
         <TextField
           required
@@ -37,7 +38,7 @@ export default function UserBasicInfoEdit({ basicInfo, setBasicInfo }) {
           onChange={e => setBasicInfo(prev => ({ ...prev, title: e.target.value }))}
         />
       </DoubleFieldContainer>
-    </Grid>
+    </React.Fragment>
   );
 }
 

@@ -1,10 +1,11 @@
-import { DoubleFieldContainer, Grid } from "./GenericComponents";
+import { DoubleFieldContainer } from "./GenericComponents";
 import TextField from "./TextField";
+import React from "react";
 
 export default function UserBasicInfoEdit({ basicInfo, setBasicInfo }) {
 
     return (
-        <Grid>
+        <React.Fragment>
             <DoubleFieldContainer>
                 <TextField
                     fullWidth
@@ -64,7 +65,7 @@ export default function UserBasicInfoEdit({ basicInfo, setBasicInfo }) {
                     onChange={e => setBasicInfo(prev => ({ ...prev, github: e.target.value }))}
                 />
             </DoubleFieldContainer>
-        </Grid>
+        </React.Fragment>
     );
 }
 
