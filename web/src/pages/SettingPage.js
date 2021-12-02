@@ -11,7 +11,7 @@ const StyledSuccess = styled(Typography)`
   color: #28a745;
 `;
 function SettingPage() {
-  const { user, logout, jwt } = useUserContext();
+  const { user, logout, jwt, setJwt } = useUserContext();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
@@ -27,7 +27,8 @@ function SettingPage() {
       }
 
       if (isError === false) {
-        await updateUserPassword(jwt, user, password);
+        const json = await updateUserPassword(jwt, user, password);
+        setJwt(json.jwt);
         setPassword("");
         setConfirmPassword("");
         setError("");
