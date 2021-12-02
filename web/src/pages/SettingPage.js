@@ -50,7 +50,7 @@ function SettingPage() {
       <Box component="form" onSubmit={handleSubmit} sx={{ width: "100%" }}>
         <Typography
           component="h1"
-          variant="h5"
+          variant="h2"
           color="primary"
           sx={{ mb: 2, width: "100%" }}
         >
@@ -99,7 +99,7 @@ function SettingPage() {
           </Grid>
         </Grid>
       </Box>
-      <Divider textAlign="center">OR</Divider>
+      <Divider />
       <Grid container spacing={2} justifyContent>
         <Grid item xs={12}>
           <Button
