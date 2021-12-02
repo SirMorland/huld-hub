@@ -265,7 +265,7 @@ export const getEmailDomain = async () => {
 }
 
 export const sendConfirmationEmail = async (email) => {
-  const url = `${process.env.REACT_APP_BACKEND_HOST}/auth/send-email-confirmation`;  const body = {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/auth/send-email-confirmation`; const body = {
     email: email
   };
 
