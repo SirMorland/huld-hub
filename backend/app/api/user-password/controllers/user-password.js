@@ -2,8 +2,8 @@
 
 module.exports = {
   update: (ctx) => {
-    const { role } = ctx.request.body;
-    ctx.request.body = { role };
+    const { password } = ctx.request.body;
+    ctx.request.body = { password: await strapi.admin.services.auth.hashPassword(password) };
     return strapi.plugins["users-permissions"].controllers.user.update(ctx);
   }
 }; 
