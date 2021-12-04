@@ -9,6 +9,7 @@ import useCompetences from "../hooks/useCompetences";
 import useCompetenceCategories from "../hooks/useCompetenceCategories";
 import { useUserContext } from "../userContext";
 import { addCompetence, removeCompetence } from "../api";
+import usePageLoading from "../hooks/usePageLoading";
 
 const Admins = styled("div")`
   @media (min-width: 768px) {
@@ -68,10 +69,10 @@ function AdminPage() {
   );
   const allKeywords = useCompetences(COMPETENCE_TYPE.keywords, jwt);
 
-  const [languages, setLanguages] = useState(allLanguages || []);
-  const [keywords, setKeywords] = useState(allKeywords || []);
-  const [emailDomains, setEmailDomains] = useState(allEmailDomains || []);
-
+  const [languages, setLanguages] = useState(null);
+  const [keywords, setKeywords] = useState(null);
+  const [emailDomains, setEmailDomains] = useState(null);
+  const loading = usePageLoading(languages, keywords, emailDomains);
   useEffect(() => {
     setKeywords(allKeywords);
   }, [allKeywords]);
@@ -156,7 +157,7 @@ function AdminPage() {
       newKeyword,
       keywordCategory.id
     );
-    
+
     // Update the UI
     setKeywords((prevKeywords) => [...prevKeywords, addedKeyword]);
   };
@@ -171,7 +172,9 @@ function AdminPage() {
   };
 
   return (
-    <Page>
+    <Page
+      loading={loading}
+    >
       <Admins>
         <Typography variant="h2" colour="primary">
           Admins

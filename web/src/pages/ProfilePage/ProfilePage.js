@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useRouteMatch } from "react-router";
 
 import useProfile from "../../hooks/useProfile";
+import usePageLoading from "../../hooks/usePageLoading";
 import useCompetences from "../../hooks/useCompetences";
 import useHistoryList from "../../hooks/useHistoryList";
 import useCompetenceCategories from "../../hooks/useCompetenceCategories";
@@ -33,6 +34,7 @@ function ProfilePage() {
   const competenceCategories = useCompetenceCategories(jwt);
 
   const [edit, setEdit] = useState(false);
+  const loading = usePageLoading(profile);
 
   const onSaveClick = async (profile) => {
     if (canEdit) {
@@ -95,6 +97,7 @@ function ProfilePage() {
         profile={profileProps}
         onEditClick={() => setEdit(true)}
         canEdit={canEdit}
+        loading={loading}
       />
     );
   }

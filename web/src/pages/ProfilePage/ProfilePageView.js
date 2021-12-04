@@ -76,12 +76,13 @@ function Print() {
   window.print();
 }
 
-function ProfilePageView({ profile, onEditClick, canEdit }) {
+function ProfilePageView({ profile, onEditClick, canEdit, loading }) {
   const { languages, keywords, educationHistory, workHistory } = profile;
 
   return (
     <React.Fragment>
       <Page
+        loading={loading}
         header={
           profile && (
             <HeaderContentContainer>
