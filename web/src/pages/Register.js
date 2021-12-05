@@ -10,7 +10,7 @@ import DialogWrapper from '../components/DialogWrapper';
 import { register, EmailTakenError, EmailWrongDomainError } from '../api';
 import { useUserContext } from '../userContext';
 
-export default function RegistrationForm() {
+export default function RegistrationForm(loading) {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -24,15 +24,15 @@ export default function RegistrationForm() {
         setEmailError('');
         setPasswordError('');
 
-        if (password !== reEnterPassword){
+        if (password !== reEnterPassword) {
             setPasswordError("Passwords do not match! Please check");
         } else if (email && password && password === reEnterPassword) {
             try {
                 const json = await register(email, password);
                 setJwt(json.jwt);
                 history.push("/almost-done");
-            } catch  (error) {
-                switch(true) {
+            } catch (error) {
+                switch (true) {
                     case error instanceof EmailWrongDomainError:
                         setEmailError(error.message);
                         break;
@@ -48,7 +48,9 @@ export default function RegistrationForm() {
     };
 
     return (
-        <PageWrapper>
+        <PageWrapper
+            loading={loading}
+        >
             <DialogWrapper>
                 <Typography component="h1" variant="h5" color="primary">
                     Register to Hub

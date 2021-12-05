@@ -10,7 +10,7 @@ import DialogWrapper from '../components/DialogWrapper';
 import { login, EmailOrPasswordInvalidError } from '../api';
 import { useUserContext } from '../userContext';
 
-export default function LoginForm() {
+export default function LoginForm(loading) {
     const location = useLocation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -34,7 +34,9 @@ export default function LoginForm() {
     };
 
     return (
-        <PageWrapper>
+        <PageWrapper
+            loading={loading}
+        >
             <DialogWrapper>
                 {location.search.includes('confirmed=true') && <Typography component="p" variant="body" > Your email has been confirmed. You can log in now <br /><br /></Typography>}
                 <Typography component="h1" variant="h5" color="primary">
@@ -85,7 +87,7 @@ export default function LoginForm() {
                         fullWidth
                         variant="contained"
                         color="primary"
-                        sx={{ mt: 3, mb: 2 }}   
+                        sx={{ mt: 3, mb: 2 }}
                     >
                         LOG IN
                     </Button>
