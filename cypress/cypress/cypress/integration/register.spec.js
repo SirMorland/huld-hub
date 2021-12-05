@@ -30,7 +30,7 @@ describe("Registration", () => {
 
 		cy.get("button").click();
 
-		cy.contains("Please provide valid email address i.e youremail@huld.io");
+		cy.contains("Your email domain is not allowed.");
 	});
 
 	it("should register with correct input", function () {

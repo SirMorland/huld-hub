@@ -18,6 +18,14 @@ const DEFAULT_ROLES = {
         actions: ['find', 'update', 'delete', 'findone', 'deleteprofile'],
       },
       {
+        controller: 'email-domains',
+        actions: ['create', 'find', 'update', 'delete', 'findone'],
+      },
+      {
+        controller: 'email-domains',
+        actions: ['create', 'find', 'update', 'delete', 'findone'],
+      },
+      {
         controller: 'user-role',
         actions: ['update'],
       },
@@ -265,7 +273,20 @@ const DEFAULT_PROFILES = [
   }
 ];
 
+
+const DEFAULT_DOMAINS = [
+  {
+    domain: "huld.io",
+    type: "internal",
+  },
+  {
+    domain: "gmail.com",
+    type: "external",
+  },
+];
+
 module.exports = {
+  DEFAULT_DOMAINS,
   DEFAULT_ROLES,
   DEFAULT_USERS,
   DEFAULT_COMPETENCES,
