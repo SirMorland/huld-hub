@@ -53,7 +53,7 @@ function EmailDomainEdit(props) {
       <Typography variant="h2" colour="primary">
         Allowed email domains
       </Typography>
-      <div style={{margin: "4px 0"}}>
+      <div style={{margin: "4px 0"}} data-testid="internal-email-domains">
         <Typography variant="h3" colour="primary">
           Internal
         </Typography>
@@ -65,7 +65,7 @@ function EmailDomainEdit(props) {
           onSubmit={(e) => submit(e, DOMAIN_TYPES.INT)}
         />
       </div>
-      <div>
+      <div data-testid="external-email-domains">
         <Typography variant="h3" colour="primary">
           External
         </Typography>
