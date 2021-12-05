@@ -85,10 +85,7 @@ function AdminPage() {
     setEmailDomains(allEmailDomains);
   }, [allEmailDomains]);
 
-  console.log(emailDomains);
-
   const onEmailDomainAdd = async (type, newEmailDomain) => {
-    console.log(newEmailDomain);
     const newAllowedDomain = {type, domain: newEmailDomain}
     const addedEmailDomain = await addEmailDomain(jwt, newAllowedDomain)
 
