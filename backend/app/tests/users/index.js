@@ -4,7 +4,7 @@ const { grantPrivileges, getPermissionValues } = require("../helpers/strapi");
 // user mock data
 const mockUserData = {
   username: "tester",
-  email: "tester@strapi.com",
+  email: "tester@real.io",
   provider: "local",
   password: "1234abc",
   confirmed: true,
@@ -13,7 +13,13 @@ const mockUserData = {
 
 const registeredUser = {
   username: "huldhub",
-  email: "huldhub@example.com",
+  email: "huldhub@real.io",
+  password: "huldhub",
+};
+
+const badRegisteredUser = {
+  username: "huldhub",
+  email: "huldhub@fake.com",
   password: "huldhub",
 };
 
@@ -23,6 +29,8 @@ describe("Login and Register User", () => {
       2,
       getPermissionValues("user-profiles", ["find", "findone", "create"])
     );
+
+    await strapi.query("email-domains").create({domain: "real.io", type: "external"});
   });
   // clean up all competences
   afterAll(async () => {
@@ -31,6 +39,37 @@ describe("Login and Register User", () => {
       strapi.services["user-profiles"].delete({ id })
     );
     await Promise.all(promiseProfile);
+  });
+
+
+  it("should not register user with disallowed domain", async () => {
+
+    // Get all users in the database
+    const usersBeforeRegister = await strapi.plugins[
+      "users-permissions"
+    ].services.user.fetchAll();
+
+    // Test that there is no user
+    expect(usersBeforeRegister).toHaveLength(0);
+
+    // mock send confirmation email because we don't have a real email service in the test
+    strapi.plugins["users-permissions"].services.user.sendConfirmationEmail = jest.fn();
+    // Make request to register endpoint
+    await request(strapi.server) // app server is an instance of Class: http.Server
+      .post("/auth/local/register")
+      .set("accept", "application/json")
+      .set("Content-Type", "application/json")
+      .send(badRegisteredUser)
+      .expect("Content-Type", /json/)
+      .expect(400);
+
+    // Get the current number of users
+    const usersAfterRegister = await strapi.plugins[
+      "users-permissions"
+    ].services.user.fetchAll();
+
+    // Check that the number of users increased by 1
+    expect(usersAfterRegister).toHaveLength(0);
   });
 
   it("should register new user", async () => {

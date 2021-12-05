@@ -1,9 +1,9 @@
 {
   "paths": {
-    "/email-domain": {
-      "get": {
+    "/user-role/{id}": {
+      "put": {
         "deprecated": false,
-        "description": "",
+        "description": "Update a record",
         "responses": {
           "200": {
             "description": "response",
@@ -52,9 +52,31 @@
         },
         "summary": "",
         "tags": [
-          "Email-domain"
+          "User-role"
         ],
-        "parameters": []
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewUser-role"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
       }
     }
   },
