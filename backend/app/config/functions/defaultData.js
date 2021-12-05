@@ -10,19 +10,19 @@ const DEFAULT_ROLES = {
         actions: ['find', 'create', 'delete'],
       },
       {
-        controller: 'comptence-categories',
+        controller: 'competence-categories',
         actions: ['find'],
       },
       {
         controller: 'user-profiles',
-        actions: ['find', 'update', 'delete', 'findone'],
-      },
-      {
-        controller: 'user-role',
-        actions: ['update'],
+        actions: ['find', 'update', 'delete', 'findone', 'deleteprofile'],
       }
     ],
     usersPermissions: [
+      {
+        controller: 'user',
+        action: 'update',
+      },
       {
         controller: 'user',
         action: 'find',
@@ -45,7 +45,7 @@ const DEFAULT_ROLES = {
         actions: ['find'],
       },
       {
-        controller: 'comptence-categories',
+        controller: 'competence-categories',
         actions: ['find'],
       },
       {
