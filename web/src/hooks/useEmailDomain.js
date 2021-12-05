@@ -1,20 +1,20 @@
 import {useEffect, useState} from "react";
-import { getEmailDomain } from '../api';
+import { getEmailDomains } from '../api';
 
-const useEmailDomain = () => {
-  const [emailDomain, setEmailDomain] = useState("");
+const useEmailDomain = (jwt) => {
+  const [emailDomain, setEmailDomain] = useState([]);
   useEffect(()=>{
     const fetchEmailDomain = async () => {
       try {
-        const text = await getEmailDomain();
-        setEmailDomain(text);
+        const domains = await getEmailDomains(jwt);
+        setEmailDomain(domains);
       } catch (error) {
       }
     };
 
     fetchEmailDomain();
 
-  }, []);
+  }, [jwt]);
   return emailDomain;
 };
 
