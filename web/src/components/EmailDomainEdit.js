@@ -5,7 +5,7 @@ import ItemListEdit from './ItemListEdit';
 import FormWithInputAndBtn from './FormWithInputAndBtn';
 
 const DOMAIN_TYPES = { INT: 'internal', EXT: 'external' };
-const email_regrex =
+const emailDomainRegrex =
   /^@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const formatInput = (input) => {
@@ -16,7 +16,7 @@ const formatInput = (input) => {
 };
 
 function EmailDomainEdit(props) {
-  const { emailDomains, onAdd, onRemove} = props;
+  const { emailDomains, onAdd, onRemove } = props;
   const [internalDomain, setInternalDomain] = useState('');
   const [externalDomain, setExternalDomain] = useState('');
 
@@ -25,21 +25,44 @@ function EmailDomainEdit(props) {
     name: `@${emailDomain.domain}`,
   }));
 
-  const internalDomains = formatedEmailDomains.filter(domain => domain.type === "internal")
-  const externalDomains = formatedEmailDomains.filter(domain => domain.type === "external")
+  const internalDomains = formatedEmailDomains.filter(
+    (domain) => domain.type === 'internal'
+  );
+  const externalDomains = formatedEmailDomains.filter(
+    (domain) => domain.type === 'external'
+  );
 
   const submit = (e, type) => {
     e.preventDefault();
-    
+
     switch (type) {
       case DOMAIN_TYPES.INT:
-        if (!email_regrex.test(internalDomain)) return;
-        onAdd(type, internalDomain.slice(1));
+        // Test that domain has correct format
+        if (!emailDomainRegrex.test(internalDomain)) return;
+
+        // check that domain has not been added before
+        if (
+          !formatedEmailDomains.some(
+            (domain) =>
+              domain.name.toLowerCase() === internalDomain.toLowerCase()
+          )
+        ) {
+          onAdd(type, internalDomain.slice(1).toLowerCase());
+        }
         setInternalDomain('');
         break;
       case DOMAIN_TYPES.EXT:
-        if (!email_regrex.test(externalDomain)) return;
-        onAdd(type, externalDomain.slice(1));
+        // Test that domain has correct format
+        if (!emailDomainRegrex.test(externalDomain)) return;
+        // check that domain has not been added before
+        if (
+          !formatedEmailDomains.some(
+            (domain) =>
+              domain.name.toLowerCase() === externalDomain.toLowerCase()
+          )
+        ) {
+          onAdd(type, externalDomain.slice(1).toLowerCase());
+        }
         setExternalDomain('');
         break;
 
@@ -53,7 +76,7 @@ function EmailDomainEdit(props) {
       <Typography variant="h2" colour="primary">
         Allowed email domains
       </Typography>
-      <div style={{margin: "4px 0"}} data-testid="internal-email-domains">
+      <div style={{ margin: '4px 0' }} data-testid="internal-email-domains">
         <Typography variant="h3" colour="primary">
           Internal
         </Typography>
