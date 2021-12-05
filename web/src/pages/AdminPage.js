@@ -3,7 +3,7 @@ import { Typography } from '@mui/material';
 import { styled } from '@mui/system';
 
 import Page from '../components/Page/Page';
-import useEmailDomain from '../hooks/useEmailDomain';
+import useEmailDomains from '../hooks/useEmailDomains';
 import useGetAllUsers from '../hooks/useGetAllUsers';
 import useGetRoles from '../hooks/useGetRoles';
 import useUser from '../hooks/useUser';
@@ -62,7 +62,7 @@ const COMPETENCE_TYPE = {
 
 function AdminPage() {
   const { jwt } = useUserContext();
-  const allEmailDomains = useEmailDomain(jwt);
+  const allEmailDomains = useEmailDomains(jwt);
   const allCompetenceCategories = useCompetenceCategories(jwt);
   const allLanguages = useCompetences(
     COMPETENCE_TYPE.languages.serverName,
