@@ -19,14 +19,14 @@ const DEFAULT_ROLES = {
       },
       {
         controller: 'email-domains',
-        actions: ['find', 'update', 'delete', 'findone'],
+        actions: ['create', 'find', 'update', 'delete', 'findone'],
+      },
+      {
+        controller: 'user-role',
+        actions: ['update'],
       }
     ],
     usersPermissions: [
-      {
-        controller: 'user',
-        action: 'update',
-      },
       {
         controller: 'user',
         action: 'find',
