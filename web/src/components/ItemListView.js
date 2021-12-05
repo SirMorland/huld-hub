@@ -50,7 +50,7 @@ ItemListView.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
   })).isRequired,
-  noItemDescription: PropTypes.string.isRequired,
+  noItemDescription: PropTypes.string,
 };
 
 export default ItemListView;
