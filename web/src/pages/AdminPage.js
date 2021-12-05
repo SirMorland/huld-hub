@@ -173,6 +173,7 @@ function AdminPage() {
   const allUsers = useGetAllUsers(jwt);
   const { ADMIN, EMPLOYEE } = useGetRoles(jwt);
   const [users, setUsers] = useState(allUsers || []);
+  const user = useUser(jwt);
 
   useEffect(() => {
     setUsers(allUsers);
@@ -198,6 +199,11 @@ function AdminPage() {
 
   //removal from Admin list
   const onRemove = async (demotedUser) => {
+    //user is not able to demote himself
+    if (demotedUser.id === user.id) {
+      alert("User is not able to demote himself.")
+      return;
+    }
     const updatedItem = await updateUserRole(jwt, demotedUser, EMPLOYEE?.id);
     console.log(updatedItem);
     setUsers((prevItems) =>
