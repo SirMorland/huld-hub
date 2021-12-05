@@ -6,6 +6,7 @@ import Page from '../components/Page/Page';
 import useEmailDomain from '../hooks/useEmailDomain';
 import useGetAllUsers from '../hooks/useGetAllUsers';
 import useGetRoles from '../hooks/useGetRoles';
+import useUser from '../hooks/useUser';
 
 import { useUserContext } from '../userContext';
 import SelectAutocompleteField from '../components/SelectAutocompleteField';
