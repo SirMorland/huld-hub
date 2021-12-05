@@ -97,7 +97,6 @@ function AdminPage() {
   };
 
   const onEmailDomainsRemove = async (itemToRemove) => {
-
     const removedDomain = await removeEmailDomain(jwt, itemToRemove.id)
     setEmailDomains((prevItems) =>
       prevItems.filter((item) => item.id !== removedDomain.id)
