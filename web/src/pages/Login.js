@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router';
 
-import { Button, Grid, Link, Typography } from '@mui/material';
+import { Grid, Link, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { Box } from '@mui/system';
 
 import TextField from '../components/TextField';
@@ -10,12 +11,16 @@ import DialogWrapper from '../components/DialogWrapper';
 import { login, EmailOrPasswordInvalidError } from '../api';
 import { useUserContext } from '../userContext';
 
-export default function LoginForm(loading) {
+export default function LoginForm() {
     const location = useLocation();
     const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(false);
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const { setJwt } = useUserContext();
+    // TODO: set Loading accordingly 
+    // - setLoading(true) will show the loader,
+    // - setLoading(false) will hide the loader
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -34,9 +39,7 @@ export default function LoginForm(loading) {
     };
 
     return (
-        <PageWrapper
-            loading={loading}
-        >
+        <PageWrapper>
             <DialogWrapper>
                 {location.search.includes('confirmed=true') && <Typography component="p" variant="body" > Your email has been confirmed. You can log in now <br /><br /></Typography>}
                 <Typography component="h1" variant="h5" color="primary">
@@ -82,7 +85,8 @@ export default function LoginForm(loading) {
                         </Grid>
                     </Grid>
                     <br />
-                    <Button
+                    <LoadingButton
+                        loading={loading}
                         type="submit"
                         fullWidth
                         variant="contained"
@@ -90,7 +94,7 @@ export default function LoginForm(loading) {
                         sx={{ mt: 3, mb: 2 }}
                     >
                         LOG IN
-                    </Button>
+                    </LoadingButton>
                     <br />
                     <br />
                     <Grid container justifyContent="center">
