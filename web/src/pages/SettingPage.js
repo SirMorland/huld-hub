@@ -100,7 +100,7 @@ function SettingPage() {
           </Grid>
         </Grid>
       </Box>
-      <Divider />
+      {/* <Divider />
       <Grid container spacing={2} justifyContent>
         <Grid item xs={12}>
           <Button
@@ -113,7 +113,7 @@ function SettingPage() {
             Log out
           </Button>
         </Grid>
-      </Grid>
+      </Grid> */}
     </Page>
   );
 }
