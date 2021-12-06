@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Page from "../components/Page/Page";
-import { Button, Grid, Divider, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import TextField from "../components/TextField";
 import { useUserContext } from "../userContext";
@@ -11,7 +11,7 @@ const StyledSuccess = styled(Typography)`
   color: #28a745;
 `;
 function SettingPage() {
-  const { user, logout, jwt, setJwt } = useUserContext();
+  const { user, jwt, setJwt } = useUserContext();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
