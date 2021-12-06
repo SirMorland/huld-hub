@@ -215,7 +215,7 @@ function ProfilePageView({ profile, onEditClick, canEdit, canDelete, jwt }) {
           </DialogTitle>
           <DialogContent>
             <DialogContentText color="text" id="alert-dialog-description">
-              Are you sure you wish to delete this user?
+              Are you sure you wish to delete this account?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
