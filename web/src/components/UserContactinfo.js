@@ -37,12 +37,14 @@ const StyledIcon = `
   }
 `;
 
-const PrintIcon = styled('div')`
+const PrintIcon = styled('span')`
+  display: block;
   float:left;
   width: 15%;
 `;
 
-const PrintText = styled('div')`
+const PrintText = styled('span')`
+  display: block;
   float:right;
   width: 85%;
   word-break:break-all;
