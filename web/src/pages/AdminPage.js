@@ -1,22 +1,24 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Typography } from "@mui/material";
-import { styled } from "@mui/system";
+import React, { useEffect, useState } from 'react';
+import { Typography } from '@mui/material';
+import { styled } from '@mui/system';
 
-import Page from "../components/Page/Page";
-import useEmailDomain from "../hooks/useEmailDomain";
-import useGetAllUsers from "../hooks/useGetAllUsers";
-import useGetRoles from "../hooks/useGetRoles";
+import Page from '../components/Page/Page';
+import useEmailDomains from '../hooks/useEmailDomains';
+import useGetAllUsers from '../hooks/useGetAllUsers';
+import useGetRoles from '../hooks/useGetRoles';
+import useUser from '../hooks/useUser';
 
-import { useUserContext } from "../userContext";
-import SelectAutocompleteField from "../components/SelectAutocompleteField";
-import ItemListEdit from "../components/ItemListEdit";
-import CompetenceEdit from "../components/CompetenceEdit";
-import useCompetences from "../hooks/useCompetences";
-import useCompetenceCategories from "../hooks/useCompetenceCategories";
+import { useUserContext } from '../userContext';
+import SelectAutocompleteField from '../components/SelectAutocompleteField';
+import ItemListEdit from '../components/ItemListEdit';
+import CompetenceEdit from '../components/CompetenceEdit';
+import EmailDomainEdit from '../components/EmailDomainEdit';
+import useCompetences from '../hooks/useCompetences';
 import usePageLoading from "../hooks/usePageLoading";
-import { addCompetence, removeCompetence, updateUserRole } from "../api";
+import useCompetenceCategories from '../hooks/useCompetenceCategories';
+import { addCompetence, removeCompetence, updateUserRole, addEmailDomain, removeEmailDomain } from '../api';
 
-const Admins = styled("div")`
+const Admins = styled('div')`
   @media (min-width: 768px) {
     grid-column-start: 1;
   }
@@ -24,7 +26,7 @@ const Admins = styled("div")`
     grid-column-start: 1;
   }
 `;
-const Domains = styled("div")`
+const Domains = styled('div')`
   @media (min-width: 768px) {
     grid-column-start: 2;
   }
@@ -32,7 +34,7 @@ const Domains = styled("div")`
     grid-column-start: 1;
   }
 `;
-const Languages = styled("div")`
+const Languages = styled('div')`
   @media (min-width: 768px) {
     grid-column-start: 1;
   }
@@ -41,7 +43,7 @@ const Languages = styled("div")`
     grid-row: span 3;
   }
 `;
-const Keywords = styled("div")`
+const Keywords = styled('div')`
   @media (min-width: 768px) {
     grid-column-start: 2;
   }
@@ -53,22 +55,16 @@ const Keywords = styled("div")`
 
 const COMPETENCE_TYPE = {
   languages: {
-    serverName: "coding languages",
-    clientName: "languages proficiencies",
+    serverName: 'coding languages',
+    clientName: 'languages proficiencies',
   },
-  keywords: "keywords",
+  keywords: 'keywords',
 };
 
 function AdminPage() {
-  const domain = useEmailDomain();
-  const allEmailDomains = useMemo(
-    () => [{ name: `@${domain}`, id: 0 }],
-    [domain]
-  );
-
   const { jwt } = useUserContext();
+  const allEmailDomains = useEmailDomains(jwt);
   const allCompetenceCategories = useCompetenceCategories(jwt);
-
   const allLanguages = useCompetences(
     COMPETENCE_TYPE.languages.serverName,
     jwt
@@ -91,20 +87,20 @@ function AdminPage() {
     setEmailDomains(allEmailDomains);
   }, [allEmailDomains]);
 
-  const onEmailDomainAdd = (newEmailDomain) => {
-    console.log(newEmailDomain);
-    // TODO: send POST request to server
+  const onEmailDomainAdd = async (type, newEmailDomain) => {
+    const newAllowedDomain = {type, domain: newEmailDomain}
+    const addedEmailDomain = await addEmailDomain(jwt, newAllowedDomain)
+
     setEmailDomains((prevEmailDomains) => [
       ...prevEmailDomains,
-      { name: newEmailDomain, id: prevEmailDomains.length },
+      addedEmailDomain,
     ]);
   };
 
-  const onEmailDomainsRemove = (itemToRemove) => {
-    console.log(itemToRemove);
-    // TODO: send DELETE request to server
+  const onEmailDomainsRemove = async (itemToRemove) => {
+    const removedDomain = await removeEmailDomain(jwt, itemToRemove.id)
     setEmailDomains((prevItems) =>
-      prevItems.filter((item) => item.id !== itemToRemove.id)
+      prevItems.filter((item) => item.id !== removedDomain.id)
     );
   };
 
@@ -135,8 +131,7 @@ function AdminPage() {
   };
 
   const onLanguageRemove = async (itemToRemove) => {
-
-    const removedItem = await removeCompetence(jwt, itemToRemove.id)
+    const removedItem = await removeCompetence(jwt, itemToRemove.id);
 
     setLanguages((prevItems) =>
       prevItems.filter((item) => item.id !== removedItem.id)
@@ -169,8 +164,7 @@ function AdminPage() {
   };
 
   const onKeywordRemove = async (itemToRemove) => {
-
-    const removedItem = await removeCompetence(jwt, itemToRemove.id)
+    const removedItem = await removeCompetence(jwt, itemToRemove.id);
 
     setKeywords((prevItems) =>
       prevItems.filter((item) => item.id !== removedItem.id)
@@ -180,46 +174,60 @@ function AdminPage() {
   const allUsers = useGetAllUsers(jwt);
   const { ADMIN, EMPLOYEE } = useGetRoles(jwt);
   const [users, setUsers] = useState(allUsers || []);
+  const user = useUser(jwt);
 
   useEffect(() => {
-    setUsers(allUsers)
+    setUsers(allUsers);
   }, [allUsers]);
 
   //filtering admin from all users
-  const admin = users.filter(user => user.role.type === "admin").map(user => ({
-    name: user.username,
-    id: user.id,
-    role: user.role
-  })
-  );
+  const admin = users
+    .filter((user) => user.role.type === 'admin')
+    .map((user) => ({
+      name: user.username,
+      id: user.id,
+      role: user.role,
+    }));
 
   //filtering employees from all users
-  const employees = users.filter(user => user.role.type === "employee").map(user => ({
-    name: user.username,
-    id: user.id,
-    role: user.role
-  })
-  );
+  const employees = users
+    .filter((user) => user.role.type === 'employee')
+    .map((user) => ({
+      name: user.username,
+      id: user.id,
+      role: user.role,
+    }));
 
   //removal from Admin list
   const onRemove = async (demotedUser) => {
+    //user is not able to demote himself
+    if (demotedUser.id === user.id) {
+      alert("User is not able to demote himself.")
+      return;
+    }
     const updatedItem = await updateUserRole(jwt, demotedUser, EMPLOYEE?.id);
     console.log(updatedItem);
-    setUsers(prevItems => prevItems.map(item => item.id === updatedItem.id ? updatedItem : item))
-  }
+    setUsers((prevItems) =>
+      prevItems.map((item) => (item.id === updatedItem.id ? updatedItem : item))
+    );
+  };
 
   const onSelect = async (itemSelected) => {
     const updatedItem = await updateUserRole(jwt, itemSelected, ADMIN?.id);
     console.log(updatedItem);
-    setUsers(prevItems => prevItems.map(item => item.id === updatedItem.id ? updatedItem : item))
-  }
+    setUsers((prevItems) =>
+      prevItems.map((item) => (item.id === updatedItem.id ? updatedItem : item))
+    );
+  };
 
   return (
     <Page
       loading={loading}
     >
       <Admins>
-        <Typography variant="h2" colour="primary">Admins</Typography>
+        <Typography variant="h2" colour="primary">
+          Admins
+        </Typography>
         <ItemListEdit items={admin} onRemove={onRemove} />
         <SelectAutocompleteField
           options={employees}
@@ -228,11 +236,10 @@ function AdminPage() {
         />
       </Admins>
       <Domains>
-        <CompetenceEdit
-          type="allowed email domain"
+        <EmailDomainEdit
           onRemove={onEmailDomainsRemove}
           onAdd={onEmailDomainAdd}
-          items={emailDomains}
+          emailDomains={emailDomains}
         />
       </Domains>
       <Languages>

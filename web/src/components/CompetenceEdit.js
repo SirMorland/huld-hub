@@ -1,32 +1,18 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import TextField from "./TextField";
-import styled from "@mui/system/styled";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import ItemListEdit from "./ItemListEdit";
-import { capitalizeFirstLetters } from "../utils";
-
-const StyledForm = styled("form")({
-  display: "flex",
-});
-
-const StyledTextField = styled(TextField)({
-  flexGrow: 1,
-});
-
-const StyledButton = styled(Button)({
-  margin: "4px 0 4px 10px",
-});
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import Typography from '@mui/material/Typography';
+import ItemListEdit from './ItemListEdit';
+import FormWithInputAndBtn from './FormWithInputAndBtn';
+import { capitalizeFirstLetters } from '../utils';
 
 function CompetenceEdit(props) {
   const { items, onAdd, onRemove, type } = props;
-  const [newItem, setNewItem] = useState("");
+  const [newItem, setNewItem] = useState('');
 
   const submit = (e) => {
     e.preventDefault();
     onAdd(newItem);
-    setNewItem("");
+    setNewItem('');
   };
 
   return (
@@ -35,23 +21,12 @@ function CompetenceEdit(props) {
         {capitalizeFirstLetters(type)}
       </Typography>
       <ItemListEdit items={items} onRemove={onRemove} />
-      <StyledForm onSubmit={submit}>
-        <StyledTextField
-          data-testid="new-competence-item"
-          placeholder={`Create new ${type}`}
-          required
-          value={newItem}
-          onChange={({ target }) => setNewItem(target.value)}
-        />
-        <StyledButton
-          type="submit"
-          variant="contained"
-          color="primary"
-          data-testid="add-item-btn"
-        >
-          Add
-        </StyledButton>
-      </StyledForm>
+      <FormWithInputAndBtn
+        placeholder={`Create new ${type}`}
+        value={newItem}
+        setValue={setNewItem}
+        onSubmit={submit}
+      />
     </div>
   );
 }
@@ -60,7 +35,7 @@ CompetenceEdit.defaultProps = {
   items: [],
   onRemove: () => {},
   onAdd: () => {},
-  type: "",
+  type: '',
 };
 
 CompetenceEdit.propTypes = {
