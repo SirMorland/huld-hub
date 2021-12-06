@@ -46,7 +46,7 @@ HistoryListView.defaultProps = {
 
 HistoryListView.propTypes = {
   title: PropTypes.string.isRequired,
-  noItemDescription: PropTypes.string.isRequired,
+  noItemDescription: PropTypes.string,
   historyItems: PropTypes.arrayOf(HistoryItemViewProps),
 };
 
