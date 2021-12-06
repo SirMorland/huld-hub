@@ -2,12 +2,12 @@
 const _ = require("lodash");
 const { sanitizeEntity } = require("strapi-utils");
 
-const emailRegExp = new RegExp(
-  `^(([^<>()\\[\\]\\\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@"]+)*)|(".+"))@${
-    process.env.EMAIL_DOMAIN ||
-    "((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))"
-  }$`
-);
+const emailRegExp = (domains) =>
+  new RegExp(
+    `^(([^<>()\\[\\]\\\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@"]+)*)|(".+"))@(${domains.join(
+      "|"
+    )})$`
+  );
 
 // const emailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -99,19 +99,20 @@ module.exports = {
       );
     }
 
-    // Check if the provided email is valid or not.
-    const isEmail = emailRegExp.test(params.email);
+    const emailDomains = await strapi.services["email-domains"].find({});
+    const allowedDomains = emailDomains.map((email) => email.domain);
 
-    if (isEmail) {
+    // Check if the provided email is valid or not.
+    const isAllowedEmail = emailRegExp(allowedDomains).test(params.email);
+
+    if (isAllowedEmail) {
       params.email = params.email.toLowerCase();
     } else {
       return ctx.badRequest(
         null,
         formatError({
           id: "Auth.form.error.email.format",
-          message: `Please provide valid email address i.e youremail@${
-            process.env.EMAIL_DOMAIN || "domain.com"
-          }`,
+          message: "Your email domain is not allowed.",
         })
       );
     }
@@ -155,16 +156,16 @@ module.exports = {
         .create(params);
 
       const nameRegex = /(?<first_name>[^.@]+)(\.(?<last_name>[^.@]+))?@.*/gm;
-      const { groups: { first_name, last_name }} = nameRegex.exec(params.email);
+      const {
+        groups: { first_name, last_name },
+      } = nameRegex.exec(params.email);
 
-      await strapi
-        .query("user-profiles")
-        .create({
-          first_name,
-          last_name,
-          email: params.email,
-          user: user.id
-        });
+      await strapi.query("user-profiles").create({
+        first_name,
+        last_name,
+        email: params.email,
+        user: user.id,
+      });
 
       const sanitizedUser = sanitizeEntity(user, {
         model: strapi.query("user", "users-permissions").model,

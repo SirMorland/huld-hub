@@ -1,0 +1,12 @@
+{
+	"routes": [
+	  {
+      "method": "PUT",
+      "path": "/user-role/:id",
+      "handler": "user-role.update",
+      "config": {
+        "policies": ["adminOnlyUpdateOthers"]
+      }
+	  }
+	]
+}
