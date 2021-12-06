@@ -34,10 +34,7 @@ const AuthUser = ({ children }) => {
   const { user, jwt } = useUserContext();
 
   if (user === null) {
-    return (
-      <ErrorPage 
-        errorCode={503}/> 
-    ); 
+    return null;
   }
 
   // authenticated user with JWT
