@@ -18,12 +18,12 @@ export default function LoginForm() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const { setJwt } = useUserContext();
-    // TODO: set Loading accordingly 
-    // - setLoading(true) will show the loader,
-    // - setLoading(false) will hide the loader
+
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+        setLoading(true);
+        setError('');
         try {
             const json = await login(email, password);
             setJwt(json.jwt);
@@ -35,6 +35,8 @@ export default function LoginForm() {
                 default:
                     break;
             }
+        } finally {
+            setLoading(false);
         }
     };
 

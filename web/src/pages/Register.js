@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 
 import { Box } from '@mui/system';
-import { Button, Grid, Link, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import { Grid, Link, Typography } from '@mui/material';
 
 import TextField from '../components/TextField';
 import PageWrapper from '../components/PageWrapper';
@@ -10,13 +11,14 @@ import DialogWrapper from '../components/DialogWrapper';
 import { register, EmailTakenError, EmailWrongDomainError } from '../api';
 import { useUserContext } from '../userContext';
 
-export default function RegistrationForm(loading) {
+export default function RegistrationForm() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [reEnterPassword, setReEnterPassword] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [loading, setLoading] = useState(false);
     const history = useHistory();
     const { setJwt } = useUserContext();
     const handleSubmit = async (event) => {
@@ -24,10 +26,12 @@ export default function RegistrationForm(loading) {
         setEmailError('');
         setPasswordError('');
 
+
         if (password !== reEnterPassword) {
             setPasswordError("Passwords do not match! Please check");
         } else if (email && password && password === reEnterPassword) {
-            try {
+            try {        
+                setLoading(true);
                 const json = await register(email, password);
                 setJwt(json.jwt);
                 history.push("/almost-done");
@@ -43,14 +47,14 @@ export default function RegistrationForm(loading) {
                         setPasswordError(error.message);
                         break;
                 }
+            } finally{
+                setLoading(false);
             }
         }
     };
 
     return (
-        <PageWrapper
-            loading={loading}
-        >
+        <PageWrapper>
             <DialogWrapper>
                 <Typography component="h1" variant="h5" color="primary">
                     Register to Hub
@@ -119,7 +123,8 @@ export default function RegistrationForm(loading) {
                         </Grid>
                     </Grid>
                     <br />
-                    <Button
+                    <LoadingButton
+                        loading={loading}
                         type="submit"
                         fullWidth
                         variant="contained"
@@ -127,7 +132,7 @@ export default function RegistrationForm(loading) {
                         sx={{ mt: 3, mb: 2 }}
                     >
                         Register
-                    </Button>
+                    </LoadingButton>
                     <br />
                     <br />
                     <Grid container justifyContent="center">
