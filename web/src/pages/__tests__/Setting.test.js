@@ -27,11 +27,6 @@ describe("Setting page", () => {
     expect(getByText("Save")).toBeInTheDocument();
   });
 
-  // it("renders a submit Log out button", () => {
-  //   const { getByText } = renderHelper(<Setting />);
-  //   expect(getByText("Log out")).toBeInTheDocument();
-  // });
-
   const mockUser = {
     jwt: "asd",
     user: {

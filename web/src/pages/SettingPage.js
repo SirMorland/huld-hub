@@ -99,21 +99,7 @@ function SettingPage() {
             </Button>
           </Grid>
         </Grid>
-      </Box>
-      {/* <Divider />
-      <Grid container spacing={2} justifyContent>
-        <Grid item xs={12}>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="error"
-            onClick={logout}
-          >
-            Log out
-          </Button>
-        </Grid>
-      </Grid> */}
+      </Box>   
     </Page>
   );
 }
