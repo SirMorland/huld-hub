@@ -367,6 +367,17 @@ export const resetPassword = async (code, password, reEnterPassword) => {
   return await handleBasicReponse(response);
 };
 
+export const deleteUserProfile = async (profileId, jwt) => {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/user-profiles/deleteprofile/${profileId}`;
+  const response = await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    }
+  });
+  return await handleBasicReponse(response);
+};
+
 export class EmailOrPasswordInvalidError extends Error {}
 export class EmailWrongDomainError extends Error {}
 export class EmailTakenError extends Error {}

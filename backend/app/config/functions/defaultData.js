@@ -22,10 +22,6 @@ const DEFAULT_ROLES = {
         actions: ['create', 'find', 'update', 'delete', 'findone'],
       },
       {
-        controller: 'email-domains',
-        actions: ['create', 'find', 'update', 'delete', 'findone'],
-      },
-      {
         controller: 'user-role',
         actions: ['update'],
       },

@@ -26,6 +26,9 @@ function ProfilePage() {
   const canEdit = user 
     && (parseInt(profileId) === parseInt(user.profile) || user.role.type === "admin");
 
+  const canDelete = user 
+    && (parseInt(profileId) !== parseInt(user.profile) && user.role.type === "admin");
+
   const [profile, setProfile] = useProfile(profileId, jwt);
 
   const allLanguages = useCompetences("coding languages", jwt);
@@ -95,6 +98,8 @@ function ProfilePage() {
         profile={profileProps}
         onEditClick={() => setEdit(true)}
         canEdit={canEdit}
+        canDelete={canDelete}
+        jwt={jwt}
       />
     );
   }

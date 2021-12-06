@@ -2,6 +2,12 @@ import React from "react";
 
 import { Button } from "@mui/material";
 import { styled } from "@mui/system";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { useHistory } from "react-router-dom";
 
 import Page from '../../components/Page/Page';
 import PrintPage from '../../components/Page/PrintPage';
@@ -11,6 +17,8 @@ import ItemListView from "../../components/ItemListView";
 import Title from "../../components/Title/Title";
 import UserContactinfo from "../../components/UserContactinfo";
 import ActionButtonContainer from "../../components/ActionButtonContainer";
+import { deleteUserProfile } from "../../api";
+
 
 const HeaderContentContainer = styled("div")`
   display: flex;
@@ -76,8 +84,35 @@ function Print() {
   window.print();
 }
 
-function ProfilePageView({ profile, onEditClick, canEdit }) {
+function ProfilePageView({ profile, onEditClick, canEdit, canDelete, jwt }) {
   const { languages, keywords, educationHistory, workHistory } = profile;
+
+  const [open, setOpen] = React.useState(false);
+  const history = useHistory();
+ 
+  const handleDelete = async () => {
+    if (!canDelete)
+      return;
+    
+    try {
+      const json = await deleteUserProfile(profile.id, jwt);
+      if (json){
+        console.log("user deleted");
+        history.push("/search");
+      }
+    } catch (error) {
+      console.log(error);
+      handleClose();
+    }
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <React.Fragment>
@@ -137,27 +172,58 @@ function ProfilePageView({ profile, onEditClick, canEdit }) {
           />
         </Education>
 
-      <ActionButtonContainer>
-        {canEdit && (
-          <Button
-            fullWidth
-            size="small"
-            variant="contained"
-            color="secondary"
-            onClick={onEditClick}
-          >
-            Edit
-          </Button>)}
+        <ActionButtonContainer>
           {canEdit && (
-          <Button  fullWidth
-            variant="contained"
-            color="secondary"
-            onClick={Print}
-          >Print
-          </Button>)}
+            <Button
+              fullWidth
+              size="small"
+              variant="contained"
+              color="secondary"
+              onClick={onEditClick}
+            >
+              Edit
+            </Button>)}
+          {canEdit && (
+            <Button fullWidth
+              variant="contained"
+              color="third"
+              onClick={Print}
+            >Print
+            </Button>)}
+          {canDelete && (
+            <Button
+              fullWidth
+              size="small"
+              variant="contained"
+              color="error"
+              onClick={handleClickOpen}
+            >
+              Delete
+            </Button>)}
         </ActionButtonContainer>
       </Page>
       <PrintPage {...profile}></PrintPage>
+      {canDelete &&
+					<Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Delete user"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText color="text" id="alert-dialog-description">
+              Are you sure you wish to delete this account?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleDelete} autoFocus>Confirm</Button>
+          </DialogActions>
+        </Dialog>
+				}
     </React.Fragment>
   );
 }
