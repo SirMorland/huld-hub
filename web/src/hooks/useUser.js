@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-
 /**
  * user === null means we are waiting for user
  * user === false means there is no current user
@@ -26,6 +25,8 @@ const useUser = (jwt) => {
           setUser(false);
         }
       }catch(error){
+        let json = { connectionError: true};
+        setUser(json);
         console.log(error);
       }
       

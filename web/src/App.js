@@ -34,14 +34,14 @@ const AuthUser = ({ children }) => {
   const { user, jwt } = useUserContext();
 
   if (user === null) {
-    return (
-      <ErrorPage 
-        errorCode={503}/> 
-    ); 
+    return null;
   }
 
   // authenticated user with JWT
   if (jwt) {
+    if (user?.connectionError){
+      return (<ErrorPage errorCode={503}/>);
+    }
     // confimred user
     if (user?.confirmed) {
       if (path === "/" || path === "/login" || path === "/register" || path === "/almost-done") {
