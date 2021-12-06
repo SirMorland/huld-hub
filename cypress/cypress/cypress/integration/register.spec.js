@@ -68,6 +68,8 @@ describe("Registration", () => {
 	});
 
 	it("should log out", function () {
+		cy.get("button:contains('Settings')").click();
+
 		cy.get("button:contains('Log out')").click();
 
 		cy.location("pathname").should("equal", "/login");
