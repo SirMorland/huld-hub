@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router';
 
-import { Button, Grid, Link, Typography } from '@mui/material';
+import { Grid, Link, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { Box } from '@mui/system';
 
 import TextField from '../components/TextField';
@@ -13,12 +14,16 @@ import { useUserContext } from '../userContext';
 export default function LoginForm() {
     const location = useLocation();
     const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(false);
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const { setJwt } = useUserContext();
+
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+        setLoading(true);
+        setError('');
         try {
             const json = await login(email, password);
             setJwt(json.jwt);
@@ -30,6 +35,8 @@ export default function LoginForm() {
                 default:
                     break;
             }
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -80,7 +87,8 @@ export default function LoginForm() {
                         </Grid>
                     </Grid>
                     <br />
-                    <Button
+                    <LoadingButton
+                        loading={loading}
                         type="submit"
                         fullWidth
                         variant="contained"
@@ -88,7 +96,7 @@ export default function LoginForm() {
                         sx={{ mt: 3, mb: 2 }}
                     >
                         LOG IN
-                    </Button>
+                    </LoadingButton>
                     <br />
                     <br />
                     <Grid container justifyContent="center">

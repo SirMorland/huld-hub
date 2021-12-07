@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 
 import { Box } from '@mui/system';
-import { Button, Grid, Link, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import { Grid, Link, Typography } from '@mui/material';
 
 import TextField from '../components/TextField';
 import PageWrapper from '../components/PageWrapper';
@@ -17,6 +18,7 @@ export default function RegistrationForm() {
     const [reEnterPassword, setReEnterPassword] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [loading, setLoading] = useState(false);
     const history = useHistory();
     const { setJwt } = useUserContext();
     const handleSubmit = async (event) => {
@@ -24,15 +26,17 @@ export default function RegistrationForm() {
         setEmailError('');
         setPasswordError('');
 
-        if (password !== reEnterPassword){
+
+        if (password !== reEnterPassword) {
             setPasswordError("Passwords do not match! Please check");
         } else if (email && password && password === reEnterPassword) {
-            try {
+            try {        
+                setLoading(true);
                 const json = await register(email, password);
                 setJwt(json.jwt);
                 history.push("/almost-done");
-            } catch  (error) {
-                switch(true) {
+            } catch (error) {
+                switch (true) {
                     case error instanceof EmailWrongDomainError:
                         setEmailError(error.message);
                         break;
@@ -43,6 +47,8 @@ export default function RegistrationForm() {
                         setPasswordError(error.message);
                         break;
                 }
+            } finally{
+                setLoading(false);
             }
         }
     };
@@ -117,7 +123,8 @@ export default function RegistrationForm() {
                         </Grid>
                     </Grid>
                     <br />
-                    <Button
+                    <LoadingButton
+                        loading={loading}
                         type="submit"
                         fullWidth
                         variant="contained"
@@ -125,7 +132,7 @@ export default function RegistrationForm() {
                         sx={{ mt: 3, mb: 2 }}
                     >
                         Register
-                    </Button>
+                    </LoadingButton>
                     <br />
                     <br />
                     <Grid container justifyContent="center">

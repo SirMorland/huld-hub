@@ -31,7 +31,7 @@ function CompetenceEdit(props) {
   );
 }
 
-CompetenceEdit.default = {
+CompetenceEdit.defaultProps = {
   items: [],
   onRemove: () => {},
   onAdd: () => {},
@@ -44,7 +44,7 @@ CompetenceEdit.propTypes = {
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
     })
-  ).isRequired,
+  ),
   onRemove: PropTypes.func.isRequired,
   onAdd: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,

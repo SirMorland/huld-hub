@@ -84,7 +84,7 @@ function Print() {
   window.print();
 }
 
-function ProfilePageView({ profile, onEditClick, canEdit, canDelete, jwt }) {
+function ProfilePageView({ profile, onEditClick, canEdit, loading, canDelete, jwt }) {
   const { languages, keywords, educationHistory, workHistory } = profile;
 
   const [open, setOpen] = React.useState(false);
@@ -117,6 +117,7 @@ function ProfilePageView({ profile, onEditClick, canEdit, canDelete, jwt }) {
   return (
     <React.Fragment>
       <Page
+        loading={loading}
         header={
           profile && (
             <HeaderContentContainer>

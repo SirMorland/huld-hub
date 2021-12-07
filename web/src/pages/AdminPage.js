@@ -14,6 +14,7 @@ import ItemListEdit from '../components/ItemListEdit';
 import CompetenceEdit from '../components/CompetenceEdit';
 import EmailDomainEdit from '../components/EmailDomainEdit';
 import useCompetences from '../hooks/useCompetences';
+import usePageLoading from "../hooks/usePageLoading";
 import useCompetenceCategories from '../hooks/useCompetenceCategories';
 import { addCompetence, removeCompetence, updateUserRole, addEmailDomain, removeEmailDomain } from '../api';
 
@@ -70,10 +71,10 @@ function AdminPage() {
   );
   const allKeywords = useCompetences(COMPETENCE_TYPE.keywords, jwt);
 
-  const [languages, setLanguages] = useState(allLanguages || []);
-  const [keywords, setKeywords] = useState(allKeywords || []);
-  const [emailDomains, setEmailDomains] = useState(allEmailDomains || []);
-
+  const [languages, setLanguages] = useState(null);
+  const [keywords, setKeywords] = useState(null);
+  const [emailDomains, setEmailDomains] = useState(null);
+  const loading = usePageLoading(languages, keywords, emailDomains);
   useEffect(() => {
     setKeywords(allKeywords);
   }, [allKeywords]);
@@ -220,7 +221,9 @@ function AdminPage() {
   };
 
   return (
-    <Page>
+    <Page
+      loading={loading}
+    >
       <Admins>
         <Typography variant="h2" colour="primary">
           Admins

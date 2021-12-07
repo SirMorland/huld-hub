@@ -34,13 +34,14 @@ const ItemListEdit = ({ items, onRemove }) => {
   );
 };
 
+ItemListEdit.defaultProps = { items: [], onRemove: () => { } }
 ItemListEdit.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
     })
-  ).isRequired,
+  ),
   onRemove: PropTypes.func.isRequired,
 };
 
