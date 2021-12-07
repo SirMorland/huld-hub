@@ -123,11 +123,11 @@ function SearchItem(props) {
         />
         <div>
           <InfoName variant="body1">
-            {match(first_name.split(" "), " ").render}{" "}
-            {match(last_name.split(" "), " ").render}
+            {match(first_name?.split(" "), " ").render}{" "}
+            {match(last_name?.split(" "), " ").render}
           </InfoName>
           <InfoTitle variant="body1">
-            {match(title.split(" "), " ").render}
+            {match(title?.split(" "), " ").render}
           </InfoTitle>
         </div>
         <ProfileLink to={`/profile/${id}`}>Profile</ProfileLink>
