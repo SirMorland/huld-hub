@@ -73,7 +73,7 @@ function AdminPage() {
 
   const [languages, setLanguages] = useState(null);
   const [keywords, setKeywords] = useState(null);
-  const [emailDomains, setEmailDomains] = useState(null);
+  const [emailDomains, setEmailDomains] = useState([]);
   const loading = usePageLoading(languages, keywords, emailDomains);
   useEffect(() => {
     setKeywords(allKeywords);
