@@ -15,7 +15,7 @@ import ErrorPage from "./pages/ErrorPage";
 import ForgotPassword from "./pages/ForgotPassword"
 import ResetPassword from "./pages/ResetPassword"
 import PasswordChanged from "./pages/PasswordChanged"
-
+import SettingPage from "./pages/SettingPage";
 
 
 import theme from "./theme";
@@ -39,6 +39,9 @@ const AuthUser = ({ children }) => {
 
   // authenticated user with JWT
   if (jwt) {
+    if (user?.connectionError){
+      return (<ErrorPage errorCode={503}/>);
+    }
     // confimred user
     if (user?.confirmed) {
       if (path === "/" || path === "/login" || path === "/register" || path === "/almost-done") {
@@ -116,7 +119,7 @@ function App() {
             <Route exact path="/profile/:profileId" component={ProfilePage} />
             <Route exact path="/search" component={SearchPage} />
             <Route exact path="/admin" component={AdminPage} />
-
+            <Route exact path="/settings" component={SettingPage} />
             <Route>
                 <ErrorPage errorCode={404} />
             </Route>

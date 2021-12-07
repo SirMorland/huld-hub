@@ -103,7 +103,7 @@ export const getAllUsers = async (jwt) => {
  * @param {string} id of the user role to be updated
  */
 export const updateUserRole = async (jwt, user, role) => {
-  const url = `${process.env.REACT_APP_BACKEND_HOST}/user-role/${user.id}`;
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/users/${user.id}`;
   const body = { role };
   const response = await fetchPost(url, body, jwt, 'PUT');
   return await handleBasicReponse(response);
@@ -122,6 +122,19 @@ export const getRoles = async (jwt) => {
   });
   return await handleBasicReponse(response);
 };
+
+/**
+* update input user with a new password
+* @param {string} jwt authoriazation token
+* @param {Object.<id:string | number>} user object for updating
+* @param {string} password of the user to be updated
+*/
+export const updateUserPassword = async (jwt, user, password) => {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/user-password/${user.id}`;
+  const body = { password };
+  const response = await fetchPost(url, body, jwt, "PUT");
+  return await handleBasicReponse(response);
+}
 
 /**
  * Add a new competence with name and category
@@ -351,6 +364,17 @@ export const resetPassword = async (code, password, reEnterPassword) => {
   };
 
   const response = await fetchPost(url, body);
+  return await handleBasicReponse(response);
+};
+
+export const deleteUserProfile = async (profileId, jwt) => {
+  const url = `${process.env.REACT_APP_BACKEND_HOST}/user-profiles/deleteprofile/${profileId}`;
+  const response = await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+    }
+  });
   return await handleBasicReponse(response);
 };
 
