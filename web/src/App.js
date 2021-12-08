@@ -32,13 +32,12 @@ const AuthUser = ({ children }) => {
   const location = useLocation();
   const path = location.pathname;
   const { user, jwt } = useUserContext();
-
   if (user === null) {
     return null;
   }
 
   // authenticated user with JWT
-  if (jwt) {
+  if (jwt && user) {
     if (user?.connectionError){
       return (<ErrorPage errorCode={503}/>);
     }
