@@ -59,7 +59,7 @@ const AuthUser = ({ children }) => {
       return <Redirect to="/almost-done" />;
     }
   }  else {
-    if (path === "/" || path === "/almost-done") {
+    if (path !== '/register' && (path === "/" || path === "/almost-done")) {
       // Unauthenticated users trying to access Roor or Almost done page are redirected to Login page
       return <Redirect to="/login" />;
     }
