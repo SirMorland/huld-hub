@@ -1,32 +1,37 @@
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
-import { Typography } from '@mui/material';
-import { useUserContext } from '../userContext';
+import { Link, Typography } from '@mui/material';
+
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
-import { Link } from 'react-router-dom';
+import { useUserContext } from '../userContext';
 
 export default function EmailConfirmed() {
     const { user } = useUserContext();
     return (
         <PageWrapper>
             <DialogWrapper>
-                <Typography component="h1" variant="h5" color="primary">
+                <Typography variant="h1" align="center">
                     Email confirmed
                 </Typography>
-                <br />
-                <br />
-                <Typography component="p" variant="body2">
-                    Your registration to Hub is now completed!
-                </Typography>
-                <br />
-                <Typography component="p" variant="body2">
-                    Finish up by filling your profile with your information.
-                </Typography>
-                <br />
-                {user  
-                ? <Link to={`/profile/${user.profileId}`}>Go to my profile</Link> 
-                : <Link to="/login">Go to login page</Link>}
+                <div>
+                    <Typography component="p" variant="body2" align="center">
+                        Your registration to Hub is now completed!
+                    </Typography>
+                    <Typography component="p" variant="body2" align="center">
+                        Finish up by filling your profile with your information.
+                    </Typography>
+                </div>
+                {user ?
+                    <Link component={RouterLink} to={`/profile/${user.profileId}`} variant="body2" color="secondary" align="center">
+                        Go to my profile
+                    </Link> 
+                :
+                    <Link component={RouterLink} to="/login" variant="body2" color="secondary" align="center">
+                        Go to login page
+                    </Link>
+                }
             </DialogWrapper>
         </PageWrapper>
     );

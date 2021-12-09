@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
-import { Box } from '@mui/system';
-import { Button, Grid, Link, Typography } from '@mui/material';
+import { Button, Link, Typography } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -11,6 +11,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '../components/TextField';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
+import { StyledForm } from '../components/GenericComponents';
 import { sendPasswordReset } from '../api';
 
 export default function PasswordResetLinkForm() {
@@ -40,66 +41,42 @@ export default function PasswordResetLinkForm() {
     return (
         <PageWrapper>
             <DialogWrapper>
-                <Typography component="h1" variant="h5" color="primary">
+                <Typography variant="h1" align="center">
                     Forgot password
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3, width: '100%' }}>
-                    <Grid container >
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                id="email"
-                                type="email"
-                                label="Email Address"
-                                placeholder="john.doe@huld.io"
-                                name="email"
-                                value={email}
-                                onChange={e => setEmail(e.target.value)}
-                            />
-                        </Grid>
-                        {emailSent &&
-                            <React.Fragment>
-                                <br />
-                                <Grid container justifyContent="center">
-                                    <Grid item>
-                                        <Typography component="p" variant="body2" color="error">
-                                            {emailSent}
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-                            </React.Fragment>
-                        }
-                    </Grid>
-                    <br />
+                <StyledForm onSubmit={handleSubmit}>
+                    <TextField
+                        required
+                        id="email"
+                        type="email"
+                        label="Email Address"
+                        placeholder="john.doe@huld.io"
+                        name="email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        errorText={emailSent}
+                    />
                     <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
-                        sx={{ mt: 3, mb: 2 }}
                     >
                         Send password reset link
                     </Button>
-                    <br />
-                    <br />
-                    <Grid container justifyContent="center">
-                        <Grid item>
-                            <Link href="/login" variant="body2" color="secondary">
-                                Go to login page
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </Box>
+                </StyledForm>
+                <Link component={RouterLink} to="/login" variant="body2" color="secondary" align="center">
+                    Go to login page
+                </Link>
             </DialogWrapper>
+
             <Dialog
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">
-                    {"Email has been sent"}
-                </DialogTitle>
+                <DialogTitle id="alert-dialog-title">Email has been sent</DialogTitle>
                 <DialogContent>
                     <DialogContentText color="text" id="alert-dialog-description">
                         Reset link for the password has been sent to the described email.

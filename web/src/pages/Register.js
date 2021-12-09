@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { useHistory } from "react-router-dom";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 
-import { Box } from '@mui/system';
 import { LoadingButton } from '@mui/lab';
-import { Grid, Link, Typography } from '@mui/material';
+import { Link, Typography } from '@mui/material';
 
 import TextField from '../components/TextField';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
+import { StyledForm } from '../components/GenericComponents';
 import { register, EmailTakenError, EmailWrongDomainError } from '../api';
 import { useUserContext } from '../userContext';
 
@@ -56,93 +56,55 @@ export default function RegistrationForm() {
     return (
         <PageWrapper>
             <DialogWrapper>
-                <Typography component="h1" variant="h5" color="primary">
+                <Typography variant="h1" align="center">
                     Register to Hub
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                id="email"
-                                type="email"
-                                label="Email Address"
-                                placeholder="john.doe@huld.io"
-                                name="email"
-                                value={email}
-                                onChange={e => setEmail(e.target.value)}
-                            />
-                            {emailError &&
-                                <React.Fragment>
-                                    <br />
-                                    <Grid container justifyContent="center">
-                                        <Grid item>
-                                            <Typography component="p" variant="body2" color="error">
-                                                {emailError}
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-                                </React.Fragment>
-                            }
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                type="password"
-                                id="password"
-                                name="password"
-                                label="Password"
-                                placeholder="********"
-                                value={password}
-                                onChange={e => setPassword(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                type="password"
-                                id="reEnterPassword"
-                                name="reEnterPassword"
-                                label="Re-Enter Password"
-                                placeholder="********"
-                                value={reEnterPassword}
-                                onChange={e => setReEnterPassword(e.target.value)}
-                            />
-                            {passwordError &&
-                                <React.Fragment>
-                                    <br />
-                                    <Grid container justifyContent="center">
-                                        <Grid item>
-                                            <Typography component="p" variant="body2" color="error">
-                                                {passwordError}
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-                                </React.Fragment>
-                            }
-                        </Grid>
-                    </Grid>
-                    <br />
+                <StyledForm onSubmit={handleSubmit}>
+                    <TextField
+                        required
+                        id="email"
+                        type="email"
+                        label="Email Address"
+                        placeholder="john.doe@huld.io"
+                        name="email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        errorText={emailError}
+                    />
+                    <TextField
+                        required
+                        type="password"
+                        id="password"
+                        name="password"
+                        label="Password"
+                        placeholder="********"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                    />
+                    <TextField
+                        required
+                        type="password"
+                        id="reEnterPassword"
+                        name="reEnterPassword"
+                        label="Re-Enter Password"
+                        placeholder="********"
+                        value={reEnterPassword}
+                        onChange={e => setReEnterPassword(e.target.value)}
+                        errorText={passwordError}
+                    />
                     <LoadingButton
                         loading={loading}
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
-                        sx={{ mt: 3, mb: 2 }}
                     >
                         Register
                     </LoadingButton>
-                    <br />
-                    <br />
-                    <Grid container justifyContent="center">
-                        <Grid item>
-                            <Link href="/login" variant="body2" color="secondary">
-                                Already a member? Login instead
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </Box>
+                </StyledForm>
+                <Link component={RouterLink} to="/login" variant="body2" color="secondary" align="center">
+                    Already a member? Login instead
+                </Link>
             </DialogWrapper>
         </PageWrapper>
     );
