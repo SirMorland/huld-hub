@@ -42,6 +42,10 @@ const AuthUser = ({ children }) => {
     if (user?.connectionError){
       return (<ErrorPage errorCode={503}/>);
     }
+    //if used account has been deleted
+    if (user?.notFound){
+      return (<ErrorPage errorCode={401}/>);
+    }
     // confimred user
     if (user?.confirmed) {
       if (path === "/" || path === "/login" || path === "/register" || path === "/almost-done") {

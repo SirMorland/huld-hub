@@ -21,8 +21,18 @@ const useUser = (jwt) => {
             setUser(json);
           } catch (e) {
           } 
-        } else {
-          setUser(false);
+        }else {
+          try {
+            let json = await response.json();
+            //user not found, user disabled, and user unconfirmed return same errorCode
+            if (json.message === 'User Not Found'){
+              setUser({ notFound: true });
+            }else{
+              setUser(false);
+            }
+          } catch (e) {
+          } 
+        
         }
       }catch(error){
         let json = { connectionError: true};
