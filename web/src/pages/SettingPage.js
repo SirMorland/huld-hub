@@ -87,7 +87,7 @@ function SettingPage() {
       </Form>
 
       <Dialog
-        open={success}
+        open={!!success}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"

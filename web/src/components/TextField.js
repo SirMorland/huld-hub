@@ -50,7 +50,7 @@ function TextField({ label, textarea, className, helpText, errorText, ...props }
       <OutlinedInput
         {...inputProps}
         inputProps={{ "data-testid": "textfield-input" }}
-        error={errorText}
+        error={!!errorText}
       />
       {(helpText || errorText) &&
         <Typography component="p" variant="body2" color="error" align="center">
