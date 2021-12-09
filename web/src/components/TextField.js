@@ -10,10 +10,12 @@ const TextFieldContainer = styled("div")`
 `;
 
 const OutlinedInput = styled(MuiOutlinedInput)(({ theme }) => `
+  padding: 0;
+
   & .MuiOutlinedInput-input {
     height: 16px;
     padding: 16px 12px;
-    background: "white";
+    background: white;
   }
 
   & .MuiOutlinedInput-input::placeholder {

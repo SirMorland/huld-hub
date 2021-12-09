@@ -16,3 +16,8 @@ export const Grid = styled('div')`
   display: grid;
   gap: 16px;
 `;
+
+export const CondensedGrid = styled('div')`
+  display: grid;
+  gap: 8px;
+`;

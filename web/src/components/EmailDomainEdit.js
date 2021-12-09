@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import ItemListEdit from './ItemListEdit';
 import FormWithInputAndBtn from './FormWithInputAndBtn';
+import { CondensedGrid } from './GenericComponents';
 
 const DOMAIN_TYPES = { INT: 'internal', EXT: 'external' };
 const emailDomainRegrex =
@@ -72,11 +73,11 @@ function EmailDomainEdit(props) {
   };
 
   return (
-    <div>
+    <>
       <Typography variant="h2" colour="primary">
         Allowed email domains
       </Typography>
-      <div style={{ margin: '4px 0' }} data-testid="internal-email-domains">
+      <CondensedGrid data-testid="internal-email-domains">
         <Typography variant="h3" colour="primary">
           Internal
         </Typography>
@@ -87,8 +88,8 @@ function EmailDomainEdit(props) {
           setValue={setInternalDomain}
           onSubmit={(e) => submit(e, DOMAIN_TYPES.INT)}
         />
-      </div>
-      <div data-testid="external-email-domains">
+      </CondensedGrid>
+      <CondensedGrid data-testid="external-email-domains">
         <Typography variant="h3" colour="primary">
           External
         </Typography>
@@ -99,8 +100,8 @@ function EmailDomainEdit(props) {
           setValue={setExternalDomain}
           onSubmit={(e) => submit(e, DOMAIN_TYPES.EXT)}
         />
-      </div>
-    </div>
+      </CondensedGrid>
+    </>
   );
 }
 

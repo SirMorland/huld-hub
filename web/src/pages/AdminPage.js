@@ -13,12 +13,15 @@ import SelectAutocompleteField from '../components/SelectAutocompleteField';
 import ItemListEdit from '../components/ItemListEdit';
 import CompetenceEdit from '../components/CompetenceEdit';
 import EmailDomainEdit from '../components/EmailDomainEdit';
+import { CondensedGrid, Grid } from '../components/GenericComponents';
 import useCompetences from '../hooks/useCompetences';
 import usePageLoading from "../hooks/usePageLoading";
 import useCompetenceCategories from '../hooks/useCompetenceCategories';
 import { addCompetence, removeCompetence, updateUserRole, addEmailDomain, removeEmailDomain } from '../api';
 
-const Admins = styled('div')`
+const Admins = styled(CondensedGrid)`
+  align-content: flex-start;
+
   @media (min-width: 768px) {
     grid-column-start: 1;
   }
@@ -26,7 +29,9 @@ const Admins = styled('div')`
     grid-column-start: 1;
   }
 `;
-const Domains = styled('div')`
+const Domains = styled(Grid)`
+  align-content: flex-start;
+
   @media (min-width: 768px) {
     grid-column-start: 2;
   }
@@ -34,22 +39,28 @@ const Domains = styled('div')`
     grid-column-start: 1;
   }
 `;
-const Languages = styled('div')`
+const Languages = styled(CondensedGrid)`
+  align-content: space-between;
+
   @media (min-width: 768px) {
     grid-column-start: 1;
   }
   @media (min-width: 1152px) {
     grid-column-start: 2;
-    grid-row: span 3;
+    grid-row: span 2;
+    align-content: flex-start;
   }
 `;
-const Keywords = styled('div')`
+const Keywords = styled(CondensedGrid)`
+  align-content: space-between;
+
   @media (min-width: 768px) {
     grid-column-start: 2;
   }
   @media (min-width: 1152px) {
     grid-column-start: 3;
-    grid-row: span 3;
+    grid-row: span 2;
+    align-content: flex-start;
   }
 `;
 
@@ -222,6 +233,7 @@ function AdminPage() {
 
   return (
     <Page
+      rows={2}
       loading={loading}
     >
       <Admins>

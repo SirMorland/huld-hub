@@ -3,6 +3,14 @@ import Avatar from '@mui/material/Avatar';
 import { styled } from '@mui/system';
 import IconButton from '@mui/material/IconButton';
 
+const ProfilePicEditContainer = styled("div")`
+    margin: auto;
+  
+    @media (min-width: 768px) {
+        margin: 0;
+    }
+`;
+
 const StyledAvatar = styled(Avatar)`
     width: 128px;
     height: 128px;
@@ -38,7 +46,7 @@ const ProfilePicEdit = forwardRef(({ profileImage }, ref) => {
         [file]
     );
     return (
-        <div>
+        <ProfilePicEditContainer>
             <input
                 type="file" onChange={(e) => setFile(e.target.files[0])} id="upload"
                 accept="image/*" style={{ display: "none" }}
@@ -49,7 +57,7 @@ const ProfilePicEdit = forwardRef(({ profileImage }, ref) => {
                 </StyledButton>
             </label>
             <label htmlFor="avatar" />
-        </div>
+        </ProfilePicEditContainer>
     );
 })
 

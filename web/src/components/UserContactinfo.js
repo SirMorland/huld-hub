@@ -13,17 +13,22 @@ import { styled } from "@mui/system";
 const Container = styled('div')`
   display: grid;
   gap: 8px;
+  grid-template-columns: max-content 1fr;
+  align-items: center;
+
+  @media screen and (min-width: 768px) {
+    direction: rtl;
+  }
 `;
 
 const ContactText = styled(Typography)`
   color: white;
-  text-align: right;
   font-size: 16px;
   line-height: 1;
+  word-break: break-word;
 
   @media print{
     color: black;
-    text-align: left;
   }
 `;
 
@@ -31,23 +36,11 @@ const StyledIcon = `
   width: 16px;
   height: 16px;
   vertical-align: bottom;
-  margin-left: 8px;
+  color: white;
+  
   @media print{
-    margin-right: 8px;
+    color: black;
   }
-`;
-
-const PrintIcon = styled('span')`
-  display: block;
-  float:left;
-  width: 15%;
-`;
-
-const PrintText = styled('span')`
-  display: block;
-  float:right;
-  width: 85%;
-  word-break:break-all;
 `;
 
 const ContactLocationIcon = styled(LocationOnIcon)(StyledIcon);
@@ -57,83 +50,45 @@ const ContactGithubIcon = styled(GitHubIcon)(StyledIcon);
 const ContactLinkedInIcon = styled(LinkedInIcon)(StyledIcon);
 const ContactMdiIcon = styled(Icon)(StyledIcon);
 
-export default function UserContactinfo({profile, iconSide}) {
-  if (iconSide === "right"){
-    return (
-      <Container>
-        {profile.address && (
-          <ContactText>
-            {profile.address}<ContactLocationIcon />
-          </ContactText>
-        )}
-        {profile.email && (
-          <ContactText>
-            {profile.email}<ContactEmailIcon />
-          </ContactText>
-        )}
-        {profile.phone && (
-          <ContactText>
-            {profile.phone}<ContactPhoneIcon />
-          </ContactText>
-        )}
-        {profile.slack && (
-          <ContactText>
-            {profile.slack}<ContactMdiIcon path={mdiSlack} />
-          </ContactText>
-        )}
-        {profile.github && (
-          <ContactText>
-            {profile.github}<ContactGithubIcon />
-          </ContactText>
-        )}
-        {profile.linkedin && (
-          <ContactText>
-            {profile.linkedin}<ContactLinkedInIcon />
-          </ContactText>
-        )}
-      </Container>
-    );
-  }else{
-    return (
-      <Container>
-        {profile.address && (
-          <ContactText>
-            <PrintIcon><ContactLocationIcon /></PrintIcon>
-            <PrintText> {profile.address}</PrintText>
-          </ContactText>
-        )}
-        {profile.email && (
-          <ContactText>
-            <PrintIcon><ContactEmailIcon /></PrintIcon>
-            <PrintText> {profile.email}</PrintText>
-          </ContactText>
-        )}
-        {profile.phone && (
-          <ContactText>
-            <PrintIcon><ContactPhoneIcon /></PrintIcon>
-            <PrintText> {profile.phone}</PrintText>
-          </ContactText>
-        )}
-        {profile.slack && (
-          <ContactText>
-            <PrintIcon> <ContactMdiIcon path={mdiSlack} /></PrintIcon>
-            <PrintText> {profile.slack}</PrintText>
-          </ContactText>
-        )}
-        {profile.github && (
-          <ContactText>
-            <PrintIcon><ContactGithubIcon /></PrintIcon>
-            <PrintText> {profile.github}</PrintText>
-          </ContactText>
-        )}
-        {profile.linkedin && (
-          <ContactText>
-            <PrintIcon><ContactLinkedInIcon /></PrintIcon>
-            <PrintText> {profile.linkedin}</PrintText>
-          </ContactText>
-        )}
-      </Container>
-    );
-  }
- 
+export default function UserContactinfo({ profile }) {
+  return (
+    <Container>
+      {profile.address && (
+        <>
+          <ContactLocationIcon />
+          <ContactText>{profile.address}</ContactText>
+        </>
+      )}
+      {profile.email && (
+        <>
+          <ContactEmailIcon />
+          <ContactText>{profile.email}</ContactText>
+        </>
+      )}
+      {profile.phone && (
+        <>
+          <ContactPhoneIcon />
+          <ContactText>{profile.phone}</ContactText>
+        </>
+      )}
+      {profile.slack && (
+        <>
+          <ContactMdiIcon path={mdiSlack} />
+          <ContactText>{profile.slack}</ContactText>
+        </>
+      )}
+      {profile.github && (
+        <>
+          <ContactGithubIcon />
+          <ContactText>{profile.github}</ContactText>
+        </>
+      )}
+      {profile.linkedin && (
+        <>
+          <ContactLinkedInIcon />
+          <ContactText>{profile.linkedin}</ContactText>
+        </>
+      )}
+    </Container>
+  );
 }

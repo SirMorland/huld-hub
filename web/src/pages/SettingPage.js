@@ -1,15 +1,18 @@
 import { useState } from "react";
-import Page from "../components/Page/Page";
-import { Button, Grid, Typography } from "@mui/material";
+
+import { Button, Dialog, DialogActions, DialogTitle, Typography } from "@mui/material";
 import { styled } from "@mui/system";
+
+import Page from "../components/Page/Page";
 import TextField from "../components/TextField";
 import { useUserContext } from "../userContext";
-import { Box } from "@mui/system";
 import { updateUserPassword, NotFoundError } from "../api";
 
-const StyledSuccess = styled(Typography)`
-  color: #28a745;
+const Form = styled("form")`
+  display: grid;
+  gap: 16px;
 `;
+
 function SettingPage() {
   const { user, jwt, setJwt } = useUserContext();
   const [password, setPassword] = useState("");
@@ -46,60 +49,56 @@ function SettingPage() {
     }
   };
 
+  const handleClose = () => {
+      setSuccess("");
+  };
+
   return (
     <Page>
-      <Box component="form" onSubmit={handleSubmit} sx={{ width: "100%" }}>
-        <Typography
-          component="h1"
-          variant="h2"
-          color="primary"
-          sx={{ mb: 2, width: "100%" }}
-        >
+      <Form onSubmit={handleSubmit}>
+        <Typography variant="h2">
           Change your password
         </Typography>
+        
+        <TextField
+          required
+          id="new_password"
+          type="password"
+          label="New password"
+          name="new_password"
+          placeholder="********"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <TextField
+          required
+          id="confirm_password"
+          type="password"
+          label="Confirm password"
+          name="confirm_password"
+          placeholder="********"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          errorText={error}
+        />
+        <Button type="submit" fullWidth variant="contained" color="primary">
+          Save
+        </Button>
+      </Form>
 
-        <Grid container spacing={2} justifyContent>
-          <Grid item xs={12}>
-            <TextField
-              required
-              id="new_password"
-              type="password"
-              label="New password"
-              name="new_password"
-              placeholder="********"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              id="confirm_password"
-              type="password"
-              label="Confirm password"
-              name="confirm_password"
-              placeholder="********"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </Grid>
-          <Grid container justifyContent="center" sx={{ mt: 2 }}>
-            <Grid item>
-              <Typography component="p" variant="body2" color="error">
-                {error && `${error} `}
-              </Typography>
-              <StyledSuccess component="p" variant="body2" colour="success">
-                {success && `${success} `}
-              </StyledSuccess>
-            </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <Button type="submit" fullWidth variant="contained" color="primary">
-              Save
-            </Button>
-          </Grid>
-        </Grid>
-      </Box>   
+      <Dialog
+        open={success}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+          <DialogTitle id="alert-dialog-title">{success}</DialogTitle>
+          <DialogActions>
+              <Button onClick={handleClose} autoFocus>
+                  Close
+              </Button>
+          </DialogActions>
+      </Dialog>
     </Page>
   );
 }
