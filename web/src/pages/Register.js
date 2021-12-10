@@ -36,6 +36,7 @@ export default function RegistrationForm() {
                 setJwt(json.jwt);
                 history.push("/almost-done");
             } catch (error) {
+                setLoading(false);
                 switch (true) {
                     case error instanceof EmailWrongDomainError:
                         setEmailError(error.message);
@@ -47,8 +48,6 @@ export default function RegistrationForm() {
                         setPasswordError(error.message);
                         break;
                 }
-            } finally{
-                setLoading(false);
             }
         }
     };

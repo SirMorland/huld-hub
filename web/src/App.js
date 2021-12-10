@@ -32,13 +32,12 @@ const AuthUser = ({ children }) => {
   const location = useLocation();
   const path = location.pathname;
   const { user, jwt } = useUserContext();
-
   if (user === null) {
     return null;
   }
 
   // authenticated user with JWT
-  if (jwt) {
+  if (jwt && user) {
     if (user?.connectionError){
       return (<ErrorPage errorCode={503}/>);
     }
@@ -60,7 +59,7 @@ const AuthUser = ({ children }) => {
       return <Redirect to="/almost-done" />;
     }
   }  else {
-    if (path === "/" || path === "/almost-done") {
+    if (path !== '/register' && (path === "/" || path === "/almost-done")) {
       // Unauthenticated users trying to access Roor or Almost done page are redirected to Login page
       return <Redirect to="/login" />;
     }
