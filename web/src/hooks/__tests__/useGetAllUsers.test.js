@@ -18,7 +18,7 @@ describe("useCompetenceCategories hook", () => {
     expect(result.current.length).toEqual(0);
   });
 
-  it.only("should return users list when hub-jwt is defined and the jwt is proper", async () => {
+  it("should return users list when hub-jwt is defined and the jwt is proper", async () => {
     const mockUserData = [{ id: 1, name: "cat" }];
     fetch.mockResponseOnce(JSON.stringify(mockUserData), {
       status: 200,

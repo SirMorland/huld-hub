@@ -3,22 +3,32 @@ import MuiOutlinedInput from "@mui/material/OutlinedInput";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/system";
 
-const OutlinedInput = styled(MuiOutlinedInput)(({ theme }) => ({
-  "& .MuiOutlinedInput-input::placeholder": {
-    color: theme.palette.grey[500],
-  },
-  "& .MuiOutlinedInput-input": {
-    background: "white",
-  },
-  margin: "4px 0",
-}));
+const TextFieldContainer = styled("div")`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
+const OutlinedInput = styled(MuiOutlinedInput)(({ theme }) => `
+  padding: 0;
+
+  & .MuiOutlinedInput-input {
+    height: 16px;
+    padding: 16px 12px;
+    background: white;
+  }
+
+  & .MuiOutlinedInput-input::placeholder {
+    color: ${theme.palette.grey[500]};
+  }
+`);
 
 /**
  *
  * @param {{textarea: boolean; label: string; placeholder: string; error: boolean; required: boolean; type: string; value: string; onChange: Function; }} param0
  * @returns
  */
-function TextField({ label, textarea, className, ...props }) {
+function TextField({ label, textarea, className, helpText, errorText, ...props }) {
   const inputProps = {
     fullWidth: true,
     placeholder: label,
@@ -26,7 +36,7 @@ function TextField({ label, textarea, className, ...props }) {
     ...props,
   };
   return (
-    <div data-testid="textfield-container" className={className}>
+    <TextFieldContainer data-testid="textfield-container" className={className}>
       {label && (
         <Typography
           component="label"
@@ -40,8 +50,14 @@ function TextField({ label, textarea, className, ...props }) {
       <OutlinedInput
         {...inputProps}
         inputProps={{ "data-testid": "textfield-input" }}
+        error={!!errorText}
       />
-    </div>
+      {(helpText || errorText) &&
+        <Typography component="p" variant="body2" color="error" align="center">
+          {errorText} {helpText}
+        </Typography>
+      }
+    </TextFieldContainer>
   );
 }
 

@@ -67,7 +67,7 @@ function PrintPage(profile) {
                     variant="square"
                 />)}
                 <TextContainer>
-                    <UserContactinfo  profile={profile} iconSide={"left"}  ></UserContactinfo>
+                    <UserContactinfo profile={profile} />
                 </TextContainer>
                 <TextContainer>
                     <ProfileInfo title="Skills" data={profile.skills} />

@@ -10,11 +10,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Logout from '@mui/icons-material/Logout';
 import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
 
-const StyledHeaderContainer = styled("div")(
-  ({ theme }) => `
-  position: sticky;
-  top: 0;
-  z-index: 10;
+const StyledHeaderContainer = styled("div")(({ theme }) => `
   background-color: ${theme.colors.primaryText};
   min-height: 56px;
   display: flex;
@@ -25,18 +21,18 @@ const StyledHeaderContainer = styled("div")(
   {    
     display: none;
   }
-`
-);
+`);
 
 const StyledHeader = styled("header")`
   width: 100%;
   max-width: 1920px;
-  padding: 0 16px;
   box-sizing: border-box;
 
+  display: flex;
+  justify-content: space-between;
+
   @media (min-width: 768px) {
-    justify-content: space-between;
-    display: flex;
+    padding: 0 16px;
   }
 `;
 const StyledContent = styled("div")`

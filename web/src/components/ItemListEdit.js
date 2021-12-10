@@ -8,13 +8,9 @@ const StyledIcon = styled(DoDisturbOnIcon)(`
   font-size: 16px;
 `);
 
-const Wrapper = styled("div")(`
-  margin: 8px 0px;
-`);
-
 const ItemListEdit = ({ items, onRemove }) => {
   return (
-    <Wrapper>
+    <div>
       {items &&
         items.length > 0 &&
         items.map((item, index) => (
@@ -30,7 +26,7 @@ const ItemListEdit = ({ items, onRemove }) => {
             {item.name}
           </div>
         ))}
-    </Wrapper>
+    </div>
   );
 };
 

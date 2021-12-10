@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useHistory, useLocation } from "react-router-dom";
 
-import { Box } from '@mui/system';
-import { Button, Grid, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 
 import TextField from '../components/TextField';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
+import { StyledForm } from '../components/GenericComponents';
 import { resetPassword } from '../api';
 
 export default function ResetPasswordForm() {
@@ -39,60 +39,41 @@ export default function ResetPasswordForm() {
     return (
         <PageWrapper>
             <DialogWrapper>
-                <Typography component="h1" variant="h5" color="primary">
+                <Typography variant="h1" align="center">
                     Reset password
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3, width: '100%' }}>
-                    <Grid container spacing={2}>
-                        
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                type="password"
-                                id="password"
-                                name="password"
-                                label="New Password"
-                                placeholder="********"
-                                value={password}
-                                onChange={e => setPassword(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                type="password"
-                                id="reEnterPassword"
-                                name="reEnterPassword"
-                                label="Re-Enter Password"
-                                placeholder="********"
-                                value={reEnterPassword}
-                                onChange={e => setReEnterPassword(e.target.value)}
-                            />
-                            {passwordError &&
-                                <React.Fragment>
-                                    <br />
-                                    <Grid container justifyContent="center">
-                                        <Grid item>
-                                            <Typography component="p" variant="body2" color="error">
-                                                {passwordError}
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-                                </React.Fragment>
-                            }
-                        </Grid>
-                    </Grid>
-                    <br />
+                <StyledForm onSubmit={handleSubmit}>
+                    <TextField
+                        required
+                        type="password"
+                        id="password"
+                        name="password"
+                        label="New Password"
+                        placeholder="********"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                    />
+                    <TextField
+                        required
+                        type="password"
+                        id="reEnterPassword"
+                        name="reEnterPassword"
+                        label="Re-Enter Password"
+                        placeholder="********"
+                        value={reEnterPassword}
+                        onChange={e => setReEnterPassword(e.target.value)}
+                        errorText={passwordError}
+                    />
                     <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
-                        sx={{ mt: 3, mb: 2 }}
                     >
                         Reset
                     </Button>
-                </Box>
+                </StyledForm>
+                <br />
             </DialogWrapper>
         </PageWrapper>
     );

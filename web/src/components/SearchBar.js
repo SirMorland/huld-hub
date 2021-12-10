@@ -17,9 +17,11 @@ const InputWrapper = styled("div")({
 });
 
 const StyledButton = styled(Button)(`
+  height: 48px;
+  width: 48px;
+  min-width: 48px;
   margin-left: 16px;
-  margin-top: 4px;
-  height: 56px;
+  padding: 16px;
 `);
 
 const StyledIcon = styled(ArrowForwardIosIcon)(`
@@ -62,16 +64,16 @@ const SearchBar = ({ onSubmit }) => {
           value={query}
           onChange={({ target }) => setQuery(target.value)}
           placeholder="e.g. John, fullstack, CSS, iOS"
+          helpText={query &&
+            <Typography
+              variant="caption"
+              color="white"
+              sx={{ whiteSpace: "nowrap" }}
+            >
+              Separate search terms with a comma (,)
+            </Typography>
+          }
         />
-        {query && (
-          <Typography
-            variant="caption"
-            color="white"
-            sx={{ whiteSpace: "nowrap" }}
-          >
-            Separate search terms with a comma (,)
-          </Typography>
-        )}
       </InputWrapper>
       <StyledButton
         aria-label="search"

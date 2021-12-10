@@ -8,7 +8,7 @@ const useUser = (jwt) => {
   useEffect(() => {
     const fetchUser = async (jwt) => {
       const url = `${process.env.REACT_APP_BACKEND_HOST}/users/me`;
-      try{
+      try {
         const response = await fetch(url, {
           headers: {
             "Authorization": `Bearer ${jwt}`
@@ -17,31 +17,32 @@ const useUser = (jwt) => {
         if (response.status === 200) {
           try {
             let json = await response.json();
+            console.log(json);
             json.profileId = json.profile
             setUser(json);
           } catch (e) {
-          } 
-        }else {
+          }
+        } else {
           try {
             let json = await response.json();
+            console.log(json.message);
             //user not found, user disabled, and user unconfirmed return same errorCode
-            if (json.message === 'User Not Found'){
+            if (json.message === 'User Not Found') {
               setUser({ notFound: true });
-            }else{
-              setUser(false);
-            }
+            } else if (json.message === 'Your account email is not confirmed.') {
+              setUser({ confirmed: false });
+            } else setUser(false);
           } catch (e) {
-          } 
-        
+          }
+
         }
-      }catch(error){
-        let json = { connectionError: true};
+      } catch (error) {
+        let json = { connectionError: true };
         setUser(json);
         console.log(error);
       }
-      
-    }
 
+    }
     if (jwt) {
       fetchUser(jwt);
     } else {
