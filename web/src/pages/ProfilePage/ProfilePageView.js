@@ -22,8 +22,16 @@ import { deleteUserProfile } from "../../api";
 
 const HeaderContentContainer = styled("div")`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  gap: 16px;
+  
+  @media (min-width: 768px) {
+    gap: 32px;
+    flex-direction: row;
+    align-items: center;
+  }
+
   @media print{
     display: none;
   }
@@ -31,7 +39,7 @@ const HeaderContentContainer = styled("div")`
 
 const Skills = styled("div")`
   @media (min-width: 768px) {
-    grid-column-start: 1;
+    grid-column-start: 2;
   }
   @media (min-width: 1152px) {
     grid-column-start: 1;
@@ -55,7 +63,7 @@ const Keywords = styled("div")`
 `;
 const Bio = styled("div")`
   @media (min-width: 768px) {
-    grid-column-start: 2;
+    grid-column-start: 1;
   }
   @media (min-width: 1152px) {
     grid-column-start: 1;
@@ -67,7 +75,7 @@ const Work = styled("div")`
   }
   @media (min-width: 1152px) {
     grid-column-start: 2;
-    grid-row: span 5;
+    grid-row: span 4;
   }
 `;
 const Education = styled("div")`
@@ -76,7 +84,7 @@ const Education = styled("div")`
   }
   @media (min-width: 1152px) {
     grid-column-start: 3;
-    grid-row: span 5;
+    grid-row: span 4;
   }
 `;
 
@@ -117,6 +125,7 @@ function ProfilePageView({ profile, onEditClick, canEdit, loading, canDelete, jw
   return (
     <React.Fragment>
       <Page
+        rows={4}
         loading={loading}
         header={
           profile && (
@@ -130,11 +139,14 @@ function ProfilePageView({ profile, onEditClick, canEdit, loading, canDelete, jw
                   `${process.env.REACT_APP_BACKEND_HOST}${profile.image.url}`
                 }
               />
-              <UserContactinfo profile={profile} iconSide={"right"}></UserContactinfo>
+              <UserContactinfo profile={profile} />
             </HeaderContentContainer>
           )
         }
       >
+        <Bio>
+          <ProfileInfo title="Bio" data={profile && profile.bio} />
+        </Bio>
         <Skills>
           <ProfileInfo title="Skills" data={profile && profile.skills} />
         </Skills>
@@ -153,9 +165,6 @@ function ProfilePageView({ profile, onEditClick, canEdit, loading, canDelete, jw
             noItemDescription="No Keywords Provided"
           />
         </Keywords>
-        <Bio>
-          <ProfileInfo title="Bio" data={profile && profile.bio} />
-        </Bio>
 
         <Work>
           <HistoryListView

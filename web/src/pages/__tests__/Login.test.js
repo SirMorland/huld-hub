@@ -27,7 +27,7 @@ describe('Login Form', () => {
     it('renders a submit button', () => {
         const { getByText } = renderHelper(<LoginForm />);
 
-        expect(getByText("LOG IN")).toBeInTheDocument();
+        expect(getByText("Log in")).toBeInTheDocument();
     });
 
     const mockUser = {

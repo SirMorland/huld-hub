@@ -8,7 +8,7 @@ import { styled } from '@mui/system';
 import NavBar from '../NavBar/NavBar';
 import { useUserContext } from "../../userContext";
 
-const StyledMain = styled('main')`
+const StyledMain = styled('main')(({ rows }) => `
   display: grid;
   grid-auto-flow: dense;
   grid-auto-columns: 1fr;
@@ -21,6 +21,7 @@ const StyledMain = styled('main')`
 
   @media (min-width: 768px){
     grid-auto-columns: minmax(0, 576px);
+    ${rows ? `grid-template-rows: repeat(${rows - 1}, max-content) 1fr;` : ""}
     margin: 32px auto 112px auto;
     padding: 0 32px;
   }
@@ -28,7 +29,7 @@ const StyledMain = styled('main')`
   @media print {
     display: none;
   }
-`;
+`);
 
 const Backdrop = styled("div")(({ theme }) => ({
   position: "fixed", /* Sit on top of the page content */
@@ -45,14 +46,14 @@ const Backdrop = styled("div")(({ theme }) => ({
 
 }))
 
-const Page = ({ header, children, loading }) => {
+const Page = ({ header, rows, children, loading }) => {
   const { user, logout, jwt } = useUserContext();
   return (
     <React.Fragment>
       <NavBar onLogOutClick={logout} loggedIn={!!jwt} role={user?.role?.type} >
         {header}
       </NavBar>
-      <StyledMain>
+      <StyledMain rows={rows}>
         {children}
       </StyledMain>
       <Backdrop style={{ display: loading ? "flex" : "none" }}>
@@ -64,10 +65,12 @@ const Page = ({ header, children, loading }) => {
 
 Page.propTypes = {
   header: PropTypes.element,
+  rows: PropTypes.number,
   children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.arrayOf(PropTypes.element)
-  ])
+  ]),
+  loading: PropTypes.bool
 };
 
 export default Page;

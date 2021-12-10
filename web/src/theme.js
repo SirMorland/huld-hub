@@ -32,6 +32,11 @@ const theme = createTheme({
   typography: {
     fontFamily: "Fira Sans",
     fontSize: 16,
+    h1: {
+      fontSize: "24px",
+      fontWeight: "bold",
+      lineHeight: 1
+    },
     h2: {
       fontSize: "24px",
       fontWeight: "bold",

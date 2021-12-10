@@ -49,7 +49,7 @@ describe("DatePicker Component", () => {
     const { getByTestId } = renderWithTheme(
       <DatePicker label={testData.label} onChange={() => {}} />
     );
-    const calenderIconEl = getByTestId("CalendarIcon");
+    const calenderIconEl = getByTestId("date-input");
     fireEvent.click(calenderIconEl);
     expect(screen.getByText(testData.date.getFullYear())).toBeTruthy();
     expect(
@@ -65,7 +65,7 @@ describe("DatePicker Component", () => {
     const { getByTestId } = renderWithTheme(
       <DatePicker label={testData.label} onChange={onChange} />
     );
-    const calenderIconEl = getByTestId("CalendarIcon");
+    const calenderIconEl = getByTestId("date-input");
     
     await waitFor(() => fireEvent.click(calenderIconEl));
     await waitFor(() => fireEvent.click(screen.getByText(testData.randomDay)));

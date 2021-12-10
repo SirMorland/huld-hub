@@ -7,10 +7,10 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { useUserContext } from '../userContext';
 import PageWrapper from '../components/PageWrapper';
 import DialogWrapper from '../components/DialogWrapper';
 import { sendConfirmationEmail } from '../api';
+import { useUserContext } from '../userContext';
 
 export default function AlmostDone() {
 
@@ -55,37 +55,38 @@ export default function AlmostDone() {
 	return (
 		<PageWrapper>
 			<DialogWrapper>
-				<Typography component="h1" variant="h5" color="primary">
+				<Typography variant="h1" align="center">
 					Almost done
 				</Typography>
-				<br />
-				<br />
-				<Typography component="p" variant="body2">
-					Thank you for registering to Hub. To finish your registration, please confirm your email address by clicking the link we sent to {email}.
+				<div>
+					<Typography component="p" variant="body2" align="justify">
+						Thank you for registering to Hub. To finish your registration, please confirm your email address by clicking the link we sent to {email}.
+					</Typography>
 					<br />
-					<br />
-					Didn't receive the confirmation email? Please check your spam folder or try sending the email again by clicking the button below.
-					<br />
-					<br />
-				</Typography>
-				<Button
-					type="button"
-					fullWidth
-					variant="contained"
-					onClick={HandleSendConfirmationEmail}
-					color="primary"
-					sx={{ mt: 3, mb: 2 }}
-				>
-					Resend confirmation email
-				</Button>
-				{SendError &&
-					<React.Fragment>
-						<Typography component="p" variant="body2" color="error">
-							{SendError}
-						</Typography>
-					</React.Fragment>
-				}
+					<Typography component="p" variant="body2" align="justify">
+						Didn't receive the confirmation email? Please check your spam folder or try sending the email again by clicking the button below.
+					</Typography>
+				</div>
+				<div>
+					<Button
+						type="button"
+						fullWidth
+						variant="contained"
+						onClick={HandleSendConfirmationEmail}
+						color="primary"
+					>
+						Resend confirmation email
+					</Button>
+					{SendError &&
+						<React.Fragment>
+							<Typography component="p" variant="body2" color="error">
+								{SendError}
+							</Typography>
+						</React.Fragment>
+					}
+				</div>
 			</DialogWrapper>
+
 			<Dialog
 				open={open}
 				onClose={handleClose}

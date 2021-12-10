@@ -6,7 +6,14 @@ import { Typography } from '@mui/material';
 
 const StyledContainer = styled('div')`
   display: flex;
+  flex-direction: column;
   align-items: center;
+  
+  @media (min-width: 768px) {
+    flex-direction: row;
+    gap: 32px;
+  }
+
   @media print{
       display: none;
   }
@@ -14,24 +21,40 @@ const StyledContainer = styled('div')`
 const NameContainer = styled('div')`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  
+  @media (min-width: 768px) {
+    align-items: flex-start;
+  }
 `;
 
 const StyledAvatar = styled(Avatar)`
-    margin-right: 32px;
     width: 128px;
     height: 128px;
 `;
 const StyledHeader = styled(Typography)(({ theme }) => `
   font-weight: bold;
   color: white;
-  font-size: 48px;
+  font-size: 40px;
   font-family: ${theme.fonts.header};
+  text-align: center;
+
+  @media (min-width: 768px) {
+    font-size: 48px;
+    text-align: initial;
+  }
 `);
 const StyledSubHeader = styled(Typography)(({ theme }) => `
   font-weight: bold;
   color: white;
-  font-size: 32px;
+  font-size: 24px;
   font-family: ${theme.fonts.header};
+  text-align: center;
+  
+  @media (min-width: 768px) {
+    font-size: 32px;
+    text-align: initial;
+  }
 `);
 const Title = (props) => {
     const { first_name, last_name, title, image } = props;

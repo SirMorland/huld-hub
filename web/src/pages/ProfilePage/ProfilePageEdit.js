@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 
 import Page from "../../components/Page/Page";
 import ActionButtonContainer from "../../components/ActionButtonContainer";
-import { Grid } from "../../components/GenericComponents";
+import { CondensedGrid, Grid } from "../../components/GenericComponents";
 import SelectInputField from "../../components/SelectAutocompleteField";
 import HistoryListEdit from "../../components/HistoryList/HistoryListEdit";
 import { HISTORY_TYPE } from "../../hooks/useHistoryList";
@@ -15,15 +15,9 @@ import ItemListEdit from "../../components/ItemListEdit";
 import UserBasicInfoEdit from "../../components/UserBasicInfoEdit";
 import UserContactInfoEdit from "../../components/UserContactInfoEdit"
 
-// const ProfilePicture = styled("div")`
-//   @media (min-width: 768px) {
-//     grid-column-start: 1;
-//   }
-//   @media (min-width: 1152px) {
-//     grid-column-start: 1;
-//   }
-// `;
 const BasicInfo = styled(Grid)`
+  align-content: flex-end;
+
   @media (min-width: 768px) {
     grid-column-start: 1;
   }
@@ -32,6 +26,8 @@ const BasicInfo = styled(Grid)`
   }
 `;
 const ContactInfo = styled(Grid)`
+  align-content: flex-end;
+
   @media (min-width: 768px) {
     grid-column-start: 2;
   }
@@ -41,13 +37,15 @@ const ContactInfo = styled(Grid)`
 `;
 const Skills = styled("div")`
   @media (min-width: 768px) {
-    grid-column-start: 1;
+    grid-column-start: 2;
   }
   @media (min-width: 1152px) {
     grid-column-start: 1;
   }
 `;
-const Languages = styled("div")`
+const Languages = styled(CondensedGrid)`
+  align-content: space-between;
+
   @media (min-width: 768px) {
     grid-column-start: 1;
   }
@@ -55,17 +53,20 @@ const Languages = styled("div")`
     grid-column-start: 1;
   }
 `;
-const Keywords = styled("div")`
+const Keywords = styled(CondensedGrid)`
+  align-content: space-between;
+
   @media (min-width: 768px) {
     grid-column-start: 2;
   }
   @media (min-width: 1152px) {
     grid-column-start: 1;
+    align-content: flex-start;
   }
 `;
 const Bio = styled("div")`
   @media (min-width: 768px) {
-    grid-column-start: 2;
+    grid-column-start: 1;
   }
   @media (min-width: 1152px) {
     grid-column-start: 1;
@@ -77,7 +78,7 @@ const Work = styled("div")`
   }
   @media (min-width: 1152px) {
     grid-column-start: 2;
-    grid-row: span 7;
+    grid-row: span 6;
   }
 `;
 const Education = styled("div")`
@@ -86,7 +87,7 @@ const Education = styled("div")`
   }
   @media (min-width: 1152px) {
     grid-column-start: 3;
-    grid-row: span 7;
+    grid-row: span 6;
   }
 `;
 
@@ -182,7 +183,7 @@ function ProfilePageEdit({
 
   return (
     <form onSubmit={onSave}>
-      <Page>
+      <Page rows={6}>
         <BasicInfo>
           <ProfilePicEdit profileImage={edited.image} ref={profileImageRef} />
           <UserBasicInfoEdit
@@ -197,8 +198,20 @@ function ProfilePageEdit({
           ></UserContactInfoEdit>
         </ContactInfo>
 
+        <Bio>
+          <Typography variant="h2">Bio</Typography>
+          <TextField
+            textarea
+            required
+            id="Profile_Info_Edit"
+            type="text"
+            placeholder="Few words about yourself"
+            value={profileBio}
+            onChange={(e) => setProfileBio(e.target.value)}
+          />
+        </Bio>
         <Skills>
-          <Typography variant="h2"> Skills </Typography>
+          <Typography variant="h2">Skills</Typography>
           <TextField
             textarea
             required
@@ -211,8 +224,10 @@ function ProfilePageEdit({
         </Skills>
 
         <Languages>
-          <Typography variant="h2">Language proficiencies</Typography>
-          <ItemListEdit items={edited.languages} onRemove={onLanguageRemove} />
+          <CondensedGrid>
+            <Typography variant="h2">Language proficiencies</Typography>
+            <ItemListEdit items={edited.languages} onRemove={onLanguageRemove} />
+          </CondensedGrid>
           <SelectInputField
             options={languagesToAdd}
             onSelect={onLanguageAdd}
@@ -220,27 +235,16 @@ function ProfilePageEdit({
           />
         </Languages>
         <Keywords>
-          <Typography variant="h2">Keywords</Typography>
-          <ItemListEdit items={edited.keywords} onRemove={onKeywordRemove} />
+          <CondensedGrid>
+            <Typography variant="h2">Keywords</Typography>
+            <ItemListEdit items={edited.keywords} onRemove={onKeywordRemove} />
+          </CondensedGrid>
           <SelectInputField
             options={keywordsToAdd}
             onSelect={onKeywordAdd}
             label="Pick new keyword"
           />
         </Keywords>
-
-        <Bio>
-          <Typography variant="h2"> Bio </Typography>
-          <TextField
-            textarea
-            required
-            id="Profile_Info_Edit"
-            type="text"
-            placeholder="Few words about yourself"
-            value={profileBio}
-            onChange={(e) => setProfileBio(e.target.value)}
-          />
-        </Bio>
 
         <Work>
           <HistoryListEdit
