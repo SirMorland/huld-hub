@@ -17,15 +17,14 @@ const useUser = (jwt) => {
         if (response.status === 200) {
           try {
             let json = await response.json();
-            console.log(json);
             json.profileId = json.profile
             setUser(json);
           } catch (e) {
+            setUser({ connectionError: true });
           }
         } else {
           try {
             let json = await response.json();
-            console.log(json.message);
             //user not found, user disabled, and user unconfirmed return same errorCode
             if (json.message === 'User Not Found') {
               setUser({ notFound: true });
@@ -33,6 +32,7 @@ const useUser = (jwt) => {
               setUser({ confirmed: false });
             } else setUser(false);
           } catch (e) {
+            setUser({ connectionError: true });
           }
 
         }
