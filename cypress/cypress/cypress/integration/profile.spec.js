@@ -1,5 +1,4 @@
-const { cy } = require("date-fns/locale");
-const { DEFAULT_USERS, DEFAULT_PROFILES } = require("../../../../backend/app/config/functions/defaultData");
+const { DEFAULT_PROFILES } = require("../../../../backend/app/config/functions/defaultData");
 
 describe('Profile', ()=>{
   const adminProfile = DEFAULT_PROFILES.find(profile => profile.username === 'huld-admin');
@@ -73,6 +72,63 @@ describe('Profile', ()=>{
         cy.get(`[name='${key}']`).invoke('val').should('eq', adminProfile[key]);
       }
     });
+
+    const checkHistoryItem = (item) => {
+      Object.keys(item).forEach(key => {
+        let found = false;
+        if (key === 'description') {
+          cy.get('textarea').each(textarea => {
+            if (textarea.val() === item[key]) {
+              found = true;
+              return false;
+            }
+          }).then(() => {
+            expect(found).to.be.true;
+          });
+        } else if (!key.includes('date')) {
+          cy.get('input').each(input => {
+            if (input.val() === item[key]) {
+              found = true;
+              return false;
+            }
+          }).then(() => {
+            expect(found).to.be.true;
+          });
+        } else if (item[key]) {
+          const object = new Date(item[key]);
+          const date = object.getDate() > 9 ? object.getDate() : `0${object.getDate()}`;
+          const month = object.getMonth() + 1 > 9 ? object.getMonth() + 1 : `0${object.getMonth() + 1}`;
+          const year = object.getFullYear();
+          const formattedDate = `${date}.${month}.${year}`;
+          cy.get('input').each(input => {
+            if (input.val() === formattedDate) {
+              found = true;
+              return false;
+            }
+          }).then(() => {
+            expect(found).to.be.true;
+          });
+        }
+      });
+    }
+
+    adminProfile.education_histories.forEach(checkHistoryItem);
+    adminProfile.work_experiences.forEach(checkHistoryItem);
+
+  });
+
+  it('should update profile', () => {
+    cy.visit('/');
+    cy.get('button:contains("Edit")').click();
+    cy.get('input[name="first_name"]').clear().type('Testi Firstname');
+    cy.get('button:contains("Save")').click();
+    cy.contains('Testi Firstname');
+
+    // reset
+    cy.get('button:contains("Edit")').click();
+    cy.get('input[name="first_name"]').clear().type(adminProfile.first_name);
+    cy.get('button:contains("Save")').click();
+    cy.contains(adminProfile.first_name);
   });
 
 });
