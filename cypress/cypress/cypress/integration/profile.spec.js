@@ -1,11 +1,27 @@
+const getInputByLabel = (label) => {
+  return cy
+    .contains('label', label)
+    .invoke('attr', 'for')
+    .then((id) => {
+      cy.get('#' + id)
+    })
+}
+
+const formatDate = (string) => {
+  const object = new Date(string);
+  const date = object.getDate() > 9 ? object.getDate() : `0${object.getDate()}`;
+  const month = object.getMonth() + 1 > 9 ? object.getMonth() + 1 : `0${object.getMonth() + 1}`;
+  const year = object.getFullYear();
+  return `${date}.${month}.${year}`;
+}
 
 
 describe('Profile', ()=>{
-  let adminProfile;
+  let user;
   before(()=>{
     cy.clearCookies();
-    cy.fixture("admin").then((admin) => {
-      adminProfile = admin;
+    cy.fixture("user").then((data) => {
+      user = data;
     });
   });
   beforeEach(() => {
@@ -17,12 +33,53 @@ describe('Profile', ()=>{
 
   it('should login and show profile page', ()=>{
     cy.visit('/');
-    cy.get("input[name=email]").type('huld-admin@huld.io');
-		cy.get("input[name=password]").type('huld-admin');
+    cy.get("input[name=email]").type(user.email);
+		cy.get("input[name=password]").type(user.password);
 
 		cy.get("button").click();
 		cy.url().should("contain", "/profile/");
   })
+
+  it('should update profile', () => {
+    cy.visit('/');
+    cy.get('button:contains("Edit")').click();
+
+    Object.keys(user.profile).forEach(key => {
+      if (!['work_experiences', 'education_histories', 'languages', 'keywords'].includes(key)) {
+        cy.get(`[name='${key}']`).clear().type(user.profile[key]);
+      }
+    });
+
+    user.profile.languages.forEach(language => {
+      getInputByLabel('Pick new language proficiency').click();
+      cy.get(`li:contains('${language}')`).click();
+    });
+
+    user.profile.keywords.forEach(keyword => {
+      getInputByLabel('Pick new keyword').click();
+      cy.get(`li:contains('${keyword}')`).click();
+    });
+
+    const work = user.profile.work_experiences[0];
+    cy.get('button:contains("Add a new work")').click();
+    cy.get('input[placeholder="Company *"]').clear().type(work.company);
+    cy.get('input[placeholder="Position *"]').clear().type(work.position);
+    cy.get('input[placeholder="dd.mm.yyyy"]').first().type(formatDate(work.start_date));
+    cy.get('input[placeholder="dd.mm.yyyy"]').last().type(formatDate(work.end_date));
+    cy.get('textarea[placeholder="Description"]').clear().type(work.description);
+
+    const education = user.profile.education_histories[0];
+    cy.get('button:contains("Add a new education")').click();
+    cy.get('input[placeholder="School *"]').clear().type(education.school);
+    cy.get('input[placeholder="Degree *"]').clear().type(education.degree);
+
+    cy.get('input[placeholder="dd.mm.yyyy"]').eq(2).type(formatDate(education.start_date));
+    cy.get('input[placeholder="dd.mm.yyyy"]').last().type(formatDate(education.end_date));
+    cy.get('textarea[placeholder="Description"]').last().type(education.description);
+
+
+    cy.get('button:contains("Save")').click();
+  });
 
   it('should show profile page with information', () => {
     const checkHistoryItem = (item) => {
@@ -35,19 +92,19 @@ describe('Profile', ()=>{
       });
     };
     cy.visit('/');
-    Object.keys(adminProfile).forEach(key => {
-      if (!['work_experiences', 'education_histories', 'competences', 'skills', 'username'].includes(key)) {
-        cy.contains(adminProfile[key]);
+    Object.keys(user.profile).forEach(key => {
+      if (!['work_experiences', 'education_histories', 'languages', 'keywords', 'skills', 'username'].includes(key)) {
+        cy.contains(user.profile[key]);
       }
     });
-    adminProfile.skills.split("\n").forEach(skill => {
+    user.profile.skills.split("\n").forEach(skill => {
       cy.contains(skill);
     });
-    adminProfile.competences.forEach(competence => {
+    [...user.profile.languages, ...user.profile.keywords].forEach(competence => {
       cy.contains(competence);
     });
-    adminProfile.work_experiences.forEach(checkHistoryItem);
-    adminProfile.education_histories.forEach(checkHistoryItem);
+    user.profile.work_experiences.forEach(checkHistoryItem);
+    user.profile.education_histories.forEach(checkHistoryItem);
     cy.contains('Edit');
     cy.contains('Print');
   });
@@ -66,13 +123,13 @@ describe('Profile', ()=>{
     cy.visit('/');
     cy.get('button:contains("Edit")').click();
 
-    adminProfile.competences.forEach(competence => {
+    [...user.profile.languages, ...user.profile.keywords].forEach(competence => {
       cy.contains(competence);
     });
 
-    Object.keys(adminProfile).forEach(key => {
-      if (!['work_experiences', 'education_histories', 'competences', 'username'].includes(key)) {
-        cy.get(`[name='${key}']`).invoke('val').should('eq', adminProfile[key]);
+    Object.keys(user.profile).forEach(key => {
+      if (!['work_experiences', 'education_histories', 'languages', 'keywords', 'username'].includes(key)) {
+        cy.get(`[name='${key}']`).invoke('val').should('eq', user.profile[key]);
       }
     });
 
@@ -98,11 +155,7 @@ describe('Profile', ()=>{
             expect(found).to.be.true;
           });
         } else if (item[key]) {
-          const object = new Date(item[key]);
-          const date = object.getDate() > 9 ? object.getDate() : `0${object.getDate()}`;
-          const month = object.getMonth() + 1 > 9 ? object.getMonth() + 1 : `0${object.getMonth() + 1}`;
-          const year = object.getFullYear();
-          const formattedDate = `${date}.${month}.${year}`;
+          const formattedDate = formatDate(item[key]);
           cy.get('input').each(input => {
             if (input.val() === formattedDate) {
               found = true;
@@ -115,23 +168,10 @@ describe('Profile', ()=>{
       });
     }
 
-    adminProfile.education_histories.forEach(checkHistoryItem);
-    adminProfile.work_experiences.forEach(checkHistoryItem);
+    user.profile.education_histories.forEach(checkHistoryItem);
+    user.profile.work_experiences.forEach(checkHistoryItem);
 
   });
 
-  it('should update profile', () => {
-    cy.visit('/');
-    cy.get('button:contains("Edit")').click();
-    cy.get('input[name="first_name"]').clear().type('Testi Firstname');
-    cy.get('button:contains("Save")').click();
-    cy.contains('Testi Firstname');
-
-    // reset
-    cy.get('button:contains("Edit")').click();
-    cy.get('input[name="first_name"]').clear().type(adminProfile.first_name);
-    cy.get('button:contains("Save")').click();
-    cy.contains(adminProfile.first_name);
-  });
 
 });
