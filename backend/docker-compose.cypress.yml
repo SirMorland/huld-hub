@@ -6,4 +6,3 @@ services:
       SMTP_PORT: 7777
       EMAIL_FROM: huldhub@outlook.com
       EMAIL_REPLY_TO: huldhub@outlook.com
-      EMAIL_DOMAIN: huld.io
