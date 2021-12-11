@@ -1,9 +1,12 @@
-const { DEFAULT_PROFILES } = require("../../../../backend/app/config/functions/defaultData");
+
 
 describe('Profile', ()=>{
-  const adminProfile = DEFAULT_PROFILES.find(profile => profile.username === 'huld-admin');
+  let adminProfile;
   before(()=>{
     cy.clearCookies();
+    cy.fixture("admin").then((admin) => {
+      adminProfile = admin;
+    });
   });
   beforeEach(() => {
 		Cypress.Cookies.preserveOnce("hub-jwt");
