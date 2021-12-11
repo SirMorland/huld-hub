@@ -80,3 +80,15 @@ export const formatProfileForSave = (profile) => {
   // TODO: format more things here
   return profile;
 }
+
+/**
+ * Converts a given value to a number
+ *
+ * @param {number | string} value
+ * @returns {number}
+ */
+ export const toStrictNumber = (value) => {
+  if (typeof value === 'number') return value;
+  if (typeof value !== 'string' || value.trim().length === 0) return NaN;
+  return Number(value);
+};

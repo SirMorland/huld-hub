@@ -17,7 +17,6 @@ const useUser = (jwt) => {
         if (response.status === 200) {
           try {
             let json = await response.json();
-            console.log(json);
             json.profileId = json.profile
             setUser(json);
           } catch (e) {

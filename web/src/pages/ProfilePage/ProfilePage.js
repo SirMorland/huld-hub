@@ -6,7 +6,7 @@ import usePageLoading from "../../hooks/usePageLoading";
 import useCompetences from "../../hooks/useCompetences";
 import useHistoryList from "../../hooks/useHistoryList";
 import useCompetenceCategories from "../../hooks/useCompetenceCategories";
-import { formatProfileForSave } from "../../utils";
+import { formatProfileForSave, toStrictNumber } from "../../utils";
 import { postProfile, uploadPicture } from "../../api";
 
 import ProfilePageEdit from "./ProfilePageEdit";
@@ -19,16 +19,16 @@ import ErrorPage from "../ErrorPage";
 
 function ProfilePage() {
   let match = useRouteMatch();
-  const profileId = match.params.profileId;
+  const profileId = toStrictNumber(match.params.profileId);
 
   const { jwt, user } = useUserContext();
-
+  
   // user can edit the profile is the current user is the profile owner or if the user is an admin
   const canEdit = user 
-    && (parseInt(profileId) === parseInt(user.profile) || user.role.type === "admin");
+    && (profileId === toStrictNumber(user.profile) || user.role.type === "admin");
 
   const canDelete = user 
-    && (parseInt(profileId) !== parseInt(user.profile) && user.role.type === "admin");
+    && (profileId !== toStrictNumber(user.profile) && user.role.type === "admin");
 
   const [profile, setProfile] = useProfile(profileId, jwt);
 
