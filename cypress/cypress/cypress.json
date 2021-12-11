@@ -10,6 +10,7 @@
 	},
 	"testFiles": [
 		"register.spec.js",
-		"login.spec.js"
+		"login.spec.js",
+		"profile.spec.js"
 	]
 }

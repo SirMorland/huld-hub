@@ -195,7 +195,6 @@ const DEFAULT_PROFILES = [
       {
         start_date: "2020-10-20T12:36:26.000Z",
         end_date: "2021-10-20T12:36:26.000Z",
-        title: "Cleaner at Admin",
         position: "cleaner",
         company: "Jaffe and Hilbert",
         description: "Cleaning up admin desks, tables. Making coffee every morning"
@@ -236,7 +235,6 @@ const DEFAULT_PROFILES = [
     work_experiences: [
       {
         start_date: "2021-10-20T12:36:26.000Z",
-        title: "Employee at Admin",
         description: "I have been doing employee work at admin for few years. It's a nice job with interesting tasks. I love the work that I am doing here.",
         position: "Employee",
         company: "Admin Oy",
@@ -244,7 +242,6 @@ const DEFAULT_PROFILES = [
       {
         start_date: "2020-10-20T12:36:26.000Z",
         end_date: "2021-10-20T12:36:26.000Z",
-        title: "Cleaner at Admin",
         position: "Cleaner",
         description: "Cleaning up admin desks, tables. Making coffee every morning",
         company: "Mix n Go Oy",
