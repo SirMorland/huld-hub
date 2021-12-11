@@ -27,7 +27,8 @@ module.exports = async () => {
   await permissionSetup();
   await roleSetup([DEFAULT_ROLES.ADMIN, DEFAULT_ROLES.EMPLOYEE, DEFAULT_ROLES.PUBLIC]);
   await defaultSettings(DEFAULT_SETTINGS);
-  await competenceSetup(DEFAULT_COMPETENCES);
+  if (process.env.NODE_ENV !== 'test') 
+    await competenceSetup(DEFAULT_COMPETENCES);
 
   if (process.env.NODE_ENV === "development") {
     try {
