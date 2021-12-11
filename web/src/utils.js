@@ -89,10 +89,6 @@ export const formatProfileForSave = (profile) => {
  */
  export const toNumber = (value) => {
   if (typeof value === 'number') return value;
-  if (
-    (typeof value === 'string' && value.trim().length === 0) ||
-    typeof value !== 'string'
-  )
-    return NaN;
+  if (typeof value !== 'string' || value.trim().length === 0) return NaN;
   return Number(value);
 };
