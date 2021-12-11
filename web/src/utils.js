@@ -87,7 +87,7 @@ export const formatProfileForSave = (profile) => {
  * @param {number | string} value
  * @returns {number}
  */
- export const toNumber = (value) => {
+ export const toStrictNumber = (value) => {
   if (typeof value === 'number') return value;
   if (typeof value !== 'string' || value.trim().length === 0) return NaN;
   return Number(value);
