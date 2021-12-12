@@ -20,10 +20,22 @@ const useUser = (jwt) => {
             json.profileId = json.profile
             setUser(json);
           } catch (e) {
+            setUser({ connectionError: true });
           }
-        } else if (response.status === 401) {
-          setUser({ confirmed: false });
-        } else setUser(false);
+        } else {
+          try {
+            let json = await response.json();
+            //user not found, user disabled, and user unconfirmed return same errorCode
+            if (json.message === 'User Not Found') {
+              setUser({ notFound: true });
+            } else if (json.message === 'Your account email is not confirmed.') {
+              setUser({ confirmed: false });
+            } else setUser(false);
+          } catch (e) {
+            setUser({ connectionError: true });
+          }
+
+        }
       } catch (error) {
         let json = { connectionError: true };
         setUser(json);

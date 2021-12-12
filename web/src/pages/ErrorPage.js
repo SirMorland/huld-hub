@@ -12,6 +12,7 @@ function errorPage({errorCode}) {
                 {errorCode === 404 && <Typography variant="h2" color="primary" fontSize="20px">The Page you are looking at is not found</Typography>}
                 {errorCode === 403 && <Typography variant="h2" color="primary" fontSize="20px">You are not authorized to see this page</Typography>}
                 {errorCode === 503 && <Typography variant="h2" color="primary" fontSize="20px">Unable to connect to the server</Typography>}
+                {errorCode === 401 && <Typography variant="h2" color="primary" fontSize="20px">User not found</Typography>}
             </div>
         </Page>
     );

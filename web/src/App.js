@@ -37,9 +37,13 @@ const AuthUser = ({ children }) => {
   }
 
   // authenticated user with JWT
-  if (jwt && user) {
+  if (jwt && user !== null) {
     if (user?.connectionError){
       return (<ErrorPage errorCode={503}/>);
+    }
+    //if used account has been deleted
+    if (user?.notFound){
+      return (<ErrorPage errorCode={401}/>);
     }
     // confimred user
     if (user?.confirmed) {
