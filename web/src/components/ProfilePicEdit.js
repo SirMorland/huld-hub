@@ -47,11 +47,11 @@ const ProfilePicEdit = forwardRef(({ profileImage }, ref) => {
     );
     return (
         <ProfilePicEditContainer>
-            <input
+            <input data-testid="file-input"
                 type="file" onChange={(e) => setFile(e.target.files[0])} id="upload"
                 accept="image/*" style={{ display: "none" }}
             />
-            <label htmlFor="upload">
+            <label htmlFor="upload" data-testid="file-label">
                 <StyledButton aria-label="upload picture" component="span">
                     <StyledAvatar id="avatar" src={file ? URL.createObjectURL(file) : imageUrl} />
                 </StyledButton>
