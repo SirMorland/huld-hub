@@ -26,12 +26,6 @@ jobs:
         cd web
         cp .env.cypress .env
         docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
-    
-    - name: Restart backend
-      run: |
-        cd backend
-        docker-compose stop
-        docker-compose start
 
     - name: Run Cypress tests
       run: |

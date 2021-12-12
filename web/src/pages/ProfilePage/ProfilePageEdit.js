@@ -203,6 +203,7 @@ function ProfilePageEdit({
           <TextField
             textarea
             required
+            name="bio"
             id="Profile_Info_Edit"
             type="text"
             placeholder="Few words about yourself"
@@ -215,6 +216,7 @@ function ProfilePageEdit({
           <TextField
             textarea
             required
+            name="skills"
             id="Profile_Skills_Edit"
             type="text"
             placeholder="Few skills about yourself"

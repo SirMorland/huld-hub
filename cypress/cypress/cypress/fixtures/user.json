@@ -4,5 +4,46 @@
 	"password": "password",
 	"incorrectPassword": "pasword",
 	"firstName": "Ted",
-	"lastName": "Tester"
+	"lastName": "Tester",
+	"profile": {
+		"last_name": "Meikäläinen",
+		"first_name": "Matti",
+		"title": "Administrator",
+		"phone": "+358 353 588 888",
+		"address": "Tampere",
+		"linkedin": "https://linkedin.com/huld-admin",
+		"github": "https://github.com/huld-admin",
+		"slack": "@huld-admin",
+		"work_experiences": [
+			{
+				"start_date": "2020-10-20T12:36:26.000Z",
+				"end_date": "2021-10-20T12:36:26.000Z",
+				"position": "cleaner",
+				"company": "Jaffe and Hilbert",
+				"description": "Cleaning up admin desks, tables. Making coffee every morning"
+			}
+		],
+		"education_histories": [
+			{
+				"school": "Tampere University",
+				"start_date": "2020-10-20T12:36:26.000Z",
+				"end_date": "2021-10-20T12:36:26.000Z",
+				"degree": "Master Degree",
+				"description": "Doing a master degree focused in administration work"
+			}
+		],
+		"languages": [
+			"Javascript",
+			"Swift",
+			"Lua",
+			"Kotlin",
+			"CSS"
+		],
+		"keywords": [
+			"iOS",
+			"Android"
+		],
+		"skills": "Technology\nInternet\nNetflix\nTesting",
+		"bio": "I am an admin. I like to administrate."
+	}
 }
