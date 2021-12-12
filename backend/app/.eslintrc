@@ -1,7 +1,7 @@
 {
   "parser": "babel-eslint",
-  "extends": "eslint:recommended",
-  "plugins": ["jest"],
+  "extends": ["eslint:recommended", "prettier"],
+  "plugins": ["jest", "prettier"],
   "env": {
     "commonjs": true,
     "es6": true,
@@ -20,6 +20,7 @@
     "strapi": true
   },
   "rules": {
+    "prettier/prettier": "error",
     "indent": ["error", 2, { "SwitchCase": 1 }],
     "linebreak-style": ["error", "unix"],
     "no-console": 0,
