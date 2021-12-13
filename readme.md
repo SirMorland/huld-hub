@@ -19,6 +19,9 @@ All users have profile that others can view. These profiles contain peoples name
 
 Application has several configurations. Only selected email domains can be registered, and only selected languages and keywords may be used in the user profiles. Users can also be promoted into admins and demoted from the settings page.
 
+![Profile example](./documentation/images/profile_example.png)
+![Seach example](./documentation/images/search_example.png)
+
 ## Authors <a name=Authors></a>
 
 - Prosper Evergreen, prosper.evergreen@tuni.fi
@@ -63,4 +66,4 @@ Web application is React based and styled with CSS.
 
 ## User Guide <a name=UserGuide></a>
 
-User guide can be found in a seperate file by name 'User guide' in same folder
+User guide can be found in a seperate file by name 'User guide' in the folder documentation
