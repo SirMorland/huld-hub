@@ -25,7 +25,7 @@ All users have profile that others can view. These profiles contain peoples name
 
 Application has several configurations. Only selected email domains can be registered, and only selected languages and keywords may be used in the user profiles. Users can also be promoted into admins and demoted from the settings page.
 
-<img src="./documentation/images/search_example.png" alt="Seach example" width="400"/>
+<img src="./documentation/images/settings_example.png" alt="Settings example" width="400"/>
 
 
 ## Authors <a name=Authors></a>
