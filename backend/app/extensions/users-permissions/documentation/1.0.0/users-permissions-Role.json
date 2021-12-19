@@ -561,6 +561,9 @@
                 "role": {
                   "type": "string"
                 },
+                "profile": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },

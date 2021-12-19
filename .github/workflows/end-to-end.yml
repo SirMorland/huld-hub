@@ -1,0 +1,40 @@
+name: End-to-end CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Start backend
+      run: |
+        cd backend
+        cp app/.env.cypress app/.env
+        docker-compose -f docker-compose.yml -f docker-compose.prod.yml -f docker-compose.cypress.yml up -d
+
+    - name: Start frontend
+      run: |
+        cd web
+        cp .env.cypress .env
+        docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+
+    - name: Run Cypress tests
+      run: |
+        cd cypress
+        docker-compose up
+    
+    - name: Cypress report
+      uses: SirMorland/cypress-report-action@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        pathname: cypress/cypress/cypress/mochawesome.json
+      if: always()

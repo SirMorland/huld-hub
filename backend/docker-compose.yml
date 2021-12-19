@@ -11,6 +11,7 @@ services:
       DATABASE_USERNAME: strapi
       DATABASE_PASSWORD: strapi
       DATABASE_SSL: 'false'
+      EMAIL_DOMAIN: huld.io
       
     ports:
       - '1337:1337'
@@ -30,3 +31,7 @@ services:
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       retries: 10
+
+networks:
+  default:
+    name: huldhub_network

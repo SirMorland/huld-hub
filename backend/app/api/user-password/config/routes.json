@@ -1,0 +1,12 @@
+{
+	"routes": [
+	  {
+      "method": "PUT",
+      "path": "/user-password/:id",
+      "handler": "user-password.update",
+      "config": {
+        "policies": ["updateOwnPassword"]
+      }
+	  }
+	]
+} 
