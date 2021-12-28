@@ -1,27 +1,27 @@
-import { BrowserRouter } from "react-router-dom";
-import { render } from "@testing-library/react";
+import { BrowserRouter } from 'react-router-dom';
+import { render } from '@testing-library/react';
 
-import { ThemeProvider } from "@mui/material";
+import { ThemeProvider } from '@mui/material';
 
-import theme from "./theme";
-import React from "react";
-import { UserProvider } from "./userContext";
+import theme from './theme';
+import React from 'react';
+import { UserProvider } from './userContext';
 
 export const fetchPost = (url, body, jwt, method) => {
   const headers = {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-  }
-  if (jwt) headers["Authorization"] = `Bearer ${jwt}`;
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  };
+  if (jwt) headers['Authorization'] = `Bearer ${jwt}`;
   return fetch(url, {
-    method: method || "POST",
+    method: method || 'POST',
     headers,
     body: JSON.stringify(body),
   });
 };
 
 export const getYear = (data) => {
-  if (!data) return "    ";
+  if (!data) return '    ';
   const date = new Date(data);
   return date.getFullYear();
 };
@@ -34,8 +34,8 @@ export const renderWithRouter = (children) => {
 };
 export const renderHelper = (children, context) => {
   const contextValue = {
-    setJwt: () => { },
-    jwt: "jwt",
+    setJwt: () => {},
+    jwt: 'jwt',
     ...context,
   };
   return render(
@@ -79,7 +79,7 @@ export const formatProfileForSave = (profile) => {
   delete profile.file;
   // TODO: format more things here
   return profile;
-}
+};
 
 /**
  * Converts a given value to a number
@@ -87,8 +87,17 @@ export const formatProfileForSave = (profile) => {
  * @param {number | string} value
  * @returns {number}
  */
- export const toStrictNumber = (value) => {
+export const toStrictNumber = (value) => {
   if (typeof value === 'number') return value;
   if (typeof value !== 'string' || value.trim().length === 0) return NaN;
   return Number(value);
 };
+
+/**
+ * Formats strings to regrex style
+ * 
+ * @param {string} string - string to convert to regrex 
+ * @returns 
+ */
+export const escapeRegex = (string) =>
+  string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
