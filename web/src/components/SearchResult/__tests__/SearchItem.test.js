@@ -135,8 +135,7 @@ describe("SearchItem component", () => {
   afterEach(cleanup);
   it("should render correct data", () => {
     const { getByText } = renderHelper(<SearchItem {...testData} />);
-    expect(getByText(testData.first_name)).toBeTruthy();
-    expect(getByText(testData.last_name)).toBeTruthy();
+    expect(getByText(`${testData.first_name} ${testData.last_name}`)).toBeTruthy();
     expect(getByText(testData.title)).toBeTruthy();
   });
 
