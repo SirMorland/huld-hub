@@ -2,8 +2,6 @@ version: '3'
 services:
   strapi:
     environment:
-      SMTP_HOST: cypress
-      SMTP_PORT: 7777
-      EMAIL_FROM: huldhub@outlook.com
-      EMAIL_REPLY_TO: huldhub@outlook.com
-      EMAIL_DOMAIN: huld.io
+      STRAPI_HOST: 0.0.0.0
+      STRAPI_PORT: 1337
+      STRAPI_URL: http://strapi:1337
