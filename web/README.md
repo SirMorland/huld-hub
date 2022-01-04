@@ -11,7 +11,7 @@
 ### Setup development environment
 To start the development environment:
 1. Copy `docker-compose.dev.yml` to `docker-compose.override.yml`. The `docker-compose.override.yml` file can be further edited if needed.
-2. Copy `.env.example` to `.env`.
+2. Create a `.env` file and copy [.env.example](.env.example) to it providing the required values
 3. Run `docker-compose up` to start the frontend in development mode. Docker will need to build the container if it's the first time you run it.
 4. The frontend runs on http://localhost:3000 by default.
 

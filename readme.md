@@ -40,7 +40,7 @@ Application has several configurations. Only selected email domains can be regis
 
 ## Usage <a name=Usage></a>
 
-To start this application you must run both backend and web applications. Instruction on how to do this can be found in files `backend/README` and `web/README`. These files also contain other information like available commands and troubleshooting intructions.
+To start this application you must run both backend and web applications. Instruction on how to do this can be found in files [backend/README](backend/README) and [web/README](web/README). These files also contain other information like available commands and troubleshooting intructions.
 
 ## Dev work flow <a name=DevWorkFlow></a>
 You can follow the [convetional commits](https://www.conventionalcommits.org/en/v1.0.0/) for naming branches and commit messages.
