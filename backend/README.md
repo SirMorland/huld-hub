@@ -20,7 +20,7 @@ Strapi with docker
 ## Getting started
 
 - Copy `docker-compose.dev.yml` to `docker-compose.override.yml` to setup development environment. The `docker-compose.override.yml` file can be further edited if needed.
-- Create an `app/.env` file and copy [app/.env.example](app/.env.example) to it providing the required values
+- Create an `app/.env` file and copy [app/.env.example](./app/.env.example) to it providing the required values
 - Run `docker-compose up` to start Strapi server in development mode. Docker will need to build the container if it's the first time you run it.
 - Database dumps in `/mysql-dump` will be imported when you run `docker-compose up` the first time
 - By default, the strapi endpoint will be at http://localhost:1337
