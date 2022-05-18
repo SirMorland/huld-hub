@@ -22,7 +22,7 @@
     "eslint-plugin-jest": "^24.5.0",
     "knex": "0.21.18",
     "mysql": "2.18.1",
-    "strapi": "3.6.8",
+    "strapi": "3.6.10",
     "strapi-admin": "3.6.8",
     "strapi-connector-bookshelf": "3.6.8",
     "strapi-plugin-content-manager": "3.6.8",
